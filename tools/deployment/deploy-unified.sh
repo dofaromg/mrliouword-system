@@ -32,20 +32,14 @@ npm install
 # 3. 初始化 D1 資料庫
 echo -e "${BLUE}[3/6]${NC} 初始化 D1 資料庫..."
 echo "  → 創建資料庫結構..."
-wrangler d1 execute mrliouword-db --env production --file=schema/d1-schema.sql || {
-  echo -e "${YELLOW}警告: 資料庫結構可能已存在${NC}"
-}
+wrangler d1 execute mrliouword-db --env production --file=schema/d1-schema.sql || true
 
 # 4. 載入種子資料
 echo -e "${BLUE}[4/6]${NC} 載入種子資料..."
 echo "  → 載入 52 個粒子..."
-wrangler d1 execute mrliouword-db --env production --file=schema/seeds/particles.sql || {
-  echo -e "${YELLOW}警告: 粒子資料可能已存在${NC}"
-}
+wrangler d1 execute mrliouword-db --env production --file=schema/seeds/particles.sql || true
 echo "  → 載入 9 個層級..."
-wrangler d1 execute mrliouword-db --env production --file=schema/seeds/layers.sql || {
-  echo -e "${YELLOW}警告: 層級資料可能已存在${NC}"
-}
+wrangler d1 execute mrliouword-db --env production --file=schema/seeds/layers.sql || true
 
 # 5. 部署 Worker
 echo -e "${BLUE}[5/6]${NC} 部署 Cloudflare Worker..."
@@ -54,9 +48,7 @@ wrangler deploy --env production
 # 6. 執行初始同步
 echo -e "${BLUE}[6/6]${NC} 執行初始同步..."
 sleep 3  # 等待 Worker 啟動
-curl -X POST https://mrliouword-unified.liouuuuu.workers.dev/sync/all -s || {
-  echo -e "${YELLOW}警告: 同步請求失敗，請稍後手動執行${NC}"
-}
+curl -X POST https://mrliouword-unified.liouuuuu.workers.dev/sync/all -s || true
 
 echo ""
 echo -e "${GREEN}✅ 部署完成!${NC}"

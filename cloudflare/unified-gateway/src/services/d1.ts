@@ -18,12 +18,22 @@ export class D1Service {
     }
     
     const result = await this.db.prepare(query).bind(...params).all();
-    return result.results as unknown as Particle[];
+    return (result.results as unknown as Particle[]).map(p => ({
+      ...p,
+      links: typeof p.links === 'string' ? JSON.parse(p.links) : p.links,
+      tags: typeof p.tags === 'string' ? JSON.parse(p.tags) : p.tags
+    }));
   }
 
   async getParticle(fx: string): Promise<Particle | null> {
     const result = await this.db.prepare('SELECT * FROM particles WHERE fx = ?').bind(fx).first();
-    return result as Particle | null;
+    if (!result) return null;
+    const p = result as unknown as Particle;
+    return {
+      ...p,
+      links: typeof p.links === 'string' ? JSON.parse(p.links) : p.links,
+      tags: typeof p.tags === 'string' ? JSON.parse(p.tags) : p.tags
+    };
   }
 
   async createParticle(particle: Particle): Promise<void> {
@@ -44,7 +54,11 @@ export class D1Service {
 
   async getMemories(limit: number = 100): Promise<Memory[]> {
     const result = await this.db.prepare('SELECT * FROM memories ORDER BY ts DESC LIMIT ?').bind(limit).all();
-    return result.results as unknown as Memory[];
+    return (result.results as unknown as Memory[]).map(m => ({
+      ...m,
+      tags: typeof m.tags === 'string' ? JSON.parse(m.tags) : m.tags,
+      meta: typeof m.meta === 'string' ? JSON.parse(m.meta) : m.meta
+    }));
   }
 
   async createMemory(memory: Memory): Promise<void> {
@@ -67,12 +81,26 @@ export class D1Service {
 
   async getPersonas(): Promise<Persona[]> {
     const result = await this.db.prepare('SELECT * FROM personas').all();
-    return result.results as unknown as Persona[];
+    return (result.results as unknown as Persona[]).map(p => ({
+      ...p,
+      traits: typeof p.traits === 'string' ? JSON.parse(p.traits) : p.traits,
+      capabilities: typeof p.capabilities === 'string' ? JSON.parse(p.capabilities) : p.capabilities,
+      constraints: typeof p.constraints === 'string' ? JSON.parse(p.constraints) : p.constraints,
+      meta: typeof p.meta === 'string' ? JSON.parse(p.meta) : p.meta
+    }));
   }
 
   async getPersona(id: string): Promise<Persona | null> {
     const result = await this.db.prepare('SELECT * FROM personas WHERE id = ?').bind(id).first();
-    return result as Persona | null;
+    if (!result) return null;
+    const p = result as unknown as Persona;
+    return {
+      ...p,
+      traits: typeof p.traits === 'string' ? JSON.parse(p.traits) : p.traits,
+      capabilities: typeof p.capabilities === 'string' ? JSON.parse(p.capabilities) : p.capabilities,
+      constraints: typeof p.constraints === 'string' ? JSON.parse(p.constraints) : p.constraints,
+      meta: typeof p.meta === 'string' ? JSON.parse(p.meta) : p.meta
+    };
   }
 
   async updatePersona(persona: Persona): Promise<void> {
@@ -108,7 +136,11 @@ export class D1Service {
     query += ' ORDER BY created_at DESC';
     
     const result = await this.db.prepare(query).bind(...params).all();
-    return result.results as unknown as Resource[];
+    return (result.results as unknown as Resource[]).map(r => ({
+      ...r,
+      tags: typeof r.tags === 'string' ? JSON.parse(r.tags) : r.tags,
+      meta: typeof r.meta === 'string' ? JSON.parse(r.meta) : r.meta
+    }));
   }
 
   async searchResources(q: string): Promise<Resource[]> {
@@ -118,7 +150,11 @@ export class D1Service {
       ORDER BY created_at DESC
       LIMIT 50
     `).bind(`%${q}%`, `%${q}%`, `%${q}%`).all();
-    return result.results as unknown as Resource[];
+    return (result.results as unknown as Resource[]).map(r => ({
+      ...r,
+      tags: typeof r.tags === 'string' ? JSON.parse(r.tags) : r.tags,
+      meta: typeof r.meta === 'string' ? JSON.parse(r.meta) : r.meta
+    }));
   }
 
   async logTrace(log: TraceLog): Promise<void> {
