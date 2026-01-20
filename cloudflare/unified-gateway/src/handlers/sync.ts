@@ -66,8 +66,8 @@ export async function handleSyncAll(env: Env): Promise<Response> {
   const memResult = await handleSyncMemories(env);
   const partResult = await handleSyncParticles(env);
   
-  const memData = await memResult.json();
-  const partData = await partResult.json();
+  const memData = await memResult.json() as { synced: number };
+  const partData = await partResult.json() as { synced: number };
   
   return jsonResponse({
     message: 'All data synced to KV',

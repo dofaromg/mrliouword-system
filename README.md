@@ -40,6 +40,7 @@
 ### Cloudflare Workers
 | 服務 | URL | 功能 |
 |------|-----|------|
+| mrliouword-unified | [連結](https://mrliouword-unified.liouuuuu.workers.dev) | **統一閘道 - 整合所有功能** |
 | mrliouword-private | [連結](https://mrliouword-private.mrliou.workers.dev) | 記憶/人格/吸收/掃描 |
 | particle-auth-gateway | [連結](https://particle-auth-gateway.mrliou.workers.dev) | 統一身份認證 |
 
@@ -66,6 +67,7 @@ mrliouword-system/
 │   └── particle_dict.json       # 52 個粒子定義
 ├── cloudflare/                  # Cloudflare Workers
 │   ├── config.json              # 服務配置
+│   ├── unified-gateway/         # ✨ 統一 API 閘道 (新增)
 │   ├── mrliouword-private/      # Private AI Server
 │   └── particle-auth-gateway/   # 認證網關
 ├── integrations/                # 整合連接器
@@ -73,8 +75,16 @@ mrliouword-system/
 │   └── google/                  # Google Drive/Earth
 ├── docs/                        # 文檔
 │   ├── conversations/           # 對話索引
+│   ├── ARCHITECTURE.md          # ✨ 系統架構 (新增)
+│   ├── API_REFERENCE.md         # ✨ API 參考 (新增)
+│   ├── INTEGRATION_GUIDE.md     # ✨ 整合指南 (新增)
+│   ├── RESOURCE_INVENTORY.md    # ✨ 資源清單 (新增)
 │   └── REPOS_INDEX.md           # 153+ repo 索引
 └── tools/                       # 工具腳本
+    └── deployment/              # ✨ 部署腳本 (新增)
+        ├── deploy-unified.sh    # 一鍵部署
+        ├── sync.sh              # 同步腳本
+        └── backup.sh            # 備份腳本
 ```
 
 ---
@@ -83,7 +93,20 @@ mrliouword-system/
 
 詳細的部署說明請參考 [DEPLOYMENT.md](./DEPLOYMENT.md)
 
-**快速開始**：
+### 統一閘道快速部署
+
+```bash
+# 一鍵部署統一閘道
+./tools/deployment/deploy-unified.sh
+
+# 手動同步資料
+./tools/deployment/sync.sh
+
+# 備份資料庫
+./tools/deployment/backup.sh
+```
+
+**傳統部署**：
 1. 配置 GitHub Secrets (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`)
 2. 在 Cloudflare 創建所需資源 (KV, D1, R2)
 3. 推送到 `main` 分支自動部署
@@ -92,6 +115,11 @@ mrliouword-system/
 
 ## 🔗 相關連結
 
+- **統一閘道 API**: [https://mrliouword-unified.liouuuuu.workers.dev](https://mrliouword-unified.liouuuuu.workers.dev)
+- **API 文檔**: [docs/API_REFERENCE.md](./docs/API_REFERENCE.md)
+- **整合指南**: [docs/INTEGRATION_GUIDE.md](./docs/INTEGRATION_GUIDE.md)
+- **系統架構**: [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
+- **資源清單**: [docs/RESOURCE_INVENTORY.md](./docs/RESOURCE_INVENTORY.md)
 - **GitHub Repos**: 153+ repositories ([索引](./docs/REPOS_INDEX.md))
 - **Notion 工作區**: Mrliouword 8♾️Flowagent
 - **對話索引**: [conversations/INDEX.md](./docs/conversations/INDEX.md)

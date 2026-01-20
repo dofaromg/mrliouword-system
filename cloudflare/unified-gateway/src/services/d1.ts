@@ -18,7 +18,7 @@ export class D1Service {
     }
     
     const result = await this.db.prepare(query).bind(...params).all();
-    return result.results as Particle[];
+    return result.results as unknown as Particle[];
   }
 
   async getParticle(fx: string): Promise<Particle | null> {
@@ -44,7 +44,7 @@ export class D1Service {
 
   async getMemories(limit: number = 100): Promise<Memory[]> {
     const result = await this.db.prepare('SELECT * FROM memories ORDER BY ts DESC LIMIT ?').bind(limit).all();
-    return result.results as Memory[];
+    return result.results as unknown as Memory[];
   }
 
   async createMemory(memory: Memory): Promise<void> {
@@ -67,7 +67,7 @@ export class D1Service {
 
   async getPersonas(): Promise<Persona[]> {
     const result = await this.db.prepare('SELECT * FROM personas').all();
-    return result.results as Persona[];
+    return result.results as unknown as Persona[];
   }
 
   async getPersona(id: string): Promise<Persona | null> {
@@ -108,7 +108,7 @@ export class D1Service {
     query += ' ORDER BY created_at DESC';
     
     const result = await this.db.prepare(query).bind(...params).all();
-    return result.results as Resource[];
+    return result.results as unknown as Resource[];
   }
 
   async searchResources(q: string): Promise<Resource[]> {
@@ -118,7 +118,7 @@ export class D1Service {
       ORDER BY created_at DESC
       LIMIT 50
     `).bind(`%${q}%`, `%${q}%`, `%${q}%`).all();
-    return result.results as Resource[];
+    return result.results as unknown as Resource[];
   }
 
   async logTrace(log: TraceLog): Promise<void> {
