@@ -1,0 +1,54 @@
+# MrLiouWord Unified Gateway - Wrangler Configuration
+# origin_signature: MrLiouWord
+
+name = "mrliouword-unified-gateway"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# Production Environment
+[env.production]
+name = "mrliouword-unified"
+workers_dev = false
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "mrliouword-db"
+database_id = "7980baaf-48d3-43cc-8be7-dd8c9590f3d1"
+
+[[env.production.kv_namespaces]]
+binding = "KV"
+id = "01275832766148bfbcaa00ee4aeb9946"
+
+[[env.production.kv_namespaces]]
+binding = "AUTH_KV"
+id = "8cd99b4a67f74afea367f394995d5c50"
+
+[[env.production.r2_buckets]]
+binding = "R2"
+bucket_name = "mrlioubook"
+
+# Cron triggers for automatic sync (every 5 minutes)
+[env.production.triggers]
+crons = ["*/5 * * * *"]
+
+# Development Environment
+[env.development]
+name = "mrliouword-unified-dev"
+workers_dev = true
+
+[[env.development.d1_databases]]
+binding = "DB"
+database_name = "mrliouword-db"
+database_id = "7980baaf-48d3-43cc-8be7-dd8c9590f3d1"
+
+[[env.development.kv_namespaces]]
+binding = "KV"
+id = "01275832766148bfbcaa00ee4aeb9946"
+
+[[env.development.kv_namespaces]]
+binding = "AUTH_KV"
+id = "8cd99b4a67f74afea367f394995d5c50"
+
+[[env.development.r2_buckets]]
+binding = "R2"
+bucket_name = "mrlioubook"
