@@ -1,0 +1,130 @@
+{
+  "version": "2.0",
+  "origin_signature": "MrLiouWord",
+  "sealed_at": "2026-02-12T00:00:00.000Z",
+  "description": "MRL ParticleKit Lite 效果註冊表",
+  "effects": [
+    {
+      "id": "fx_001",
+      "name": "frequency_resonance",
+      "description": "計算頻率共振強度",
+      "layer": "L5",
+      "category": "physics",
+      "params": {
+        "base_freq": 33.88,
+        "phi": 1.618033988749895,
+        "harmonic_order": 1
+      },
+      "formula": "f(n) = base_freq × phi^(n-1)"
+    },
+    {
+      "id": "fx_002",
+      "name": "simhash_distance",
+      "description": "計算 SimHash Hamming 距離",
+      "layer": "L7",
+      "category": "similarity",
+      "params": {
+        "threshold": 3,
+        "bits": 64
+      },
+      "formula": "hamming_distance(h1, h2)"
+    },
+    {
+      "id": "fx_003",
+      "name": "layer_transform",
+      "description": "層級轉換與升維/降維",
+      "layer": "ALL",
+      "category": "transform",
+      "params": {
+        "source_layer": "L1",
+        "target_layer": "L7",
+        "preserve_signature": true
+      },
+      "formula": "transform(data, source, target)"
+    },
+    {
+      "id": "fx_004",
+      "name": "tensor_attention",
+      "description": "張量注意力計算",
+      "layer": "L6",
+      "category": "neural",
+      "params": {
+        "num_heads": 8,
+        "d_model": 768,
+        "dropout": 0.1
+      },
+      "formula": "Attention(Q, K, V) = softmax(Q·K^T / sqrt(d_k)) · V"
+    },
+    {
+      "id": "fx_005",
+      "name": "merkle_chain",
+      "description": "Merkle Chain 完整性驗證",
+      "layer": "L0",
+      "category": "security",
+      "params": {
+        "hash_algorithm": "sha256",
+        "chain_depth": 10
+      },
+      "formula": "merkle_root = H(H(H(...H(genesis_block)...)))"
+    },
+    {
+      "id": "fx_006",
+      "name": "particle_split",
+      "description": "粒子分裂與合併",
+      "layer": "L1",
+      "category": "lifecycle",
+      "params": {
+        "delta_p0_threshold": 0.01,
+        "max_split_depth": 5
+      },
+      "formula": "|δP| >= δP₀ → split"
+    },
+    {
+      "id": "fx_007",
+      "name": "persona_mapping",
+      "description": "人格特徵映射",
+      "layer": "L5",
+      "category": "persona",
+      "params": {
+        "persona_id": "Mrl_Zero",
+        "feature_dims": 512,
+        "activation": "tanh"
+      },
+      "formula": "persona_vector = map(input, persona_space)"
+    },
+    {
+      "id": "fx_008",
+      "name": "trace_compression",
+      "description": "執行軌跡壓縮",
+      "layer": "L3",
+      "category": "compression",
+      "params": {
+        "algorithm": "zlib",
+        "compression_level": 9,
+        "preserve_order": true
+      },
+      "formula": "compressed = compress(trace, algorithm, level)"
+    }
+  ],
+  "categories": {
+    "physics": "物理與頻率計算",
+    "similarity": "相似度與距離度量",
+    "transform": "轉換與映射",
+    "neural": "神經網絡與注意力",
+    "security": "安全與驗證",
+    "lifecycle": "粒子生命週期",
+    "persona": "人格與特徵",
+    "compression": "壓縮與編碼"
+  },
+  "layers": {
+    "L0": "雲端平台層",
+    "L1": "原子粒子層",
+    "L2": "原型模組層",
+    "L3": "封裝層",
+    "L4": "拓撲跳點層",
+    "L5": "人格策略層",
+    "L6": "系統映像層",
+    "L7": "語意記憶層",
+    "L∞": "頻率源層"
+  }
+}
