@@ -72,8 +72,26 @@ mrliouword-system/
 │   ├── notion/                  # Notion 同步
 │   └── google/                  # Google Drive/Earth
 ├── docs/                        # 文檔
+│   ├── laws/                    # 基礎法則
+│   │   └── LAW-0-签名律.md       # LAW-0 簽名律
+│   ├── core/                    # 核心文檔
+│   │   ├── 核心文档.md           # 核心文檔索引
+│   │   └── Mrliou万物逻辑结构-完整封存档案.md
+│   ├── architecture/            # 技術架構
+│   │   └── WebGPU神经元与注意力机制整合架构.md
+│   ├── integrations/            # 整合指南
+│   │   └── MCP.md               # Model Context Protocol
+│   ├── progress/                # 進度追蹤
+│   │   └── mon_feb_09_2026_next_phase_delivery.md
 │   ├── conversations/           # 對話索引
 │   └── REPOS_INDEX.md           # 153+ repo 索引
+├── packages/                    # 封包系統
+│   ├── mrl_particlekit_lite_v2/ # ParticleKit Lite v2
+│   ├── mrl_world_module/        # 686 粒子生成系統
+│   ├── mrl_world_system/        # TotalCore Unity v1
+│   ├── mrl_world_minimal/       # Seal v1.flpkg
+│   ├── mrl_ai_network/          # 粒子語言融合系統
+│   └── mrl_asi_computer/        # ASI 超級電腦
 └── tools/                       # 工具腳本
 ```
 
@@ -177,6 +195,30 @@ curl -X POST https://particle-edge.your-account.workers.dev/attention/compute \
   -H "X-Master-Key: your-key" \
   -d '{"inputs": [{"value": "頻率"}, {"value": "共振"}]}'
 ```
+
+---
+
+## 📚 核心文檔
+
+### 基礎法則與理論
+- [⚖️ LAW-0 签名律](./docs/laws/LAW-0-签名律.md) - 系統最基礎法則
+- [Mrliou 萬物邏輯結構](./docs/core/Mrliou万物逻辑结构-完整封存档案.md) - Liou Closure Law 形式化結構
+- [核心文檔索引](./docs/core/核心文档.md) - 完整文檔索引
+
+### 技術架構
+- [WebGPU 神經元與注意力機制](./docs/architecture/WebGPU神经元与注意力机制整合架构.md) - 雲上雲計畫計算骨幹
+- [MCP 整合指南](./docs/integrations/MCP.md) - Model Context Protocol 整合
+
+### 封包系統
+- [MRL ParticleKit Lite v2](./packages/mrl_particlekit_lite_v2/) - 語義粒子處理工具包
+- [686 粒子生成系統](./packages/mrl_world_module/) - 世界模組與自洽生成
+- [TotalCore Unity](./packages/mrl_world_system/) - 總核心統一封包
+- [Seal v1.flpkg](./packages/mrl_world_minimal/) - 最小封包結構
+- [粒子語言融合系統](./packages/mrl_ai_network/) - 四位一體架構
+- [ASI 超級電腦](./packages/mrl_asi_computer/) - 完整系統架構白皮書
+
+### 進度追蹤
+- [運轉包交付進度](./docs/progress/mon_feb_09_2026_next_phase_delivery.md) - 2026-02-09 開發進度
 
 ---
 

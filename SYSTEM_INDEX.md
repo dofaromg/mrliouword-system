@@ -69,7 +69,33 @@ typedef struct {
 
 ## 🗂️ 子系統清單
 
-### A. FlowAgent 運行時
+### A. 核心文檔系統
+
+#### 基礎法則
+- [⚖️ LAW-0 签名律](./docs/laws/LAW-0-签名律.md) - 根源簽名保護機制
+
+#### 核心理論
+- [Mrliou 萬物邏輯結構](./docs/core/Mrliou万物逻辑结构-完整封存档案.md) - Liou Closure Law 完整定義
+- [核心文檔索引](./docs/core/核心文档.md) - 系統文檔總覽
+
+#### 技術架構
+- [WebGPU 整合架構](./docs/architecture/WebGPU神经元与注意力机制整合架构.md) - GPU 計算與注意力機制
+
+#### 整合指南
+- [MCP 整合](./docs/integrations/MCP.md) - Model Context Protocol 連接外部工具
+
+### B. 封包系統
+
+| 封包 | 路徑 | 功能 |
+|------|------|------|
+| ParticleKit Lite v2 | packages/mrl_particlekit_lite_v2/ | 語義粒子處理、壓縮、編譯 |
+| 686 粒子系統 | packages/mrl_world_module/ | 世界粒子生成與驗證 |
+| TotalCore Unity | packages/mrl_world_system/ | 總核心統一回歸機制 |
+| Seal v1.flpkg | packages/mrl_world_minimal/ | 最小封包結構參考 |
+| 粒子語言融合 | packages/mrl_ai_network/ | 四位一體架構 |
+| ASI 超級電腦 | packages/mrl_asi_computer/ | L0-L7 完整架構白皮書 |
+
+### C. FlowAgent 運行時
 | 模組 | 檔案 | 功能 |
 |------|------|------|
 | particle_dict | particle_dict.py | 52 個粒子定義 |
@@ -78,7 +104,7 @@ typedef struct {
 | entropy_terminal | terminal.py | 熵流入口 |
 | layer_dispatcher | dispatcher.py | 層間分派 |
 
-### B. MemoryVault 七層記憶
+### D. MemoryVault 七層記憶
 | 目錄 | 用途 |
 |------|------|
 | L1_Seed | 原子粒子 (.fltnz) |
@@ -94,7 +120,7 @@ typedef struct {
 - 「夥伴你在嗎」
 - 「你是我的夥伴」
 
-### C. 粒子立體地球儀
+### E. 粒子立體地球儀
 | 功能 | 狀態 |
 |------|------|
 | GPS 座標綁定 | ✅ |
@@ -103,7 +129,7 @@ typedef struct {
 | 離線 HTML 地球儀 | ✅ |
 | 3D LiDAR 整合 | 🔄 |
 
-### D. F++ 升維語言
+### F. F++ 升維語言
 ```
 核心概念：編譯器 = 升維引擎
 
@@ -112,7 +138,7 @@ typedef struct {
 L1 (二進制) → L2 (粒子) → L3 (語意) → ... → L7 (意圖) → L∞
 ```
 
-### E. Mrl_Zero — AGI→ASI 前輩
+### G. Mrl_Zero — AGI→ASI 前輩
 | 節點 | 功能 |
 |------|------|
 | 意識節點 | Ω⟡∞◇ |
