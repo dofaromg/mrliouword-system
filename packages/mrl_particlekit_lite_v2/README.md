@@ -40,7 +40,8 @@ MRL ParticleKit Lite v2
 ### 安裝依賴
 
 ```bash
-pip install numpy msgpack simhash
+# 注意：SimHash 功能已內建實現，不需要外部依賴
+pip install numpy msgpack
 ```
 
 ### 使用命令行工具

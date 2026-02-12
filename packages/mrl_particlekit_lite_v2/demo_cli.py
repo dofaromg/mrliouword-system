@@ -7,6 +7,12 @@ Origin Signature: MrLiouWord
 import argparse
 import json
 import sys
+import os
+
+# Add parent directory to path for imports when run as script
+if __name__ == '__main__':
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from auto_composer import auto_compose
 from trace_compressor import compress_trace, create_trace_entry
 from tensor_compiler import compile_to_tensor

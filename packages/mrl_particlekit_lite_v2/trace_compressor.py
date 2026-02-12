@@ -69,8 +69,8 @@ def decompress_trace(
 def create_trace_entry(
     step: int,
     operation: str,
-    input_data: any,
-    output_data: any,
+    input_data,
+    output_data,
     layer: str = "L7"
 ) -> Dict:
     """

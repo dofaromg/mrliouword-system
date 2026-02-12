@@ -99,7 +99,7 @@
       "layer": "L3",
       "category": "compression",
       "params": {
-        "algorithm": "zstd",
+        "algorithm": "zlib",
         "compression_level": 9,
         "preserve_order": true
       },

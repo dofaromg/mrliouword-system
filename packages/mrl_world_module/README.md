@@ -250,23 +250,22 @@ def main():
     print("=== 686 粒子自洽生成系統 ===\n")
     
     # 生成所有粒子
-    generator = Particle686Generator()
-    particles = generator.generate_all_particles()
+    particles = Particle686Generator.generate_all_particles()
     
     print(f"✓ 生成了 {len(particles)} 個粒子")
     
     # 驗證一致性
-    is_consistent = generator.verify_consistency(particles)
+    is_consistent = Particle686Generator.verify_consistency(particles)
     print(f"✓ 一致性驗證: {'通過' if is_consistent else '失敗'}")
     
     # 統計信息
     print("\n=== 層級分布 ===")
-    for layer, count in generator.LAYER_DISTRIBUTION.items():
-        freq = generator.LAYER_FREQUENCIES[layer]
+    for layer, count in Particle686Generator.LAYER_DISTRIBUTION.items():
+        freq = Particle686Generator.LAYER_FREQUENCIES[layer]
         print(f"{layer}: {count:3d} 粒子 ({count/686*100:5.2f}%) @ {freq:6.2f} Hz")
     
     print("\n=== 地理分布 ===")
-    for region, count in generator.GEOGRAPHIC_DISTRIBUTION.items():
+    for region, count in Particle686Generator.GEOGRAPHIC_DISTRIBUTION.items():
         print(f"{region:20s}: {count:3d} 粒子 ({count/686*100:5.2f}%)")
     
     # 顯示示例粒子
