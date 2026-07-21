@@ -1,9 +1,9 @@
 """
 基礎 Agent 類別
 """
-import asyncio
+
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Optional, AsyncGenerator
+from typing import Any, AsyncGenerator, Callable, Dict, Optional
 from datetime import datetime
 
 from .config import config
@@ -31,33 +31,38 @@ class BaseAgent(ABC):
         self.logger.info(f"初始化 {name} Agent")
 
     @abstractmethod
-    async def execute(self, *args, **kwargs) -> AsyncGenerator[str, None]:
+    def execute(self, *args: Any, **kwargs: Any) -> AsyncGenerator[str, None]:
         """
         執行 Agent 任務
-        
+
         子類必須實現此方法
-        
+
         Yields:
             執行過程中的消息
         """
-        pass
+        raise NotImplementedError
 
-    async def _track_execution(self, func, *args, **kwargs):
+    async def _track_execution(
+        self,
+        func: Callable[..., AsyncGenerator[str, None]],
+        *args: Any,
+        **kwargs: Any,
+    ) -> AsyncGenerator[str, None]:
         """追蹤執行時間和指標"""
         start_time = datetime.now()
-        
+
         try:
             metrics_collector.record_request()
-            result = await func(*args, **kwargs)
-            
+            async for message in func(*args, **kwargs):
+                yield message
+
             # 計算執行時間
             duration = (datetime.now() - start_time).total_seconds()
             metrics_collector.record_execution_time(duration)
             metrics_collector.record_agent_call(self.name, duration)
-            
+
             self.logger.info(f"{self.name} 執行完成，耗時: {duration:.2f}秒")
-            return result
-            
+
         except Exception as e:
             metrics_collector.record_error()
             self.logger.error(f"{self.name} 執行錯誤: {str(e)}")
