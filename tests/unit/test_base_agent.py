@@ -19,8 +19,9 @@ class FailingDummyAgent(BaseAgent):
     """會失敗的測試用 Agent"""
 
     async def execute(self, *args, **kwargs):
+        if False:
+            yield "unreachable"
         raise ValueError("boom")
-        yield "unreachable"
 
 
 def test_base_agent_creation():
