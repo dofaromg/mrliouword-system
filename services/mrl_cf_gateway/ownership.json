@@ -1,0 +1,22 @@
+{
+  "label": "Mrlludflare",
+  "system_name": "MRL Cloudflare Gateway",
+  "owner": {
+    "name": "Mr. Liou",
+    "github": "dofaromg",
+    "origin_signature": "MrLiouWord"
+  },
+  "repository": "dofaromg/mrliouword-system",
+  "branch": "feature/mrl-cf-mother-gateway-v0.1",
+  "runtime": "cloudflare-workers",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "status": "owner-claimed",
+  "scope": [
+    "gateway",
+    "routing",
+    "authentication",
+    "runtime-forwarding"
+  ]
+}
