@@ -1,22 +1,29 @@
 {
-  "label": "Mrlludflare",
-  "system_name": "MRL Cloudflare Gateway",
+  "project_name": "Mrliouword",
+  "system_name": "Mrliouword Mother Gateway",
   "owner": {
-    "name": "Mr. Liou",
+    "name": "Mrliouword",
     "github": "dofaromg",
     "origin_signature": "MrLiouWord"
   },
+  "labels": [
+    "Mrliouword",
+    "MrliouAI",
+    "MrliouhanAI",
+    "FlowAgent"
+  ],
   "repository": "dofaromg/mrliouword-system",
   "branch": "feature/mrl-cf-mother-gateway-v0.1",
-  "runtime": "cloudflare-workers",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "runtime": "self-hosted",
+  "external_cloud_required": false,
   "status": "owner-claimed",
   "scope": [
     "gateway",
     "routing",
     "authentication",
-    "runtime-forwarding"
+    "runtime-forwarding",
+    "memory-routing",
+    "tool-routing",
+    "service-registry"
   ]
 }
