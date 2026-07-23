@@ -9,7 +9,7 @@ required by MRL_SystemA_ParticleLayer while preserving unknown source fields in
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields
 from typing import Any, Dict, List, Mapping, Optional
 from uuid import uuid4
 
@@ -36,7 +36,7 @@ class UnifiedParticle:
     def __post_init__(self) -> None:
         if self.origin_signature != ORIGIN_SIGNATURE:
             raise ValueError(
-                "LAW-0 violation: origin_signature must be MrLiouWord"
+                f"LAW-0 violation: origin_signature must be {ORIGIN_SIGNATURE!r}"
             )
         if not self.source:
             raise ValueError("source must not be empty")
@@ -48,7 +48,14 @@ class UnifiedParticle:
 
     @classmethod
     def from_dict(cls, value: Mapping[str, Any]) -> "UnifiedParticle":
-        return cls(**dict(value))
+        known = {f.name for f in fields(cls)}
+        kwargs: Dict[str, Any] = {k: v for k, v in value.items() if k in known}
+        extra = {k: v for k, v in value.items() if k not in known}
+        if extra:
+            state: Dict[str, Any] = dict(kwargs.get("state") or {})
+            state.update(extra)
+            kwargs["state"] = state
+        return cls(**kwargs)
 
     def to_mrl(self) -> Dict[str, Any]:
         """Return an MRL-compatible mapping without introducing a new schema."""

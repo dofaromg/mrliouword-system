@@ -21,7 +21,10 @@ from abc import ABC
 from copy import deepcopy
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Type
 
-from unified_particle import ORIGIN_SIGNATURE, UnifiedParticle
+try:
+    from .unified_particle import ORIGIN_SIGNATURE, UnifiedParticle
+except ImportError:  # running as top-level module (directory on sys.path)
+    from unified_particle import ORIGIN_SIGNATURE, UnifiedParticle  # type: ignore[no-redef]
 
 
 class ParticleLayerError(RuntimeError):
@@ -77,12 +80,16 @@ class SystemAAdapter(ABC):
 
     def from_unified(self, particle: UnifiedParticle) -> Dict[str, Any]:
         if particle.origin_signature != ORIGIN_SIGNATURE:
-            raise OriginSignatureError("LAW-0 violation")
+            raise OriginSignatureError(
+                f"LAW-0 violation: expected {ORIGIN_SIGNATURE!r}, "
+                f"got {particle.origin_signature!r}"
+            )
         if particle.source != self.table_name:
             raise ParticleLayerError(
                 f"source mismatch: expected {self.table_name}, "
                 f"got {particle.source}"
             )
+        self._validate_row_origin(particle.state)
         return deepcopy(dict(particle.state))
 
     def roundtrip_check(self, row: Mapping[str, Any]) -> bool:
@@ -167,7 +174,11 @@ def verify_law2(
     rows: Iterable[Mapping[str, Any]],
     sample_n: int = 100,
 ) -> Dict[str, Any]:
-    """Verify up to sample_n rows and return a deployment-friendly report."""
+    """Verify up to sample_n rows and return a deployment-friendly report.
+
+    Raises:
+        RoundtripViolation: If any row fails the reversible round-trip check.
+    """
     checked = 0
     failures: List[Any] = []
     for row in rows:
