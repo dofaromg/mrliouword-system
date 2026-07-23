@@ -1,0 +1,10 @@
+name = "mrl-cf-mother-gateway"
+main = "src/index.ts"
+compatibility_date = "2026-07-23"
+workers_dev = true
+
+[vars]
+MRL_UPSTREAM_URL = ""
+
+[observability]
+enabled = true
