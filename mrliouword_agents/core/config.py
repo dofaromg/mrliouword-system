@@ -67,7 +67,7 @@ class MrliouwordConfig(PydanticBaseSettings):
 
     # 背景記憶同步
     background_memory_enabled: bool = Field(
-        default=True, validation_alias="BACKGROUND_MEMORY_ENABLED"
+        default=False, validation_alias="BACKGROUND_MEMORY_ENABLED"
     )
     runtime_memory_dir: str = Field(
         default="data/runtime_memory", validation_alias="RUNTIME_MEMORY_DIR"

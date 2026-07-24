@@ -57,6 +57,13 @@ Documentation = "https://github.com/dofaromg/mrliouword-system/docs"
 Repository = "https://github.com/dofaromg/mrliouword-system"
 "Bug Tracker" = "https://github.com/dofaromg/mrliouword-system/issues"
 
+[tool.setuptools]
+py-modules = ["particle_globe"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+mrliouword_agents = ["core/particle_dict.json"]
+
 [tool.black]
 line-length = 88
 target-version = ['py38', 'py39', 'py310', 'py311']
