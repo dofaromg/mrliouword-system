@@ -76,6 +76,7 @@ async def test_data_analyzer_syncs_background_memory(tmp_path, sample_csv_file, 
 
     monkeypatch.setattr(config, "runtime_memory_dir", str(tmp_path / "runtime_memory"))
     monkeypatch.setattr(config, "particle_dict_path", str(particle_dict_path))
+    monkeypatch.setattr(config, "background_memory_enabled", True)
 
     analyzer = MrliouwordDataAnalyzer()
     messages = []
