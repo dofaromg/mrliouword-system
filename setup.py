@@ -25,7 +25,7 @@ setup(
     packages=find_packages(exclude=["tests", "tests.*", "examples"]),
     python_requires=">=3.8",
     install_requires=[
-        "anthropic>=0.18.0",
+        
         "pydantic>=2.0.0",
         "pydantic-settings>=2.14.2",
         "pyyaml>=6.0",
@@ -64,7 +64,7 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
     ],
-    keywords="ai agent sdk claude anthropic mrliouword",
+    keywords="ai agent sdk mrliouword",
     project_urls={
         "Documentation": "https://github.com/dofaromg/mrliouword-system/docs",
         "Source": "https://github.com/dofaromg/mrliouword-system",

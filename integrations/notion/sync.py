@@ -7,7 +7,7 @@ Notion Sync - MrLiouWord 粒子系統同步工具
 - 記憶條目 → Notion 頁面
 - 系統狀態 → Notion 儀表板
 
-Author: MR.liou × Claude
+Author: MR.liou
 """
 
 import os

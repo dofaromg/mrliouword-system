@@ -7,7 +7,7 @@ Google Integration - MrLiouWord 粒子系統 Google 整合
 - Google Earth KML 輸出
 - Google Sheets 資料匯出
 
-Author: MR.liou × Claude
+Author: MR.liou
 """
 
 import os
@@ -170,7 +170,7 @@ def main():
         title="對話記錄",
         lat=25.0330,
         lon=121.5654,
-        description="Claude 對話記錄",
+        description="MrLiou AI 對話記錄",
         layer="L5"
     )
     

@@ -48,5 +48,5 @@ def mock_config():
     from mrliouword_agents.core.config import MrliouwordConfig
 
     return MrliouwordConfig(
-        anthropic_api_key="test-key", environment="test", debug=True
+        mrliou_ai_key="test-key", environment="test", debug=True
     )

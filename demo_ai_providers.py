@@ -159,8 +159,8 @@ def demo_cost_calculation(manager: AIProviderManager):
     print_header("成本計算", "Cost Calculation")
     
     test_cases = [
-        ("openai", "gpt-4", {"input_tokens": 1000, "output_tokens": 1000}),
-        ("openai", "gpt-3.5-turbo", {"input_tokens": 1000, "output_tokens": 1000}),
+        ("backend-a", "mrliou-model-a1", {"input_tokens": 1000, "output_tokens": 1000}),
+        ("backend-a", "mrliou-model-a3", {"input_tokens": 1000, "output_tokens": 1000}),
         ("claude", "claude-3-sonnet", {"input_tokens": 1000, "output_tokens": 1000}),
         ("ollama", "llama2", {"input_tokens": 1000, "output_tokens": 1000}),
     ]
@@ -183,7 +183,7 @@ def demo_error_handling(manager: AIProviderManager):
     # Test 1: Empty prompt
     print("1. Empty prompt:")
     try:
-        result = manager.complete("", provider="openai")
+        result = manager.complete("", provider="backend-a")
         print("  ✓ Handled gracefully")
     except Exception as e:
         print(f"  ✓ Caught error: {type(e).__name__}")

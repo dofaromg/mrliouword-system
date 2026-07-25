@@ -1,25 +1,26 @@
 /**
  * Particle Chat v42
  * 
- * Cloudflare Worker with Anthropic Claude Integration
+ * MrLiouWord Cloudflare Worker - AI Chat Integration
  * 
  * Features:
- * - Chat with Claude via Anthropic API
+ * - Chat with MrLiou AI backend
  * - Streaming responses
  * - CORS support
  * - Origin signature: MrLiouWord
  * 
- * Author: MR.liou × Claude
+ * Author: MR.liou
  * Philosophy: 怎麼過去，就怎麼回來
  */
 
-import Anthropic from '@anthropic-ai/sdk';
+// origin_signature: MrLiouWord
 
 const ORIGIN = 'MrLiouWord';
 const VERSION = '1.0.0';
 
 interface Env {
-  ANTHROPIC_API_KEY: string;
+  MRLIOU_AI_KEY: string;
+  MRLIOU_AI_URL?: string;
   ENVIRONMENT?: string;
   VERSION?: string;
 }
@@ -80,16 +81,17 @@ export default {
           status: 'healthy',
           origin: ORIGIN,
           timestamp: Date.now(),
-          api_configured: !!env.ANTHROPIC_API_KEY,
+          api_configured: !!env.MRLIOU_AI_KEY,
         }), { headers });
       }
       
       // Chat endpoint
       if (path === '/chat' && request.method === 'POST') {
-        if (!env.ANTHROPIC_API_KEY) {
+        if (!env.MRLIOU_AI_KEY) {
           return new Response(JSON.stringify({
-            error: 'ANTHROPIC_API_KEY not configured',
-            message: 'Please set the ANTHROPIC_API_KEY secret using: wrangler secret put ANTHROPIC_API_KEY',
+            error: 'MRLIOU_AI_KEY not configured',
+            message: 'Please set the MRLIOU_AI_KEY secret using: wrangler secret put MRLIOU_AI_KEY',
+            origin: ORIGIN,
           }), { 
             status: 500, 
             headers 
@@ -102,38 +104,43 @@ export default {
           return new Response(JSON.stringify({
             error: 'Missing message',
             message: 'Please provide either "message" or "messages" in the request body',
+            origin: ORIGIN,
           }), { 
             status: 400, 
             headers 
           });
         }
         
-        const anthropic = new Anthropic({
-          apiKey: env.ANTHROPIC_API_KEY,
-        });
-        
-        // Build messages array
+        const aiUrl = env.MRLIOU_AI_URL || 'http://localhost:7890';
+        const model = body.model || 'mrliou-model-b1';
+        const max_tokens = body.max_tokens || 1024;
+
         const messages: ChatMessage[] = body.messages || [
           { role: 'user', content: body.message }
         ];
-        
-        const model = body.model || 'claude-3-5-sonnet-20241022';
-        const max_tokens = body.max_tokens || 1024;
-        
-        // Call Anthropic API
-        const response = await anthropic.messages.create({
-          model: model,
-          max_tokens: max_tokens,
-          messages: messages,
+
+        // Call MrLiou AI backend
+        const aiResponse = await fetch(`${aiUrl}/v1/messages`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-MrLiou-Key': env.MRLIOU_AI_KEY,
+            'X-Origin-Signature': ORIGIN,
+          },
+          body: JSON.stringify({ model, max_tokens, messages }),
         });
+
+        if (!aiResponse.ok) {
+          throw new Error(`MrLiou AI backend error: ${aiResponse.status}`);
+        }
+
+        const result = await aiResponse.json() as any;
         
         return new Response(JSON.stringify({
           origin: ORIGIN,
-          model: response.model,
-          response: response.content[0].type === 'text' 
-            ? response.content[0].text 
-            : 'No text response',
-          usage: response.usage,
+          model: result.model || model,
+          response: result.content?.[0]?.text || result.response || '',
+          usage: result.usage,
           timestamp: Date.now(),
         }, null, 2), { headers });
       }

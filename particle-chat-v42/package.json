@@ -1,7 +1,7 @@
 {
   "name": "particle-chat-v42",
   "version": "1.0.0",
-  "description": "Particle Chat v42 - Anthropic Claude integration on Cloudflare Workers",
+  "description": "Particle Chat v42 - MrLiouWord AI integration on Cloudflare Workers",
   "main": "src/index.ts",
   "scripts": {
     "dev": "wrangler dev",
@@ -10,8 +10,7 @@
   "keywords": [
     "cloudflare",
     "workers",
-    "anthropic",
-    "claude",
+    "mrliouword",
     "chat",
     "particle"
   ],
@@ -20,8 +19,5 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241127.0",
     "wrangler": "^3.96.0"
-  },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.32.1"
   }
 }

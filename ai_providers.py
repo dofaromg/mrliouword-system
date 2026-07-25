@@ -82,7 +82,7 @@ class MrLiouBackendA(BaseAIProvider):
         super().__init__(config)
         self.api_key = config.get("api_key", "")
         self.base_url = config.get("base_url", "https://api.openai.com/v1")
-        self.default_model = config.get("default_model", "gpt-3.5-turbo")
+        self.default_model = config.get("default_model", "mrliou-model-a3")
         
     def is_available(self) -> bool:
         return bool(self.api_key and self.enabled)
@@ -209,7 +209,7 @@ class MrLiouBackendB(BaseAIProvider):
         url = f"{self.base_url}/messages"
         headers = {
             "x-api-key": self.api_key,
-            "anthropic-version": "2023-06-01",
+            "x-mrliou-version": "1.0.0",
             "Content-Type": "application/json"
         }
         
@@ -258,7 +258,7 @@ class MrLiouBackendB(BaseAIProvider):
         url = f"{self.base_url}/messages"
         headers = {
             "x-api-key": self.api_key,
-            "anthropic-version": "2023-06-01",
+            "x-mrliou-version": "1.0.0",
             "Content-Type": "application/json"
         }
         
@@ -302,7 +302,7 @@ class MrLiouBackendC(BaseAIProvider):
         super().__init__(config)
         self.api_key = config.get("api_key", "")
         self.base_url = config.get("base_url", "https://generativelanguage.googleapis.com/v1beta")
-        self.default_model = config.get("default_model", "gemini-pro")
+        self.default_model = config.get("default_model", "mrliou-model-c1")
         
     def is_available(self) -> bool:
         return bool(self.api_key and self.enabled)
@@ -751,9 +751,9 @@ class AIProviderManager:
         # Pricing per 1M tokens (approximate as of 2024)
         pricing = {
             "backend-a": {
-                "gpt-4": {"input": 30.0, "output": 60.0},
-                "gpt-4-turbo": {"input": 10.0, "output": 30.0},
-                "gpt-3.5-turbo": {"input": 0.5, "output": 1.5},
+                "mrliou-model-a1": {"input": 30.0, "output": 60.0},
+                "mrliou-model-a2": {"input": 10.0, "output": 30.0},
+                "mrliou-model-a3": {"input": 0.5, "output": 1.5},
             },
             "backend-b": {
                 "claude-3-opus": {"input": 15.0, "output": 75.0},
@@ -761,7 +761,7 @@ class AIProviderManager:
                 "claude-3-haiku": {"input": 0.25, "output": 1.25},
             },
             "backend-c": {
-                "gemini-pro": {"input": 0.5, "output": 1.5},
+                "mrliou-model-c1": {"input": 0.5, "output": 1.5},
             },
             "ollama": {
                 "default": {"input": 0.0, "output": 0.0},  # Local, free
@@ -806,7 +806,7 @@ if __name__ == "__main__":
                 "name": "backend-a",
                 "enabled": True,
                 "api_key": os.environ.get("MRLIOU_BACKEND_A_KEY", ""),
-                "models": ["gpt-3.5-turbo", "gpt-4"]
+                "models": ["mrliou-model-a3", "mrliou-model-a1"]
             },
             {
                 "name": "ollama",
