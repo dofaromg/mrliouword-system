@@ -6,6 +6,15 @@
 
 ---
 
+## 🧭 倉庫主導權定位
+
+- 本倉庫（`dofaromg/mrliouword-system`）是**主體與唯一主版來源**（source of truth）。
+- 外部產品、外部平台產物、第三方導出內容，統一歸入「外部材料區」，不作為主版覆蓋來源。
+- 主導權規範詳見：[REPOSITORY_AUTHORITY.md](./REPOSITORY_AUTHORITY.md)
+- 外部材料分類詳見：[materials/external-products/README.md](./materials/external-products/README.md)
+
+---
+
 ## 🌀 核心理念
 
 ```
