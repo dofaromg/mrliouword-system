@@ -60,6 +60,14 @@ async def test_runtime_memory_persists_records(tmp_path):
     assert records[1]["warehouse_categories"] == ["function"]
 
 
+def test_runtime_memory_initialization_is_lazy_and_uses_packaged_particle_dict(tmp_path):
+    storage_dir = tmp_path / "runtime_memory"
+    memory = ParticleRuntimeMemory(storage_dir=str(storage_dir))
+
+    assert not storage_dir.exists()
+    assert memory.particle_dict_path.exists()
+
+
 @pytest.mark.asyncio
 async def test_data_analyzer_syncs_background_memory(tmp_path, sample_csv_file, monkeypatch):
     """DataAnalyzer 執行時會同步保存背景記憶"""
@@ -68,6 +76,7 @@ async def test_data_analyzer_syncs_background_memory(tmp_path, sample_csv_file, 
 
     monkeypatch.setattr(config, "runtime_memory_dir", str(tmp_path / "runtime_memory"))
     monkeypatch.setattr(config, "particle_dict_path", str(particle_dict_path))
+    monkeypatch.setattr(config, "background_memory_enabled", True)
 
     analyzer = MrliouwordDataAnalyzer()
     messages = []

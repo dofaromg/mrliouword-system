@@ -73,9 +73,10 @@ class ParticleRuntimeMemory:
         particle_dict_path: Optional[str] = None,
     ):
         self.storage_dir = Path(storage_dir or config.runtime_memory_dir)
-        self.storage_dir.mkdir(parents=True, exist_ok=True)
         self.warehouse_dir = self.storage_dir / "particle_warehouse"
         self._warehouse_registry_path = self.warehouse_dir / "registry.json"
+        self._storage_ready = False
+        self._storage_disabled = False
         self.particle_dict_path = Path(
             particle_dict_path or config.particle_dict_path or self._default_particle_dict()
         )
@@ -85,7 +86,25 @@ class ParticleRuntimeMemory:
         self._worker_loop: Optional[asyncio.AbstractEventLoop] = None
 
     def _default_particle_dict(self) -> Path:
-        return Path(__file__).resolve().parents[2] / "core" / "particle_dict.json"
+        packaged_path = Path(__file__).resolve().with_name("particle_dict.json")
+        legacy_path = Path(__file__).resolve().parents[2] / "core" / "particle_dict.json"
+        if packaged_path.exists():
+            return packaged_path
+        return legacy_path
+
+    def _ensure_storage_paths(self) -> bool:
+        if self._storage_disabled:
+            return False
+        if self._storage_ready:
+            return True
+        try:
+            self.storage_dir.mkdir(parents=True, exist_ok=True)
+            self.warehouse_dir.mkdir(parents=True, exist_ok=True)
+            self._storage_ready = True
+            return True
+        except OSError:
+            self._storage_disabled = True
+            return False
 
     def _load_particle_dict(self) -> Dict[str, Any]:
         if not self.particle_dict_path.exists():
@@ -131,12 +150,15 @@ class ParticleRuntimeMemory:
         return registry
 
     def _save_warehouse_registry(self, registry: Dict[str, Any]) -> None:
+        if not self._ensure_storage_paths():
+            return
         registry["updated_at"] = datetime.now().isoformat()
         with open(self._warehouse_registry_path, "w", encoding="utf-8") as file:
             json.dump(registry, file, ensure_ascii=False, indent=2)
 
     def _ensure_warehouse_registry(self) -> None:
-        self.warehouse_dir.mkdir(parents=True, exist_ok=True)
+        if not self._ensure_storage_paths():
+            return
         self._save_warehouse_registry(self._load_warehouse_registry())
 
     def _agent_filename(self, agent_name: str) -> Path:
@@ -318,6 +340,8 @@ class ParticleRuntimeMemory:
     def _persist_warehouse_entries(self, entries: List[Dict[str, Any]]) -> None:
         if not entries:
             return
+        if not self._ensure_storage_paths():
+            return
 
         self._ensure_warehouse_registry()
         registry = self._load_warehouse_registry()
@@ -379,6 +403,8 @@ class ParticleRuntimeMemory:
             try:
                 if record is None:
                     return
+                if not self._ensure_storage_paths():
+                    continue
                 output_file = self._agent_filename(record["agent_name"])
                 with open(output_file, "a", encoding="utf-8") as file:
                     file.write(json.dumps(record, ensure_ascii=False) + "\n")

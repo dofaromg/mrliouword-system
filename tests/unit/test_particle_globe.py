@@ -4,6 +4,8 @@ Tests for ParticleGlobe.
 
 import json
 
+import pytest
+
 from particle_globe import ParticleGlobe
 
 
@@ -118,3 +120,28 @@ def test_export_kml_and_offline_globe(tmp_path):
     assert "<Polygon><outerBoundaryIs><LinearRing>" in kml
     assert "粒子記憶地球儀" in html
     assert json.dumps("P_EXPORT")[1:-1] in html
+
+
+def test_update_structure_rejects_string_points():
+    globe = ParticleGlobe()
+    globe.bind_particle("P_TEXT", 25.0330, 121.5654)
+
+    with pytest.raises(ValueError):
+        globe.update_particle_structure("P_TEXT", points=["25.0330,121.5654"])
+
+
+def test_offline_globe_escapes_case_insensitive_script_payload(tmp_path):
+    globe = ParticleGlobe()
+    globe.bind_particle(
+        "P_SAFE",
+        25.0330,
+        121.5654,
+        data={"payload": "</SCRIPT><script>alert(1)</script>"},
+    )
+    html_path = tmp_path / "safe-globe.html"
+
+    globe.generate_offline_globe(str(html_path))
+    html = html_path.read_text(encoding="utf-8")
+
+    assert "</SCRIPT><script>alert(1)</script>" not in html
+    assert "\\u003c/SCRIPT\\u003e\\u003cscript\\u003ealert(1)\\u003c/script\\u003e" in html

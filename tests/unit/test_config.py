@@ -18,3 +18,4 @@ def test_config_defaults():
     assert config.model == "claude-sonnet-4-20250514"
     assert config.max_tokens == 4096
     assert config.environment == "development"
+    assert config.background_memory_enabled is False

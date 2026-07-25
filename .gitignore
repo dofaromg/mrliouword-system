@@ -31,6 +31,7 @@ clickhouse_credentials*.txt
 
 # Particle system runtime
 particle_memory/
+data/runtime_memory/
 naming_history/
 test_results/
 sync_reports/

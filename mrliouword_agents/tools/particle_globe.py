@@ -118,7 +118,11 @@ class ParticleGlobe:
                 meta=meta,
             )
 
-        if isinstance(point, Sequence) and len(point) >= 2:
+        if (
+            isinstance(point, Sequence)
+            and not isinstance(point, (str, bytes, bytearray))
+            and len(point) >= 2
+        ):
             latitude = float(point[0])
             longitude = float(point[1])
             altitude = float(point[2]) if len(point) > 2 else 0.0
@@ -570,7 +574,14 @@ class ParticleGlobe:
         """生成離線 HTML 地球儀。"""
 
         records = self._select_bindings(particles)
-        payload = json.dumps(records, ensure_ascii=False).replace("</", "<\\/")
+        payload = (
+            json.dumps(records, ensure_ascii=False)
+            .replace("<", "\\u003c")
+            .replace(">", "\\u003e")
+            .replace("&", "\\u0026")
+            .replace("\u2028", "\\u2028")
+            .replace("\u2029", "\\u2029")
+        )
         html = """<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>

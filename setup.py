@@ -23,6 +23,9 @@ setup(
     author_email="contact@mrliou.com",
     url="https://github.com/dofaromg/mrliouword-system",
     packages=find_packages(exclude=["tests", "tests.*", "examples"]),
+    py_modules=["particle_globe"],
+    include_package_data=True,
+    package_data={"mrliouword_agents": ["core/particle_dict.json"]},
     python_requires=">=3.8",
     install_requires=[
         "anthropic>=0.18.0",
