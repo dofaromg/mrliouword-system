@@ -6,7 +6,7 @@ MrLiou AI Supercomputer - FlowCore Loop with Judge Pattern
 HTTP server with AI provider integration, Merkle chain audit trail,
 and cost tracking. Zero external dependencies.
 
-Author: MR.liou & Claude
+Author: MR.liou
 Version: 1.0.0
 Philosophy: 怎麼過去，就怎麼回來 (How you go, so you return)
 """

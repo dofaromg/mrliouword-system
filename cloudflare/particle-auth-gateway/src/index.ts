@@ -9,7 +9,7 @@
  * - ROAO 認知循環
  * - World API (心跳/頻率/波紋)
  * 
- * Author: MR.liou × Claude
+ * Author: MR.liou
  * Philosophy: 怎麼過去，就怎麼回來
  */
 

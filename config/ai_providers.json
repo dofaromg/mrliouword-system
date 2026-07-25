@@ -1,69 +1,68 @@
 {
-  "default_provider": "openai",
+  "default_provider": "backend-a",
   "providers": [
     {
-      "name": "openai",
+      "name": "backend-a",
       "enabled": true,
-      "api_key": "${OPENAI_API_KEY}",
-      "base_url": "https://api.openai.com/v1",
-      "default_model": "gpt-3.5-turbo",
+      "api_key": "${MRLIOU_BACKEND_A_KEY}",
+      "base_url": "${MRLIOU_BACKEND_A_URL}",
+      "default_model": "mrliou-model-a1",
       "models": [
-        "gpt-4",
-        "gpt-4-turbo-preview",
-        "gpt-3.5-turbo"
+        "mrliou-model-a1",
+        "mrliou-model-a2",
+        "mrliou-model-a3"
       ]
     },
     {
-      "name": "claude",
+      "name": "backend-b",
       "enabled": true,
-      "api_key": "${ANTHROPIC_API_KEY}",
-      "base_url": "https://api.anthropic.com/v1",
-      "default_model": "claude-3-sonnet-20240229",
+      "api_key": "${MRLIOU_BACKEND_B_KEY}",
+      "base_url": "${MRLIOU_BACKEND_B_URL}",
+      "default_model": "mrliou-model-b1",
       "models": [
-        "claude-3-opus-20240229",
-        "claude-3-sonnet-20240229",
-        "claude-3-haiku-20240307"
+        "mrliou-model-b1",
+        "mrliou-model-b2",
+        "mrliou-model-b3"
       ]
     },
     {
-      "name": "gemini",
+      "name": "backend-c",
       "enabled": true,
-      "api_key": "${GOOGLE_API_KEY}",
-      "base_url": "https://generativelanguage.googleapis.com/v1beta",
-      "default_model": "gemini-pro",
+      "api_key": "${MRLIOU_BACKEND_C_KEY}",
+      "base_url": "${MRLIOU_BACKEND_C_URL}",
+      "default_model": "mrliou-model-c1",
       "models": [
-        "gemini-pro"
+        "mrliou-model-c1"
       ]
     },
     {
       "name": "ollama",
       "enabled": true,
       "base_url": "http://localhost:11434",
-      "default_model": "llama2",
+      "default_model": "mrliou-local",
       "models": [
-        "llama2",
-        "mistral",
-        "codellama"
+        "mrliou-local",
+        "mrliou-local-code"
       ]
     },
     {
-      "name": "azure",
+      "name": "backend-d",
       "enabled": false,
-      "api_key": "${AZURE_OPENAI_API_KEY}",
-      "endpoint": "${AZURE_OPENAI_ENDPOINT}",
-      "deployment": "${AZURE_OPENAI_DEPLOYMENT}",
+      "api_key": "${MRLIOU_BACKEND_D_KEY}",
+      "endpoint": "${MRLIOU_BACKEND_D_ENDPOINT}",
+      "deployment": "${MRLIOU_BACKEND_D_DEPLOYMENT}",
       "api_version": "2023-05-15",
       "models": [
-        "gpt-4",
-        "gpt-35-turbo"
+        "mrliou-model-d1",
+        "mrliou-model-d2"
       ]
     }
   ],
   "fallback": {
     "enabled": true,
     "order": [
-      "openai",
-      "claude",
+      "backend-a",
+      "backend-b",
       "ollama"
     ]
   }

@@ -3,7 +3,7 @@
  * Origin Signature: MrLiouWord
  *
  * Abstraction layer for AI model backends.
- * Switch via AI_PROVIDER env var: 'gemini' | 'local' | 'openai' | 'anthropic'
+ * Switch via AI_PROVIDER env var: 'backend-a' | 'backend-b' | 'backend-c' | 'local'
  */
 
 export interface ModelInfo {

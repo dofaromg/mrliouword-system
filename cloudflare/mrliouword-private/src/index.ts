@@ -9,7 +9,7 @@
  * - 吸收系統 (Absorb) - 外部素材粒子化
  * - 掃描系統 (Scanner) - 3D 掃描處理
  * 
- * Author: MR.liou × Claude
+ * Author: MR.liou
  * Version: 2.0.0
  */
 

@@ -5,7 +5,7 @@ MrLiou AI Supercomputer - Integration Test Suite
 
 Comprehensive tests for multi-provider AI support.
 
-Author: MR.liou & Claude
+Author: MR.liou
 Version: 1.0.0
 """
 
@@ -94,11 +94,11 @@ def test_ai_providers_import(results: TestResult):
         # Check for required classes
         required_classes = [
             'BaseAIProvider',
-            'OpenAIProvider',
-            'ClaudeProvider',
-            'GeminiProvider',
+            'MrLiouBackendA',
+            'MrLiouBackendB',
+            'MrLiouBackendC',
             'OllamaProvider',
-            'AzureOpenAIProvider',
+            'MrLiouBackendD',
             'AIProviderManager'
         ]
         
@@ -220,14 +220,14 @@ def test_cost_calculation(results: TestResult):
         
         manager = AIProviderManager()
         
-        # Test OpenAI GPT-3.5 cost
+        # Test Backend-A cost
         usage = {
             "input_tokens": 1000,
             "output_tokens": 1000,
             "total_tokens": 2000
         }
         
-        cost = manager.calculate_cost(usage, "gpt-3.5-turbo", "openai")
+        cost = manager.calculate_cost(usage, "mrliou-model-a3", "backend-a")
         
         # Expected: (1000/1M * 0.5) + (1000/1M * 1.5) = 0.0005 + 0.0015 = 0.002
         expected_cost = 0.002

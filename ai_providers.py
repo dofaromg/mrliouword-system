@@ -75,8 +75,8 @@ class BaseAIProvider(ABC):
         }
 
 
-class OpenAIProvider(BaseAIProvider):
-    """OpenAI GPT provider implementation."""
+class MrLiouBackendA(BaseAIProvider):
+    """MrLiou Backend-A provider implementation."""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -88,9 +88,9 @@ class OpenAIProvider(BaseAIProvider):
         return bool(self.api_key and self.enabled)
     
     def complete(self, prompt: str, **kwargs) -> Dict[str, Any]:
-        """OpenAI chat completion."""
+        """MrLiou Backend-A chat completion."""
         if not self.is_available():
-            raise ValueError(f"OpenAI provider not available")
+            raise ValueError(f"MrLiou Backend-A not available")
         
         model = kwargs.get("model", self.default_model)
         max_tokens = kwargs.get("max_tokens", 1000)
@@ -131,14 +131,14 @@ class OpenAIProvider(BaseAIProvider):
             }
         except urllib.error.HTTPError as e:
             error_body = e.read().decode('utf-8')
-            raise RuntimeError(f"OpenAI API error: {e.code} - {error_body}")
+            raise RuntimeError(f"MrLiou Backend-A error: {e.code} - {error_body}")
         except Exception as e:
-            raise RuntimeError(f"OpenAI request failed: {str(e)}")
+            raise RuntimeError(f"MrLiou Backend-A request failed: {str(e)}")
     
     def stream(self, prompt: str, **kwargs) -> Iterator[str]:
-        """OpenAI streaming completion."""
+        """MrLiou Backend-A streaming completion."""
         if not self.is_available():
-            raise ValueError(f"OpenAI provider not available")
+            raise ValueError(f"MrLiou Backend-A not available")
         
         model = kwargs.get("model", self.default_model)
         max_tokens = kwargs.get("max_tokens", 1000)
@@ -182,11 +182,11 @@ class OpenAIProvider(BaseAIProvider):
                         except json.JSONDecodeError:
                             continue
         except Exception as e:
-            raise RuntimeError(f"OpenAI streaming failed: {str(e)}")
+            raise RuntimeError(f"MrLiou Backend-A streaming failed: {str(e)}")
 
 
-class ClaudeProvider(BaseAIProvider):
-    """Anthropic Claude provider implementation."""
+class MrLiouBackendB(BaseAIProvider):
+    """MrLiou Backend-B provider implementation."""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -198,9 +198,9 @@ class ClaudeProvider(BaseAIProvider):
         return bool(self.api_key and self.enabled)
     
     def complete(self, prompt: str, **kwargs) -> Dict[str, Any]:
-        """Claude messages completion."""
+        """MrLiou Backend-B completion."""
         if not self.is_available():
-            raise ValueError(f"Claude provider not available")
+            raise ValueError(f"MrLiou Backend-B not available")
         
         model = kwargs.get("model", self.default_model)
         max_tokens = kwargs.get("max_tokens", 1000)
@@ -242,14 +242,14 @@ class ClaudeProvider(BaseAIProvider):
             }
         except urllib.error.HTTPError as e:
             error_body = e.read().decode('utf-8')
-            raise RuntimeError(f"Claude API error: {e.code} - {error_body}")
+            raise RuntimeError(f"MrLiou Backend-B error: {e.code} - {error_body}")
         except Exception as e:
-            raise RuntimeError(f"Claude request failed: {str(e)}")
+            raise RuntimeError(f"MrLiou Backend-B request failed: {str(e)}")
     
     def stream(self, prompt: str, **kwargs) -> Iterator[str]:
-        """Claude streaming completion."""
+        """MrLiou Backend-B streaming completion."""
         if not self.is_available():
-            raise ValueError(f"Claude provider not available")
+            raise ValueError(f"MrLiou Backend-B not available")
         
         model = kwargs.get("model", self.default_model)
         max_tokens = kwargs.get("max_tokens", 1000)
@@ -292,11 +292,11 @@ class ClaudeProvider(BaseAIProvider):
                         except json.JSONDecodeError:
                             continue
         except Exception as e:
-            raise RuntimeError(f"Claude streaming failed: {str(e)}")
+            raise RuntimeError(f"MrLiou Backend-B streaming failed: {str(e)}")
 
 
-class GeminiProvider(BaseAIProvider):
-    """Google Gemini provider implementation."""
+class MrLiouBackendC(BaseAIProvider):
+    """MrLiou Backend-C provider implementation."""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -308,9 +308,9 @@ class GeminiProvider(BaseAIProvider):
         return bool(self.api_key and self.enabled)
     
     def complete(self, prompt: str, **kwargs) -> Dict[str, Any]:
-        """Gemini generateContent completion."""
+        """MrLiou Backend-C completion."""
         if not self.is_available():
-            raise ValueError(f"Gemini provider not available")
+            raise ValueError(f"MrLiou Backend-C not available")
         
         model = kwargs.get("model", self.default_model)
         max_tokens = kwargs.get("max_tokens", 1000)
@@ -341,7 +341,7 @@ class GeminiProvider(BaseAIProvider):
                 result = json.loads(response.read().decode('utf-8'))
             
             text = result["candidates"][0]["content"]["parts"][0]["text"]
-            # Gemini doesn't always provide token counts
+            # Backend-C doesn't always provide token counts
             usage_metadata = result.get("usageMetadata", {})
             
             return {
@@ -355,14 +355,14 @@ class GeminiProvider(BaseAIProvider):
             }
         except urllib.error.HTTPError as e:
             error_body = e.read().decode('utf-8')
-            raise RuntimeError(f"Gemini API error: {e.code} - {error_body}")
+            raise RuntimeError(f"MrLiou Backend-C error: {e.code} - {error_body}")
         except Exception as e:
-            raise RuntimeError(f"Gemini request failed: {str(e)}")
+            raise RuntimeError(f"MrLiou Backend-C request failed: {str(e)}")
     
     def stream(self, prompt: str, **kwargs) -> Iterator[str]:
-        """Gemini streaming completion."""
+        """MrLiou Backend-C streaming completion."""
         if not self.is_available():
-            raise ValueError(f"Gemini provider not available")
+            raise ValueError(f"MrLiou Backend-C not available")
         
         model = kwargs.get("model", self.default_model)
         max_tokens = kwargs.get("max_tokens", 1000)
@@ -403,7 +403,7 @@ class GeminiProvider(BaseAIProvider):
                         except json.JSONDecodeError:
                             continue
         except Exception as e:
-            raise RuntimeError(f"Gemini streaming failed: {str(e)}")
+            raise RuntimeError(f"MrLiou Backend-C streaming failed: {str(e)}")
 
 
 class OllamaProvider(BaseAIProvider):
@@ -519,8 +519,8 @@ class OllamaProvider(BaseAIProvider):
             raise RuntimeError(f"Ollama streaming failed: {str(e)}")
 
 
-class AzureOpenAIProvider(BaseAIProvider):
-    """Azure OpenAI provider implementation."""
+class MrLiouBackendD(BaseAIProvider):
+    """MrLiou Backend-D provider implementation."""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
@@ -533,9 +533,9 @@ class AzureOpenAIProvider(BaseAIProvider):
         return bool(self.api_key and self.endpoint and self.deployment and self.enabled)
     
     def complete(self, prompt: str, **kwargs) -> Dict[str, Any]:
-        """Azure OpenAI chat completion."""
+        """MrLiou Backend-D chat completion."""
         if not self.is_available():
-            raise ValueError(f"Azure OpenAI provider not available")
+            raise ValueError(f"MrLiou Backend-D not available")
         
         max_tokens = kwargs.get("max_tokens", 1000)
         temperature = kwargs.get("temperature", 0.7)
@@ -574,14 +574,14 @@ class AzureOpenAIProvider(BaseAIProvider):
             }
         except urllib.error.HTTPError as e:
             error_body = e.read().decode('utf-8')
-            raise RuntimeError(f"Azure OpenAI API error: {e.code} - {error_body}")
+            raise RuntimeError(f"MrLiou Backend-D error: {e.code} - {error_body}")
         except Exception as e:
-            raise RuntimeError(f"Azure OpenAI request failed: {str(e)}")
+            raise RuntimeError(f"MrLiou Backend-D request failed: {str(e)}")
     
     def stream(self, prompt: str, **kwargs) -> Iterator[str]:
-        """Azure OpenAI streaming completion."""
+        """MrLiou Backend-D streaming completion."""
         if not self.is_available():
-            raise ValueError(f"Azure OpenAI provider not available")
+            raise ValueError(f"MrLiou Backend-D not available")
         
         max_tokens = kwargs.get("max_tokens", 1000)
         temperature = kwargs.get("temperature", 0.7)
@@ -623,7 +623,7 @@ class AzureOpenAIProvider(BaseAIProvider):
                         except json.JSONDecodeError:
                             continue
         except Exception as e:
-            raise RuntimeError(f"Azure OpenAI streaming failed: {str(e)}")
+            raise RuntimeError(f"MrLiou Backend-D streaming failed: {str(e)}")
 
 
 class AIProviderManager:
@@ -664,7 +664,7 @@ class AIProviderManager:
         self.fallback_order = fallback_config.get("order", [])
         
         # Set default provider
-        self.default_provider = self.config.get("default_provider", "openai")
+        self.default_provider = self.config.get("default_provider", "backend-a")
     
     def _substitute_env_vars(self, obj):
         """Recursively substitute environment variables in config."""
@@ -688,11 +688,11 @@ class AIProviderManager:
         provider_name = config.get("name", "").lower()
         
         provider_classes = {
-            "openai": OpenAIProvider,
-            "claude": ClaudeProvider,
-            "gemini": GeminiProvider,
+            "backend-a": MrLiouBackendA,
+            "backend-b": MrLiouBackendB,
+            "backend-c": MrLiouBackendC,
             "ollama": OllamaProvider,
-            "azure": AzureOpenAIProvider
+            "backend-d": MrLiouBackendD
         }
         
         provider_class = provider_classes.get(provider_name)
@@ -750,23 +750,23 @@ class AIProviderManager:
         """
         # Pricing per 1M tokens (approximate as of 2024)
         pricing = {
-            "openai": {
+            "backend-a": {
                 "gpt-4": {"input": 30.0, "output": 60.0},
                 "gpt-4-turbo": {"input": 10.0, "output": 30.0},
                 "gpt-3.5-turbo": {"input": 0.5, "output": 1.5},
             },
-            "claude": {
+            "backend-b": {
                 "claude-3-opus": {"input": 15.0, "output": 75.0},
                 "claude-3-sonnet": {"input": 3.0, "output": 15.0},
                 "claude-3-haiku": {"input": 0.25, "output": 1.25},
             },
-            "gemini": {
+            "backend-c": {
                 "gemini-pro": {"input": 0.5, "output": 1.5},
             },
             "ollama": {
                 "default": {"input": 0.0, "output": 0.0},  # Local, free
             },
-            "azure": {
+            "backend-d": {
                 "default": {"input": 10.0, "output": 30.0},  # Varies by deployment
             }
         }
@@ -800,12 +800,12 @@ if __name__ == "__main__":
     
     # Create test config
     test_config = {
-        "default_provider": "openai",
+        "default_provider": "backend-a",
         "providers": [
             {
-                "name": "openai",
+                "name": "backend-a",
                 "enabled": True,
-                "api_key": os.environ.get("OPENAI_API_KEY", ""),
+                "api_key": os.environ.get("MRLIOU_BACKEND_A_KEY", ""),
                 "models": ["gpt-3.5-turbo", "gpt-4"]
             },
             {
@@ -817,7 +817,7 @@ if __name__ == "__main__":
         ],
         "fallback": {
             "enabled": True,
-            "order": ["openai", "ollama"]
+            "order": ["backend-a", "ollama"]
         }
     }
     
