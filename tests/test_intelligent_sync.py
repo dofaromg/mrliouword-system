@@ -41,6 +41,18 @@ class TestGitHubSearch:
         assert "language:Python" in query or "language:TypeScript" in query
         assert "stars:>=10" in query
         assert "fork:false" in query
+
+    def test_build_query_with_repository_scope(self):
+        """Test query builder with external repository scoping"""
+        engine = GitHubSearchEngine()
+
+        query = engine.build_query(
+            pattern="attention",
+            repositories=["dofaromg/flow-tasks", "dofaromg/flow-tasks-01"],
+        )
+
+        assert "repo:dofaromg/flow-tasks" in query
+        assert "repo:dofaromg/flow-tasks-01" in query
     
     @patch('requests.get')
     def test_search_code(self, mock_get):

@@ -89,6 +89,28 @@ def test_get_particles_in_radius_returns_sorted_matches():
     assert nearby[0]["distance_km"] == 0.0
 
 
+def test_record_element_weight_definition_persists_element_table():
+    globe = ParticleGlobe()
+    globe.bind_particle("P_EARTH", 25.0330, 121.5654)
+
+    definition = globe.record_element_weight_definition(
+        "P_EARTH",
+        "earth",
+        0.4,
+        definition="Layer L4 minimum weight",
+        meta={"source": "daily-sync"},
+    )
+
+    binding = globe.get_binding("P_EARTH")
+    element_table = globe.get_element_table("P_EARTH")
+
+    assert definition["element"] == "earth"
+    assert definition["min_weight"] == 0.4
+    assert element_table["earth"]["definition"] == "Layer L4 minimum weight"
+    assert binding["data"]["element_table"]["earth"]["meta"]["source"] == "daily-sync"
+    assert binding["lifecycle"]["history"][-1]["stage"] == "element.weight.definition"
+
+
 def test_export_kml_and_offline_globe(tmp_path):
     globe = ParticleGlobe()
     globe.bind_particle("P_EXPORT", 25.0330, 121.5654, data={"name": "export"})

@@ -101,6 +101,34 @@ class IntelligentRepoSync:
         self.errors = []
         
         logger.info("IntelligentRepoSync initialized")
+
+    def _configured_repositories(self) -> List[str]:
+        """Load enabled external repositories from config."""
+        github_config = self.config.get('github', {})
+        repositories = github_config.get('repositories', [])
+        scoped_repos: List[str] = []
+
+        for repo in repositories:
+            if isinstance(repo, str):
+                candidate = repo.strip()
+                if candidate:
+                    scoped_repos.append(candidate)
+                continue
+
+            if not isinstance(repo, dict):
+                continue
+            if repo.get('enabled', True) is False:
+                continue
+
+            candidate = (
+                repo.get('full_name')
+                or repo.get('repo')
+                or repo.get('name')
+            )
+            if isinstance(candidate, str) and '/' in candidate and candidate.strip():
+                scoped_repos.append(candidate.strip())
+
+        return scoped_repos
     
     def _load_config(self) -> Dict:
         """Load configuration from YAML file"""
@@ -179,6 +207,8 @@ class IntelligentRepoSync:
         session_id = str(uuid.uuid4())
         timestamp = datetime.now().isoformat()
         
+        self.errors = []
+
         logger.info(f"="*80)
         logger.info(f"Sync Session: {session_id}")
         logger.info(f"Pattern: {pattern}")
@@ -188,12 +218,14 @@ class IntelligentRepoSync:
         logger.info("Step 1: Searching GitHub...")
         github_config = self.config.get('github', {})
         max_results = limit or github_config.get('max_results', 30)
+        repositories = self._configured_repositories()
         
         snippets = self.search_engine.search_code(
             pattern=pattern,
             languages=github_config.get('languages'),
             limit=max_results,
-            min_stars=github_config.get('min_stars', 10)
+            min_stars=github_config.get('min_stars', 10),
+            repositories=repositories,
         )
         
         logger.info(f"Found {len(snippets)} code snippets")
@@ -391,7 +423,8 @@ class IntelligentRepoSync:
             'new_particles': particles_created,
             'merged_particles': particles_merged,
             'extraction_rate': f"{extracted_structures}/{github_results}" if github_results > 0 else "0/0",
-            'success': len(errors or self.errors) == 0
+            'success': len(errors or self.errors) == 0,
+            'repositories_scoped': self._configured_repositories(),
         }
         
         return SyncReport(
@@ -410,7 +443,7 @@ class IntelligentRepoSync:
     
     def _save_report(self, report: SyncReport):
         """Save sync report"""
-        reports_dir = './sync_reports'
+        reports_dir = self.config.get('reporting', {}).get('output_dir', './sync_reports')
         os.makedirs(reports_dir, exist_ok=True)
         
         report_file = os.path.join(

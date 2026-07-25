@@ -85,7 +85,8 @@ class GitHubSearchEngine:
         pattern: str,
         languages: Optional[List[str]] = None,
         min_stars: int = 10,
-        exclude_forks: bool = True
+        exclude_forks: bool = True,
+        repositories: Optional[List[str]] = None,
     ) -> str:
         """
         Build semantic GitHub search query
@@ -104,6 +105,13 @@ class GitHubSearchEngine:
         if languages:
             lang_queries = ' OR '.join([f'language:{lang}' for lang in languages])
             query_parts.append(f'({lang_queries})')
+
+        if repositories:
+            repo_queries = ' OR '.join(
+                [f'repo:{repo}' for repo in repositories if isinstance(repo, str) and repo.strip()]
+            )
+            if repo_queries:
+                query_parts.append(f'({repo_queries})')
         
         if min_stars > 0:
             query_parts.append(f'stars:>={min_stars}')
@@ -118,7 +126,8 @@ class GitHubSearchEngine:
         pattern: str,
         languages: Optional[List[str]] = None,
         limit: int = 30,
-        min_stars: int = 10
+        min_stars: int = 10,
+        repositories: Optional[List[str]] = None,
     ) -> List[CodeSnippet]:
         """
         Search GitHub code globally
@@ -132,7 +141,12 @@ class GitHubSearchEngine:
         Returns:
             List of code snippets
         """
-        query = self.build_query(pattern, languages, min_stars)
+        query = self.build_query(
+            pattern,
+            languages,
+            min_stars,
+            repositories=repositories,
+        )
         logger.info(f"Searching GitHub: {query}")
         
         self._check_rate_limit()

@@ -108,7 +108,7 @@ similar = manager.find_similar(query_code, threshold=3)
 ## GitHub Actions
 
 自動化同步工作流程：
-- 每週一自動執行
+- 每日自動執行
 - 支援手動觸發
 - 可指定模式或倉庫過濾
 - 自動提交粒子記憶

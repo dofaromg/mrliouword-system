@@ -29,6 +29,13 @@ github:
     enabled: true
     max_requests_per_minute: 30
 
+  # External repositories to absorb daily
+  repositories:
+    - full_name: "dofaromg/flow-tasks"
+      enabled: true
+    - full_name: "dofaromg/flow-tasks-01"
+      enabled: true
+
 # Patterns to Search
 patterns:
   # Attention mechanisms
@@ -169,8 +176,8 @@ schedule:
   # Enable scheduled sync
   enabled: true
   
-  # Cron expression (weekly on Monday at 00:00 UTC)
-  cron: "0 0 * * 1"
+  # Cron expression (daily at 00:00 UTC)
+  cron: "0 0 * * *"
   
   # Timezone
   timezone: "UTC"

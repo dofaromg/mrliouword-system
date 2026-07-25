@@ -32,6 +32,10 @@ class ParticleRuntimeMemory:
             "label": "AI 初始權重 Token",
             "description": "保存人工智能初始權重與 token 種子資料",
         },
+        "element_weight_definition": {
+            "label": "元素表最小權重定義",
+            "description": "保存粒子法典地球儀元素表的最小權重定義紀錄",
+        },
     }
 
     WAREHOUSE_FIELD_ALIASES = {
@@ -51,6 +55,11 @@ class ParticleRuntimeMemory:
         "weight_tokens": "ai_weight_token",
         "initial_weight_token": "ai_weight_token",
         "initial_weight_tokens": "ai_weight_token",
+        "element_weight_definition": "element_weight_definition",
+        "element_weight_definitions": "element_weight_definition",
+        "min_weight_definition": "element_weight_definition",
+        "min_weight_definitions": "element_weight_definition",
+        "element_table": "element_weight_definition",
     }
 
     DEFAULT_EVENT_PARTICLES = {
@@ -258,14 +267,29 @@ class ParticleRuntimeMemory:
                 if field_name not in source:
                     continue
                 raw_items = source[field_name]
-                if isinstance(raw_items, list):
-                    items = raw_items
-                else:
-                    items = [raw_items]
+                items = self._normalize_warehouse_items(category, raw_items)
                 bucket = groups.setdefault(category, [])
                 for item in items:
                     bucket.append(self._json_safe(item))
         return groups
+
+    @staticmethod
+    def _normalize_warehouse_items(category: str, raw_items: Any) -> List[Any]:
+        if isinstance(raw_items, list):
+            return raw_items
+        if category == "element_weight_definition" and isinstance(raw_items, dict):
+            if "element" in raw_items or "min_weight" in raw_items:
+                return [raw_items]
+            items = []
+            for element, definition in raw_items.items():
+                if isinstance(definition, dict):
+                    payload = dict(definition)
+                    payload.setdefault("element", element)
+                    items.append(payload)
+                else:
+                    items.append({"element": element, "min_weight": definition})
+            return items
+        return [raw_items]
 
     def _build_warehouse_entries(
         self,

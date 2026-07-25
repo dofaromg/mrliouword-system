@@ -1,9 +1,9 @@
 name: Intelligent GitHub Sync
 
 on:
-  # Weekly schedule (Monday at 00:00 UTC)
+  # Daily schedule (00:00 UTC)
   schedule:
-    - cron: '0 0 * * 1'
+    - cron: '0 0 * * *'
   
   # Manual trigger with pattern selection
   workflow_dispatch:

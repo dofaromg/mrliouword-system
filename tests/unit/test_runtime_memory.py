@@ -134,3 +134,36 @@ async def test_runtime_memory_persists_independent_particle_warehouse(tmp_path):
     assert registry["categories"]["function"]["records"] == 1
     assert registry["categories"]["api"]["records"] == 1
     assert registry["categories"]["ai_weight_token"]["records"] == 1
+
+
+@pytest.mark.asyncio
+async def test_runtime_memory_records_element_weight_definitions(tmp_path):
+    particle_dict_path = tmp_path / "particle_dict.json"
+    _write_particle_dict(particle_dict_path)
+
+    memory = ParticleRuntimeMemory(
+        storage_dir=str(tmp_path / "runtime_memory"),
+        particle_dict_path=str(particle_dict_path),
+    )
+
+    await memory.record(
+        "DataAnalyzer",
+        "execution.message",
+        {
+            "element_table": {
+                "earth": {
+                    "min_weight": 0.4,
+                    "definition": "Layer L4 minimum weight",
+                }
+            }
+        },
+    )
+    await memory.flush()
+
+    definition_records = memory.read_warehouse_records("element_weight_definition")
+    assert definition_records[0]["record"]["element"] == "earth"
+    assert definition_records[0]["record"]["min_weight"] == 0.4
+
+    registry_path = tmp_path / "runtime_memory" / "particle_warehouse" / "registry.json"
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    assert registry["categories"]["element_weight_definition"]["records"] == 1

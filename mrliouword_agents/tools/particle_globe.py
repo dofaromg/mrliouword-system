@@ -78,6 +78,14 @@ class ParticleGlobe:
         self._particle_index: Dict[str, List[str]] = {}
 
     @staticmethod
+    def _normalize_binding_data(data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        normalized = dict(data or {})
+        element_table = normalized.get("element_table")
+        if not isinstance(element_table, dict):
+            normalized["element_table"] = {}
+        return normalized
+
+    @staticmethod
     def _validate_coordinate(latitude: float, longitude: float, altitude: float) -> None:
         if latitude is None or longitude is None:
             raise ValueError("latitude and longitude are required")
@@ -184,7 +192,7 @@ class ParticleGlobe:
             latitude=point.latitude,
             longitude=point.longitude,
             altitude=point.altitude,
-            data=dict(data or {}),
+            data=self._normalize_binding_data(data),
             trajectory=[point],
             structure={
                 "points": [point.to_dict()],
@@ -203,6 +211,53 @@ class ParticleGlobe:
         self._bindings[bind_id] = binding
         self._particle_index.setdefault(particle_id, []).append(bind_id)
         return bind_id
+
+    def record_element_weight_definition(
+        self,
+        particle_id: str,
+        element: str,
+        min_weight: float,
+        definition: Optional[str] = None,
+        meta: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """記錄元素表最小權重定義。"""
+
+        if not isinstance(element, str) or not element.strip():
+            raise ValueError("element is required")
+        if not isinstance(min_weight, (int, float)) or min_weight < 0:
+            raise ValueError("min_weight must be a non-negative number")
+
+        binding = self._latest_binding(particle_id)
+        binding.data = self._normalize_binding_data(binding.data)
+        timestamp = _utc_now()
+        entry = {
+            "element": element.strip(),
+            "min_weight": float(min_weight),
+            "definition": definition,
+            "meta": dict(meta or {}),
+            "updated_at": timestamp,
+        }
+        binding.data["element_table"][entry["element"]] = entry
+
+        history = binding.lifecycle.setdefault("history", [])
+        history.append(
+            LifecycleEvent(
+                stage="element.weight.definition",
+                metrics={
+                    "element": entry["element"],
+                    "min_weight": entry["min_weight"],
+                },
+            ).to_dict()
+        )
+        binding.lifecycle["updated_at"] = timestamp
+        return entry
+
+    def get_element_table(self, particle_id: str) -> Dict[str, Dict[str, Any]]:
+        """取得粒子元素表。"""
+
+        binding = self._latest_binding(particle_id)
+        binding.data = self._normalize_binding_data(binding.data)
+        return dict(binding.data["element_table"])
 
     def get_binding(self, particle_id: str) -> Optional[Dict[str, Any]]:
         """取得粒子最新綁定。"""
@@ -298,6 +353,7 @@ class ParticleGlobe:
 
         if data:
             binding.data.update(data)
+            binding.data = self._normalize_binding_data(binding.data)
 
         binding.geometry_type = self._detect_geometry_type(structure, binding.trajectory)
         binding.lifecycle["updated_at"] = _utc_now()

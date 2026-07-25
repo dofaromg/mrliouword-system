@@ -137,7 +137,7 @@ naming:
 
 ## 🔄 GitHub Actions
 
-Runs automatically every Monday at 00:00 UTC. Manual trigger available:
+Runs automatically every day at 00:00 UTC. Manual trigger available:
 
 1. Go to **Actions** → **Intelligent GitHub Sync**
 2. Click **Run workflow**
