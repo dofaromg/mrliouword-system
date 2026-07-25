@@ -37,7 +37,7 @@ class MrliouwordConfig(PydanticBaseSettings):
     environment: str = Field(default="development", validation_alias="ENVIRONMENT")
     debug: bool = Field(default=False, validation_alias="DEBUG")
 
-    # Anthropic API
+    # MrLiou AI API
     anthropic_api_key: str = Field(default="", validation_alias="ANTHROPIC_API_KEY")
     model: str = Field(default="claude-sonnet-4-20250514", validation_alias="MODEL")
     max_tokens: int = Field(default=4096, validation_alias="MAX_TOKENS")

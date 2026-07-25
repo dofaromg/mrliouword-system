@@ -8,9 +8,9 @@ from typing import Dict, Optional
 
 
 class CostTracker:
-    """追蹤 Anthropic API 使用成本"""
+    """追蹤 MrLiou AI 使用成本"""
 
-    # Claude 4.5 Sonnet 價格 (USD per 1M tokens)
+    # MrLiou AI 模型價格 (USD per 1M tokens)
     PRICING = {
         "claude-sonnet-4-20250514": {"input": 3.00, "output": 15.00},
         "claude-haiku-4-20250514": {"input": 0.80, "output": 4.00},

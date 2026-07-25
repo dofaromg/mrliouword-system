@@ -4,9 +4,9 @@ MrLiou AI Supercomputer - Multi-Provider AI Abstraction Layer
 ================================================================
 
 Zero external dependencies implementation using pure Python standard library.
-Supports OpenAI, Claude, Gemini, Ollama, and Azure OpenAI providers.
+Multi-backend AI integration layer.
 
-Author: MR.liou & Claude
+Author: MR.liou
 Version: 1.0.0
 Philosophy: 怎麼過去，就怎麼回來 (How you go, so you return)
 """

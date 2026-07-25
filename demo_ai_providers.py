@@ -6,7 +6,7 @@ MrLiou AI Supercomputer - Interactive Demo Script
 Demonstrates all AI provider features with live testing.
 展示所有 AI 提供者功能，並進行即時測試。
 
-Author: MR.liou & Claude
+Author: MR.liou
 Version: 1.0.0
 """
 

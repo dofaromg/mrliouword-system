@@ -35,7 +35,7 @@ class MrliouwordCodeReviewer(BaseAgent):
         
         yield f"📖 讀取程式碼中..."
         
-        # 這裡應該調用 Claude API 進行實際審查
+        # 這裡應該調用 MrLiou AI API 進行實際審查
         # 目前為示範實作
         yield f"✓ 程式碼載入完成"
         yield f"🔎 開始{'嚴格' if strict_mode else '標準'}審查..."

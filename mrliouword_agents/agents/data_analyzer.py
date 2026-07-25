@@ -35,7 +35,7 @@ class MrliouwordDataAnalyzer(BaseAgent):
         
         yield f"📊 載入數據中..."
         
-        # 這裡應該調用 Claude API 進行實際分析
+        # 這裡應該調用 MrLiou AI API 進行實際分析
         # 目前為示範實作
         yield f"✓ 數據載入完成"
         yield f"📈 開始{'完整' if full_analysis else '快速'}分析..."
