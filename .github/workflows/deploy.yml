@@ -1,4 +1,4 @@
-name: Deploy MrLiouWord System
+name: Deploy MRL System and MrliouAI
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
       - name: Install Wrangler
         run: npm install -g wrangler
       
-      - name: Deploy mrliouword-private
+      - name: Deploy MRL System Core
         working-directory: cloudflare/mrliouword-private
         run: |
           npm install
@@ -75,7 +75,7 @@ jobs:
           echo "Last updated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> docs/STATUS.md
           echo "" >> docs/STATUS.md
           echo "## Deployed Components" >> docs/STATUS.md
-          echo "- mrliouword-private: ✅" >> docs/STATUS.md
+          echo "- MRL_System_Core: ✅" >> docs/STATUS.md
           echo "- particle-auth-gateway: ✅" >> docs/STATUS.md
       
       - name: Commit docs
