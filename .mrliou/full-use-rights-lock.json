@@ -1,0 +1,95 @@
+{
+  "schema": "MrLiou.FullUseRightsLock.v1",
+  "status": "stable_locked_candidate",
+  "effective_at": "2026-08-03T14:54:00+08:00",
+  "rights_holder": {
+    "canonical_name": "Mr.liou",
+    "public_attribution": "Mrlious",
+    "github_identity": "dofaromg",
+    "origin_signature": "MrLiouWord"
+  },
+  "scope": {
+    "source_of_truth": "dofaromg/mrliouword-system",
+    "applies_to": [
+      "main branch",
+      "all current and future branches",
+      "mirrors and organization projections",
+      "external platform projections",
+      "AI-assisted implementations",
+      "domains and deployments",
+      "packages, releases, exports and generated artifacts"
+    ]
+  },
+  "full_use_rights": {
+    "holder": "Mr.liou",
+    "rights": [
+      "access",
+      "run",
+      "execute",
+      "copy",
+      "download",
+      "export",
+      "archive",
+      "restore",
+      "modify",
+      "adapt",
+      "fork",
+      "merge",
+      "deploy",
+      "host",
+      "publish",
+      "distribute",
+      "license",
+      "commercial_use",
+      "migrate_between_platforms",
+      "remove_from_platform",
+      "revoke_delegated_access",
+      "approve_or_reject_derivatives"
+    ],
+    "exclusive_final_exercise_and_adjudication": "Mr.liou",
+    "branch_delegation_does_not_transfer_rights": true,
+    "platform_execution_does_not_transfer_rights": true,
+    "hosting_does_not_transfer_rights": true,
+    "billing_does_not_transfer_rights": true,
+    "ai_generation_does_not_transfer_rights": true
+  },
+  "provider_rule": {
+    "allowed_roles": [
+      "tool",
+      "execution_platform",
+      "hosting_provider",
+      "billing_provider",
+      "projection",
+      "implementation_assistant"
+    ],
+    "provider_may_not_silently_replace_rights_holder": true,
+    "provider_may_not_silently_narrow_internal_canonical_use_rights": true,
+    "external_contract_or_legal_limits_must_be_explicitly_recorded": true
+  },
+  "mobius_return_requirement": {
+    "export_path_required": true,
+    "return_to_motherbody_required": true,
+    "rollback_or_reconstruction_path_required": true,
+    "platform_lock_in_without_recorded_consent_forbidden": true
+  },
+  "external_policy_evidence": [
+    {
+      "provider": "Manus",
+      "source": "Manus Help Center: Do I own the assets generated via Manus?",
+      "retrieved_at": "2026-08-03",
+      "summary": "The user owns content created with Manus and may use outputs for personal or commercial purposes, subject to applicable law and third-party rights.",
+      "status": "DOCUMENTED_PROVIDER_POLICY"
+    }
+  ],
+  "limits": {
+    "third_party_components_remain_subject_to_their_licenses": true,
+    "applicable_law_and_valid_contracts_apply": true,
+    "this_lock_is_internal_canonical_governance_and_not_a_substitute_for_legal_advice": true
+  },
+  "change_control": {
+    "approval_required": "Mr.liou",
+    "silent_override_forbidden": true,
+    "history_append_only": true,
+    "migration_record_required": true
+  }
+}
