@@ -1,9 +1,10 @@
-name: MrLiou Authority Guard
+name: MrLiou Authority and Möbius Closure Guard
 
 on:
   pull_request:
   push:
-    branches: [main]
+    branches:
+      - '**'
 
 permissions:
   contents: read
@@ -17,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify immutable authority and changed-file provenance
+      - name: Verify immutable authority, branch rights, closure and provenance
         shell: bash
         run: |
           set -euo pipefail
@@ -48,23 +49,67 @@ jobs:
           else:
               try:
                   lock = json.loads(lock_path.read_text(encoding='utf-8'))
+                  authority = lock.get('canonical_authority') or {}
+                  origin = lock.get('origin') or {}
+                  scope = lock.get('scope') or {}
+                  rights = lock.get('exclusive_rights') or {}
+                  delegation = lock.get('branch_delegation') or {}
+                  closure = lock.get('mobius_closure_law') or {}
+                  change = lock.get('change_control') or {}
+
                   checks = {
-                      'canonical_authority.name': (lock.get('canonical_authority') or {}).get('name'),
-                      'canonical_authority.public_name': (lock.get('canonical_authority') or {}).get('public_name'),
-                      'canonical_authority.github_identity': (lock.get('canonical_authority') or {}).get('github_identity'),
-                      'origin.signature': (lock.get('origin') or {}).get('signature'),
-                      'origin.source_of_truth': (lock.get('origin') or {}).get('source_of_truth'),
+                      'schema': lock.get('schema'),
+                      'canonical_authority.name': authority.get('name'),
+                      'canonical_authority.public_name': authority.get('public_name'),
+                      'canonical_authority.github_identity': authority.get('github_identity'),
+                      'canonical_authority.exclusive_exercise_right': authority.get('exclusive_exercise_right'),
+                      'canonical_authority.exclusive_adjudication_right': authority.get('exclusive_adjudication_right'),
+                      'origin.signature': origin.get('signature'),
+                      'origin.source_of_truth': origin.get('source_of_truth'),
+                      'scope.all_current_and_future_branches': scope.get('all_current_and_future_branches'),
+                      'exclusive_rights.rights_holder': rights.get('rights_holder'),
+                      'branch_delegation.final_approver': delegation.get('final_approver'),
+                      'branch_delegation.delegation_transfers_authority': delegation.get('delegation_transfers_authority'),
+                      'mobius_closure_law.name': closure.get('name'),
+                      'change_control.approval_required': change.get('approval_required'),
+                      'change_control.closure_and_reverse_path_required': change.get('closure_and_reverse_path_required'),
                   }
                   expected = {
+                      'schema': 'MrLiou.EqualityAuthorityLock.v2',
                       'canonical_authority.name': 'Mr.liou',
                       'canonical_authority.public_name': 'Mrlious',
                       'canonical_authority.github_identity': 'dofaromg',
+                      'canonical_authority.exclusive_exercise_right': True,
+                      'canonical_authority.exclusive_adjudication_right': True,
                       'origin.signature': 'MrLiouWord',
                       'origin.source_of_truth': 'dofaromg/mrliouword-system',
+                      'scope.all_current_and_future_branches': True,
+                      'exclusive_rights.rights_holder': 'Mr.liou',
+                      'branch_delegation.final_approver': 'Mr.liou',
+                      'branch_delegation.delegation_transfers_authority': False,
+                      'mobius_closure_law.name': 'MRL Möbius Closure and Reversal Law',
+                      'change_control.approval_required': 'Mr.liou',
+                      'change_control.closure_and_reverse_path_required': True,
                   }
                   for key, value in checks.items():
                       if value != expected[key]:
                           errors.append(f'authority lock mismatch: {key}={value!r}, expected {expected[key]!r}')
+
+                  reserved = set(rights.get('reserved_actions') or [])
+                  required_actions = {
+                      'approve', 'reject', 'merge', 'release',
+                      'authorize external use', 'revoke authorization',
+                      'issue final incident ruling', 'close SEV incidents'
+                  }
+                  missing_actions = sorted(required_actions - reserved)
+                  if missing_actions:
+                      errors.append(f'exclusive_rights missing reserved actions: {missing_actions}')
+
+                  invariants = set(closure.get('invariants') or [])
+                  if not any('return path' in item for item in invariants):
+                      errors.append('Möbius closure lacks return-path invariant')
+                  if not closure.get('forward_path') or not closure.get('reverse_path'):
+                      errors.append('Möbius closure requires both forward_path and reverse_path')
               except Exception as exc:
                   errors.append(f'invalid authority lock JSON: {exc}')
 
@@ -77,6 +122,7 @@ jobs:
               ('public_attribution', 'Mrlious'),
               ('origin_signature', 'MrLiouWord'),
               ('source_of_truth', 'dofaromg/mrliouword-system'),
+              ('final_approver', 'Mr.liou'),
           ]
 
           for path in changed:
@@ -107,15 +153,27 @@ jobs:
                       if marker not in text:
                           errors.append(f'{path}: missing incident marker {marker}')
 
+              if str(path).startswith('docs/branches/') and path.suffix.lower() == '.md':
+                  required_branch_markers = [
+                      'final_approver: "Mr.liou"',
+                      'return_path:',
+                      'rollback_path:',
+                  ]
+                  for marker in required_branch_markers:
+                      if marker not in text:
+                          errors.append(f'{path}: missing branch closure marker {marker}')
+
           if errors:
-              print('MRL Authority Guard FAILED:')
+              print('MRL Authority and Möbius Closure Guard FAILED:')
               for error in errors:
                   print(f' - {error}')
               sys.exit(1)
 
-          print('MRL Authority Guard PASS')
+          print('MRL Authority and Möbius Closure Guard PASS')
           print('canonical_authority=Mr.liou')
-          print('public_attribution=Mrlious')
+          print('exclusive_exercise_right=true')
+          print('exclusive_adjudication_right=true')
+          print('all_branches=true')
+          print('mobius_return_path=required')
           print('origin_signature=MrLiouWord')
-          print('source_of_truth=dofaromg/mrliouword-system')
           PY
