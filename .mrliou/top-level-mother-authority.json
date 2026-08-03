@@ -1,0 +1,71 @@
+{
+  "schema": "MrLiou.TopLevelMotherAuthority.v1",
+  "status": "stable_locked_candidate",
+  "effective_at": "2026-08-03T14:45:00+08:00",
+  "canonical_authority": {
+    "human": "Mr.liou",
+    "github_identity": "dofaromg",
+    "public_attribution": "Mrlious",
+    "origin_signature": "MrLiouWord"
+  },
+  "top_level_motherbody": {
+    "name": "dofaromg/MrLiouWord MRL Motherbody",
+    "source_of_truth": "dofaromg/mrliouword-system",
+    "role": "top-level canonical motherbody and authority registry",
+    "applies_to": [
+      "main branch",
+      "all current and future branches",
+      "organization mirrors",
+      "external platform projections",
+      "AI-assisted implementations",
+      "domains and deployments",
+      "packages, releases and generated artifacts"
+    ]
+  },
+  "exclusive_rights": {
+    "rights_holder": "Mr.liou",
+    "exercise_right": "exclusive",
+    "adjudication_right": "exclusive",
+    "final_approval": "Mr.liou",
+    "branch_delegation_transfers_authority": false,
+    "platform_execution_transfers_authority": false,
+    "billing_relationship_transfers_authority": false,
+    "hosting_or_domain_binding_transfers_authority": false
+  },
+  "hierarchy": {
+    "L0_authority": "Mr.liou",
+    "L0_identity_projection": "dofaromg",
+    "origin_signature": "MrLiouWord",
+    "motherbody_repository": "dofaromg/mrliouword-system",
+    "branch_and_mirror_rule": "All branches, mirrors and projections remain subordinate to and reversible toward the motherbody.",
+    "external_provider_rule": "External providers, models and platforms are execution, hosting, billing, tooling or projection roles only."
+  },
+  "required_provenance_fields": [
+    "canonical_authority",
+    "github_identity",
+    "public_attribution",
+    "origin_signature",
+    "source_of_truth",
+    "artifact_owner",
+    "derived_from",
+    "branch_or_projection_role",
+    "provider_role",
+    "return_path",
+    "rollback_path",
+    "final_approver"
+  ],
+  "mobius_closure": {
+    "forward": "motherbody -> authorized branch/projection -> execution/artifact",
+    "reverse": "artifact/evidence -> verification -> rollback/reconstruction -> motherbody -> Mr.liou adjudication",
+    "missing_reverse_path_is_sev1": true,
+    "canonical_publication_without_return_path_forbidden": true
+  },
+  "change_control": {
+    "approval_required": "Mr.liou",
+    "history_append_only": true,
+    "silent_override_forbidden": true,
+    "migration_record_required": true,
+    "incident_record_required_for_authority_drift": true
+  },
+  "notice": "This is the canonical internal MRL authority declaration. External legal rights and remedies require applicable contracts, law and preserved evidence."
+}
