@@ -1,0 +1,121 @@
+name: MrLiou Authority Guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  authority-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify immutable authority and changed-file provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+            if [[ -z "$BASE_SHA" || "$BASE_SHA" =~ ^0+$ ]]; then
+              BASE_SHA="$(git rev-parse HEAD^)"
+            fi
+          fi
+
+          git diff --name-only "$BASE_SHA" "$GITHUB_SHA" > /tmp/mrl_changed_files.txt
+
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import re
+          import sys
+
+          root = pathlib.Path('.')
+          lock_path = root / '.mrliou' / 'equality-authority-lock.json'
+          errors = []
+
+          if not lock_path.exists():
+              errors.append('missing .mrliou/equality-authority-lock.json')
+          else:
+              try:
+                  lock = json.loads(lock_path.read_text(encoding='utf-8'))
+                  checks = {
+                      'canonical_authority.name': (lock.get('canonical_authority') or {}).get('name'),
+                      'canonical_authority.public_name': (lock.get('canonical_authority') or {}).get('public_name'),
+                      'canonical_authority.github_identity': (lock.get('canonical_authority') or {}).get('github_identity'),
+                      'origin.signature': (lock.get('origin') or {}).get('signature'),
+                      'origin.source_of_truth': (lock.get('origin') or {}).get('source_of_truth'),
+                  }
+                  expected = {
+                      'canonical_authority.name': 'Mr.liou',
+                      'canonical_authority.public_name': 'Mrlious',
+                      'canonical_authority.github_identity': 'dofaromg',
+                      'origin.signature': 'MrLiouWord',
+                      'origin.source_of_truth': 'dofaromg/mrliouword-system',
+                  }
+                  for key, value in checks.items():
+                      if value != expected[key]:
+                          errors.append(f'authority lock mismatch: {key}={value!r}, expected {expected[key]!r}')
+              except Exception as exc:
+                  errors.append(f'invalid authority lock JSON: {exc}')
+
+          changed_file = pathlib.Path('/tmp/mrl_changed_files.txt')
+          changed = [pathlib.Path(line.strip()) for line in changed_file.read_text().splitlines() if line.strip()]
+          text_suffixes = {'.md', '.json', '.yaml', '.yml', '.py', '.ts', '.tsx', '.js', '.jsx', '.toml'}
+
+          structured_rules = [
+              ('canonical_authority', 'Mr.liou'),
+              ('public_attribution', 'Mrlious'),
+              ('origin_signature', 'MrLiouWord'),
+              ('source_of_truth', 'dofaromg/mrliouword-system'),
+          ]
+
+          for path in changed:
+              if not path.exists() or path.suffix.lower() not in text_suffixes:
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+
+              for field, expected_value in structured_rules:
+                  pattern = re.compile(
+                      rf'(?im)^\s*["\']?{re.escape(field)}["\']?\s*[:=]\s*["\']?([^"\'\s,#}}]+)'
+                  )
+                  for match in pattern.finditer(text):
+                      value = match.group(1).strip()
+                      if value != expected_value:
+                          errors.append(f'{path}: {field}={value!r}, expected {expected_value!r}')
+
+              if str(path).startswith('docs/incidents/') and path.suffix.lower() == '.md':
+                  required = {
+                      'severity: "SEV-1"',
+                      'canonical_authority: "Mr.liou"',
+                      'public_attribution: "Mrlious"',
+                      'origin_signature: "MrLiouWord"',
+                  }
+                  for marker in required:
+                      if marker not in text:
+                          errors.append(f'{path}: missing incident marker {marker}')
+
+          if errors:
+              print('MRL Authority Guard FAILED:')
+              for error in errors:
+                  print(f' - {error}')
+              sys.exit(1)
+
+          print('MRL Authority Guard PASS')
+          print('canonical_authority=Mr.liou')
+          print('public_attribution=Mrlious')
+          print('origin_signature=MrLiouWord')
+          print('source_of_truth=dofaromg/mrliouword-system')
+          PY
