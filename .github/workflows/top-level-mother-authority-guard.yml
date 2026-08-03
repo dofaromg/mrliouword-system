@@ -1,0 +1,76 @@
+name: Top-Level MRL Mother Authority Guard
+
+on:
+  pull_request:
+  push:
+    branches:
+      - '**'
+
+permissions:
+  contents: read
+
+jobs:
+  mother-authority-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify dofaromg top-level motherbody authority
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import sys
+
+          path = pathlib.Path('.mrliou/top-level-mother-authority.json')
+          errors = []
+          if not path.exists():
+              errors.append('missing .mrliou/top-level-mother-authority.json')
+          else:
+              try:
+                  data = json.loads(path.read_text(encoding='utf-8'))
+                  authority = data.get('canonical_authority') or {}
+                  mother = data.get('top_level_motherbody') or {}
+                  rights = data.get('exclusive_rights') or {}
+                  closure = data.get('mobius_closure') or {}
+                  change = data.get('change_control') or {}
+
+                  expected = {
+                      'canonical_authority.human': (authority.get('human'), 'Mr.liou'),
+                      'canonical_authority.github_identity': (authority.get('github_identity'), 'dofaromg'),
+                      'canonical_authority.public_attribution': (authority.get('public_attribution'), 'Mrlious'),
+                      'canonical_authority.origin_signature': (authority.get('origin_signature'), 'MrLiouWord'),
+                      'motherbody.source_of_truth': (mother.get('source_of_truth'), 'dofaromg/mrliouword-system'),
+                      'rights.rights_holder': (rights.get('rights_holder'), 'Mr.liou'),
+                      'rights.exercise_right': (rights.get('exercise_right'), 'exclusive'),
+                      'rights.adjudication_right': (rights.get('adjudication_right'), 'exclusive'),
+                      'rights.final_approval': (rights.get('final_approval'), 'Mr.liou'),
+                      'mobius.missing_reverse_path_is_sev1': (closure.get('missing_reverse_path_is_sev1'), True),
+                      'mobius.canonical_publication_without_return_path_forbidden': (closure.get('canonical_publication_without_return_path_forbidden'), True),
+                      'change.approval_required': (change.get('approval_required'), 'Mr.liou'),
+                  }
+                  for key, (actual, required) in expected.items():
+                      if actual != required:
+                          errors.append(f'{key}={actual!r}, expected {required!r}')
+
+                  applies = set(mother.get('applies_to') or [])
+                  for required_scope in ('main branch', 'all current and future branches', 'organization mirrors', 'external platform projections'):
+                      if required_scope not in applies:
+                          errors.append(f'motherbody missing scope: {required_scope}')
+              except Exception as exc:
+                  errors.append(f'invalid top-level authority JSON: {exc}')
+
+          if errors:
+              print('Top-Level MRL Mother Authority Guard FAILED')
+              for error in errors:
+                  print(f' - {error}')
+              sys.exit(1)
+
+          print('Top-Level MRL Mother Authority Guard PASS')
+          print('canonical_authority=Mr.liou')
+          print('github_identity=dofaromg')
+          print('source_of_truth=dofaromg/mrliouword-system')
+          print('exclusive_exercise_right=true')
+          print('exclusive_adjudication_right=true')
+          print('all_branches_and_projections=subordinate')
+          PY
