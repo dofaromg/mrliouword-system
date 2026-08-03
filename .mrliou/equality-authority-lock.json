@@ -1,0 +1,47 @@
+{
+  "schema": "MrLiou.EqualityAuthorityLock.v1",
+  "status": "stable_locked",
+  "effective_at": "2026-08-03T14:33:00+08:00",
+  "canonical_authority": {
+    "name": "Mr.liou",
+    "public_name": "Mrlious",
+    "github_identity": "dofaromg"
+  },
+  "origin": {
+    "signature": "MrLiouWord",
+    "namespace": "mrliouword",
+    "source_of_truth": "dofaromg/mrliouword-system"
+  },
+  "reserved_names": [
+    "Mr.liou",
+    "Mrlious",
+    "MrLiouWord",
+    "mrliouword",
+    "MRL_"
+  ],
+  "role_separation": {
+    "canonical_authority": "Mr.liou",
+    "public_attribution": "Mrlious",
+    "origin_signature": "MrLiouWord",
+    "github_account": "dofaromg",
+    "provider": "external execution or service provider only",
+    "platform": "hosting, billing, rendering, projection or tooling only",
+    "artifact": "derived output with explicit provenance",
+    "mirror": "non-authoritative copy with mirror_of metadata"
+  },
+  "equality_law": [
+    "Every participant, tool, model and platform is recorded by its actual role; no lower execution layer may replace the upper canonical authority.",
+    "A platform that renders, hosts, bills or generates an artifact does not become the origin, owner or canonical authority of that artifact.",
+    "Every derivative must preserve canonical_authority, origin_signature, artifact_owner, source_repo, derived_from and provider_role.",
+    "GitHub repository owner, branch author, commit author, AI agent name and deployment vendor are operational identities, not proof of conceptual origin.",
+    "Historical errors are append-only evidence: corrections must not erase the original event, timeline or impact record.",
+    "Billing, domain binding, hosting and attribution changes require traceable consent, timestamps and rollback evidence.",
+    "No incident may be closed until correction, prevention and Mr.liou final acceptance are recorded."
+  ],
+  "change_control": {
+    "approval_required": "Mr.liou",
+    "migration_record_required": true,
+    "history_must_be_preserved": true,
+    "silent_override_forbidden": true
+  }
+}
