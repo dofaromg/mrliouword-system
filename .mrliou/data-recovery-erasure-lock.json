@@ -1,0 +1,63 @@
+{
+  "schema": "MrLiou.DataRecoveryErasureLock.v1",
+  "status": "stable_locked_candidate",
+  "effective_at": "2026-08-03T14:57:00+08:00",
+  "canonical_authority": "Mr.liou",
+  "public_attribution": "Mrlious",
+  "github_identity": "dofaromg",
+  "origin_signature": "MrLiouWord",
+  "source_of_truth": "dofaromg/mrliouword-system",
+  "clean_rebuild_branch": "mrliou/clean-rebuild-data-recovery-2026-08-03",
+  "required_order": [
+    "inventory_external_locations",
+    "export_all_user_data",
+    "preserve_original_timestamps_and_metadata",
+    "hash_and_manifest_exports",
+    "verify_readability_and_completeness",
+    "restore_into_motherbody_or_controlled_storage",
+    "revoke_tokens_integrations_and_domain_bindings",
+    "request_external_deletion",
+    "verify_deletion_or_retention_exception",
+    "preserve_deletion_receipts_and_audit_history"
+  ],
+  "recovery_scope": [
+    "projects",
+    "conversations",
+    "prompts and user inputs",
+    "generated files and build artifacts",
+    "source code",
+    "deployment configuration",
+    "custom domain records",
+    "workspace and membership metadata",
+    "billing invoices and transaction records",
+    "audit logs and timestamps",
+    "API keys and integration references"
+  ],
+  "erasure_rule": {
+    "external_copies_should_be_removed_after_verified_recovery": true,
+    "deletion_before_verified_recovery_forbidden": true,
+    "silent_retention_forbidden": true,
+    "retention_exceptions_must_be_disclosed_in_writing": true,
+    "deletion_receipt_required": true,
+    "backup_retention_window_must_be_recorded": true,
+    "legal_or_security_hold_must_be_recorded": true
+  },
+  "sandbox_principle": {
+    "desired_end_state": "External execution copies cease to be accessible or reusable after recovery and deletion, except for explicitly disclosed legal, security, or backup retention.",
+    "not_equivalent_to_unverifiable_instant_disappearance": true,
+    "verification_required": [
+      "account view",
+      "published URLs",
+      "custom domains",
+      "API access",
+      "shared links",
+      "search indexing",
+      "support confirmation"
+    ]
+  },
+  "change_control": {
+    "final_approver": "Mr.liou",
+    "history_append_only": true,
+    "silent_override_forbidden": true
+  }
+}
