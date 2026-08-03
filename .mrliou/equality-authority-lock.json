@@ -1,16 +1,25 @@
 {
-  "schema": "MrLiou.EqualityAuthorityLock.v1",
+  "schema": "MrLiou.EqualityAuthorityLock.v2",
   "status": "stable_locked",
-  "effective_at": "2026-08-03T14:33:00+08:00",
+  "effective_at": "2026-08-03T14:43:00+08:00",
   "canonical_authority": {
     "name": "Mr.liou",
     "public_name": "Mrlious",
-    "github_identity": "dofaromg"
+    "github_identity": "dofaromg",
+    "exclusive_exercise_right": true,
+    "exclusive_adjudication_right": true
   },
   "origin": {
     "signature": "MrLiouWord",
     "namespace": "mrliouword",
     "source_of_truth": "dofaromg/mrliouword-system"
+  },
+  "scope": {
+    "repository": "dofaromg/mrliouword-system",
+    "main_branch": "main",
+    "all_current_and_future_branches": true,
+    "mirrors_and_projections_must_return_to_origin": true,
+    "derived_artifacts_require_provenance": true
   },
   "reserved_names": [
     "Mr.liou",
@@ -19,6 +28,77 @@
     "mrliouword",
     "MRL_"
   ],
+  "exclusive_rights": {
+    "rights_holder": "Mr.liou",
+    "applies_to": [
+      "main",
+      "all branches",
+      "release and publication",
+      "source-of-truth migration",
+      "domain binding and canonical URL",
+      "licensing and external authorization",
+      "billing consent connected to MRL assets",
+      "incident adjudication and closure"
+    ],
+    "reserved_actions": [
+      "approve",
+      "reject",
+      "merge",
+      "release",
+      "rename canonical entities",
+      "authorize external use",
+      "revoke authorization",
+      "transfer source_of_truth",
+      "bind or unbind official domains",
+      "accept billing obligations",
+      "issue final incident ruling",
+      "close SEV incidents"
+    ],
+    "non_transfer_rule": "Branch operation, implementation, hosting, billing, rendering, contribution or AI assistance does not transfer Mr.liou's exercise or adjudication rights.",
+    "internal_governance_notice": "This file is the canonical internal MRL governance declaration. External legal claims must be supported by applicable law, contracts and preserved evidence."
+  },
+  "branch_delegation": {
+    "allowed": true,
+    "principle": "Branches may be independently managed within a recorded delegated scope.",
+    "delegation_is_revocable": true,
+    "delegation_transfers_authority": false,
+    "delegation_transfers_ownership": false,
+    "required_fields": [
+      "branch_owner_or_steward",
+      "delegated_scope",
+      "source_branch",
+      "derived_from_commit",
+      "return_path",
+      "rollback_path",
+      "final_approver"
+    ],
+    "final_approver": "Mr.liou"
+  },
+  "mobius_closure_law": {
+    "name": "MRL Möbius Closure and Reversal Law",
+    "purpose": "Prevent an outward branch, platform or projection from losing the return path to the origin or reversing the source-authority relationship.",
+    "forward_path": [
+      "Mr.liou canonical definition",
+      "explicit authorization",
+      "branch or external projection",
+      "implementation or execution",
+      "evidence and provenance capture"
+    ],
+    "reverse_path": [
+      "artifact and state verification",
+      "rollback or reconstruction path",
+      "return to source_of_truth",
+      "Mr.liou adjudication",
+      "approved merge, release, correction or rejection"
+    ],
+    "invariants": [
+      "Every outward path must contain a verified return path.",
+      "No branch, mirror, platform, provider, model or generated artifact may become a new root by display, execution, billing or hosting.",
+      "The forward transformation and reverse reconstruction must preserve canonical_authority and origin_signature.",
+      "A branch may govern its local work but cannot make a final canonical ruling.",
+      "Any missing return path is a closure failure and must block canonical publication."
+    ]
+  },
   "role_separation": {
     "canonical_authority": "Mr.liou",
     "public_attribution": "Mrlious",
@@ -27,7 +107,8 @@
     "provider": "external execution or service provider only",
     "platform": "hosting, billing, rendering, projection or tooling only",
     "artifact": "derived output with explicit provenance",
-    "mirror": "non-authoritative copy with mirror_of metadata"
+    "mirror": "non-authoritative copy with mirror_of metadata",
+    "branch_steward": "delegated local manager without final adjudication right"
   },
   "equality_law": [
     "Every participant, tool, model and platform is recorded by its actual role; no lower execution layer may replace the upper canonical authority.",
@@ -42,6 +123,8 @@
     "approval_required": "Mr.liou",
     "migration_record_required": true,
     "history_must_be_preserved": true,
-    "silent_override_forbidden": true
+    "silent_override_forbidden": true,
+    "main_and_branch_authority_must_match": true,
+    "closure_and_reverse_path_required": true
   }
 }
