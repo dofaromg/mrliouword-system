@@ -1,0 +1,80 @@
+schema: MRL_System_MrliouAI_Naming_Registry/v1
+status: canonical
+root_authority: MrLiouWord
+origin_signature: MrLiouWord
+
+canonical:
+  system:
+    id: MRL_System
+    display_name: MRL 系統
+    repository: mrliouword-system
+  product:
+    id: MrliouAI
+    display_name: MrliouAI
+    public_domain: mrliouword.com
+  web_platform:
+    id: MrliouAI_Control_Center
+    display_name: MrliouAI 控制中心
+    service_name: mrliouai-control-center
+  api_gateway:
+    id: MRL_API_Gateway
+    display_name: MRL API Gateway
+    service_name: mrl-api-gateway
+    public_domain: api.mrliouword.com
+  core_service:
+    id: MRL_System_Core
+    display_name: MRL 系統核心服務
+    worker_name: mrl-system-core
+  ai_runtime:
+    id: MrliouAI_Runtime
+    display_name: MrliouAI Runtime
+    service_name: mrliouai-runtime
+    default_endpoint: http://mrl-runtime:7810
+  memory:
+    id: MRL_Memory
+    display_name: MRL 記憶模組
+  files:
+    id: MRL_Files
+    display_name: MRL 檔案模組
+  persona:
+    id: MrliouAI_Persona
+    display_name: MrliouAI 人格模組
+  tools:
+    id: MrliouAI_Tools
+    display_name: MrliouAI 工具模組
+  status:
+    id: MRL_System_Status
+    display_name: MRL 系統狀態
+  audit:
+    id: MRL_Audit
+    display_name: MRL 審計模組
+  identity:
+    id: MRL_Identity
+    display_name: MRL 身分模組
+  storage:
+    id: MRL_Storage
+    display_name: MRL 儲存模組
+
+legacy_aliases:
+  mrliouword-private:
+    canonical: MRL_System_Core
+    disposition: migrate_service_name
+  mrl-silly-api:
+    canonical: MRL_API_Gateway
+    disposition: replace
+  particle-api:
+    canonical: MRL_API_Gateway
+    disposition: quarantine_as_source_name
+  particle-edge:
+    canonical: MRL_System_Core
+    disposition: quarantine_as_source_name
+  FlowAgent:
+    canonical: MrliouAI
+    disposition: preserve_only_in_historical_provenance
+
+rules:
+  - New runtime, API, UI, container, Worker and documentation identifiers MUST use this registry.
+  - Legacy aliases MUST NOT be shown as current product or module names.
+  - Historical evidence MUST retain original text and be marked as provenance; it MUST NOT be silently rewritten.
+  - Cloud provider resource names are implementation identifiers and MUST NOT replace canonical MRL or MrliouAI names.
+  - All public responses MUST include origin_signature=MrLiouWord.

@@ -1,5 +1,5 @@
 /**
- * MrliouWord Private AI Server
+ * MRL System Core Service
  * 
  * Cloudflare Worker 實作
  * 
@@ -309,7 +309,7 @@ export default {
       // 根路徑
       if (path === '/' && req.method === 'GET') {
         return ok({
-          name: 'MrliouWord Private AI Server',
+          name: 'MRL System Core Service',
           version: VERSION,
           philosophy: '怎麼過去，就怎麼回來',
           endpoints: [
@@ -319,7 +319,7 @@ export default {
             'GET /particles', 'GET /frequencies',
             'GET /persona/list', 'POST /persona/register',
             'DELETE /persona/deregister', 'GET /persona/registry',
-            // MRL API Gateway endpoints
+            // MRL_API_Gateway endpoints
             'GET /health',
             'GET /api/mrl/runtimeos/ai/models',
             'POST /api/mrl/runtimeos/ai/generate',
@@ -332,7 +332,7 @@ export default {
       }
 
       // ----------------------------------------------------------------
-      // MRL API Gateway 端點契約
+      // MRL_API_Gateway 端點契約
       // 統一回應格式: { ok, service, version, origin_signature, data?, error? }
       // ----------------------------------------------------------------
 
@@ -340,7 +340,7 @@ export default {
       if (path === '/health' && req.method === 'GET') {
         return ok({
           ok: true,
-          service: 'mrl-silly-api',
+          service: 'MRL_API_Gateway',
           version: VERSION,
           origin_signature: ORIGIN,
           timestamp: Date.now()
