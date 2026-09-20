@@ -18,9 +18,13 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
-SKIP_DIRS = {".git", "node_modules", "__pycache__", "dist", ".mypy_cache"}
+SKIP_DIRS = {".git", "node_modules", "__pycache__", "dist", "build", ".mypy_cache"}
+# 本機建置產物的目錄名帶版本或套件名，無法寫死，改以字尾判斷。
+# 不排除的話，setup.py 產生的 PKG-INFO 會被當成「客戶端參照」，
+# 讓稽核結果隨本機有沒有建置過而變動。
+SKIP_DIR_SUFFIXES = (".egg-info",)
 
 # wrangler 只會讀取這些檔名；帶空格或其他變形的檔案（例如 "wrangler 2.jsonc"）
 # 不會被讀到，這本身就是一個值得回報的發現。
@@ -31,45 +35,109 @@ def walk(root: Path):
     for path in root.rglob("*"):
         if any(part in SKIP_DIRS for part in path.parts):
             continue
+        if any(part.endswith(SKIP_DIR_SUFFIXES) for part in path.parts):
+            continue
         if path.is_file():
             yield path
 
 
 def strip_jsonc(text: str) -> str:
-    """移除 // 行註解，讓 jsonc 能被 json 解析。"""
-    return re.sub(r"^\s*//.*$", "", text, flags=re.M)
+    """把 wrangler 接受的 JSONC 轉成標準 JSON。
+
+    原本只用 `^\s*//.*$` 移除整行註解，於是行末註解、區塊註解、尾隨逗號
+    三種 wrangler 完全接受的寫法都會讓 json.loads 失敗，設定因此被靜默
+    略過——而 deployable_from_repo 正是本報告的主結論。
+
+    逐字元掃描而非正規表示式：必須分辨字串內的 // 與真正的註解。
+    """
+    out = []
+    i, n = 0, len(text)
+    in_string = False
+    while i < n:
+        ch = text[i]
+        if in_string:
+            out.append(ch)
+            if ch == "\\" and i + 1 < n:  # 轉義字元整組保留
+                out.append(text[i + 1])
+                i += 2
+                continue
+            if ch == '"':
+                in_string = False
+            i += 1
+            continue
+        if ch == '"':
+            in_string = True
+            out.append(ch)
+            i += 1
+            continue
+        if ch == "/" and i + 1 < n:
+            if text[i + 1] == "/":
+                while i < n and text[i] != "\n":
+                    i += 1
+                continue
+            if text[i + 1] == "*":
+                end = text.find("*/", i + 2)
+                i = n if end == -1 else end + 2
+                continue
+        if ch in "}]":
+            # 尾隨逗號：回頭把 } 或 ] 之前的逗號丟掉。必須在這個迴圈裡做，
+            # 因為掃完之後字串字面值還在，事後用正規表示式會誤傷
+            # 像 "a,}" 這種字串內容（已有回歸測試覆蓋）。
+            j = len(out) - 1
+            while j >= 0 and out[j].isspace():
+                j -= 1
+            if j >= 0 and out[j] == ",":
+                del out[j]
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
+class WranglerParseError(Exception):
+    """設定檔存在但無法解析。不可靜默吞掉——會讓主結論少算。"""
 
 
 def read_wrangler_name(path: Path) -> Optional[str]:
+    """回傳宣告的 worker 名稱；解析失敗時丟 WranglerParseError。"""
     try:
         text = path.read_text(encoding="utf-8")
-    except (OSError, UnicodeDecodeError):
-        return None
+    except (OSError, UnicodeDecodeError) as exc:
+        raise WranglerParseError(str(exc)) from exc
     if path.suffix == ".toml":
         match = re.search(r'^\s*name\s*=\s*"([^"]+)"', text, re.M)
         return match.group(1) if match else None
     try:
-        return json.loads(strip_jsonc(text)).get("name")
-    except json.JSONDecodeError:
-        return None
+        parsed = json.loads(strip_jsonc(text))
+    except json.JSONDecodeError as exc:
+        raise WranglerParseError(f"{exc.msg} (line {exc.lineno})") from exc
+    return parsed.get("name") if isinstance(parsed, dict) else None
 
 
-def collect_wrangler(root: Path) -> Dict[str, List[Dict[str, Any]]]:
-    """回傳 worker 名稱 -> 宣告它的設定檔清單。"""
+def collect_wrangler(
+    root: Path,
+) -> Tuple[Dict[str, List[Dict[str, Any]]], List[Dict[str, str]]]:
+    """回傳 (worker 名稱 -> 宣告它的設定檔清單, 無法解析的設定檔清單)。"""
     found: Dict[str, List[Dict[str, Any]]] = {}
+    failed: List[Dict[str, str]] = []
     for path in walk(root):
         if not path.name.startswith("wrangler"):
             continue
         if path.suffix not in {".toml", ".jsonc", ".json"}:
             continue
-        name = read_wrangler_name(path)
-        if not name:
-            continue
         rel = path.relative_to(root).as_posix()
+        try:
+            name = read_wrangler_name(path)
+        except WranglerParseError as exc:
+            # 解析不了就明說。靜默略過會讓 deployable_from_repo 少算。
+            failed.append({"path": rel, "reason": str(exc)})
+            continue
+        if not name:
+            failed.append({"path": rel, "reason": "沒有 name 欄位"})
+            continue
         found.setdefault(name, []).append(
             {"path": rel, "readable_by_wrangler": path.name in WRANGLER_CANONICAL}
         )
-    return found
+    return found, failed
 
 
 def collect_config_json(root: Path) -> List[str]:
@@ -135,7 +203,7 @@ def audit(root: Path) -> Dict[str, Any]:
         raise SystemExit("找不到 registry/cloudflare_inventory_*.json，無法稽核")
     inventory = json.loads(inventories[-1].read_text(encoding="utf-8"))
 
-    wrangler = collect_wrangler(root)
+    wrangler, unparsable = collect_wrangler(root)
     config_workers = collect_config_json(root)
     client_refs = collect_client_refs(root)
     aliases = collect_registry(root)
@@ -152,7 +220,9 @@ def audit(root: Path) -> Dict[str, Any]:
                 "in_service_registry": name in config_workers,
                 "client_references": client_refs.get(name, []),
                 "naming": (
-                    {"status": "legacy_alias", **alias} if alias else {"status": "unregistered"}
+                    {"status": "legacy_alias", **alias}
+                    if alias
+                    else {"status": "unregistered"}
                 ),
             }
         )
@@ -175,10 +245,13 @@ def audit(root: Path) -> Dict[str, Any]:
             "deployable_from_repo": sum(w["deployable_from_repo"] for w in workers),
             "in_service_registry": sum(w["in_service_registry"] for w in workers),
             "referenced_by_clients": sum(bool(w["client_references"]) for w in workers),
-            "legacy_alias": sum(w["naming"]["status"] == "legacy_alias" for w in workers),
+            "legacy_alias": sum(
+                w["naming"]["status"] == "legacy_alias" for w in workers
+            ),
         },
         "workers": workers,
         "config_not_readable_by_wrangler": unreadable,
+        "config_parse_failed": unparsable,
         "wrangler_configs_not_in_inventory": orphan_configs,
         "client_refs_not_in_inventory": orphan_refs,
     }
@@ -187,7 +260,11 @@ def audit(root: Path) -> Dict[str, Any]:
 def main() -> int:
     root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd()
     report = audit(root)
-    out = Path(sys.argv[2]) if len(sys.argv) > 2 else root / "registry" / "connection_audit.json"
+    out = (
+        Path(sys.argv[2])
+        if len(sys.argv) > 2
+        else root / "registry" / "connection_audit.json"
+    )
     out.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
@@ -200,10 +277,18 @@ def main() -> int:
     print(f"   服務註冊表    {t['in_service_registry']}")
     print(f"   客戶端有參照  {t['referenced_by_clients']}")
     print(f"   legacy alias  {t['legacy_alias']}")
+    if report["config_parse_failed"]:
+        print(f"   ⚠️  無法解析的 wrangler 設定檔 {len(report['config_parse_failed'])}")
+        for item in report["config_parse_failed"]:
+            print(f"        {item['path']} — {item['reason']}")
     if report["config_not_readable_by_wrangler"]:
-        print(f"   ⚠️  wrangler 讀不到的設定檔 {len(report['config_not_readable_by_wrangler'])}")
+        print(
+            f"   ⚠️  wrangler 讀不到的設定檔 {len(report['config_not_readable_by_wrangler'])}"
+        )
     if report["client_refs_not_in_inventory"]:
-        print(f"   ⚠️  參照了盤點中沒有的 Worker {len(report['client_refs_not_in_inventory'])}")
+        print(
+            f"   ⚠️  參照了盤點中沒有的 Worker {len(report['client_refs_not_in_inventory'])}"
+        )
     print(f"   📝 報告寫入 {out}")
     return 0
 

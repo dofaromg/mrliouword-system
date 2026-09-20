@@ -147,6 +147,16 @@ jobs:
           gap = t["cloud_workers"] - t["deployable_from_repo"]
           print()
           print(f"**{gap} 個雲端 Worker 在倉庫中沒有部署設定。**")
+          # 解析失敗會讓「倉庫可部署」少算，所以放在最前面且獨立列出理由。
+          failed = r.get("config_parse_failed") or []
+          if failed:
+              print()
+              print("### ⚠️ 無法解析的 wrangler 設定檔")
+              print()
+              print("這些設定不會被計入「倉庫可部署」。")
+              print()
+              for item in failed:
+                  print(f"- `{item['path']}` — {item['reason']}")
           for key, label in [
               ("config_not_readable_by_wrangler", "wrangler 讀不到的設定檔"),
               ("wrangler_configs_not_in_inventory", "盤點中沒有、倉庫卻有設定"),
