@@ -42,7 +42,7 @@ def walk(root: Path):
 
 
 def strip_jsonc(text: str) -> str:
-    """把 wrangler 接受的 JSONC 轉成標準 JSON。
+    r"""把 wrangler 接受的 JSONC 轉成標準 JSON。
 
     原本只用 `^\s*//.*$` 移除整行註解，於是行末註解、區塊註解、尾隨逗號
     三種 wrangler 完全接受的寫法都會讓 json.loads 失敗，設定因此被靜默
