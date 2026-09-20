@@ -214,10 +214,23 @@ class IntelligentRepoSync:
         
         for snippet in snippets:
             try:
-                structure = self.logical_extractor.extract(
+                structure = self.logical_extractor.extract_from_code(
                     code=snippet.code,
                     language=snippet.language
                 )
+                
+                # extract_from_code 回傳的 patterns 是 Dict[str, List[str]]，
+                # 鍵為模式名。下游（命名引擎、標籤）需要的是名稱列表，
+                # 在此衍生一次，保留原 dict 不失真。
+                structure['pattern_names'] = list(structure.get('patterns', {}).keys())
+                
+                # extract_from_code 的 reasoning_chains 是 List[List[str]]，
+                # 而命名引擎宣告 List[str] 並直接 ' '.join()。兩邊契約不同，
+                # 在此銜接，不更動任一模組的宣告。
+                structure['reasoning_texts'] = [
+                    ' '.join(chain) if isinstance(chain, (list, tuple)) else str(chain)
+                    for chain in structure.get('reasoning_chains', [])
+                ]
                 
                 # Add source info
                 structure_dict = structure
@@ -291,9 +304,9 @@ class IntelligentRepoSync:
         try:
             for structure in structures:
                 decision = self.naming_engine.generate_name(
-                    patterns=structure.get('patterns', []),
+                    patterns=structure.get('pattern_names', []),
                     concepts=structure.get('concepts', []),
-                    reasoning_chains=structure.get('reasoning_chains', []),
+                    reasoning_chains=structure.get('reasoning_texts', []),
                     source_info=structure.get('source_info')
                 )
                 
@@ -302,6 +315,7 @@ class IntelligentRepoSync:
                 # Add naming to structure
                 structure['particle_name'] = decision.particle_name
                 structure['particle_type'] = decision.particle_type
+                structure['confidence'] = decision.confidence
             
             logger.info(f"Generated {len(naming_decisions)} particle names")
             
@@ -331,7 +345,7 @@ class IntelligentRepoSync:
                     particle_type=structure.get('particle_type', 'fx.logic.general'),
                     content=content,
                     source_info=structure.get('source_info', {}),
-                    tags=structure.get('patterns', []) + structure.get('concepts', []),
+                    tags=structure.get('pattern_names', []) + structure.get('concepts', []),
                     metadata={
                         'confidence': structure.get('confidence', 0.0),
                         'formula': structure.get('formula', '')
