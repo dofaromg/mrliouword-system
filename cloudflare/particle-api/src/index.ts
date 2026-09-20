@@ -45,6 +45,9 @@ const R2_MAX_LIMIT = 1000;
 const R2_INDEX_MAX_OBJECTS = 1000;
 // 寫入以 batch 送出，而非每個物件一次往返。
 const D1_BATCH_SIZE = 100;
+// syncKVtoD1 單次呼叫最多處理的鍵數，理由同 R2_INDEX_MAX_OBJECTS。
+// 每個鍵需要一次 kv.get 加一次 emit，成本比 R2 索引更高。
+const KV_SYNC_MAX_KEYS = 1000;
 
 const EXT_LAYER: Record<string, string> = {
   ".txt": "L1", ".md": "L1", ".json": "L1", ".csv": "L1",
@@ -281,13 +284,15 @@ class Channel {
   async init() {
     await this.db.exec(`
       CREATE TABLE IF NOT EXISTS channel_sync (
-        id TEXT PRIMARY KEY, key TEXT NOT NULL UNIQUE, value TEXT, layer TEXT DEFAULT 'L7',
+        id TEXT PRIMARY KEY, key TEXT NOT NULL, value TEXT, layer TEXT DEFAULT 'L7',
         simhash TEXT, merkle TEXT, prev TEXT, source TEXT DEFAULT 'kv', created_at INTEGER, synced_at INTEGER
       );
       CREATE INDEX IF NOT EXISTS idx_key ON channel_sync(key);
       CREATE INDEX IF NOT EXISTS idx_layer ON channel_sync(layer);
     `);
-    const head = await this.db.prepare("SELECT merkle FROM channel_sync ORDER BY synced_at DESC LIMIT 1").first<{merkle:string}>();
+    // 同一批寫入的 synced_at 會相同（Date.now() 在迴圈內不變），
+    // 只靠 synced_at 排序無法決定鏈尾。rowid 是插入序，即鏈的順序。
+    const head = await this.db.prepare("SELECT merkle FROM channel_sync ORDER BY synced_at DESC, rowid DESC LIMIT 1").first<{merkle:string}>();
     if (head) this.chainHead = head.merkle;
   }
 
@@ -299,7 +304,7 @@ class Channel {
     
     await this.kv.put(key, value);
     await this.kv.put(`channel:meta:${key}`, JSON.stringify(entry));
-    await this.db.prepare(`INSERT OR REPLACE INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
+    await this.db.prepare(`INSERT INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
       .bind(id, key, value, layer, simhash, merkle, this.chainHead, "kv", ts, ts).run();
     
     this.chainHead = merkle;
@@ -311,7 +316,8 @@ class Channel {
     const meta = await this.kv.get(`channel:meta:${key}`);
     if (value) return { value, meta: meta ? JSON.parse(meta) : null };
     
-    const row = await this.db.prepare("SELECT * FROM channel_sync WHERE key = ?").bind(key).first();
+    // 同一個 key 現在可以有多列（鏈是 append-only），取最新的那一列。
+    const row = await this.db.prepare("SELECT * FROM channel_sync WHERE key = ? ORDER BY synced_at DESC, rowid DESC LIMIT 1").bind(key).first();
     if (row) {
       await this.kv.put(key, (row as any).value);
       return { value: (row as any).value, meta: row };
@@ -333,15 +339,31 @@ class Channel {
     return result.results || [];
   }
 
-  async syncKVtoD1(prefix = "") {
+  async syncKVtoD1(prefix = "", startCursor?: string) {
     let synced = 0;
-    const list = await this.kv.list({ prefix, limit: 1000 });
-    for (const k of list.keys) {
-      if (k.name.startsWith("channel:meta:") || k.name.startsWith("mem:") || k.name.startsWith("persona:")) continue;
-      const v = await this.kv.get(k.name);
-      if (v) { await this.emit(k.name, v); synced++; }
-    }
-    return { success: true, synced, timestamp: now() };
+    let scanned = 0;
+    let pages = 0;
+    let cursor: string | undefined = startCursor;
+    let truncated = false;
+
+    // 原本只取第一頁（limit 1000）就回報 success:true，超出的鍵永遠不會被同步，
+    // 而呼叫端拿不到任何續接點，無從得知同步並不完整。改為跨頁掃描並回報 cursor。
+    do {
+      const list = await this.kv.list({ prefix, limit: KV_SYNC_MAX_KEYS, cursor });
+      for (const k of list.keys) {
+        scanned++;
+        if (k.name.startsWith("channel:meta:") || k.name.startsWith("mem:") || k.name.startsWith("persona:")) continue;
+        const v = await this.kv.get(k.name);
+        if (v) { await this.emit(k.name, v); synced++; }
+      }
+      pages++;
+      cursor = list.list_complete ? undefined : list.cursor;
+      truncated = Boolean(cursor);
+    } while (cursor && scanned < KV_SYNC_MAX_KEYS);
+
+    // truncated 為 true 時把 cursor 原樣回傳，呼叫端可再送一次
+    // POST /channel/sync/kv-to-d1 { prefix, cursor } 從中斷處續接。
+    return { success: true, synced, scanned, pages, truncated, cursor: cursor ?? null, timestamp: now() };
   }
 
   async indexR2(prefix = "", startCursor?: string) {
@@ -363,7 +385,7 @@ class Channel {
         const id = uuid(), layer = getLayer(obj.key), simhash = simhash64(obj.key);
         const merkle = await sha256(obj.key + obj.size + simhash + this.chainHead);
         statements.push(
-          this.db.prepare(`INSERT OR REPLACE INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
+          this.db.prepare(`INSERT INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
             .bind(id, obj.key, `[R2:${obj.size}]`, layer, simhash, merkle, this.chainHead, "r2", obj.uploaded.getTime(), Date.now())
         );
         this.chainHead = merkle;
@@ -385,7 +407,7 @@ class Channel {
 
   async verify() {
     const errors: string[] = [];
-    const rows = await this.db.prepare("SELECT * FROM channel_sync ORDER BY synced_at ASC").all();
+    const rows = await this.db.prepare("SELECT * FROM channel_sync ORDER BY synced_at ASC, rowid ASC").all();
     let prev = "0".repeat(64);
     for (const row of (rows.results || []) as any[]) {
       if (row.prev !== prev) errors.push(`Chain broken at ${row.key}`);
@@ -559,7 +581,7 @@ export default {
       if (path === "/channel/sync/kv-to-d1" && request.method === "POST") {
         await channel.init();
         const b = await body() as any;
-        return json(await channel.syncKVtoD1(b.prefix || ""));
+        return json(await channel.syncKVtoD1(b.prefix || "", b.cursor || undefined));
       }
 
       if (path === "/channel/sync/r2-index" && request.method === "POST") {
