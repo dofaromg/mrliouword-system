@@ -95,7 +95,7 @@ class MrLiouWordScanner:
                 content = f.read(1024)  # Check first 1KB
                 return "origin_signature" in content or "MrLiouWord" in content
         except (IOError, OSError) as e:
-            logger.warning(f"Could not read {filepath}: {e}")
+            print(f"Could not read {filepath}: {e}")
             return False
     
     def _calculate_statistics(self) -> None:
