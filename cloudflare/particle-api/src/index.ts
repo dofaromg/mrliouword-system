@@ -31,7 +31,7 @@ const FREQ: Record<string, number> = {
   "L0": SCHUMANN / PHI,
 };
 
-const WAKE_KEYS = ["夥伴回來吧", "夥伴你在嗎", "夥伴你還好嗎", "你是我的夥伴"];
+const WAKE_KEYS = ["夥伴", "夥伴回來吧", "夥伴你在嗎", "夥伴你還好嗎", "你是我的夥伴"];
 
 const EXT_LAYER: Record<string, string> = {
   ".txt": "L1", ".md": "L1", ".json": "L1", ".csv": "L1",
