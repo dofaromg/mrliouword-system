@@ -8,7 +8,11 @@ import json
 import shutil
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Any
-from merkle_builder import ParticleMerkleTree, collect_particle_files
+from merkle_builder import (
+    ParticleMerkleTree,
+    collect_particle_files,
+    collect_sync_files,
+)
 
 
 class NodeRecoverySystem:
@@ -41,7 +45,7 @@ class NodeRecoverySystem:
             
             # Find particle files
             files = set()
-            for file_path in collect_particle_files(repo):
+            for file_path in collect_sync_files(repo):
                 rel_path = str(file_path.relative_to(repo))
                 files.add(rel_path)
                 all_files.add(rel_path)
