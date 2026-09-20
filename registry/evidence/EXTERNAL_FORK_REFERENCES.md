@@ -1,10 +1,10 @@
 ---
-canonical_authority: 各上游作者（非 MRL）
+canonical_authority: Mr.liou   # 指本索引檔本身；被索引的外部上游著作權歸屬見內文表格
 origin_signature: MrLiouWord   # 僅指本索引檔本身由 MRL 側建立
 source_repo: 外部（權利人上傳，非本倉庫產出）
 source_artifact: 見下方逐項
 source_version: 見下方逐項
-derivative_role: mirror
+derivative_role: projection   # 新撰的核對索引，非逐字轉錄
 artifact_owner: 各上游作者
 contributors:
   - Claude（本倉庫：核對授權與作者歸屬，未修改任何上游檔案）

@@ -1,6 +1,6 @@
 ---
 # 十欄來源鏈，依 docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md §4
-canonical_authority: MrLiouWord
+canonical_authority: Mr.liou
 origin_signature: MrLiouWord
 source_repo: 外部（權利人上傳，非本倉庫產出）
 source_artifact: Mrliou_MRL_GitHub_Payment_Provenance_Incident_Record_20260914_v3.docx

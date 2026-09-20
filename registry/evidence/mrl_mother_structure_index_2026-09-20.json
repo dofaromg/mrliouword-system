@@ -1,6 +1,6 @@
 {
   "_provenance": {
-    "canonical_authority": "MRL_MOTHER（外部；本倉庫 canonical_authority: false）",
+    "canonical_authority": "Mr.liou",
     "origin_signature": "MrLiouWord",
     "source_repo": "外部（權利人上傳，非本倉庫產出）",
     "source_artifact": "MRL_MOTHER.md",
@@ -17,7 +17,8 @@
     "source_bytes": 79069,
     "source_lines": 2925,
     "preserved_at": "2026-09-20",
-    "note": ".mrliou/meta.json 宣告 mother_mutation: forbidden，故本檔是『索引』而非母體副本。要逐字比對請以上方 SHA-256 取原檔。"
+    "note": ".mrliou/meta.json 宣告 mother_mutation: forbidden，故本檔是『索引』而非母體副本。要逐字比對請以上方 SHA-256 取原檔。",
+    "canonical_source": "MRL_MOTHER（外部母體）。本倉庫 .mrliou/meta.json 宣告 canonical_authority: false，不得冒充 canonical。"
   },
   "_what_this_measures": "母體定義了多少、這個倉庫實際接上了多少。分母是母體，分子是倉庫。基線一律以 origin/main 的 git tree 為準，不用工作目錄，避免把未提交的檔案算進去。",
   "summary": {
