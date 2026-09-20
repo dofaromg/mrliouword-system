@@ -1,10 +1,11 @@
 """
 API 成本追蹤系統
 """
+
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 
 class CostTracker:
@@ -21,11 +22,12 @@ class CostTracker:
         self.storage_file.parent.mkdir(parents=True, exist_ok=True)
         self.costs = self._load_costs()
 
-    def _load_costs(self) -> Dict:
+    def _load_costs(self) -> Dict[str, Any]:
         """載入成本記錄"""
         if self.storage_file.exists():
             with open(self.storage_file, "r") as f:
-                return json.load(f)
+                loaded: Dict[str, Any] = json.load(f)
+                return loaded
         return {"total_cost": 0, "sessions": []}
 
     def _save_costs(self):
@@ -67,7 +69,7 @@ class CostTracker:
 
     def get_total_cost(self) -> float:
         """獲取總成本"""
-        return self.costs["total_cost"]
+        return float(self.costs["total_cost"])
 
     def get_daily_cost(self, date: Optional[str] = None) -> float:
         """獲取每日成本"""
@@ -77,7 +79,7 @@ class CostTracker:
             for s in self.costs["sessions"]
             if s["timestamp"].startswith(target_date)
         )
-        return daily_cost
+        return float(daily_cost)
 
     def generate_report(self) -> str:
         """生成成本報告"""
