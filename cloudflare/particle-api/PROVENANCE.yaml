@@ -1,0 +1,96 @@
+# ============================================================================
+#  particle-api 來源鏈記錄
+#
+#  依 docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md 第 4 節，
+#  任何使用 MRL / MrLiouWord / 粒子系統定義的產物都必須宣告完整來源鏈；
+#  只有 origin_signature 會被判定為 provenance incomplete。
+#
+#  為什麼是外掛檔而不是寫進原始碼：
+#  wrangler.toml / package.json / tsconfig.json / src/index.ts 是
+#  particle-api-v3.0.0.zip 的逐位元組原樣匯入。命名註冊表規則 3 規定
+#  「歷史證據必須保留原文並標示為 provenance，不得被靜默改寫」，
+#  因此來源鏈記錄在旁，不動匯入內容本身。
+# ============================================================================
+
+canonical_authority: Mr.liou
+origin_signature: MrLiouWord
+source_repo: dofaromg/mrliouword-system
+source_artifact: cloudflare/particle-api/
+source_version: b12b792
+derivative_role: implementation
+artifact_owner: Mr.liou
+verification_status: partial
+
+canonical_identity:
+  module: MRL_API_Gateway
+  registry: registry/MRL_System_MrliouAI_Naming_Registry_v1.yaml
+  cloud_resource_name: particle-api
+  cloud_name_status: legacy_alias
+  disposition: quarantine_as_source_name
+  note: >
+    雲端資源名是實作識別碼，依註冊表規則 4 不得取代 canonical 名稱，
+    也不得依規則 2 被當成現行產品或模組名使用。
+
+imported_verbatim:
+  archive: particle-api-v3.0.0.zip
+  provided_by: Mr.liou
+  import_commit: b12b792
+  files:
+    - path: wrangler.toml
+      sha256: f8c61b83d344e50339a3105461ae6af3a7358a27b952ad1a3ecb9d98c82d7b95
+    - path: package.json
+      sha256: 9f8aa22f9aa9f0964cceec3164c83dc1d08b32168c282df023b6297a63e3cb2e
+    - path: tsconfig.json
+      sha256: 5a52773e3473d9d6498e1f74b8bcecafb0e0806efbaa7bae02f133c88c636660
+    - path: src/index.ts
+      sha256: 1be4cceffd0329093d8ebfd43056c80ff2378aba9ff3623061b077a8c8134b38
+
+superseded:
+  - commit: a94c5d0
+    what: 依 WORKERS_COMPARISON.md 記載的 v2.0.0 重建的推測版本
+    disposition: 保留在 git 歷史中，未從記錄中抹除
+    note: 路由面與綁定皆與真品不同，已由 b12b792 取代
+
+transformation:
+  - commit: df03d69
+    change: WAKE_KEYS 加入單獨的「夥伴」，與倉庫其餘 15 處對齊
+    reason: 同一個喚醒鍵不應在不同 Worker 上有不同行為
+  - commit: e820dcc
+    change: json() / err() 於既有 origin 之外附加 origin_signature
+    reason: 命名註冊表規則 5「所有公開回應必須包含 origin_signature=MrLiouWord」
+    method: 附加而非取代，不影響既有讀 origin 的呼叫端
+  - commit: 7f4f1e2
+    change: R2 列表以附加方式加入分頁；indexR2 跨頁並改用 D1 批次寫入
+    reason: Codex review #73/#74。既有 count/objects 欄位形狀不變，純附加
+  - commit: 7f4f1e2
+    change: 修正 sleep() 恆回 false 與 r2_count 恆為 1 兩個既存缺陷
+    reason: v3.0.0 的正確性 bug，非本次引入，但沒有理由留著
+  - commit: ebdb136
+    change: 移除 channel_sync 的 key UNIQUE 約束並改為純 INSERT
+    reason: >
+      UNIQUE 搭配 INSERT OR REPLACE 會在同一個 key 二次 emit 時刪掉舊列，
+      使 /channel/verify 永久回報斷鏈。改為 append 並取最新列，符合
+      .mrliou/meta.json 的 history_policy: append_only —— 重新 emit 是
+      追加一筆新事實，不是覆蓋舊事實。
+  - commit: ebdb136
+    change: syncKVtoD1 補上跨頁掃描與 cursor
+    reason: 原本只取第一頁卻回報 success:true，與 R2 是同一類缺陷的另一半
+
+contributors:
+  - name: Mr.liou
+    role: canonical_authority｜提供 v3.0.0 原始封存｜定義與裁決
+  - name: Claude Code
+    role: tool｜匯入、驗證、修正實作
+  - name: Codex
+    role: tool｜自動化審查
+
+verification:
+  performed:
+    - 四個匯入檔以 sha256 逐位元組比對封存內容
+    - ambient stub 下 tsc --strict 零錯誤
+    - 分頁以 2350 筆多頁 stub 透過真實 fetch 路由驅動，取回完整無缺漏
+    - 鏈修正以真實 sqlite3 重播，SQL 直接自原始碼抽出
+  not_performed:
+    - 實際部署（Cloudflare dashboard 的 Root directory 尚未設為 cloudflare/particle-api）
+    - 對既有線上資料的行為驗證
+  note: 因此 verification_status 為 partial，不宣稱 verified。
