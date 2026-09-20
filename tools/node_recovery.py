@@ -8,7 +8,7 @@ import json
 import shutil
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Any
-from merkle_builder import ParticleMerkleTree
+from merkle_builder import ParticleMerkleTree, collect_particle_files
 
 
 class NodeRecoverySystem:
@@ -40,18 +40,11 @@ class NodeRecoverySystem:
                 continue
             
             # Find particle files
-            sync_patterns = [
-                'core/particles/**/*.json',
-                'docs/particle-dictionary/**/*.md',
-                '.mrliou/**/*.json'
-            ]
-            
             files = set()
-            for pattern in sync_patterns:
-                for file_path in repo.glob(pattern):
-                    rel_path = str(file_path.relative_to(repo))
-                    files.add(rel_path)
-                    all_files.add(rel_path)
+            for file_path in collect_particle_files(repo):
+                rel_path = str(file_path.relative_to(repo))
+                files.add(rel_path)
+                all_files.add(rel_path)
             
             repo_files[str(repo)] = files
         
@@ -211,15 +204,7 @@ class NodeRecoverySystem:
             if not repo.exists():
                 continue
             
-            sync_patterns = [
-                'core/particles/**/*.json',
-                'docs/particle-dictionary/**/*.md',
-                '.mrliou/**/*.json'
-            ]
-            
-            files = []
-            for pattern in sync_patterns:
-                files.extend(list(repo.glob(pattern)))
+            files = collect_particle_files(repo)
             
             tree = ParticleMerkleTree()
             tree.build_from_particles(files)

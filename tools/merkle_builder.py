@@ -161,6 +161,47 @@ class ParticleMerkleTree:
         return tree
 
 
+# 粒子掃描範圍，對應 .mrliou/sync.config.json 的 sync_paths
+PARTICLE_PATTERNS = [
+    'core/particles/**/*.json',
+    'docs/particle-dictionary/**/*.md',
+    '.mrliou/**/*.json',
+]
+
+# 閉環系統自身的產物，不得納入葉節點：
+#   - merkle.json 會遞迴雜湊自己，一寫入就與記錄不符
+#   - health.json 與各 *_report.json 帶執行時間戳，跨倉庫永遠不可能相等
+# 兩者都會讓 merkle root 無法收斂，也讓跨倉庫一致性驗證永遠失敗。
+GENERATED_EXCLUDES = {
+    '.mrliou/merkle.json',
+    '.mrliou/merkle_new.json',
+    '.mrliou/health.json',
+    '.mrliou/sync_report.json',
+    '.mrliou/verification_report.json',
+    '.mrliou/final_sync_report.json',
+}
+
+
+def collect_particle_files(repo_path: Path) -> List[Path]:
+    """
+    蒐集納入 Merkle tree 的粒子檔案，排除閉環系統自身的產物。
+
+    Args:
+        repo_path: Path to repository root
+
+    Returns:
+        去重並排序後的檔案清單
+    """
+    collected = []
+    for pattern in PARTICLE_PATTERNS:
+        for path in repo_path.glob(pattern):
+            relative = path.relative_to(repo_path).as_posix()
+            if relative in GENERATED_EXCLUDES:
+                continue
+            collected.append(path)
+    return sorted(set(collected))
+
+
 def build_particle_merkle_tree(repo_path: Path, output_path: Path = None) -> ParticleMerkleTree:
     """
     Build Merkle tree for all particles in repository
@@ -172,16 +213,7 @@ def build_particle_merkle_tree(repo_path: Path, output_path: Path = None) -> Par
     Returns:
         ParticleMerkleTree object
     """
-    # Find all particle files
-    particle_patterns = [
-        'core/particles/**/*.json',
-        'docs/particle-dictionary/**/*.md',
-        '.mrliou/**/*.json'
-    ]
-    
-    particle_files = []
-    for pattern in particle_patterns:
-        particle_files.extend(repo_path.glob(pattern))
+    particle_files = collect_particle_files(repo_path)
     
     # Build tree
     tree = ParticleMerkleTree()
