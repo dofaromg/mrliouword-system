@@ -53,7 +53,9 @@ Executing user deploy command: npx wrangler versions upload
 
 **分頁**：`/r2/list` 不帶參數時行為與原本完全相同（limit 100），既有的 `count` 與 `objects` 欄位形狀不變，只額外回 `limit`、`truncated` 與 `cursor`。`truncated` 為 `true` 時把 `cursor` 原樣帶回即可取得下一頁。
 
-`POST /channel/sync/r2-index` 同樣支援續接：它會跨頁掃描，單次最多 50 頁（Worker 有 CPU 時間上限，無界迴圈在大 bucket 上會逾時）。未掃完時回應帶 `truncated: true` 與 `cursor`，把該 `cursor` 放進請求主體再送一次即可從中斷處接續。
+`POST /channel/sync/r2-index` 同樣支援續接：它會跨頁掃描，**單次最多處理 1000 個物件**，寫入以每批 100 筆的 `db.batch()` 送出（單次 Worker 呼叫最多 10 次 D1 往返）。
+
+兩個上限同時存在——Worker 的 CPU 時間，以及 D1 單次 Worker 呼叫內的查詢數。無界迴圈在大 bucket 上會中途失敗**且不回傳續接點**，留下索引到一半的狀態。未掃完時回應帶 `truncated: true` 與 `cursor`，把該 `cursor` 放進請求主體再送一次即可接續。
 
 **Memory**（SimHash64 + Merkle 鏈）
 
