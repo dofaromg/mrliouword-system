@@ -33,6 +33,13 @@ const FREQ: Record<string, number> = {
 
 const WAKE_KEYS = ["夥伴", "夥伴回來吧", "夥伴你在嗎", "夥伴你還好嗎", "你是我的夥伴"];
 
+// R2 分頁參數。預設值 100 與原始實作一致，不改變未帶參數時的行為。
+const R2_DEFAULT_LIMIT = 100;
+const R2_MAX_LIMIT = 1000;
+// indexR2 單次呼叫最多掃描的頁數。Worker 有 CPU 時間上限，
+// 不設界限的迴圈在大 bucket 上會逾時，因此改以回報 cursor 讓呼叫端續接。
+const R2_INDEX_MAX_PAGES = 50;
+
 const EXT_LAYER: Record<string, string> = {
   ".txt": "L1", ".md": "L1", ".json": "L1", ".csv": "L1",
   ".py": "L2", ".ts": "L2", ".js": "L2", ".jsx": "L2", ".tsx": "L2",
@@ -327,18 +334,30 @@ class Channel {
     return { success: true, synced, timestamp: now() };
   }
 
-  async indexR2(prefix = "") {
+  async indexR2(prefix = "", startCursor?: string) {
     let synced = 0;
-    const list = await this.r2.list({ prefix, limit: 1000 });
-    for (const obj of list.objects) {
-      const id = uuid(), layer = getLayer(obj.key), simhash = simhash64(obj.key);
-      const merkle = await sha256(obj.key + obj.size + simhash + this.chainHead);
-      await this.db.prepare(`INSERT OR REPLACE INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
-        .bind(id, obj.key, `[R2:${obj.size}]`, layer, simhash, merkle, this.chainHead, "r2", obj.uploaded.getTime(), Date.now()).run();
-      this.chainHead = merkle;
-      synced++;
-    }
-    return { success: true, synced, timestamp: now() };
+    let cursor: string | undefined = startCursor;
+    let pages = 0;
+    let truncated = false;
+
+    do {
+      const list = await this.r2.list({ prefix, limit: R2_MAX_LIMIT, cursor });
+      for (const obj of list.objects) {
+        const id = uuid(), layer = getLayer(obj.key), simhash = simhash64(obj.key);
+        const merkle = await sha256(obj.key + obj.size + simhash + this.chainHead);
+        await this.db.prepare(`INSERT OR REPLACE INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
+          .bind(id, obj.key, `[R2:${obj.size}]`, layer, simhash, merkle, this.chainHead, "r2", obj.uploaded.getTime(), Date.now()).run();
+        this.chainHead = merkle;
+        synced++;
+      }
+      pages++;
+      cursor = list.truncated ? list.cursor : undefined;
+      truncated = Boolean(cursor);
+    } while (cursor && pages < R2_INDEX_MAX_PAGES);
+
+    // truncated 為 true 時，把 cursor 原樣回傳，呼叫端可再送一次
+    // POST /channel/sync/r2-index { prefix, cursor } 從中斷處續接。
+    return { success: true, synced, pages, truncated, cursor: cursor ?? null, timestamp: now() };
   }
 
   async verify() {
@@ -427,8 +446,21 @@ export default {
 
       // === R2 ===
       if (path === "/r2/list") {
-        const list = await env.PARTICLES.list({ limit: 100 });
-        return json({ count: list.objects.length, objects: list.objects.map(o => ({ key: o.key, size: o.size })) });
+        // 分頁以附加方式提供：不帶參數時行為與原本完全相同（limit 100），
+        // 既有的 count / objects 欄位形狀不變，只多回 truncated 與 cursor。
+        const cursor = url.searchParams.get("cursor") || undefined;
+        const requested = Number(url.searchParams.get("limit"));
+        const limit = Number.isFinite(requested) && requested > 0
+          ? Math.min(Math.floor(requested), R2_MAX_LIMIT)
+          : R2_DEFAULT_LIMIT;
+        const list = await env.PARTICLES.list({ limit, cursor });
+        return json({
+          count: list.objects.length,
+          objects: list.objects.map(o => ({ key: o.key, size: o.size })),
+          limit,
+          truncated: list.truncated,
+          cursor: list.truncated ? (list.cursor ?? null) : null,
+        });
       }
 
       if (path.startsWith("/r2/get/")) {
@@ -502,7 +534,7 @@ export default {
       if (path === "/channel/sync/r2-index" && request.method === "POST") {
         await channel.init();
         const b = await body() as any;
-        return json(await channel.indexR2(b.prefix || ""));
+        return json(await channel.indexR2(b.prefix || "", b.cursor || undefined));
       }
 
       if (path === "/channel/verify") { await channel.init(); return json(await channel.verify()); }

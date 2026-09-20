@@ -47,9 +47,13 @@ Executing user deploy command: npx wrangler versions upload
 
 | 方法 | 路徑 | 說明 |
 |---|---|---|
-| GET | `/r2/list` | 列出粒子（limit 100） |
+| GET | `/r2/list` | 列出粒子。`?limit=`（預設 100，上限 1000）、`?cursor=` 續接 |
 | GET | `/r2/get/:key` | 讀取粒子 |
 | POST | `/r2/put/:key` | 寫入粒子 |
+
+**分頁**：`/r2/list` 不帶參數時行為與原本完全相同（limit 100），既有的 `count` 與 `objects` 欄位形狀不變，只額外回 `limit`、`truncated` 與 `cursor`。`truncated` 為 `true` 時把 `cursor` 原樣帶回即可取得下一頁。
+
+`POST /channel/sync/r2-index` 同樣支援續接：它會跨頁掃描，單次最多 50 頁（Worker 有 CPU 時間上限，無界迴圈在大 bucket 上會逾時）。未掃完時回應帶 `truncated: true` 與 `cursor`，把該 `cursor` 放進請求主體再送一次即可從中斷處接續。
 
 **Memory**（SimHash64 + Merkle 鏈）
 
