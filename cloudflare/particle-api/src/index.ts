@@ -370,8 +370,11 @@ const cors = {
   "Content-Type": "application/json"
 };
 
-const json = (data: any, status = 200) => new Response(JSON.stringify({ ...data, origin: ORIGIN }, null, 2), { status, headers: cors });
-const err = (msg: string, status = 400) => new Response(JSON.stringify({ error: msg, origin: ORIGIN }), { status, headers: cors });
+// 註冊表規則（MRL_System_MrliouAI_Naming_Registry_v1.yaml:80）要求所有公開
+// 回應必須包含 origin_signature。原始碼只發 origin，此處附加
+// origin_signature 而非取代，既滿足規則也不影響既有讀 origin 的呼叫端。
+const json = (data: any, status = 200) => new Response(JSON.stringify({ ...data, origin: ORIGIN, origin_signature: ORIGIN }, null, 2), { status, headers: cors });
+const err = (msg: string, status = 400) => new Response(JSON.stringify({ error: msg, origin: ORIGIN, origin_signature: ORIGIN }), { status, headers: cors });
 
 // ============================================
 // Worker 入口
