@@ -1,0 +1,88 @@
+# 連接對照 — 雲端資源與倉庫的銜接狀態
+
+> origin_signature: MrLiouWord
+> 產生工具：`tools/connection_audit.py`（可重跑，不需網路）
+> 機器可讀報告：`registry/connection_audit.json`
+> 盤點來源：`registry/cloudflare_inventory_2026-03-12.json`
+
+## 這份文件回答什麼
+
+帳號裡既有的東西，有多少在這個倉庫裡真的接上了？
+
+## 現況
+
+| 項目 | 數量 |
+|---|---|
+| 盤點中的雲端 Worker | **140** |
+| 倉庫內可部署（有 wrangler 能讀到的設定） | **3** |
+| 登記在 `cloudflare/config.json` 的服務 | 3 |
+| 被倉庫內客戶端／文件參照 | 4 |
+| 命名註冊表標記為 legacy alias | 2 |
+
+**137 個雲端 Worker 在這個倉庫裡沒有任何原始碼或部署設定。** 它們存在、可能正在運行，但倉庫對它們一無所知——改不了、驗不了、也還原不了。
+
+### 可從倉庫部署的三個
+
+| Worker | 設定檔 | 命名狀態 |
+|---|---|---|
+| `mrliouword-private` | `cloudflare/mrliouword-private/wrangler.jsonc` | legacy alias → `MRL_System_Core`（`migrate_service_name`） |
+| `particle-auth-gateway` | `cloudflare/particle-auth-gateway/wrangler.jsonc` | 未登記於註冊表 |
+| `particle-api` | `cloudflare/particle-api/wrangler.toml` | legacy alias → `MRL_API_Gateway`（`quarantine_as_source_name`） |
+
+## 需要決定的事項
+
+以下是稽核查出、但**需要倉庫擁有者判斷**的項目。我沒有自行處置，因為每一項都牽涉到無法從倉庫驗證的雲端實況。
+
+### 1. `wrangler 2.jsonc` — 綁定錯誤的休眠設定檔
+
+根目錄有一個檔名含空格的 `wrangler 2.jsonc`，宣告 `name: mrliouword-private`。
+
+**wrangler 不會讀取這個檔名**，所以它目前是休眠的——這是運氣好。它與正本 `cloudflare/mrliouword-private/wrangler.jsonc` 的差異不是版本新舊，而是**綁定指向不同的資源**：
+
+| 項目 | `wrangler 2.jsonc` | 正本 |
+|---|---|---|
+| KV id | `8cd99b4a…`（**particle-auth-vault**） | `01275832…`（mrliouword-vault） |
+| D1 | 無 | `mrliouword-db` |
+| R2 | 無 | `mrlioubook` |
+| vars | `"MASTER_KEY": ""` | `ORIGIN`、`VERSION` |
+
+若有人把它改名為 `wrangler.jsonc`，或以 `--config "wrangler 2.jsonc"` 部署，`mrliouword-private` 會被指向**認證用的 KV**，且 `MASTER_KEY` 會被一個空字串的明文 var 覆蓋掉 secret。
+
+依「檔案不要亂刪、留存紀錄」的原則，**我沒有刪除它**，而是記錄在此。處置方式由擁有者決定。
+
+> 附帶一提：2026-01-26 那次 `particle-api` 建置失敗的錯誤是
+> `Missing entry-point to Worker script`——當時根目錄唯一的 wrangler 設定就是這個
+> wrangler 讀不到的檔案。
+
+### 2. `particle-chat-v42` — 會建立新 Worker 而非更新既有的
+
+倉庫有 `particle-chat-v42/wrangler.jsonc`，其 `name` 為 `particle-chat-v42`。
+
+盤點中有 `particle-chat`（編號 57），**沒有** `particle-chat-v42`。以目前設定部署會**新建一個 Worker**，而不是更新既有的 `particle-chat`。是刻意分版，還是名稱漂移，需要確認。
+
+### 3. `mrl-system-core` — 不在盤點中，但可能只是時間差
+
+根目錄 `wrangler.jsonc` 宣告 `name: mrl-system-core`，不在 2026-03-12 的盤點中。
+
+但改名的 commit `df2e264`（naming: rename root Worker to MRL System Core）**晚於**盤點日期，所以這很可能只是時間差而非真的斷連。**需要一份新的盤點才能確認**，不應據此下結論。
+
+## 稽核工具的已知限制
+
+誠實標記，避免把工具的輸出當成全知：
+
+- **盤點是帶日期的快照**，不是即時狀態。`registry/cloudflare_inventory_2026-03-12.json` 由使用者提供，其來源標註為 Cloudflare API 即時拉取。在取得新盤點之前，任何「不在盤點中」的結論都受限於該日期。
+- **URL 參照無法分辨範例與真實端點**。例如 `tools/deploy-enhanced.sh` 中的 `particle-edge` 只是互動提示裡的範例字串，不是實際呼叫。稽核會把它列出來，判讀時需人工確認。
+- **只看 `name` 欄位**，不驗證該 Worker 在雲端是否真的存在、是否可達、綁定是否一致。
+
+## 怎麼重跑
+
+```bash
+python3 tools/connection_audit.py            # 在倉庫根目錄
+python3 tools/connection_audit.py <repo> <out.json>
+```
+
+CI 每次都會執行並把摘要寫進 job summary，完整 JSON 以 artifact 保存。這樣 137 這個數字不會在無人注意時悄悄變大。
+
+## 取得新盤點之後
+
+把新的盤點存成 `registry/cloudflare_inventory_<日期>.json`（**不要覆蓋舊檔**——舊檔是該時點的證據），稽核工具會自動採用日期最新的一份。

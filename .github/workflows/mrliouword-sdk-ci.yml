@@ -98,6 +98,66 @@ jobs:
       - name: Run Safety Check
         run: safety check --json || true
 
+  connection-audit:
+    name: Connection Audit
+    runs-on: ubuntu-latest
+    # 資訊性檢查：把「雲端有、倉庫沒接上」的缺口持續攤在眼前，
+    # 讓 137 這個數字不會在無人注意時悄悄變大。
+    # 不依賴任何套件，也不依賴其他 job。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run connection audit
+        run: python3 tools/connection_audit.py . connection_audit.json
+
+      - name: Write summary
+        if: ${{ !cancelled() }}
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r = json.load(open("connection_audit.json", encoding="utf-8"))
+          t = r["totals"]
+          print("## 🔗 Connection Audit")
+          print()
+          print(f"盤點來源：`{r['inventory_source']}`")
+          print()
+          print("| 項目 | 數量 |")
+          print("|---|---|")
+          print(f"| 雲端 Worker | {t['cloud_workers']} |")
+          print(f"| 倉庫可部署 | {t['deployable_from_repo']} |")
+          print(f"| 服務註冊表 | {t['in_service_registry']} |")
+          print(f"| 客戶端有參照 | {t['referenced_by_clients']} |")
+          print(f"| legacy alias | {t['legacy_alias']} |")
+          gap = t["cloud_workers"] - t["deployable_from_repo"]
+          print()
+          print(f"**{gap} 個雲端 Worker 在倉庫中沒有部署設定。**")
+          for key, label in [
+              ("config_not_readable_by_wrangler", "wrangler 讀不到的設定檔"),
+              ("wrangler_configs_not_in_inventory", "盤點中沒有、倉庫卻有設定"),
+              ("client_refs_not_in_inventory", "參照了盤點中沒有的 Worker"),
+          ]:
+              items = r.get(key) or {}
+              if items:
+                  print()
+                  print(f"### {label}")
+                  for name in items:
+                      print(f"- `{name}`")
+          print()
+          print("詳見 `registry/CONNECTION_MAP.md`。完整報告見本次執行的 artifact。")
+          EOF
+
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: connection-audit
+          path: connection_audit.json
+
   build:
     name: Build Package
     runs-on: ubuntu-latest

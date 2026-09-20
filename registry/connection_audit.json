@@ -1,0 +1,1480 @@
+{
+  "origin_signature": "MrLiouWord",
+  "inventory_source": "cloudflare_inventory_2026-03-12.json",
+  "inventory_note": "CareOS-Cloudflare 盤點 2026-03-12（使用者提供，來源標註為 Cloudflare API 即時拉取）",
+  "totals": {
+    "cloud_workers": 140,
+    "deployable_from_repo": 3,
+    "in_service_registry": 3,
+    "referenced_by_clients": 4,
+    "legacy_alias": 2
+  },
+  "workers": [
+    {
+      "name": "particle-boot",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-registry",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-atom",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-fusion",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-seedkernel",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-pvm",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-delta",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-reversible",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-simhash",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-attention",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-system-hub",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-doctor",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-flowagent-api",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-flowshell",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-console",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "flowagent-mother",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-memory",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-memory-loader",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-memory-trainer",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-snapshot",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-snapshot-export",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-auto-snapshot",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-version-tree",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-diff-tracker",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-diff-compress",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-diff-chart",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-diffmerge",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-branch",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-export",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-pkg-creator",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-pkg-loader",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-modules-loader",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-autopack",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-unpacker",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-patch",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-seed-installer",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-qflpkg",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-qflpkg-loader",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-qflpkg-compress",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-qflpkg-diff",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-universe-pack",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-persona-manager",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-persona-loader",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-persona-autoloader",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-persona-gui",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-persona-emulator",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-agent-emulator",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-persona-bundle",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-persona-diff",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-hexflow",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-auth-gateway",
+      "deployable_from_repo": true,
+      "wrangler_configs": [
+        {
+          "path": "cloudflare/particle-auth-gateway/wrangler.jsonc",
+          "readable_by_wrangler": true
+        }
+      ],
+      "in_service_registry": true,
+      "client_references": [
+        "README.md",
+        "unified-resource-report.md",
+        "cloudflare/config.json"
+      ],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-sig-verify",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-permissions",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-privacy",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-notify",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-message",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-chat",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-share",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-reminder",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-synapse",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-darkmode",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-theme",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-style",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-font",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-emoji",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-syntax",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-flowmap-html",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-flowmap-svg",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-connector",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-gdrive",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-gmail",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-gcalendar",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-sync",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-browser",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-haptic",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-search",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-websearch",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-deepresearch",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-research",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-inspire",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-speech",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-time",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-location",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-map",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-camera",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-voice",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-calendar",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-skills",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-file",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-config",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-artifact",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-project",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-user",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-flowmap",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-fluin-codec",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-fluin-expand",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-syntax-check",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-flow-cli",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-dev-cli",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-replay",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-dualsim",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-error",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-ai-gateway",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "mrliouword-ai-gateway",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "mrliouword-ai-memory",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-usage",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "shengai-isp",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "zhizhang-system",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "mrliouword",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": true,
+      "client_references": [
+        "README 2.md",
+        "cloudflare/config.json"
+      ],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "mrliouword-app",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "mrliouword-system",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "mrliouword-private",
+      "deployable_from_repo": true,
+      "wrangler_configs": [
+        {
+          "path": "wrangler 2.jsonc",
+          "readable_by_wrangler": false
+        },
+        {
+          "path": "cloudflare/mrliouword-private/wrangler.jsonc",
+          "readable_by_wrangler": true
+        }
+      ],
+      "in_service_registry": true,
+      "client_references": [
+        "test 2.sh",
+        "README.md",
+        "DEPLOYMENT.md",
+        "unified-resource-report.md",
+        "test.sh",
+        "cloudflare/config.json"
+      ],
+      "naming": {
+        "status": "legacy_alias",
+        "canonical": "MRL_System_Core",
+        "disposition": "migrate_service_name"
+      }
+    },
+    {
+      "name": "mrliou-partner",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "mrliou-metaenv",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "mrliou-l1-gate-runtime",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "flow-tasks",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "mrlflow-tasks",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-shortcuts",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "kiosk-agent",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "kiosk-api",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "xiaodou-generator",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "npm-particle",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "particle-api",
+      "deployable_from_repo": true,
+      "wrangler_configs": [
+        {
+          "path": "cloudflare/particle-api/wrangler.toml",
+          "readable_by_wrangler": true
+        }
+      ],
+      "in_service_registry": false,
+      "client_references": [
+        "unified-resource-report.md"
+      ],
+      "naming": {
+        "status": "legacy_alias",
+        "canonical": "MRL_API_Gateway",
+        "disposition": "quarantine_as_source_name"
+      }
+    },
+    {
+      "name": "fluin-lifeform",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "my-chat-agent",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "next-starter-template",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "workflows-starter-template",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "kv-get-started",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "365-days-computer-vision-learning-linkedin-post",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "polished-violet-b5fd",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "old-sea-2b89",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "fragrant-night-8f93",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "proud-king-7e6b",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "super-hat-e4cd",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "super-queen-748d",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "lingering-forest-b514",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "square-hill-c50c",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "little-leaf-0b33",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "bold-sky-0cd3",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    },
+    {
+      "name": "winter-rain-d5fa",
+      "deployable_from_repo": false,
+      "wrangler_configs": [],
+      "in_service_registry": false,
+      "client_references": [],
+      "naming": {
+        "status": "unregistered"
+      }
+    }
+  ],
+  "config_not_readable_by_wrangler": {
+    "mrliouword-private": [
+      {
+        "path": "wrangler 2.jsonc",
+        "readable_by_wrangler": false
+      }
+    ]
+  },
+  "wrangler_configs_not_in_inventory": {
+    "mrl-system-core": [
+      {
+        "path": "wrangler.jsonc",
+        "readable_by_wrangler": true
+      }
+    ],
+    "particle-chat-v42": [
+      {
+        "path": "particle-chat-v42/wrangler.jsonc",
+        "readable_by_wrangler": true
+      }
+    ]
+  },
+  "client_refs_not_in_inventory": {
+    "particle-edge": [
+      "tools/deploy-enhanced.sh"
+    ]
+  }
+}
