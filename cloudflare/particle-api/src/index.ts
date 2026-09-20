@@ -36,9 +36,15 @@ const WAKE_KEYS = ["夥伴", "夥伴回來吧", "夥伴你在嗎", "夥伴你還
 // R2 分頁參數。預設值 100 與原始實作一致，不改變未帶參數時的行為。
 const R2_DEFAULT_LIMIT = 100;
 const R2_MAX_LIMIT = 1000;
-// indexR2 單次呼叫最多掃描的頁數。Worker 有 CPU 時間上限，
-// 不設界限的迴圈在大 bucket 上會逾時，因此改以回報 cursor 讓呼叫端續接。
-const R2_INDEX_MAX_PAGES = 50;
+// indexR2 單次呼叫最多處理的物件數。兩個上限同時存在：
+//   Worker 有 CPU 時間上限
+//   D1 有單次 Worker 呼叫內的查詢數上限
+// 每個物件一次 INSERT，若不設界會在大 bucket 上逾時或撞上 D1 限制，
+// 而且是「中途失敗且沒有回傳續接點」，留下索引到一半的狀態。
+// 因此以物件數設界並回報 cursor，讓呼叫端分次完成。
+const R2_INDEX_MAX_OBJECTS = 1000;
+// 寫入以 batch 送出，而非每個物件一次往返。
+const D1_BATCH_SIZE = 100;
 
 const EXT_LAYER: Record<string, string> = {
   ".txt": "L1", ".md": "L1", ".json": "L1", ".csv": "L1",
@@ -213,6 +219,10 @@ class Persona {
   }
 
   async sleep() {
+    // 每個請求都會建立新的 Persona 實例，this.active 必為 null。
+    // 先從 KV 載入目前啟用的人格，否則 sleep 永遠回 false，
+    // 已喚醒的人格也永遠不會被標記為 dormant。
+    await this.getActive();
     if (!this.active) return false;
     this.active.state = "dormant";
     this.active.updated = now();
@@ -340,20 +350,33 @@ class Channel {
     let pages = 0;
     let truncated = false;
 
+    // 每頁不超過單次呼叫的物件上限，確保在頁邊界停下，cursor 才能精確續接
+    const pageLimit = Math.min(R2_MAX_LIMIT, R2_INDEX_MAX_OBJECTS);
+
     do {
-      const list = await this.r2.list({ prefix, limit: R2_MAX_LIMIT, cursor });
+      const list = await this.r2.list({ prefix, limit: pageLimit, cursor });
+
+      // 先算完雜湊鏈再成批寫入。Merkle 鏈本身是有序的，批次送出不影響
+      // 順序，因為 prev 在這個迴圈中已經逐一串好。
+      const statements = [];
       for (const obj of list.objects) {
         const id = uuid(), layer = getLayer(obj.key), simhash = simhash64(obj.key);
         const merkle = await sha256(obj.key + obj.size + simhash + this.chainHead);
-        await this.db.prepare(`INSERT OR REPLACE INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
-          .bind(id, obj.key, `[R2:${obj.size}]`, layer, simhash, merkle, this.chainHead, "r2", obj.uploaded.getTime(), Date.now()).run();
+        statements.push(
+          this.db.prepare(`INSERT OR REPLACE INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
+            .bind(id, obj.key, `[R2:${obj.size}]`, layer, simhash, merkle, this.chainHead, "r2", obj.uploaded.getTime(), Date.now())
+        );
         this.chainHead = merkle;
-        synced++;
       }
+      for (let i = 0; i < statements.length; i += D1_BATCH_SIZE) {
+        await this.db.batch(statements.slice(i, i + D1_BATCH_SIZE));
+      }
+
+      synced += list.objects.length;
       pages++;
       cursor = list.truncated ? list.cursor : undefined;
       truncated = Boolean(cursor);
-    } while (cursor && pages < R2_INDEX_MAX_PAGES);
+    } while (cursor && synced < R2_INDEX_MAX_OBJECTS);
 
     // truncated 為 true 時，把 cursor 原樣回傳，呼叫端可再送一次
     // POST /channel/sync/r2-index { prefix, cursor } 從中斷處續接。
@@ -373,8 +396,16 @@ class Channel {
 
   async stats() {
     const d1 = await this.db.prepare("SELECT COUNT(*) as c FROM channel_sync").first<{c:number}>();
-    const r2 = await this.r2.list({ limit: 1 });
-    return { d1_count: d1?.c || 0, r2_count: r2.objects.length, chain_head: this.chainHead };
+    // 原本用 limit: 1，任何非空 bucket 的 r2_count 都會是 1。
+    // 改為單頁計數並附加 truncated 旗標，讓數字誠實：
+    // 超過一頁時明示這是下限而非總數。
+    const r2 = await this.r2.list({ limit: R2_MAX_LIMIT });
+    return {
+      d1_count: d1?.c || 0,
+      r2_count: r2.objects.length,
+      r2_count_truncated: r2.truncated,
+      chain_head: this.chainHead,
+    };
   }
 }
 
