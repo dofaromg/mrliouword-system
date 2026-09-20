@@ -59,6 +59,22 @@ transformation:
     change: json() / err() 於既有 origin 之外附加 origin_signature
     reason: 命名註冊表規則 5「所有公開回應必須包含 origin_signature=MrLiouWord」
     method: 附加而非取代，不影響既有讀 origin 的呼叫端
+  - commit: 7f4f1e2
+    change: R2 列表以附加方式加入分頁；indexR2 跨頁並改用 D1 批次寫入
+    reason: Codex review #73/#74。既有 count/objects 欄位形狀不變，純附加
+  - commit: 7f4f1e2
+    change: 修正 sleep() 恆回 false 與 r2_count 恆為 1 兩個既存缺陷
+    reason: v3.0.0 的正確性 bug，非本次引入，但沒有理由留著
+  - commit: ebdb136
+    change: 移除 channel_sync 的 key UNIQUE 約束並改為純 INSERT
+    reason: >
+      UNIQUE 搭配 INSERT OR REPLACE 會在同一個 key 二次 emit 時刪掉舊列，
+      使 /channel/verify 永久回報斷鏈。改為 append 並取最新列，符合
+      .mrliou/meta.json 的 history_policy: append_only —— 重新 emit 是
+      追加一筆新事實，不是覆蓋舊事實。
+  - commit: ebdb136
+    change: syncKVtoD1 補上跨頁掃描與 cursor
+    reason: 原本只取第一頁卻回報 success:true，與 R2 是同一類缺陷的另一半
 
 contributors:
   - name: Mr.liou
@@ -72,6 +88,8 @@ verification:
   performed:
     - 四個匯入檔以 sha256 逐位元組比對封存內容
     - ambient stub 下 tsc --strict 零錯誤
+    - 分頁以 2350 筆多頁 stub 透過真實 fetch 路由驅動，取回完整無缺漏
+    - 鏈修正以真實 sqlite3 重播，SQL 直接自原始碼抽出
   not_performed:
     - 實際部署（Cloudflare dashboard 的 Root directory 尚未設為 cloudflare/particle-api）
     - 對既有線上資料的行為驗證
