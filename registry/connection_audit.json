@@ -18,7 +18,7 @@
   "inventory_note": "CareOS-Cloudflare 盤點 2026-03-12（使用者提供，來源標註為 Cloudflare API 即時拉取）",
   "totals": {
     "cloud_workers": 140,
-    "deployable_from_repo": 3,
+    "deployable_from_repo": 4,
     "in_service_registry": 3,
     "referenced_by_clients": 4,
     "legacy_alias": 2
@@ -186,8 +186,13 @@
     },
     {
       "name": "particle-memory",
-      "deployable_from_repo": false,
-      "wrangler_configs": [],
+      "deployable_from_repo": true,
+      "wrangler_configs": [
+        {
+          "path": "cloudflare/particle-memory/wrangler.toml",
+          "readable_by_wrangler": true
+        }
+      ],
       "in_service_registry": false,
       "client_references": [],
       "naming": {

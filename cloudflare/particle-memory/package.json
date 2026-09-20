@@ -1,0 +1,14 @@
+{
+  "name": "particle-memory",
+  "version": "2.0.0",
+  "private": true,
+  "description": "MRL_Memory — 七層記憶保險庫，SimHash 語義指紋（雲端資源名 particle-memory 為實作識別碼）",
+  "main": "src/index.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.60.0"
+  }
+}

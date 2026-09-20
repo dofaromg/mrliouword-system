@@ -24,8 +24,8 @@
     "Runtime Verification Status"
   ],
   "totals": {
-    "artifacts": 13,
-    "passed": 2,
+    "artifacts": 15,
+    "passed": 4,
     "failed": 11,
     "findings": 70
   },
@@ -167,6 +167,43 @@
         "Contributor Role Separation": {
           "passed": true,
           "detail": "3 位 contributor，角色皆分開"
+        },
+        "Mirror / Projection Role Check": {
+          "passed": true,
+          "detail": "derivative_role=implementation"
+        },
+        "Runtime Verification Status": {
+          "passed": true,
+          "detail": "verification_status=partial"
+        }
+      }
+    },
+    {
+      "kind": "package/npm",
+      "name": "particle-memory",
+      "path": "cloudflare/particle-memory/package.json",
+      "provenance_source": "cloudflare/particle-memory/PROVENANCE.yaml",
+      "passed": true,
+      "checks": {
+        "Authority Lock": {
+          "passed": true,
+          "detail": "canonical_authority=Mr.liou"
+        },
+        "Naming Gate": {
+          "passed": true,
+          "detail": "'particle-memory' 非 legacy alias"
+        },
+        "Provenance Completeness": {
+          "passed": true,
+          "detail": "十欄位齊全（來源：cloudflare/particle-memory/PROVENANCE.yaml）"
+        },
+        "Source Hash / Commit Link": {
+          "passed": true,
+          "detail": "source_version=import-2026-09-20"
+        },
+        "Contributor Role Separation": {
+          "passed": true,
+          "detail": "2 位 contributor，角色皆分開"
         },
         "Mirror / Projection Role Check": {
           "passed": true,
@@ -397,6 +434,43 @@
         "Runtime Verification Status": {
           "passed": false,
           "detail": "未宣告 verification_status"
+        }
+      }
+    },
+    {
+      "kind": "worker",
+      "name": "particle-memory",
+      "path": "cloudflare/particle-memory/wrangler.toml",
+      "provenance_source": "cloudflare/particle-memory/PROVENANCE.yaml",
+      "passed": true,
+      "checks": {
+        "Authority Lock": {
+          "passed": true,
+          "detail": "canonical_authority=Mr.liou"
+        },
+        "Naming Gate": {
+          "passed": true,
+          "detail": "'particle-memory' 非 legacy alias"
+        },
+        "Provenance Completeness": {
+          "passed": true,
+          "detail": "十欄位齊全（來源：cloudflare/particle-memory/PROVENANCE.yaml）"
+        },
+        "Source Hash / Commit Link": {
+          "passed": true,
+          "detail": "source_version=import-2026-09-20"
+        },
+        "Contributor Role Separation": {
+          "passed": true,
+          "detail": "2 位 contributor，角色皆分開"
+        },
+        "Mirror / Projection Role Check": {
+          "passed": true,
+          "detail": "derivative_role=implementation"
+        },
+        "Runtime Verification Status": {
+          "passed": true,
+          "detail": "verification_status=partial"
         }
       }
     },
