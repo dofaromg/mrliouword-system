@@ -179,6 +179,73 @@ jobs:
           name: connection-audit
           path: connection_audit.json
 
+  release-gate:
+    name: Release Gate
+    runs-on: ubuntu-latest
+    # 政策第 8 節：任何 Release、套件、容器與 Worker 在發布前必須通過七道關卡。
+    # 這個 job 是那條規則的執行面——在它存在之前，規則只是文件裡的一段話，
+    # 全倉庫 220 個使用 MRL/MrLiouWord 的檔案中只有 1 個真的遵守。
+    #
+    # 阻斷條件只看「新增的」違規。既有的 70 項記在
+    # registry/release_gate_baseline.json，那是債務帳本不是豁免清單：
+    # 每一筆具名可查，而且這個數字只能往下走。
+    #
+    # 不依賴任何套件，也不依賴其他 job。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PyYAML
+        run: pip install PyYAML
+
+      - name: Run release gate
+        run: python3 tools/release_gate.py . release_gate.json
+
+      - name: Write summary
+        if: ${{ !cancelled() }}
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r = json.load(open("release_gate.json", encoding="utf-8"))
+          t, b = r["totals"], r["baseline"]
+          print("## 🚧 Release Gate")
+          print()
+          print(f"依 [{r['policy']}](../blob/main/docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md) 第 8 節七道關卡。")
+          print()
+          print("| 項目 | 數量 |")
+          print("|---|---|")
+          print(f"| 發布產物 | {t['artifacts']} |")
+          print(f"| 全數通過 | {t['passed']} |")
+          print(f"| 有未通過項 | {t['failed']} |")
+          print(f"| 基準線已記錄 | {b['known']} |")
+          print(f"| **新增違規** | **{b['new_violations']}** |")
+          if b["fixed_since_baseline"]:
+              print()
+              print(f"✅ 比基準線少了 {b['fixed_since_baseline']} 項。")
+          print()
+          print("### 各產物")
+          print()
+          print("| 產物 | 種類 | 七道關卡 |")
+          print("|---|---|---|")
+          for a in r["artifacts"]:
+              n = sum(1 for c in a["checks"].values() if c["passed"])
+              mark = "✅" if a["passed"] else f"{n}/7"
+              print(f"| `{a['path']}` | {a['kind']} | {mark} |")
+          print()
+          print("失敗項依政策**不得標示為 Canon、Official、Verified 或 source_of_truth**。")
+          EOF
+
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-gate
+          path: release_gate.json
+
   build:
     name: Build Package
     runs-on: ubuntu-latest

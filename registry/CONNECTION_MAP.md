@@ -178,6 +178,41 @@ Sheets）與 `integrations/notion/sync.py` 安裝之後不可匯入。
 
 > 附帶一提：`registry/system_registry.yaml` 本身也沒有登錄標記，所以這個漂移不是從我開始的。
 
+### 9. 發布 Gate —— 外部要用就得守規則
+
+政策第 8 節已經明文列出七道關卡，規定「任何 Release、官網頁面、套件、容器與 Worker 在發布前必須通過」，且「失敗項不得標示為 Canon、Official、Verified 或 source_of_truth」。
+
+**但它一直只是文字。** 所以 `tools/release_gate.py` 把它做成會擋人的東西——七道關卡的名稱、欄位、允許值全部照政策原文，不新增任何規則（`.mrliou/meta.json` 明定本倉庫 `governance_authority: false`，執行規則可以，定義規則不行）。
+
+首次執行結果：
+
+| 項目 | 數量 |
+|---|---|
+| 第 8 節點名的發布產物 | **13** |
+| 七道關卡全過 | **2** |
+| 有未通過項 | **11** |
+
+通過的兩個是 `cloudflare/particle-api/` 的套件與 Worker——也就是本輪剛補上來源鏈的那兩個。其餘 11 個的未通過項共 70 筆，記在 `registry/release_gate_baseline.json`。
+
+**基準線是債務帳本，不是豁免清單。** 每一筆具名可查，而且 CI 只允許這個數字往下走：新增的違規一律擋下，舊的每修好一筆就移除一筆。
+
+實測擋人的三種情境：
+
+```
+外部新增沒有來源鏈的 Worker      6/7 未通過 → exit 1
+外部拿 legacy alias 當產品名      Naming Gate 指出 canonical 與 disposition → exit 1
+宣告了來源鏈但把 AI 工具寫成作者   Contributor Role Separation 擋下
+                                 且「未通過卻標示為 verified」一併擋下 → exit 1
+```
+
+最後一項特別值得記：政策第 3 節規定 AI 工具只能是工具／協作角色，不冒充人類來源。關卡會抓。
+
+`tests/test_release_gate.py` 25 個測試守著，關卡本身的來源鏈也是 10/10——**規則要能約束自己才算數**。
+
+#### 順帶查出的一件事
+
+根目錄 `package.json` 的套件名是 `mrliouword-private`，那是 legacy alias（canonical `MRL_System_Core`，disposition `migrate_service_name`）。**npm 套件名是不折不扣的「現行產品名」**，依註冊表規則 2 不得如此使用。同樣的名字在四個地方出現。已記進基準線，處置是命名治理決定，由你定。
+
 ## 稽核工具的已知限制
 
 誠實標記，避免把工具的輸出當成全知：
