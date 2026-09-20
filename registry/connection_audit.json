@@ -1,5 +1,19 @@
 {
+  "canonical_authority": "Mr.liou",
   "origin_signature": "MrLiouWord",
+  "source_repo": "dofaromg/mrliouword-system",
+  "source_artifact": "registry/connection_audit.json",
+  "source_version": "generated-by:tools/connection_audit.py",
+  "derivative_role": "generated",
+  "artifact_owner": "Mr.liou",
+  "contributors": [
+    "Mr.liou（canonical_authority：定義與裁決）",
+    "Claude Code（tool：實作）"
+  ],
+  "transformation": "由 tools/connection_audit.py 從倉庫內可查證來源生成，未改動任何既有產物",
+  "verification_status": "partial",
+  "verification_note": "僅驗證倉庫內宣告的一致性；不驗證雲端資源是否真的存在、可達或綁定一致",
+  "registry_status": "unregistered",
   "inventory_source": "cloudflare_inventory_2026-03-12.json",
   "inventory_note": "CareOS-Cloudflare 盤點 2026-03-12（使用者提供，來源標註為 Cloudflare API 即時拉取）",
   "totals": {

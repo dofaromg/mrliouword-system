@@ -1,4 +1,19 @@
 {
+  "canonical_authority": "Mr.liou",
+  "origin_signature": "MrLiouWord",
+  "source_repo": "dofaromg/mrliouword-system",
+  "source_artifact": "registry/cloudflare_inventory_2026-03-12.json",
+  "source_version": "snapshot-date:2026-03-12",
+  "derivative_role": "generated",
+  "artifact_owner": "Mr.liou",
+  "contributors": [
+    "Mr.liou（canonical_authority：提供 CareOS 盤點原始文件）",
+    "Claude Code（tool：擷取為機器可讀格式）"
+  ],
+  "transformation": "自使用者提供的 CareOS Cloudflare 盤點文件擷取為機器可讀清單；數量與原文件自稱的 140 一致",
+  "verification_status": "partial",
+  "verification_note": "帶日期的快照，非即時狀態；未驗證各資源當下是否仍存在",
+  "registry_status": "unregistered",
   "source": "CareOS-Cloudflare 盤點 2026-03-12（使用者提供，來源標註為 Cloudflare API 即時拉取）",
   "workers": [
     "particle-boot",

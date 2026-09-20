@@ -11,7 +11,24 @@
   4. 全倉庫的 *.workers.dev 參照            客戶端實際呼叫的端點
   5. registry/MRL_*_Naming_Registry_*.yaml 命名治理（canonical / legacy alias）
 
-origin_signature: MrLiouWord
+來源鏈（ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0 第 4 節）：
+  canonical_authority: Mr.liou
+  origin_signature:    MrLiouWord
+  source_repo:         dofaromg/mrliouword-system
+  source_artifact:     tools/connection_audit.py
+  source_version:      見本檔案的 git 歷史
+  derivative_role:     implementation
+  artifact_owner:      Mr.liou
+  contributors:        Mr.liou（定義與裁決）／Claude Code（tool：實作）
+  transformation:      新建的稽核工具，不改動任何既有產物
+  verification_status: verified（tests/test_connection_audit.py，13 個回歸測試）
+
+註冊狀態：**未註冊**。本工具與其產出未取得 mrl_ 鍵、也未進入
+.mrliou/particle.index.json。依 registry/rules/naming_rules_v1.yaml 的
+Registry Gate，未登錄產物不得取得 mrl_ 鍵或出現在索引中——所以不用
+mrl_ 前綴是正確的，不是遺漏。是否登錄為正式 registry entry 屬命名治理
+決定，而 .mrliou/meta.json 明定本倉庫 naming_authority: false，
+因此不由本工具自行登錄。
 """
 
 import json
@@ -29,6 +46,9 @@ SKIP_DIR_SUFFIXES = (".egg-info",)
 # wrangler 只會讀取這些檔名；帶空格或其他變形的檔案（例如 "wrangler 2.jsonc"）
 # 不會被讀到，這本身就是一個值得回報的發現。
 WRANGLER_CANONICAL = {"wrangler.toml", "wrangler.jsonc", "wrangler.json"}
+
+# 產物的來源鏈需要指回產生它的工具版本。
+GENERATOR = "tools/connection_audit.py"
 
 
 def walk(root: Path):
@@ -237,7 +257,25 @@ def audit(root: Path) -> Dict[str, Any]:
     }
 
     return {
+        # 完整來源鏈。政策明定只有 origin_signature 會被判為
+        # provenance incomplete，因此十個欄位一併輸出。
+        "canonical_authority": "Mr.liou",
         "origin_signature": "MrLiouWord",
+        "source_repo": "dofaromg/mrliouword-system",
+        "source_artifact": "registry/connection_audit.json",
+        "source_version": f"generated-by:{GENERATOR}",
+        "derivative_role": "generated",
+        "artifact_owner": "Mr.liou",
+        "contributors": [
+            "Mr.liou（canonical_authority：定義與裁決）",
+            "Claude Code（tool：實作）",
+        ],
+        "transformation": "由 tools/connection_audit.py 從倉庫內可查證來源生成，未改動任何既有產物",
+        "verification_status": "partial",
+        "verification_note": (
+            "僅驗證倉庫內宣告的一致性；不驗證雲端資源是否真的存在、可達或綁定一致"
+        ),
+        "registry_status": "unregistered",
         "inventory_source": inventories[-1].name,
         "inventory_note": inventory.get("source", ""),
         "totals": {

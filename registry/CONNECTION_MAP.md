@@ -1,3 +1,19 @@
+---
+canonical_authority: "Mr.liou"
+origin_signature: "MrLiouWord"
+source_repo: "dofaromg/mrliouword-system"
+source_artifact: "registry/CONNECTION_MAP.md"
+source_version: "見本檔案的 git 歷史"
+derivative_role: "generated"
+artifact_owner: "Mr.liou"
+contributors:
+  - "Mr.liou（canonical_authority：定義與裁決；提供雲端盤點來源）"
+  - "Claude Code（tool：稽核實作與記錄撰寫）"
+transformation: "由 tools/connection_audit.py 的輸出加人工判讀整理而成；未改動任何既有產物"
+verification_status: "partial"
+registry_status: "unregistered"
+---
+
 # 連接對照 — 存在的東西，接上了沒有
 
 > origin_signature: MrLiouWord
@@ -131,6 +147,36 @@ Sheets）與 `integrations/notion/sync.py` 安裝之後不可匯入。
 **未處理**：`black` 在這三個目錄有 23 個檔案需要重排版；`mypy` 會立刻被
 `scripts/global_github_search.py` 的模組名衝突擋住。兩者都是另一件事，
 沒有塞進同一次改動，以免大規模重排版把上面那個真缺陷蓋掉。
+
+### 7. 來源鏈政策幾乎沒有產物遵守
+
+`docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md` 第 4 節規定，任何使用 MRL / MrLiouWord / `mrl_` / 粒子系統定義的產物，都必須宣告十個欄位的完整來源鏈，並明文寫著：
+
+> `origin_signature` 單獨存在不代表來源鏈完整；缺少 `canonical_authority`、`source_artifact` 或 `derivative_role` 時，必須判定為 **provenance incomplete**。
+
+實際掃描全倉庫：
+
+| 項目 | 數量 |
+|---|---|
+| 使用 MRL / MrLiouWord 的檔案 | **220** |
+| 十個欄位齊全 | **1**（就是政策文件自己） |
+| 只有 `origin_signature`（政策明定 provenance incomplete） | **94** |
+
+這與本文件其他各項是同一個形狀：**規則寫在那裡，實況沒有跟上**。
+
+**已處理的部分**：我自己新增的產物已補齊來源鏈——`tools/connection_audit.py`、`registry/CONNECTION_MAP.md`、`registry/cloudflare_inventory_2026-03-12.json`、稽核輸出 `registry/connection_audit.json`，以及 `cloudflare/particle-api/PROVENANCE.yaml`（外掛檔，因為匯入內容依規則 3 不得改寫）。
+
+**未處理的部分**：其餘 90 幾個既有檔案沒有動。補來源鏈需要知道每個產物真正的作者、來源與轉換過程，那是我無法從倉庫查證的事，猜出來的來源鏈比沒有更糟。要補的話請一批一批給我事實，我照著記。
+
+### 8. `mrl_` 前綴與 Registry Gate：我刻意沒有自行登錄
+
+`registry/rules/naming_rules_v1.yaml` 的 Registry Gate 規定「未登錄產物不得取得 `mrl_` 鍵或出現在索引中」。
+
+我新增在 `registry/` 下的三個檔案**都沒有** `mrl_registry_entry` 或 `mrl_ruleset` 標記，也沒有使用 `mrl_` 前綴，更沒有進入 `.mrliou/particle.index.json`。
+
+這不是遺漏，是刻意的：`.mrliou/meta.json` 明定本倉庫 `naming_authority: false`、`governance_authority: false`，`.mrliou/authority-lock.json` 也寫著「`MRL_` 前綴保留給 registry-approved 產物」。**自行登錄等於替擁有者行使命名權**。要不要把它們登錄成正式 registry entry，請你決定。
+
+> 附帶一提：`registry/system_registry.yaml` 本身也沒有登錄標記，所以這個漂移不是從我開始的。
 
 ## 稽核工具的已知限制
 
