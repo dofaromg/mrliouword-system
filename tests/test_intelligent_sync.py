@@ -94,8 +94,9 @@ class TestLogicalExtractor:
         
         structure = extractor.extract_from_code(code, "Python")
         
-        assert 'attention' in structure['patterns']
-        assert structure['confidence'] > 0
+        assert 'attention_mechanism' in structure['patterns']
+        assert 'attention' in structure['patterns']['attention_mechanism']
+        assert structure['complexity'] > 0
         assert len(structure['reasoning_chains']) > 0
     
     def test_extract_concepts(self):
@@ -111,7 +112,7 @@ class TestLogicalExtractor:
         
         structure = extractor.extract_from_code(code, "Python")
         
-        assert 'distributed' in structure['concepts'] or 'concurrent' in structure['concepts']
+        assert 'DistributedCache' in structure['concepts']
     
     def test_generate_formula(self):
         """Test formula-related structure construction"""

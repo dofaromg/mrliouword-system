@@ -1,6 +1,7 @@
 """
 統一的配置管理系統
 """
+
 from typing import List, Optional
 import yaml
 from pydantic import Field
@@ -12,6 +13,7 @@ try:
         BaseSettings as PydanticBaseSettings,
         SettingsConfigDict as PydanticSettingsConfigDict,
     )
+
     HAS_PYDANTIC_SETTINGS = True
 except ImportError:  # pragma: no cover - pydantic v1 fallback
     from pydantic import BaseSettings as PydanticBaseSettings  # type: ignore
@@ -53,7 +55,8 @@ class MrliouwordConfig(PydanticBaseSettings):
     log_format: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
     # API 設定
-    api_host: str = Field(default="0.0.0.0", validation_alias="API_HOST")
+    # 預設綁定 loopback；容器/對外部署請以 API_HOST 明確指定（見 .env.example）
+    api_host: str = Field(default="127.0.0.1", validation_alias="API_HOST")
     api_port: int = Field(default=8000, validation_alias="API_PORT")
     api_workers: int = Field(default=4, validation_alias="API_WORKERS")
 
@@ -80,9 +83,12 @@ class MrliouwordConfig(PydanticBaseSettings):
 
     # 成本追蹤
     track_costs: bool = Field(default=True, validation_alias="TRACK_COSTS")
-    cost_alert_threshold: float = Field(default=100.0, validation_alias="COST_ALERT_THRESHOLD")
+    cost_alert_threshold: float = Field(
+        default=100.0, validation_alias="COST_ALERT_THRESHOLD"
+    )
 
     if not HAS_PYDANTIC_SETTINGS:
+
         class Config:
             env_file = ".env"
             env_file_encoding = "utf-8"
