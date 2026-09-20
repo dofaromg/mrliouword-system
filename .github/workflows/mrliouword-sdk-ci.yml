@@ -116,3 +116,31 @@ jobs:
         with:
           name: dist
           path: dist/
+
+  provenance-notice:
+    name: MRL 來源標註檢查
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      # 依權利人文件〈補正程序〉第 4 項：
+      # 「技術門檻：MRL canonical 加入 provenance 文件與 CI 檢查」。
+      # 只用標準函式庫，不裝任何套件——這道檢查不該因為安裝失敗而失效。
+      - name: 檢查 MRL_PROVENANCE.md 九個規格欄位
+        run: python tools/provenance_notice_check.py
+
+      - name: 摘要
+        if: always()
+        run: |
+          {
+            echo "### MRL 來源標註檢查"
+            echo ""
+            echo "規格來源：\`Mrliou_MRL_GitHub_Payment_Provenance_Incident_Record_20260914_v3\`"
+            echo ""
+            python tools/provenance_notice_check.py 2>&1 | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"
