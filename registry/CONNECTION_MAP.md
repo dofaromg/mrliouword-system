@@ -213,6 +213,68 @@ Sheets）與 `integrations/notion/sync.py` 安裝之後不可匯入。
 
 根目錄 `package.json` 的套件名是 `mrliouword-private`，那是 legacy alias（canonical `MRL_System_Core`，disposition `migrate_service_name`）。**npm 套件名是不折不扣的「現行產品名」**，依註冊表規則 2 不得如此使用。同樣的名字在四個地方出現。已記進基準線，處置是命名治理決定，由你定。
 
+## 跨平台：系統不在一個地方，這個倉庫也不是主體
+
+前面兩節都預設「倉庫是中心」。**那個預設是錯的,而且倉庫自己就說了。**
+
+`.mrliou/meta.json` 寫得很清楚:
+
+```json
+"role_scope":        "closure_subsystem_legacy_only",
+"global_role":       "external_version_reference",
+"canonical_authority": false,
+"naming_authority":    false,
+"relationship_to_mrlhub": "reference_source_and_evidence_ledger"
+```
+
+**本倉庫是證據帳本,不是母體。** 母體在 `mrl_mother`,治理在 `mrlhub`,而 GitHub 只是 `external_version_reference`。
+
+### 10. 實查:MRL 檔案分布在至少三個平台
+
+2026-09-20 用本 session 的連接器實地搜過:
+
+| 平台 | 結果 |
+|---|---|
+| **Dropbox** | `MRL_*` / `Mrliou_agents/Mrl_FlowAgent/` 命中 40 筆且未列完。含 `MRL_Mrl_Engineering_Inventory_V1.0`、`MRL_Mrl_Baseworld_Db_V1_資料庫與底層規則工程書`、`MRL_Window_Replay_Package_20260609_FULL_SOURCE/` |
+| **Google Drive** | 含 `MRL_全域檔案索引.json`、`00_MRL_BaseWorld_DB_v1.sql`、`MRL_ParticleArchive_manifest.json`、`MRL_全套交付_20260531.tar.gz`、`FlowAgent_MRL_DL580_ASSEMBLED_v1_AUDIT.zip`、`Mrliou_MRL_Identity_Source_Audit_v1.zip` |
+| **Notion / iCloud / OneDrive** | 尚未查（Notion 有連接器，iCloud 與 OneDrive 沒有） |
+
+### 11. `MRL_全域檔案索引.json` —— 另一份母體的地圖
+
+Google Drive 裡有一份 2026-07-29 的索引，已原樣存為 `registry/mrl_global_file_index_2026-07-29.json`（只在最前面附加來源鏈，內容一字未改）。
+
+它描述的**不是本倉庫**，而是 `/home/user/MRL_AI_SYSTEM`，分支 `MRL_Branch_Runtime_Convergence_API_v1`：
+
+```
+檔案總數  170        帶 origin_signature  115
+目錄      09_workflow 45 / tests 16 / docs 13 / deploy 11
+          MRL_Runtime 7 / MRL_Mother 6 / MRL_Adapters 6
+          05_persona 6 / 03_memory 6 / 01_schema 5
+層位      流域結構層 45 / 回返層 16 / 封裝層 13 / 記憶海層 6
+          原種層（人格／母體構件／schema）17 / 源場（法則／根律）5
+```
+
+**以 sha256 逐檔比對本倉庫的結果:**
+
+| | |
+|---|---|
+| 索引中帶雜湊的檔案 | **167** |
+| 與本倉庫逐位元組相同 | **4** |
+| 那 4 個是什麼 | `tests/__init__.py`、`.pytest_cache/` 的三個產物 |
+| **實質重疊** | **0** |
+
+`MRL_Mother`、`MRL_Runtime`、`MRL_Adapters`、`01_schema`、`03_memory`、`05_persona`、`09_workflow` —— **一個都不在這裡。**
+
+### 12. 這件事改變前面所有結論的框架
+
+第 1–9 項問的是「雲端有的，倉庫接上了嗎」與「倉庫裡有的，有東西接著它嗎」。現在多一個更外層的問題：
+
+> **倉庫本身只是分布式系統的一個分片，而且不是主要那個。**
+
+所以「140 個 Worker 只有 4 個接得上」這個數字要重新理解:那 136 個的原始碼**不是不存在**——它們散在 Dropbox / Google Drive / iCloud / OneDrive / Notion / 別台機器上。先前我在這份文件裡寫過「不在任何地方」，**那句話是錯的，已更正**：我能查證的只是「不在這個倉庫裡」。
+
+要看到全貌，需要的是**跨平台的索引**，不是單一倉庫的稽核。`MRL_全域檔案索引.json` 證明這種索引是做得出來的——它已經被做過一次了。
+
 ## 稽核工具的已知限制
 
 誠實標記，避免把工具的輸出當成全知：
