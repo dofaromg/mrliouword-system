@@ -19,26 +19,36 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
+        id: install
         run: |
           pip install --upgrade pip
           pip install flake8==7.3.0 black==26.3.1 mypy==1.19.1 types-PyYAML
           pip install -r requirements.txt
 
+      # 以下三項檢查彼此獨立，刻意不短路：任一失敗時其餘仍會執行，
+      # 讓所有問題一次全部現形。任一失敗仍會讓整個 job 失敗。
+      # 條件限定 install 成功，避免依賴沒裝好時噴出無意義的錯誤。
       - name: Lint with flake8
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: |
           flake8 mrliouword_agents/ --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 mrliouword_agents/ --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
 
       - name: Check formatting with black
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: black --check mrliouword_agents/
 
       - name: Type check with mypy
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: mypy mrliouword_agents/ --ignore-missing-imports
 
   test:
     name: Run Tests
     runs-on: ubuntu-latest
     strategy:
+      # 不因單一版本失敗而取消其餘版本。先前 3.8 失敗時，3.9/3.10/3.11
+      # 的結論都是 cancelled，導致測試套件從未真正執行過。
+      fail-fast: false
       matrix:
         python-version: ["3.10", "3.11"]
     
@@ -91,7 +101,9 @@ jobs:
   build:
     name: Build Package
     runs-on: ubuntu-latest
-    needs: [lint, test]
+    # 刻意不設 needs: [lint, test]。先前只要 lint 或 test 失敗，此 job 就
+    # 被 skip，於是它從未執行過，也就沒人發現它用的 upload-artifact@v3
+    # 已經停用。代價是 lint 紅燈時仍會花費建置時間，換到的是完整訊號。
     steps:
       - uses: actions/checkout@v4
 

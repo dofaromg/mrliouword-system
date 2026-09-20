@@ -20,6 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
 ]
+keywords = ["ai", "agent", "sdk", "claude", "anthropic", "mrliouword"]
 dependencies = [
     "anthropic>=0.18.0",
     "pydantic>=2.0.0",
@@ -55,14 +56,15 @@ Documentation = "https://github.com/dofaromg/mrliouword-system/docs"
 Repository = "https://github.com/dofaromg/mrliouword-system"
 "Bug Tracker" = "https://github.com/dofaromg/mrliouword-system/issues"
 
+# 套件探索範圍。先前這份設定只存在於 setup.py 的 find_packages()，
+# pyproject 沒有對應宣告，因此無法移除 setup.py——flat-layout 下
+# auto-discovery 會因為有四個頂層套件而失敗，或誤把 tests/examples 打包進去。
+[tool.setuptools.packages.find]
+include = ["mrliouword_agents*", "integrations*"]
+exclude = ["tests*", "examples*"]
+
 [tool.black]
 line-length = 88
 target-version = ['py310', 'py311']
 include = '\.pyi?$'
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-addopts = "-v --cov=mrliouword_agents --cov-report=term-missing"
