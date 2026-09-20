@@ -222,7 +222,17 @@ class IntelligentRepoSync:
                 # extract_from_code 回傳的 patterns 是 Dict[str, List[str]]，
                 # 鍵為模式名。下游（命名引擎、標籤）需要的是名稱列表，
                 # 在此衍生一次，保留原 dict 不失真。
-                structure['pattern_names'] = list(structure.get('patterns', {}).keys())
+                # patterns 是 {模式類別: [命中的關鍵字]}。兩個下游要的東西不同：
+                #   pattern_names    類別名（attention_mechanism）— 適合當標籤
+                #   pattern_keywords 命中的關鍵字（attention、memory、merkle）—
+                #     這才是命名引擎 PATTERN_TO_TYPE 認得的詞彙。只傳類別名會
+                #     讓 determine_type 的 Priority 1 永遠不命中，落到 Priority 3
+                #     甚至 fx.logic.general。
+                patterns = structure.get('patterns', {}) or {}
+                structure['pattern_names'] = list(patterns.keys())
+                structure['pattern_keywords'] = [
+                    keyword for matched in patterns.values() for keyword in matched
+                ]
                 
                 # extract_from_code 的 reasoning_chains 是 List[List[str]]，
                 # 而命名引擎宣告 List[str] 並直接 ' '.join()。兩邊契約不同，
@@ -304,7 +314,7 @@ class IntelligentRepoSync:
         try:
             for structure in structures:
                 decision = self.naming_engine.generate_name(
-                    patterns=structure.get('pattern_names', []),
+                    patterns=structure.get('pattern_keywords', []),
                     concepts=structure.get('concepts', []),
                     reasoning_chains=structure.get('reasoning_texts', []),
                     source_info=structure.get('source_info')
