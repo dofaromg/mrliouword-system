@@ -385,3 +385,48 @@ Observe 與 Mirror 之後。而 `preserve_as_delta_not_failure` 明文規定：
 | 未修 | PR #77 討論串 `4059254312`（channel 競態，提案） |
 
 原七個 PR（#70–#76）已收成 #77，但**分支與討論串一條都沒刪**，上述編號隨時可回查。
+
+---
+
+## 第 10 則（2026-09-21 補記，append）：本機綠、CI 紅——驗收環境跟真實環境不同
+
+**誰抓到的**：GitHub Actions。不是我。
+
+**錯誤**：新增的 CI job `MRL 命名正名與 lineage` 在 `a0a059e` 失敗，
+`ModuleNotFoundError: No module named 'yaml'`。我把登錄檢查寫成 workflow
+裡的內嵌 heredoc，註解還寫著「純標準函式庫，不裝任何套件」——
+但程式裡 `import yaml`，PyYAML 不是標準函式庫。
+
+本機跑得過，因為這個環境裝了 PyYAML；runner 沒有。
+
+**表層原因**：宣稱「不裝套件」卻用了非標準函式庫。
+
+**底層原因（真正該修的）**：我把檢查邏輯放在**測試碰不到的地方**。
+內嵌在 YAML 裡的 python 沒有任何測試會執行到它，所以本機與 runner 的差異
+沒有東西擋。這跟第 1 則（測的是自己捏的 fixture）、第 8 則（自己的 docstring
+算錯還自己相信）是同一個形狀：**驗收用的東西不是真實的那一個**。
+
+**修正**：
+- 邏輯搬到 `tools/naming_lineage_check.py`——它有測試、跑得到。
+- PyYAML 照 `release-gate` job 的既有慣例明確安裝。
+- 缺依賴時直接報錯並說怎麼修，**不做「裝不到就跳過」的降級**——
+  那是檢查者自己放寬標準（第 1 則、第 5 則的形狀）。
+
+**現在擋著它復發的是什麼**：
+`tests/test_naming_lineage_check.py` 兩條回歸測試——
+`test_ci_job_installs_pyyaml`（job 必須裝 PyYAML）、
+`test_ci_job_calls_the_tool_not_inline_python`（job 不得再出現內嵌 heredoc）。
+兩條都做過**破壞驗證**：把 bug 放回去，兩條都確實變紅。
+
+**附帶抓到的第二個錯**：第一次破壞驗證時我改錯位置——
+`release-gate` job 也有一模一樣的 `Install PyYAML` 步驟，
+`str.replace(..., 1)` 命中的是它，於是測試「通過」了。
+我差點據此判定測試無效。實際是**我的驗證錯了，不是測試錯了**。
+查證方式：印出全檔出現次數（2 次）與破壞後 job 的實際步驟。
+
+教訓跟第 8 則同一句：**先跑一次，再決定同不同意**——
+包括不同意自己的測試的時候。
+
+| 則 | 證據 |
+| --- | --- |
+| 10 | CI job `106233546931` 的日誌；修正於下一個 commit；回歸測試見 `tests/test_naming_lineage_check.py` 最後兩條 |

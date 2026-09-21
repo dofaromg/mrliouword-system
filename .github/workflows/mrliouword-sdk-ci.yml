@@ -370,7 +370,13 @@ jobs:
     #     CLAUDE.md         adapter    ← 機器產生
     #
     # 兩份同內容而沒有檢查一定會分岔（復盤第 1、5 則同一個形狀），
-    # 這個 job 就是那個檢查。純標準函式庫，不裝任何套件。
+    # 這個 job 就是那個檢查。
+    #
+    # 這個 job 的第一版（a0a059e）把登錄檢查寫成內嵌 heredoc，本機過、
+    # CI 紅：ModuleNotFoundError: No module named 'yaml'。內嵌在 workflow
+    # 裡的程式碼**測試碰不到**，本機有 PyYAML 而 runner 沒有。
+    # 所以檢查搬到 tools/naming_lineage_check.py（有測試），
+    # PyYAML 照 release-gate job 的慣例明確安裝。
     steps:
       - uses: actions/checkout@v4
 
@@ -382,51 +388,11 @@ jobs:
       - name: 檢查 adapter 與正本同步
         run: python tools/mrliou_claude_sync.py --check
 
-      - name: 檢查正名已登錄（Registry Gate）
-        run: |
-          python - <<'EOF'
-          import sys, yaml
-          from pathlib import Path
+      - name: Install PyYAML
+        run: pip install PyYAML
 
-          reg = yaml.safe_load(
-              Path("registry/MRL_System_MrliouAI_Naming_Registry_v1.yaml")
-              .read_text(encoding="utf-8")
-          )
-          fails = []
-
-          # naming_rules_v1.yaml 的 Registry Gate：
-          # 未登錄的產物不得進入命名/索引規則。
-          entry = (reg.get("canonical") or {}).get("entrypoint") or {}
-          if entry.get("id") != "Mrliou_claude":
-              fails.append("canonical.entrypoint 沒有登錄 Mrliou_claude")
-          if entry.get("registry_key") != "mrl_Mrliou_claude":
-              fails.append("registry_key 不是 mrl_Mrliou_claude（格式見 naming_rules_v1.yaml）")
-
-          alias = (reg.get("legacy_aliases") or {}).get("CLAUDE.md") or {}
-          if alias.get("canonical") != "Mrliou_claude":
-              fails.append("legacy_aliases['CLAUDE.md'] 沒有指向 Mrliou_claude")
-          if alias.get("disposition") != "adapter":
-              fails.append("CLAUDE.md 的處置不是 adapter（NAMING.md 1.2）")
-
-          # NAMING.md 1.4：先建 lineage 與映射，不得無證據改名。
-          lineage = Path("docs/governance/MRL_NAMING_LINEAGE.md")
-          if not lineage.is_file():
-              fails.append(f"{lineage} 不存在——沒有 lineage 就是無證據改名")
-          elif "L-001" not in lineage.read_text(encoding="utf-8"):
-              fails.append(f"{lineage} 缺少 L-001（CLAUDE.md → Mrliou_claude.md）")
-
-          # 原名永不變更、檔案不刪。
-          for must in ("CLAUDE.md", "Mrliou_claude.md"):
-              if not Path(must).is_file():
-                  fails.append(f"{must} 不存在——原名不得刪除，正本不得缺席")
-
-          if fails:
-              print("命名正名檢查未通過：")
-              for f in fails:
-                  print(f"  - {f}")
-              sys.exit(1)
-          print("✓ 正名已登錄、lineage 齊備、原名保留")
-          EOF
+      - name: 檢查正名已登錄、lineage 齊備、原名保留
+        run: python tools/naming_lineage_check.py
 
       - name: 摘要
         if: ${{ !cancelled() }}
@@ -442,6 +408,8 @@ jobs:
             echo "lineage：\`docs/governance/MRL_NAMING_LINEAGE.md\` L-001"
             echo ""
             python tools/mrliou_claude_sync.py --check 2>&1 | sed 's/^/    /'
+            echo ""
+            python tools/naming_lineage_check.py 2>&1 | sed 's/^/    /'
           } >> "$GITHUB_STEP_SUMMARY"
 
   mother-core-registry:

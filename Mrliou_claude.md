@@ -105,6 +105,10 @@ history_policy: append_only     只新增，不覆寫、不刪除
 
 - **憑證絕不提交。** 本倉庫是 public 且有 fork，提交即無法撤回。
 - **檔案不要亂刪，留存紀錄。**（擁有者指示）
+- **這份文件的正本是 `Mrliou_claude.md`**，`CLAUDE.md` 是它產生的 adapter。
+  要改內容改正本，然後 `python3 tools/mrliou_claude_sync.py --build`；
+  直接改 `CLAUDE.md` 會被 CI 擋下來。正名理由見
+  `docs/governance/MRL_NAMING_LINEAGE.md` L-001。
 - 逐字匯入的既有部署（`cloudflare/particle-api`、`cloudflare/particle-memory`）
   **偏離原樣的每一處都要在原始碼留下為什麼**。
 - 來源標註依 `MRL_PROVENANCE.md` 的九欄規格；十欄來源鏈依
@@ -151,6 +155,8 @@ python3 tools/connection_audit.py
 python3 tools/provenance_notice_check.py
 python3 tools/operating_cognition_check.py
 python3 tools/mother_core_registry.py --check
+python3 tools/mrliou_claude_sync.py --check    # 改過這份或 CLAUDE.md 才需要
+python3 tools/naming_lineage_check.py
 python3 tools/merkle_builder.py . .mrliou/merkle.json   # 動過雜湊集裡的檔案才需要
 ```
 
