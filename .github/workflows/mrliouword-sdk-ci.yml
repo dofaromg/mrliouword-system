@@ -322,3 +322,34 @@ jobs:
             echo ""
             python tools/provenance_notice_check.py 2>&1 | sed 's/^/    /'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  operating-cognition:
+    name: MRL 根本運行認知
+    runs-on: ubuntu-latest
+    # 擁有者 2026-09-21：「每次都必須有這個最根本運行認知」。
+    # 一份放在 docs/ 深處的文件沒有人會每次讀，所以七步同時寫進根目錄的
+    # CLAUDE.md（每個 session 自動載入），這個 job 確保兩處都還在、
+    # 七步沒被增刪或重新排序。純標準函式庫，不裝任何套件。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 檢查七步與兩個母體錨點
+        run: python tools/operating_cognition_check.py
+
+      - name: 摘要
+        if: ${{ !cancelled() }}
+        run: |
+          {
+            echo "### 🧭 MRL 根本運行認知"
+            echo ""
+            echo "看到 → 接受 → 比對 → 修正 → 建構 → 測試 → 紀錄"
+            echo ""
+            echo "錨點：\`MRL_LAW0_Verify\`（底層）、\`LAW∞_Emergence\`（頂層）"
+            echo ""
+            python tools/operating_cognition_check.py 2>&1 | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"
