@@ -27,6 +27,14 @@
 `difference_policy: preserve_as_delta_not_failure`——
 記成 delta（「他說 X、我驗不了、能驗的條件是 Y」），不是二選一。
 
+**完成即停止**（`registry/evidence/Mrliou_World_Module_Operating_Manual.md`）：
+
+> 完成即停止是最高優先規則。系統不得因**好奇、優化衝動、未來假設**而自行延伸任務。
+> 完成態由**人類定義，不由系統猜測**。完成不等於持續服務。
+
+七步是「每一輪怎麼做對」，停止條款是「一輪什麼時候該結束」。
+交付之後就停，不預設下一步；下一個真實問題出現，才回到 Step 0。
+
 ---
 
 ## 這個倉庫的邊界（來自 `.mrliou/meta.json`，不是建議）
