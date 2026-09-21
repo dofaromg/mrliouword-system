@@ -16,9 +16,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 from tools.operating_cognition_check import (  # noqa: E402
+    ADAPTER_PATH,
     ANCHORS,
+    CANON_PATH,
     DELTA_POLICY,
-    ENTRY_PATH,
+    ENTRY_PATHS,
     LAW_PATH,
     PREMISE,
     STEPS,
@@ -29,10 +31,11 @@ from tools.operating_cognition_check import (  # noqa: E402
 
 @pytest.fixture
 def sandbox(tmp_path: Path) -> Path:
-    """倉庫兩份真實文件的副本。"""
+    """倉庫三份真實文件的副本（法則全文、正本、adapter）。"""
     (tmp_path / LAW_PATH.parent).mkdir(parents=True, exist_ok=True)
     shutil.copy(REPO_ROOT / LAW_PATH, tmp_path / LAW_PATH)
-    shutil.copy(REPO_ROOT / ENTRY_PATH, tmp_path / ENTRY_PATH)
+    for rel in ENTRY_PATHS:
+        shutil.copy(REPO_ROOT / rel, tmp_path / rel)
     return tmp_path
 
 
@@ -64,14 +67,14 @@ def test_anchors_are_existing_mother_laws() -> None:
 
 
 @pytest.mark.parametrize("step", STEPS)
-@pytest.mark.parametrize("rel", [LAW_PATH, ENTRY_PATH])
+@pytest.mark.parametrize("rel", [LAW_PATH, *ENTRY_PATHS])
 def test_removing_a_step_is_caught(sandbox: Path, rel: Path, step: str) -> None:
     failures = check(_mutate(sandbox, rel, step))
     assert any(step in f for f in failures), f"{rel} 少了「{step}」卻被放行"
 
 
 def test_reordered_steps_are_caught(sandbox: Path) -> None:
-    p = sandbox / ENTRY_PATH
+    p = sandbox / ADAPTER_PATH
     t = p.read_text(encoding="utf-8")
     t = (
         t.replace("**看到**", "__A__")
@@ -84,7 +87,7 @@ def test_reordered_steps_are_caught(sandbox: Path) -> None:
 
 
 def test_missing_premise_is_caught(sandbox: Path) -> None:
-    assert any(PREMISE in f for f in check(_mutate(sandbox, ENTRY_PATH, PREMISE)))
+    assert any(PREMISE in f for f in check(_mutate(sandbox, ADAPTER_PATH, PREMISE)))
 
 
 @pytest.mark.parametrize("layer,anchor", sorted(ANCHORS.items()))
@@ -100,14 +103,43 @@ def test_missing_delta_policy_is_caught(sandbox: Path) -> None:
 
 
 def test_entry_must_point_at_the_full_text(sandbox: Path) -> None:
-    failures = check(_mutate(sandbox, ENTRY_PATH, LAW_PATH.as_posix()))
+    failures = check(_mutate(sandbox, ADAPTER_PATH, LAW_PATH.as_posix()))
     assert any("找得到全文" in f for f in failures)
 
 
-def test_deleting_claude_md_is_caught(sandbox: Path) -> None:
-    """CLAUDE.md 是「每次都必須有」的機制本身，不能不見。"""
-    (sandbox / ENTRY_PATH).unlink()
+def test_deleting_the_adapter_is_caught(sandbox: Path) -> None:
+    """CLAUDE.md 是「每次都必須有」的機制本身，不能不見。
+
+    它在 2026-09-21 降為 adapter，但**自動載入的仍然是它**，
+    所以「不能不見」這條沒有因為正名而變鬆。
+    """
+    (sandbox / ADAPTER_PATH).unlink()
     assert any("每次都必須" in f for f in check(sandbox))
+
+
+def test_deleting_the_canonical_is_caught(sandbox: Path) -> None:
+    """正本不見，adapter 就沒有來源，正名等於失效。"""
+    (sandbox / CANON_PATH).unlink()
+    assert any(str(CANON_PATH) in f for f in check(sandbox))
+
+
+def test_adapter_must_point_back_at_the_canonical(sandbox: Path) -> None:
+    """adapter 要自己標明正本在哪，否則下一個人會直接改它。"""
+    failures = check(_mutate(sandbox, ADAPTER_PATH, CANON_PATH.as_posix()))
+    assert any("指回正本" in f for f in failures)
+
+
+def test_canonical_header_quote_does_not_break_step_order(sandbox: Path) -> None:
+    """回歸測試：正本抬頭引用擁有者原話會含「建構」二字。
+
+    2026-09-21 實跑抓到——照全文算「首次出現」，抬頭裡的「建構」會排到
+    「看到」前面，檢查誤報順序錯誤。修的是檢查的假設（七步住在本文區），
+    不是去改擁有者的原話。素材是倉庫裡真正的正本，不是捏的。
+    """
+    canon = (sandbox / CANON_PATH).read_text(encoding="utf-8")
+    header = canon.split("<!-- MRL-CANON-BODY:BEGIN -->")[0]
+    assert "建構" in header, "抬頭不再含「建構」，這個回歸測試就失去意義了"
+    assert not check(sandbox), "本文區七步齊備時不該因抬頭用字而失敗"
 
 
 def test_deleting_the_law_is_caught(sandbox: Path) -> None:
@@ -117,5 +149,5 @@ def test_deleting_the_law_is_caught(sandbox: Path) -> None:
 
 def test_main_exit_codes(sandbox: Path, tmp_path: Path) -> None:
     assert main(["prog", str(sandbox)]) == 0
-    (sandbox / ENTRY_PATH).unlink()
+    (sandbox / ADAPTER_PATH).unlink()
     assert main(["prog", str(sandbox)]) == 1

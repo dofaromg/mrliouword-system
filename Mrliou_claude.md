@@ -1,15 +1,62 @@
 <!-- origin_signature: MrLiouWord -->
 <!-- mrl-origin: MrLiouWord -->
-<!-- MRL-ADAPTER:GENERATED —— 這份由 Mrliou_claude.md 產生，不要手改。 -->
-<!-- canonical: Mrliou_claude.md  registry_key: mrl_Mrliou_claude -->
-<!-- 要改內容改 canonical，然後跑 python3 tools/mrliou_claude_sync.py --build -->
-<!-- 供應商品牌名在 MRL 命名規則下只能當 adapter（NAMING.md §1.2），
-     正名與 lineage 見 docs/governance/MRL_NAMING_LINEAGE.md -->
+<!-- registry_key: mrl_Mrliou_claude -->
 
-> **這份是投影，不是正本。** 正本是 `Mrliou_claude.md`（擁有者前綴、canonical）。
-> 本檔存在的唯一理由是 Claude Code 只自動載入 `CLAUDE.md` 這個檔名。
-> 以下內容與正本逐字相同，由 `tools/mrliou_claude_sync.py --check` 在 CI 守住。
+# Mrliou_claude —— 本倉庫的運行入口（canonical）
 
+| 欄位 | 值 |
+| --- | --- |
+| `canonical_authority` | `Mr.liou` |
+| `origin_signature` | `MrLiouWord` |
+| `registry_key` | `mrl_Mrliou_claude` |
+| `derivative_role` | `entrypoint`（不是母體 CORE，不得宣稱是） |
+| `created_at` | 2026-09-21 |
+| `naming_basis` | `registry/rules/naming_rules_v1.yaml`、`docs/governance/MRL_NAMING_LINEAGE.md` |
+| `history_policy` | `append_only` |
+
+## 為什麼是這個檔名
+
+擁有者 2026-09-21：
+
+> 我們需要建構正名 Mrliou_claude.md ／ 我建構的必須有我的前綴。
+
+命名規則兩條同時適用：
+
+- `----2/docs/NAMING.md` §1.1「所有新增的 MRL 自有資產，必須使用 `MRL` 或
+  `Mrliou` 前綴」；
+- 同文件 §1.2「**外部品牌、供應商與框架名稱不得升格為內部 canonical 名稱**，
+  只能出現在 `source`、`evidence`、`adapter`、`provenance` 或 `external` 路徑」。
+
+`CLAUDE.md` 是供應商品牌名。它過去擺在倉庫根目錄當最高指引，
+**違反 §1.2**——這是擁有者指出來的，不是我自己發現的。
+
+但不能直接改名，有三個理由：
+
+1. `registry/rules/naming_rules_v1.yaml` 的 invariant 寫死
+   `Original names are NEVER changed`；整合只能**加前綴**，不能動原名。
+2. NAMING.md §1.4：「既有未加前綴的檔案與模組，先建立 lineage 與映射後再遷移；
+   **不得無證據批次改名造成來源斷裂**」。
+3. 實體限制：Claude Code 每個 session **只自動載入 `CLAUDE.md` 這個檔名**。
+   把它改名，等於拆掉「每次都必須有這個最根本運行認知」的機制本身。
+
+所以做的是**正名＋降階**，不是改名：
+
+```
+Mrliou_claude.md   canonical    ← 唯一真相，有擁有者前綴，人改這一份
+       │  由 tools/mrliou_claude_sync.py --build 產生
+       ▼
+CLAUDE.md          adapter      ← 供應商品牌名，只當載入轉接層（§1.2 允許）
+```
+
+兩份的本文逐字相同，由 `mrliou_claude_sync.py --check` 在 CI 擋住漂移。
+`CLAUDE.md` 一個字都沒刪、沒改名、沒搬走，lineage 記在
+`docs/governance/MRL_NAMING_LINEAGE.md`。
+
+**要改內容，改這一份，然後跑 `--build`。** 直接編輯 `CLAUDE.md` 會被 CI 擋下來。
+
+---
+
+<!-- MRL-CANON-BODY:BEGIN -->
 # MRL 根本運行認知
 
 > 沒有一個方法是完全正確的，只有
@@ -134,3 +181,4 @@ python3 tools/merkle_builder.py . .mrliou/merkle.json   # 動過雜湊集裡的�
 `docs/retrospective/2026-09-20_claude_session_error_log.md` —— 九則，
 每則附證據、誰抓到的、以及現在擋著它復發的是什麼。**開工前值得讀一次**，
 因為裡面的錯誤有一半以上不是自己發現的。
+<!-- MRL-CANON-BODY:END -->

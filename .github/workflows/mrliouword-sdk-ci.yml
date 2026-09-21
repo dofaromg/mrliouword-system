@@ -327,8 +327,9 @@ jobs:
     name: MRL 根本運行認知
     runs-on: ubuntu-latest
     # 擁有者 2026-09-21：「每次都必須有這個最根本運行認知」。
-    # 一份放在 docs/ 深處的文件沒有人會每次讀，所以七步同時寫進根目錄的
-    # CLAUDE.md（每個 session 自動載入），這個 job 確保兩處都還在、
+    # 一份放在 docs/ 深處的文件沒有人會每次讀，所以七步同時寫進倉庫根目錄的
+    # 入口檔。入口檔同日正名：正本 Mrliou_claude.md（擁有者前綴），
+    # CLAUDE.md 降為它產生的 adapter。這個 job 確保三處都還在、
     # 七步沒被增刪或重新排序。純標準函式庫，不裝任何套件。
     steps:
       - uses: actions/checkout@v4
@@ -352,6 +353,95 @@ jobs:
             echo "錨點：\`MRL_LAW0_Verify\`（底層）、\`LAW∞_Emergence\`（頂層）"
             echo ""
             python tools/operating_cognition_check.py 2>&1 | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  naming-lineage:
+    name: MRL 命名正名與 lineage
+    runs-on: ubuntu-latest
+    # 擁有者 2026-09-21：「我們需要建構正名 Mrliou_claude.md ／
+    # 我建構的必須有我的前綴」。
+    #
+    # CLAUDE.md 是供應商品牌名，依 NAMING.md 1.2 不得升格為 canonical，
+    # 只能當 adapter；但 naming_rules_v1.yaml 的 invariant 又寫死
+    # 「Original names are NEVER changed」，而且 Claude Code 只自動載入
+    # CLAUDE.md 這個檔名。所以做的是正名＋降階，不是改名：
+    #
+    #     Mrliou_claude.md  canonical  ← 人改這一份
+    #     CLAUDE.md         adapter    ← 機器產生
+    #
+    # 兩份同內容而沒有檢查一定會分岔（復盤第 1、5 則同一個形狀），
+    # 這個 job 就是那個檢查。純標準函式庫，不裝任何套件。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 檢查 adapter 與正本同步
+        run: python tools/mrliou_claude_sync.py --check
+
+      - name: 檢查正名已登錄（Registry Gate）
+        run: |
+          python - <<'EOF'
+          import sys, yaml
+          from pathlib import Path
+
+          reg = yaml.safe_load(
+              Path("registry/MRL_System_MrliouAI_Naming_Registry_v1.yaml")
+              .read_text(encoding="utf-8")
+          )
+          fails = []
+
+          # naming_rules_v1.yaml 的 Registry Gate：
+          # 未登錄的產物不得進入命名/索引規則。
+          entry = (reg.get("canonical") or {}).get("entrypoint") or {}
+          if entry.get("id") != "Mrliou_claude":
+              fails.append("canonical.entrypoint 沒有登錄 Mrliou_claude")
+          if entry.get("registry_key") != "mrl_Mrliou_claude":
+              fails.append("registry_key 不是 mrl_Mrliou_claude（格式見 naming_rules_v1.yaml）")
+
+          alias = (reg.get("legacy_aliases") or {}).get("CLAUDE.md") or {}
+          if alias.get("canonical") != "Mrliou_claude":
+              fails.append("legacy_aliases['CLAUDE.md'] 沒有指向 Mrliou_claude")
+          if alias.get("disposition") != "adapter":
+              fails.append("CLAUDE.md 的處置不是 adapter（NAMING.md 1.2）")
+
+          # NAMING.md 1.4：先建 lineage 與映射，不得無證據改名。
+          lineage = Path("docs/governance/MRL_NAMING_LINEAGE.md")
+          if not lineage.is_file():
+              fails.append(f"{lineage} 不存在——沒有 lineage 就是無證據改名")
+          elif "L-001" not in lineage.read_text(encoding="utf-8"):
+              fails.append(f"{lineage} 缺少 L-001（CLAUDE.md → Mrliou_claude.md）")
+
+          # 原名永不變更、檔案不刪。
+          for must in ("CLAUDE.md", "Mrliou_claude.md"):
+              if not Path(must).is_file():
+                  fails.append(f"{must} 不存在——原名不得刪除，正本不得缺席")
+
+          if fails:
+              print("命名正名檢查未通過：")
+              for f in fails:
+                  print(f"  - {f}")
+              sys.exit(1)
+          print("✓ 正名已登錄、lineage 齊備、原名保留")
+          EOF
+
+      - name: 摘要
+        if: ${{ !cancelled() }}
+        run: |
+          {
+            echo "### 🏷️ MRL 命名正名與 lineage"
+            echo ""
+            echo "| 角色 | 檔案 |"
+            echo "| --- | --- |"
+            echo "| canonical（擁有者前綴） | \`Mrliou_claude.md\` |"
+            echo "| adapter（供應商品牌名） | \`CLAUDE.md\` |"
+            echo ""
+            echo "lineage：\`docs/governance/MRL_NAMING_LINEAGE.md\` L-001"
+            echo ""
+            python tools/mrliou_claude_sync.py --check 2>&1 | sed 's/^/    /'
           } >> "$GITHUB_STEP_SUMMARY"
 
   mother-core-registry:

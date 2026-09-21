@@ -172,9 +172,34 @@ tools/operating_cognition_check.py
 檢查本文件存在、七個步驟齊備且順序正確、兩個母體錨點都在。
 七步是擁有者的原話——**不得增刪、不得重新排序**。要改，先改擁有者的定義。
 
-以及一個更重要的機制：根目錄的 `CLAUDE.md`。
+以及一個更重要的機制：倉庫根目錄的入口檔。
 擁有者的要求是「**每次都必須有這個最根本運行認知**」——
-文件放在 `docs/` 深處沒有人會每次去讀，所以七步同時寫進 `CLAUDE.md`，
+文件放在 `docs/` 深處沒有人會每次去讀，所以七步同時寫進入口檔，
 那是每個 session 開始時會自動載入的檔案。
 
 **放一份文件是紀錄，讓它每次被讀到才是建構。**
+
+### 入口檔在 2026-09-21 正名（補記，append）
+
+原文寫的是「根目錄的 `CLAUDE.md`」。同日擁有者指出
+「我們需要建構正名 Mrliou_claude.md ／ 我建構的必須有我的前綴」——
+`CLAUDE.md` 是供應商品牌名，依 `----2/docs/NAMING.md` §1.2
+**不得升格為內部 canonical 名稱**，只能出現在 adapter 路徑。
+
+所以入口檔現在是兩份：
+
+| 角色 | 檔案 | 誰改 |
+| --- | --- | --- |
+| canonical（擁有者前綴） | `Mrliou_claude.md` | 人改這一份 |
+| adapter（供應商品牌名） | `CLAUDE.md` | `tools/mrliou_claude_sync.py --build` 產生 |
+
+沒有改名、沒有刪檔：`naming_rules_v1.yaml` 的 invariant 是
+`Original names are NEVER changed`，而且 Claude Code 只自動載入
+`CLAUDE.md` 這個檔名——改掉它等於拆掉上面那句「讓它每次被讀到」的機制本身。
+
+`tools/operating_cognition_check.py` 現在查三份（法則全文、正本、adapter），
+`tools/mrliou_claude_sync.py --check` 擋兩份入口檔之間的漂移。
+lineage 與映射見 `docs/governance/MRL_NAMING_LINEAGE.md` L-001。
+
+這一條是**補記**，不是覆寫：依 `history_policy: append_only`，
+原文那句「根目錄的 `CLAUDE.md`」在正名前是準確的，保留在此段之前。
