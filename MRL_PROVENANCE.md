@@ -80,7 +80,7 @@
 
 | 欄位 | 值 |
 | --- | --- |
-| Source Root | MRL / MrLiouWord / `dofaromg/MRL-lecrev` |
+| Source Root | ⚠️ **未決** —— 兩份權利人文件指向不同倉庫，見 `registry/evidence/DELTA_canonical_root_unresolved.md`。規格表（第二節）逐字轉錄的 `dofaromg/MRL-lecrev` **不動**；此處是我的斷言，已撤回為 delta |
 | 本倉庫角色 | `external_version_reference_and_evidence_ledger`（`.mrliou/meta.json`） |
 | Canonical 判定 | **本倉庫不是 MRL canonical。** `canonical_authority: false` |
 | 權利人分類 | Mixed MRL and AI（見第一節） |
@@ -97,6 +97,10 @@
 
 1. **`dofaromg/MRL-lecrev` 的讀取權。** 本 session 僅獲授權
    `dofaromg/mrliouword-system` 一個倉庫，無法讀取 canonical 端的 commit。
+   **而且「canonical 端是哪一個」本身也未決**——另一份權利人文件
+   （`dofaromg/----2` 的 `MRL_CANONICAL_SYNC_v1.0.yaml`，2026-08-04）
+   宣告 `canonical_root: dofaromg/----2@main`。差異記在
+   `registry/evidence/DELTA_canonical_root_unresolved.md`，等 Root Owner 裁決。
 2. **逐檔 hash 對應。** 權利人文件〈尚待固定的關鍵證據〉本身就把
    「MRL 原檔 hash ↔ 外部檔案 hash」與「首次出現時間」列為**待完成**項目。
    canonical 端還沒固定，這一端也無從對應。

@@ -26,6 +26,9 @@
 | `MRL_GitHub_Payment_Provenance_Incident_Record_20260914_v3.index.md` | projection | 署名與授權邊界事件紀錄的**索引與節選**；帳務、證物指紋、第三方個資刻意未收錄 |
 | `mrl_mother_structure_index_2026-09-20.json` | projection | `MRL_MOTHER.md` 的結構索引：2,295 個識別碼、199 個 CORE、22 條 LAW，與本倉庫的實際覆蓋率對照 |
 | `Mrliou_World_Module_Operating_Manual.md` | mirror | 運行規章：從 0 到停止的八個 Step、莫比斯閉環、**停止條款**。自 PDF 的 ToUnicode CMap 還原，字句未改 |
+| `Mrl_Zero.Origin.v1.md` | mirror | 身分／原則文件，寫給「下一個視窗的我」。逐字保存，〈標記空位〉留白 |
+| `MRL_Root_Governance_Docs_index.md` | projection | `dofaromg/----2` 治理文件的索引與雜湊，**不複製全文** |
+| `DELTA_canonical_root_unresolved.md` | projection | ⚠️ 兩份文件指向不同 canonical root，記成 delta 等 Root Owner 裁決 |
 | `EXTERNAL_FORK_REFERENCES.md` | projection | 新撰的核對索引：經核對確認**不屬於 MRL 原創層**的外部上游，含授權與著作權歸屬 |
 | `../mrl_global_file_index_2026-07-29.json` | mirror | Google Drive 側 170 檔全域索引 —— 在 `claude/partner-jjchvg-connect` 分支，尚未合併進 main |
 
