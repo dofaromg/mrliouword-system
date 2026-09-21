@@ -3,7 +3,7 @@
   "status": "initializing",
   "repos": {
     "dofaromg/mrliouword-system": {
-      "merkle_root": "2c06d11e45931abd641ecf61a51387755262442c0675f2a650ba843449fea580",
+      "merkle_root": "b7df5204044c1d18eef5bf772ccfb838d5d86ae765ccb6cfb770b2eeddd2301b",
       "particle_count": 12,
       "last_verified": "2026-09-20T12:56:13Z"
     },
