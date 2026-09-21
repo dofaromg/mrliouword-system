@@ -133,6 +133,59 @@ def read_wrangler_name(path: Path) -> Optional[str]:
     return parsed.get("name") if isinstance(parsed, dict) else None
 
 
+# 佔位字串：設定檔存在、wrangler 也讀得到，但填的不是真值。
+# 這種設定「可解析」卻「不可部署」——把它算進可部署數，等於用一個
+# 我自己刻意留下的待辦去美化本報告的主結論。
+# 這個缺陷是 Codex 在 PR #77 上指出來的，屬實：cloudflare/particle-memory
+# 的兩個 D1 識別碼都是 FILL_ME_BEFORE_DEPLOY，卻被算進「倉庫可部署 4」。
+PLACEHOLDER_PATTERN = re.compile(
+    r"FILL[_ ]?ME|CHANGE[_ ]?ME|REPLACE[_ ]?ME|TODO|TBD|XXXX+|"
+    r"<[^>]*>|your[-_]|example\.com|PLACEHOLDER",
+    re.IGNORECASE,
+)
+
+# 這些欄位一旦是佔位字串，wrangler deploy 一定失敗。
+REQUIRED_BINDING_KEYS = (
+    "database_id",
+    "database_name",
+    "id",
+    "bucket_name",
+    "account_id",
+)
+
+
+_PLACEHOLDER_KEY_RE = re.compile(
+    r"[\"']?(" + "|".join(REQUIRED_BINDING_KEYS) + r")[\"']?\s*[:=]\s*[\"']([^\"']*)[\"']"
+)
+
+
+def find_placeholders(path: Path) -> List[Dict[str, str]]:
+    """回傳設定檔中帶佔位字串的必要欄位。
+
+    同時支援 TOML 的 ``key = "value"`` 與 JSON/JSONC 的 ``"key": "value"``，
+    包含寫在同一行的內嵌物件（``[{ "binding": "DB", "database_id": "…" }]``）。
+    第一版用逐行 partition，抓不到行內物件——測試抓到了，所以改成掃描。
+
+    整行註解會先丟掉：註解裡提到 FILL_ME 是說明，不是設定。
+    行末註解不需要特別處理，因為樣式要求值必須緊接在鍵後面且帶引號。
+    """
+    out: List[Dict[str, str]] = []
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return out
+    body = "\n".join(
+        line
+        for line in text.splitlines()
+        if not line.lstrip().startswith(("#", "//"))
+    )
+    for match in _PLACEHOLDER_KEY_RE.finditer(body):
+        key, value = match.group(1), match.group(2)
+        if value and PLACEHOLDER_PATTERN.search(value):
+            out.append({"key": key, "value": value})
+    return out
+
+
 def collect_wrangler(
     root: Path,
 ) -> Tuple[Dict[str, List[Dict[str, Any]]], List[Dict[str, str]]]:
@@ -155,7 +208,11 @@ def collect_wrangler(
             failed.append({"path": rel, "reason": "沒有 name 欄位"})
             continue
         found.setdefault(name, []).append(
-            {"path": rel, "readable_by_wrangler": path.name in WRANGLER_CANONICAL}
+            {
+                "path": rel,
+                "readable_by_wrangler": path.name in WRANGLER_CANONICAL,
+                "placeholders": find_placeholders(path),
+            }
         )
     return found, failed
 
@@ -235,7 +292,16 @@ def audit(root: Path) -> Dict[str, Any]:
         workers.append(
             {
                 "name": name,
-                "deployable_from_repo": any(c["readable_by_wrangler"] for c in configs),
+                # 讀得到 ≠ 部署得了。兩個條件都要成立。
+                "deployable_from_repo": any(
+                    c["readable_by_wrangler"] and not c["placeholders"]
+                    for c in configs
+                ),
+                "config_incomplete": [
+                    {"path": c["path"], "placeholders": c["placeholders"]}
+                    for c in configs
+                    if c["readable_by_wrangler"] and c["placeholders"]
+                ],
                 "wrangler_configs": configs,
                 "in_service_registry": name in config_workers,
                 "client_references": client_refs.get(name, []),
@@ -281,6 +347,7 @@ def audit(root: Path) -> Dict[str, Any]:
         "totals": {
             "cloud_workers": len(inventory["workers"]),
             "deployable_from_repo": sum(w["deployable_from_repo"] for w in workers),
+            "config_incomplete": sum(1 for w in workers if w["config_incomplete"]),
             "in_service_registry": sum(w["in_service_registry"] for w in workers),
             "referenced_by_clients": sum(bool(w["client_references"]) for w in workers),
             "legacy_alias": sum(
@@ -312,6 +379,11 @@ def main() -> int:
     print(f"   來源盤點      {report['inventory_source']}")
     print(f"   雲端 Worker   {t['cloud_workers']}")
     print(f"   倉庫可部署    {t['deployable_from_repo']}")
+    if t.get("config_incomplete"):
+        print(
+            f"   設定不完整    {t['config_incomplete']}"
+            "（wrangler 讀得到，但必要欄位仍是佔位字串，部署會失敗）"
+        )
     print(f"   服務註冊表    {t['in_service_registry']}")
     print(f"   客戶端有參照  {t['referenced_by_clients']}")
     print(f"   legacy alias  {t['legacy_alias']}")

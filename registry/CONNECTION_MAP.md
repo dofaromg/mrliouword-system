@@ -36,7 +36,8 @@ registry_status: "unregistered"
 | 項目 | 數量 |
 |---|---|
 | 盤點中的雲端 Worker | **140** |
-| 倉庫內可部署（有 wrangler 能讀到的設定） | **3** |
+| 倉庫內可部署（wrangler 讀得到 **且** 必要欄位不是佔位字串） | **3** |
+| 設定不完整（讀得到，但部署會失敗） | 1 —— `particle-memory`，兩個 D1 識別碼仍是 `FILL_ME_BEFORE_DEPLOY` |
 | 登記在 `cloudflare/config.json` 的服務 | 3 |
 | 被倉庫內客戶端／文件參照 | 4 |
 | 命名註冊表標記為 legacy alias | 2 |
@@ -282,6 +283,8 @@ Google Drive 裡有一份 2026-07-29 的索引，已原樣存為 `registry/mrl_g
 - **盤點是帶日期的快照**，不是即時狀態。`registry/cloudflare_inventory_2026-03-12.json` 由使用者提供，其來源標註為 Cloudflare API 即時拉取。在取得新盤點之前，任何「不在盤點中」的結論都受限於該日期。
 - **URL 參照無法分辨範例與真實端點**。例如 `tools/deploy-enhanced.sh` 中的 `particle-edge` 只是互動提示裡的範例字串，不是實際呼叫。稽核會把它列出來，判讀時需人工確認。
 - **只看 `name` 欄位**，不驗證該 Worker 在雲端是否真的存在、是否可達、綁定是否一致。
+- **「讀得到」不等於「部署得了」。** 早期版本的 `deployable_from_repo` 只檢查 wrangler 能否讀到設定檔，於是 `cloudflare/particle-memory/wrangler.toml` 這種**必要欄位仍是 `FILL_ME_BEFORE_DEPLOY`** 的設定也被算進可部署數——主結論從 3 被灌水成 4。那個佔位字串是我自己刻意留的待辦（猜錯 `database_id` 會把記憶寫進別的資料庫），結果被我自己的稽核算成了成果。這正是本倉庫一再記錄的「數字渲染」。現在 `deployable_from_repo` 要求兩個條件同時成立，佔位字串另列 `config_incomplete` 具名呈現。這個缺陷是 Codex 在 PR #77 上指出來的。
+
 - **設定檔解析失敗會列在 `config_parse_failed`，不會被靜默略過。** 早期版本的 JSONC 處理只支援整行 `//` 註解，行末註解、區塊註解與尾隨逗號都會讓設定被丟掉、讓「倉庫可部署」少算——那正是本報告的主結論。現在改為逐字元掃描（字串內的 `//` 與 `,}` 不受影響），並把任何解析失敗明列在報告與 CI summary 中。`tests/test_connection_audit.py` 有 13 個回歸測試守著。
 
 ## 怎麼重跑

@@ -13,12 +13,14 @@ Author: MR.liou
 import json
 import os
 import sys
+from pathlib import Path
 
 import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../"))
 
-from tools.connection_audit import (  # noqa: E402
+from tools.connection_audit import (
+    find_placeholders,  # noqa: E402
     WranglerParseError,
     read_wrangler_name,
     strip_jsonc,
@@ -87,3 +89,79 @@ class TestReadWranglerName:
         p.write_text('{"name": "w"')
         with pytest.raises(WranglerParseError):
             read_wrangler_name(p)
+
+
+# --- 「讀得到」不等於「部署得了」 -------------------------------------------
+#
+# 原本 deployable_from_repo 只檢查 wrangler 能否讀到設定檔，於是
+# cloudflare/particle-memory/wrangler.toml 這種必要欄位仍是
+# FILL_ME_BEFORE_DEPLOY 的設定也被算進可部署數——主結論從 3 被灌水成 4。
+# 那個佔位字串是刻意留的待辦，卻被這份稽核算成了成果。
+# 這個缺陷是 Codex 在 PR #77 上指出來的。以下是它的回歸測試。
+
+
+def test_placeholder_in_required_field_is_detected(tmp_path: Path) -> None:
+    p = tmp_path / "wrangler.toml"
+    p.write_text(
+        'name = "x"\n\n[[d1_databases]]\n'
+        'binding = "DB"\n'
+        'database_name = "FILL_ME_BEFORE_DEPLOY"\n'
+        'database_id = "FILL_ME_BEFORE_DEPLOY"\n',
+        encoding="utf-8",
+    )
+    found = {f["key"] for f in find_placeholders(p)}
+    assert found == {"database_name", "database_id"}
+
+
+def test_real_values_are_not_flagged(tmp_path: Path) -> None:
+    p = tmp_path / "wrangler.toml"
+    p.write_text(
+        'name = "x"\n\n[[d1_databases]]\n'
+        'binding = "DB"\n'
+        'database_name = "mrliouword-db"\n'
+        'database_id = "01275832-aaaa-bbbb-cccc-000000000000"\n',
+        encoding="utf-8",
+    )
+    assert find_placeholders(p) == []
+
+
+def test_placeholder_in_a_comment_is_not_a_setting(tmp_path: Path) -> None:
+    """註解裡提到 FILL_ME 是說明，不是設定——不得誤報。"""
+    p = tmp_path / "wrangler.toml"
+    p.write_text(
+        "# database_id 尚未填入，請勿沿用 FILL_ME_BEFORE_DEPLOY\n"
+        'name = "x"\n\n[[d1_databases]]\n'
+        'database_id = "real-id-0001"  # 不是 FILL_ME\n',
+        encoding="utf-8",
+    )
+    assert find_placeholders(p) == []
+
+
+def test_non_required_field_with_placeholder_is_ignored(tmp_path: Path) -> None:
+    """只有「填了就一定部署失敗」的欄位才算數，不擴大解釋。"""
+    p = tmp_path / "wrangler.toml"
+    p.write_text('name = "x"\ndescription = "TODO 之後補說明"\n', encoding="utf-8")
+    assert find_placeholders(p) == []
+
+
+def test_jsonc_placeholder_is_detected(tmp_path: Path) -> None:
+    p = tmp_path / "wrangler.jsonc"
+    p.write_text(
+        '{\n  "name": "x",\n'
+        '  "d1_databases": [{ "binding": "DB", "database_id": "<your-id-here>" }]\n}\n',
+        encoding="utf-8",
+    )
+    assert [f["key"] for f in find_placeholders(p)] == ["database_id"]
+
+
+def test_missing_file_returns_empty(tmp_path: Path) -> None:
+    assert find_placeholders(tmp_path / "nope.toml") == []
+
+
+def test_single_line_jsonc_placeholder_is_detected(tmp_path: Path) -> None:
+    """整份寫在一行的 JSONC——第一版的逐行 partition 抓不到這種。"""
+    p = tmp_path / "wrangler.jsonc"
+    p.write_text(
+        '{ "d1_databases": [{ "database_id": "<your-id-here>" }] }\n', encoding="utf-8"
+    )
+    assert [f["key"] for f in find_placeholders(p)] == ["database_id"]
