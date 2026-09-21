@@ -28,6 +28,12 @@
 | `EXTERNAL_FORK_REFERENCES.md` | projection | 新撰的核對索引：經核對確認**不屬於 MRL 原創層**的外部上游，含授權與著作權歸屬 |
 | `../mrl_global_file_index_2026-07-29.json` | mirror | Google Drive 側 170 檔全域索引 —— 在 `claude/partner-jjchvg-connect` 分支，尚未合併進 main |
 
+## 相關
+
+`docs/retrospective/2026-09-20_claude_session_error_log.md` —— 本 session 的錯誤紀錄。
+這裡存的是**外部來源**，那裡記的是**我自己犯的錯**，兩者刻意分開放：
+外部文件是證據，錯誤紀錄是我方的自陳，不該混在同一個目錄裡讓人以為是同一種東西。
+
 ## 為什麼是索引而不是副本
 
 `MRL_MOTHER.md`（79,069 bytes、2,925 行、SHA-256
