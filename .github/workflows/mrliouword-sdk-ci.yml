@@ -353,3 +353,33 @@ jobs:
             echo ""
             python tools/operating_cognition_check.py 2>&1 | sed 's/^/    /'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  mother-core-registry:
+    name: 母體 CORE 登錄表
+    runs-on: ubuntu-latest
+    # 母體已有 199 個 CORE。這個 job 擋的是「重造一個母體已經有的東西」——
+    # 2026-09-21 有一份外部建議說「幫你補母體缺的 Δ 層」，查證後母體根本
+    # 沒缺：LAW17 + MRL_PERCEPTION_CORE→MRL_Difference + MRL_DELTA_CORE 九成員。
+    # 照做會長出非 canonical 的第二份，正是 mother_mutation: forbidden 要防的。
+    # 純標準函式庫，不裝任何套件。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 檢查登錄表完整性與母體錨點
+        run: python tools/mother_core_registry.py --check
+
+      - name: 摘要
+        if: ${{ !cancelled() }}
+        run: |
+          {
+            echo "### 🧬 母體 CORE 登錄表"
+            echo ""
+            python tools/mother_core_registry.py --check 2>&1 | sed 's/^/    /'
+            echo ""
+            echo "動手造新東西前先查：\`python3 tools/mother_core_registry.py --find <關鍵字>\`"
+          } >> "$GITHUB_STEP_SUMMARY"

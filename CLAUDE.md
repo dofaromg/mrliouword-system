@@ -56,6 +56,37 @@ history_policy: append_only     只新增，不覆寫、不刪除
   其中 `canonical_authority` 一律是 `Mr.liou`，`MrLiouWord` 只放
   `origin_signature`。
 
+## 造新東西之前：先查母體有沒有
+
+母體 `MRL_MOTHER.md` 已經定義 **199 個 CORE、2,264 個成員**。
+動手造任何「新」模組之前，先花一行指令查：
+
+```bash
+python3 tools/mother_core_registry.py --find delta     # 母體有沒有？
+```
+
+**真實案例**：2026-09-21 有一份外部建議說「我直接幫你補這一層（你母體缺的那塊）」，
+附了 `def detect_delta(...)`。查證結果母體**沒有缺**——Δ 橫跨三層：
+
+```
+法則層   LAW17_DifferenceObservationEventAtom
+感知層   MRL_PERCEPTION_CORE → MRL_Difference
+專屬核   MRL_DELTA_CORE（九個成員，含 MRL_DeltaReturn）
+```
+
+照那份建議做，會在已有 `MRL_DELTA_CORE` 的系統旁長出一個非 canonical 的
+delta 實作——正是署名事件紀錄稱作「**反向混淆**」的東西。
+
+這個錯誤的形狀跟復盤第 1 則、第 9 則一樣：**把「我沒看到」說成「它缺」。**
+
+倉庫側**可以**寫某個 CORE 的 implementation / adapter，但要在 PROVENANCE
+標明 `derivative_role`，**不得宣稱自己是那個 CORE**。
+
+> 查詢回「找不到」時注意它自己的提醒：找不到只代表這份登錄表沒有，
+> 不代表不存在——登錄表只涵蓋母體的 CORE 層，不含其他平台的分片。
+
+---
+
 ## 動手前先跑這幾個
 
 ```bash
@@ -63,6 +94,7 @@ python3 tools/release_gate.py . /dev/null --trusted-baseline registry/release_ga
 python3 tools/connection_audit.py
 python3 tools/provenance_notice_check.py
 python3 tools/operating_cognition_check.py
+python3 tools/mother_core_registry.py --check
 python3 tools/merkle_builder.py . .mrliou/merkle.json   # 動過雜湊集裡的檔案才需要
 ```
 
