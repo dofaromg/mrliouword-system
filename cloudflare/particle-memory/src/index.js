@@ -367,8 +367,14 @@ var MemoryVault = class {
     const content = updates.content || existing.memory.content;
     const newSimhash = updates.content ? simhash64(content) : existing.memory.simhash;
     const layer = updates.layer || existing.memory.layer;
-    const tags = JSON.stringify(updates.tags || JSON.parse(existing.memory.tags || "[]"));
-    const metadata = JSON.stringify(updates.metadata || JSON.parse(existing.memory.metadata || "{}"));
+    // retrieve() 在第 302 行就已經把 tags 解析成陣列、metadata 解析成物件，
+    // 所以這裡不能再 JSON.parse 一次——JSON.parse([]) 與 JSON.parse({}) 都會
+    // 丟 SyntaxError，整個 PUT /update/:id 會回 400 Invalid JSON body。
+    // 實測：只給 content 會炸；連 tags 都給了還是會炸（metadata 那行獨立丟）；
+    // 只有三者全給才會成功。等於部分更新從來沒能用過。
+    // 這個缺陷是 Codex 在 PR #77 上指出來的，屬實。不要改回 JSON.parse。
+    const tags = JSON.stringify(updates.tags ?? existing.memory.tags ?? []);
+    const metadata = JSON.stringify(updates.metadata ?? existing.memory.metadata ?? {});
     await this.db.prepare(
       `UPDATE memories SET content=?, simhash=?, layer=?, tags=?, metadata=?, updated_at=datetime('now') WHERE id=?`
     ).bind(content, newSimhash, layer, tags, metadata, id).run();

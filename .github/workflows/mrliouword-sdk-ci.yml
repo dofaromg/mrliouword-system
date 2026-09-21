@@ -192,7 +192,10 @@ jobs:
     #
     # 不依賴任何套件，也不依賴其他 job。
     steps:
+      # fetch-depth: 0 是必要的——下一步要用 git show 讀基準版本的基準線。
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -202,8 +205,23 @@ jobs:
       - name: Install PyYAML
         run: pip install PyYAML
 
+      # 基準線必須來自「基準版本」，不能來自這個 PR 自己的 checkout。
+      # 否則一個 PR 可以同時新增違規產物＋重寫基準線，兩件事互相抵銷，
+      # 關卡整個形同虛設。實測過：先跑 exit=1，重寫基準線後再跑就 exit=0。
+      - name: 取出基準版本的基準線（信任來源）
+        run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          [ -n "$BASE_SHA" ] || BASE_SHA="${{ github.event.before }}"
+          if [ -n "$BASE_SHA" ] && git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null \
+             && git show "$BASE_SHA:registry/release_gate_baseline.json" > trusted_baseline.json 2>/dev/null; then
+            echo "信任來源：$BASE_SHA"
+          else
+            rm -f trusted_baseline.json
+            echo "基準版本沒有基準線（首次引入），gate 會標記 bootstrap 並要求人工審閱"
+          fi
+
       - name: Run release gate
-        run: python3 tools/release_gate.py . release_gate.json
+        run: python3 tools/release_gate.py . release_gate.json --trusted-baseline trusted_baseline.json
 
       - name: Write summary
         if: ${{ !cancelled() }}

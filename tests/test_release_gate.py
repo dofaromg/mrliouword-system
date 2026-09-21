@@ -14,12 +14,15 @@ Author: MR.liou
 import json
 import os
 import sys
+from pathlib import Path
 
 import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../"))
 
 from tools.release_gate import (  # noqa: E402
+    _parse_argv,
+    load_baseline,
     DERIVATIVE_ROLES,
     GATE_NAMES,
     PROVENANCE_CRITICAL,
@@ -194,3 +197,72 @@ class TestRuntimeVerificationStatus:
         ok, detail = gate_runtime_verification_status(tmp_path, ART, prov, False)
         assert not ok
         assert "verified" in detail.lower()
+
+
+# --- 基準線只能來自信任來源 -------------------------------------------------
+#
+# 原本 load_baseline 從同一個 checkout 讀基準線，於是一個 PR 只要同時
+# 「新增違規產物」＋「重寫基準線」，兩件事互相抵銷，整道關卡就形同虛設。
+# 實測過：先跑 exit=1，重寫基準線後再跑就 exit=0，6 筆違規被洗成既有債務。
+# 這個漏洞是 Codex 在 PR #77 上指出來的。以下是它的回歸測試。
+
+
+def _baseline_doc(keys):
+    return {
+        "known_failures": [
+            {"artifact": a, "gate": g, "detail": ""} for a, g in keys
+        ]
+    }
+
+
+def _write_json(path: Path, data) -> Path:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+    return path
+
+
+def test_load_baseline_takes_a_path_not_a_root(tmp_path: Path) -> None:
+    p = _write_json(tmp_path / "b.json", _baseline_doc([("a.toml", "Naming Gate")]))
+    assert load_baseline(p) == {"a.toml::Naming Gate": ""}
+
+
+def test_load_baseline_missing_file_is_empty(tmp_path: Path) -> None:
+    assert load_baseline(tmp_path / "nope.json") == {}
+
+
+def test_parse_argv_trusted_baseline_space_form() -> None:
+    args, writing, trusted = _parse_argv([".", "out.json", "--trusted-baseline", "t.json"])
+    assert args == [".", "out.json"]
+    assert writing is False
+    assert trusted == Path("t.json")
+
+
+def test_parse_argv_trusted_baseline_equals_form() -> None:
+    _, _, trusted = _parse_argv(["--trusted-baseline=t.json"])
+    assert trusted == Path("t.json")
+
+
+def test_parse_argv_write_baseline_flag() -> None:
+    args, writing, trusted = _parse_argv([".", "--write-baseline"])
+    assert args == ["."] and writing is True and trusted is None
+
+
+def test_parse_argv_trusted_baseline_without_value_raises() -> None:
+    with pytest.raises(SystemExit):
+        _parse_argv(["--trusted-baseline"])
+
+
+def test_baseline_may_shrink(tmp_path: Path) -> None:
+    """修好一項就從帳本移除——數字往下走是允許的。"""
+    trusted = {"a::G1": "", "b::G2": ""}
+    in_tree = {"a::G1": ""}
+    assert sorted(set(in_tree) - set(trusted)) == []
+
+
+def test_baseline_may_not_grow(tmp_path: Path) -> None:
+    """往帳本塞新條目＝繞過的形狀，必須被偵測到。"""
+    trusted = {"a::G1": ""}
+    in_tree = {"a::G1": "", "evil.toml::Provenance Completeness": ""}
+    assert sorted(set(in_tree) - set(trusted)) == [
+        "evil.toml::Provenance Completeness"
+    ]

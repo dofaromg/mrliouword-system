@@ -505,9 +505,12 @@ def _load_yaml(path: Path) -> Dict[str, Any]:
         return {}
 
 
-def load_baseline(root: Path) -> Dict[str, str]:
-    """既有未通過項的債務帳本。具名可查，不是豁免清單。"""
-    data = _load_json(root / "registry" / "release_gate_baseline.json")
+BASELINE_REL = Path("registry") / "release_gate_baseline.json"
+
+
+def load_baseline(path: Path) -> Dict[str, str]:
+    """把一份債務帳本載入成 key -> detail。具名可查，不是豁免清單。"""
+    data = _load_json(path)
     return {
         e["artifact"] + "::" + e["gate"]: e.get("detail", "")
         for e in data.get("known_failures", [])
@@ -520,7 +523,7 @@ def write_baseline(root: Path, report: Dict[str, Any]) -> Path:
     這不是豁免清單：每一筆都具名、帶說明、可逐項查證，而且 CI 只允許
     這個數字往下走。新增的違規一律擋下。
     """
-    path = root / "registry" / "release_gate_baseline.json"
+    path = root / BASELINE_REL
     path.write_text(
         json.dumps(
             {
@@ -554,9 +557,31 @@ def write_baseline(root: Path, report: Dict[str, Any]) -> Path:
     return path
 
 
+def _parse_argv(argv: List[str]) -> Tuple[List[str], bool, Optional[Path]]:
+    """回傳 (位置參數, 是否寫基準線, 信任基準線路徑)。"""
+    positional: List[str] = []
+    writing = False
+    trusted: Optional[Path] = None
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "--write-baseline":
+            writing = True
+        elif a == "--trusted-baseline":
+            i += 1
+            if i >= len(argv):
+                raise SystemExit("--trusted-baseline 需要一個路徑")
+            trusted = Path(argv[i])
+        elif a.startswith("--trusted-baseline="):
+            trusted = Path(a.split("=", 1)[1])
+        else:
+            positional.append(a)
+        i += 1
+    return positional, writing, trusted
+
+
 def main() -> int:
-    args = [a for a in sys.argv[1:] if a != "--write-baseline"]
-    writing = "--write-baseline" in sys.argv
+    args, writing, trusted_path = _parse_argv(sys.argv[1:])
     root = Path(args[0]).resolve() if args else Path.cwd()
     out = Path(args[1]) if len(args) > 1 else root / "registry" / "release_gate.json"
 
@@ -565,7 +590,32 @@ def main() -> int:
         path = write_baseline(root, report)
         print(f"📒 基準線寫入 {path}（{len(report['findings'])} 筆既有未通過項）")
         return 0
-    baseline = load_baseline(root)
+
+    # 工作樹裡的基準線——可能被同一個 PR 改過，所以不能單獨信任它。
+    in_tree_path = root / BASELINE_REL
+    in_tree = load_baseline(in_tree_path)
+
+    # 信任來源：基準版本（base revision）的那一份，由 CI 用 git show 取出。
+    # 沒有它的話，一個 PR 可以同時「新增違規」＋「重寫基準線」，兩件事互相
+    # 抵銷，關卡就整個形同虛設。這個漏洞是 Codex 在 PR #77 上指出來的，
+    # 我實測確認：先跑 exit=1，重寫基準線後再跑就 exit=0，6 筆違規被洗成
+    # 「既有債務」。不要把 baseline 改回只從工作樹讀。
+    bootstrap = False
+    if trusted_path is None:
+        baseline = in_tree
+        smuggled: List[str] = []
+        trusted_note = "未指定信任來源（本機執行）"
+    elif not trusted_path.is_file():
+        # 基準版本還沒有基準線＝這個 PR 正在首次引入它。無從比較，
+        # 據實標記並交由人工審閱，不假裝比較過。
+        bootstrap = True
+        baseline = in_tree
+        smuggled = []
+        trusted_note = "基準版本沒有基準線（首次引入，bootstrap）"
+    else:
+        baseline = load_baseline(trusted_path)
+        smuggled = sorted(set(in_tree) - set(baseline))
+        trusted_note = str(trusted_path)
 
     new = [
         f
@@ -581,6 +631,10 @@ def main() -> int:
         "known": len(baseline),
         "new_violations": len(new),
         "fixed_since_baseline": len(fixed),
+        "source": trusted_note,
+        "bootstrap": bootstrap,
+        "in_tree_entries": len(in_tree),
+        "smuggled_into_baseline": smuggled,
     }
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
@@ -592,7 +646,9 @@ def main() -> int:
     print(f"   產物            {t['artifacts']}")
     print(f"   全數通過        {t['passed']}")
     print(f"   有未通過項      {t['failed']}")
-    print(f"   基準線已記錄    {len(baseline)}")
+    print(f"   基準線已記錄    {len(baseline)}（來源：{trusted_note}）")
+    if bootstrap:
+        print("   ⚠️  基準版本沒有基準線，本輪無法比較——這一份請人工審閱")
     if fixed:
         print(f"   ✅ 比基準線少了 {len(fixed)} 項")
     if new:
@@ -600,8 +656,17 @@ def main() -> int:
         for f in new:
             print(f"        {f['artifact']}")
             print(f"          [{f['gate']}] {f['detail']}")
+    if smuggled:
+        # 工作樹的基準線比信任來源多出條目＝有人在同一個變更裡把新的違規
+        # 寫進了債務帳本。即使 new 是空的也要擋——那正是繞過的形狀。
+        print(f"\n   ❌ 基準線多出 {len(smuggled)} 筆信任來源沒有的條目：")
+        for k in smuggled:
+            artifact, _, gate = k.partition("::")
+            print(f"        {artifact}")
+            print(f"          [{gate}]")
+        print("        債務帳本只能變小。要新增條目，先讓那個產物通過關卡。")
     print(f"\n   📝 報告寫入 {out}")
-    return 1 if new else 0
+    return 1 if (new or smuggled) else 0
 
 
 if __name__ == "__main__":
