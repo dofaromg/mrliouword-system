@@ -1,0 +1,40 @@
+# mrl-origin: MrLiouWord
+# canonical_authority: Mr.liou
+# origin_signature: MrLiouWord
+# derivative_role: implementation
+# Codex contribution: deployment automation; original Worker source is unchanged.
+name: Particle API deployment
+
+on:
+  push:
+    branches: [agent/particle-api-deploy-20260921]
+    paths:
+      - .github/workflows/particle-api-deploy.yml
+      - tools/particle-api-deploy.mjs
+      - cloudflare/particle-api/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: particle-api-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/agent/particle-api-deploy-20260921'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check existing deployment access and bindings
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: node tools/particle-api-deploy.mjs
