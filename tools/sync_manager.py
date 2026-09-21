@@ -20,7 +20,11 @@ from pathlib import Path
 from typing import Dict, List, Tuple, Any
 import hashlib
 
-from merkle_builder import ParticleMerkleTree
+from merkle_builder import (
+    ParticleMerkleTree,
+    collect_particle_files,
+    collect_sync_files,
+)
 
 
 class ClosureSyncManager:
@@ -88,24 +92,17 @@ class ClosureSyncManager:
         if not repo_path.exists():
             return state
         
-        # Find particle files
-        sync_paths = [
-            'core/particles/**/*.json',
-            'docs/particle-dictionary/**/*.md',
-            '.mrliou/**/*.json'
-        ]
-        
-        particles = []
-        for pattern in sync_paths:
-            particles.extend(list(repo_path.glob(pattern)))
+        # 同步清單：要搬哪些檔案，不套用排除
+        particles = collect_sync_files(repo_path)
         
         state['particles'] = [str(p.relative_to(repo_path)) for p in particles]
         state['particle_count'] = len(particles)
         
-        # Build Merkle tree
+        # Merkle tree：要雜湊哪些檔案，套用排除
+        hashed = collect_particle_files(repo_path)
         tree = ParticleMerkleTree()
-        if particles:
-            tree.build_from_particles(particles)
+        if hashed:
+            tree.build_from_particles(hashed)
             state['merkle_root'] = tree.merkle_root
             # Don't store tree object in state for JSON serialization
             self.merkle_trees[str(repo_path)] = tree
