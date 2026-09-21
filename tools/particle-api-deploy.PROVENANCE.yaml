@@ -1,0 +1,29 @@
+canonical_authority: Mr.liou
+origin_signature: MrLiouWord
+source_repo: dofaromg/mrliouword-system
+source_artifact:
+  - cloudflare/particle-api/
+  - .github/workflows/deploy.yml
+source_version: 6575468d8e5d11236a3dbe4bfd5f43ff78c2fd7f
+derivative_role: implementation
+artifact_owner: Mr.liou
+contributors:
+  - name: Mr.liou
+    role: canonical_authority; deployment authorization
+  - name: Codex
+    role: tool; deployment automation and validation
+transformation: >-
+  Add a dedicated deployment workflow, exact-version deployment, binding checks,
+  live health/signature checks and rollback on failed verification. Preserve the
+  imported Worker source, historical provenance, existing routes, and main.
+verification_status: partial
+scope:
+  - .github/workflows/particle-api-deploy.yml
+  - tools/particle-api-deploy.mjs
+  - tools/test_particle_api_deploy.mjs
+  - cloudflare/particle-api/package-lock.json
+adoption_date: '2026-09-21'
+deployment_access_evidence:
+  workflow_run: https://github.com/dofaromg/mrliouword-system/actions/runs/35566164561
+  result: Deployment credentials were empty in GitHub Actions; no version uploaded or deployed.
+upstream_boundary: Wrangler and GitHub Actions retain their original authorship and licenses.

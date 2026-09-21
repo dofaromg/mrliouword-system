@@ -11,6 +11,7 @@ on:
     paths:
       - .github/workflows/particle-api-deploy.yml
       - tools/particle-api-deploy.mjs
+      - tools/test_particle_api_deploy.mjs
       - cloudflare/particle-api/**
   workflow_dispatch:
 
@@ -33,8 +34,30 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check existing deployment access and bindings
+      - name: Validate repository boundaries
+        run: |
+          python3 tools/release_gate.py . /dev/null --trusted-baseline registry/release_gate_baseline.json
+          python3 tools/connection_audit.py
+          python3 tools/provenance_notice_check.py
+          python3 tools/operating_cognition_check.py
+      - name: Install and validate Worker
+        working-directory: cloudflare/particle-api
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npx tsc --noEmit
+          npx wrangler deploy --dry-run
+      - name: Install pinned deployment CLI
+        run: npm install --prefix "$RUNNER_TEMP/particle-wrangler" --ignore-scripts --no-audit --no-fund wrangler@4.135.0
+      - name: Verify deployment safety
+        run: node --test tools/test_particle_api_deploy.mjs
+      - name: Deploy existing Worker and verify live responses
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: '0b36a4577da7fced6df2e062fa5f6fa2'
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PARTICLE_WRANGLER: ${{ runner.temp }}/particle-wrangler/node_modules/.bin/wrangler
         run: node tools/particle-api-deploy.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: particle-api-deployment-receipt
+          path: particle-api-deployment-receipt.json
+          if-no-files-found: error
