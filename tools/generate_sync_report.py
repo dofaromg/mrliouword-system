@@ -10,6 +10,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any
 
+from merkle_builder import collect_particle_files
+
 
 def generate_sync_report(source_repo: Path, target_repos: list, 
                         output_path: Path = None) -> Dict[str, Any]:
@@ -52,15 +54,8 @@ def generate_sync_report(source_repo: Path, target_repos: list,
             'tree_height': merkle.get('tree_height', 0)
         }
     
-    # Count particles
-    sync_patterns = [
-        'core/particles/**/*.json',
-        'docs/particle-dictionary/**/*.md'
-    ]
-    
-    particle_count = 0
-    for pattern in sync_patterns:
-        particle_count += len(list(source_repo.glob(pattern)))
+    # Count particles（與 merkle_builder 共用同一份範圍與排除規則）
+    particle_count = len(collect_particle_files(source_repo))
     
     report['summary'] = {
         'total_particles': particle_count,

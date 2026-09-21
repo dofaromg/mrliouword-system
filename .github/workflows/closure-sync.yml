@@ -140,7 +140,7 @@ jobs:
             "repos": {
               "dofaromg/mrliouword-system": {
                 "merkle_root": "$(cat .mrliou/merkle.json | python -c 'import sys, json; print(json.load(sys.stdin).get("merkle_root", ""))')",
-                "particle_count": $(find core/particles docs/particle-dictionary -type f 2>/dev/null | wc -l),
+                "particle_count": $(cat .mrliou/merkle.json | python -c 'import sys, json; print(json.load(sys.stdin).get("leaf_count", 0))'),
                 "last_verified": "$TIMESTAMP"
               }
             },

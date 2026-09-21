@@ -1,0 +1,25 @@
+# particle-memory — MRL 記憶模組（canonical: MRL_Memory）
+#
+# 雲端資源名 particle-memory 是實作識別碼。依命名註冊表規則 4，
+# 它不取代 canonical 名稱 MRL_Memory。
+#
+# ⚠️ database_id 尚未填入：本倉庫無法查證 particle-memory 實際綁定
+#    哪一個 D1。刻意留成佔位字串而不是猜一個——猜錯會把記憶寫進
+#    別的資料庫，比部署失敗嚴重得多。部署前請填入正確值。
+
+name = "particle-memory"
+main = "src/index.js"
+# 由我選定而非取自原始部署：原始封存未附 wrangler 設定。
+compatibility_date = "2026-09-20"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "FILL_ME_BEFORE_DEPLOY"
+database_id = "FILL_ME_BEFORE_DEPLOY"
+
+# DL580 同步橋所需的 secret。三者皆備才會啟用同步（fail-closed）：
+#   wrangler secret put DL580_BRIDGE
+#   wrangler secret put DL580_API_KEY
+#   [vars] DL580_SYNC_ENABLED = "true"
+#
+# 刻意不在此提供任何預設值。本倉庫是 public，憑證一旦提交就無法撤回。

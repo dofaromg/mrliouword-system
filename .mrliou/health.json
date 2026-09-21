@@ -3,9 +3,9 @@
   "status": "initializing",
   "repos": {
     "dofaromg/mrliouword-system": {
-      "merkle_root": "5cf364f8689000a6ab072655c3e336e5a747c279b6aa91be8924f01a1de2c114",
-      "particle_count": 7,
-      "last_verified": "2026-02-10T07:33:28.123441Z"
+      "merkle_root": "b7df5204044c1d18eef5bf772ccfb838d5d86ae765ccb6cfb770b2eeddd2301b",
+      "particle_count": 12,
+      "last_verified": "2026-09-20T12:56:13Z"
     },
     "dofaromg/flow-tasks": {
       "merkle_root": "",

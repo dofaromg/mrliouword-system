@@ -55,6 +55,19 @@ canonical:
     id: MRL_Storage
     display_name: MRL 儲存模組
 
+  entrypoint:
+    id: Mrliou_claude
+    display_name: MRL 運行入口
+    file: Mrliou_claude.md
+    registry_key: mrl_Mrliou_claude
+    derivative_role: entrypoint
+    adapter: CLAUDE.md
+    note: >-
+      擁有者 2026-09-21 指示「必須有我的前綴」。CLAUDE.md 是供應商品牌名，
+      依 NAMING.md 1.2 不得升格為 canonical，只保留為 adapter；
+      依 naming_rules_v1.yaml 的 invariant「Original names are NEVER changed」
+      不改名、不刪除。lineage 見 docs/governance/MRL_NAMING_LINEAGE.md。
+
 legacy_aliases:
   mrliouword-private:
     canonical: MRL_System_Core
@@ -71,6 +84,13 @@ legacy_aliases:
   FlowAgent:
     canonical: MrliouAI
     disposition: preserve_only_in_historical_provenance
+  CLAUDE.md:
+    canonical: Mrliou_claude
+    disposition: adapter
+    note: >-
+      disposition 用 NAMING.md 1.2 既有的詞 adapter。本倉庫 naming_authority: false，
+      若擁有者要換別的處置詞，以擁有者定義為準。
+      本檔由 tools/mrliou_claude_sync.py --build 產生，CI 以 --check 擋漂移。
 
 rules:
   - New runtime, API, UI, container, Worker and documentation identifiers MUST use this registry.

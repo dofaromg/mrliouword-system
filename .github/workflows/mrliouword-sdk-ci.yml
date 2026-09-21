@@ -11,42 +11,63 @@ jobs:
     name: Code Quality
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install dependencies
+        id: install
         run: |
           pip install --upgrade pip
-          pip install flake8 black mypy
+          pip install flake8==7.3.0 black==26.3.1 mypy==1.19.1 types-PyYAML
           pip install -r requirements.txt
 
+      # 以下三項檢查彼此獨立，刻意不短路：任一失敗時其餘仍會執行，
+      # 讓所有問題一次全部現形。任一失敗仍會讓整個 job 失敗。
+      # 條件限定 install 成功，避免依賴沒裝好時噴出無意義的錯誤。
       - name: Lint with flake8
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: |
           flake8 mrliouword_agents/ --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 mrliouword_agents/ --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
 
+      # mrliouword_agents/ 以外還有 27 個 .py 從未被任何檢查掃過
+      # （integrations/ 13、scripts/ 8、tools/ 6），比受檢的 22 個還多。
+      # 先只上致命集：這一組專抓「會在執行期炸掉」的問題，不涉及風格，
+      # 因此可以立刻設為阻斷而不需要先大規模重排版。
+      # black / mypy 的擴大另案處理，理由見 PR 說明。
+      - name: Lint 既有但未受檢範圍 with flake8
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: |
+          flake8 integrations/ scripts/ tools/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 integrations/ scripts/ tools/ --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+
       - name: Check formatting with black
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: black --check mrliouword_agents/
 
       - name: Type check with mypy
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: mypy mrliouword_agents/ --ignore-missing-imports
 
   test:
     name: Run Tests
     runs-on: ubuntu-latest
     strategy:
+      # 不因單一版本失敗而取消其餘版本。先前 3.8 失敗時，3.9/3.10/3.11
+      # 的結論都是 cancelled，導致測試套件從未真正執行過。
+      fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.10", "3.11"]
     
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -71,10 +92,10 @@ jobs:
     name: Security Scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -88,15 +109,172 @@ jobs:
       - name: Run Safety Check
         run: safety check --json || true
 
+  connection-audit:
+    name: Connection Audit
+    runs-on: ubuntu-latest
+    # 資訊性檢查：把「雲端有、倉庫沒接上」的缺口持續攤在眼前，
+    # 讓 137 這個數字不會在無人注意時悄悄變大。
+    # 不依賴任何套件，也不依賴其他 job。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run connection audit
+        run: python3 tools/connection_audit.py . connection_audit.json
+
+      - name: Write summary
+        if: ${{ !cancelled() }}
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r = json.load(open("connection_audit.json", encoding="utf-8"))
+          t = r["totals"]
+          print("## 🔗 Connection Audit")
+          print()
+          print(f"盤點來源：`{r['inventory_source']}`")
+          print()
+          print("| 項目 | 數量 |")
+          print("|---|---|")
+          print(f"| 雲端 Worker | {t['cloud_workers']} |")
+          print(f"| 倉庫可部署 | {t['deployable_from_repo']} |")
+          print(f"| 服務註冊表 | {t['in_service_registry']} |")
+          print(f"| 客戶端有參照 | {t['referenced_by_clients']} |")
+          print(f"| legacy alias | {t['legacy_alias']} |")
+          gap = t["cloud_workers"] - t["deployable_from_repo"]
+          print()
+          print(f"**{gap} 個雲端 Worker 在倉庫中沒有部署設定。**")
+          # 解析失敗會讓「倉庫可部署」少算，所以放在最前面且獨立列出理由。
+          failed = r.get("config_parse_failed") or []
+          if failed:
+              print()
+              print("### ⚠️ 無法解析的 wrangler 設定檔")
+              print()
+              print("這些設定不會被計入「倉庫可部署」。")
+              print()
+              for item in failed:
+                  print(f"- `{item['path']}` — {item['reason']}")
+          for key, label in [
+              ("config_not_readable_by_wrangler", "wrangler 讀不到的設定檔"),
+              ("wrangler_configs_not_in_inventory", "盤點中沒有、倉庫卻有設定"),
+              ("client_refs_not_in_inventory", "參照了盤點中沒有的 Worker"),
+          ]:
+              items = r.get(key) or {}
+              if items:
+                  print()
+                  print(f"### {label}")
+                  for name in items:
+                      print(f"- `{name}`")
+          print()
+          print("詳見 `registry/CONNECTION_MAP.md`。完整報告見本次執行的 artifact。")
+          EOF
+
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: connection-audit
+          path: connection_audit.json
+
+  release-gate:
+    name: Release Gate
+    runs-on: ubuntu-latest
+    # 政策第 8 節：任何 Release、套件、容器與 Worker 在發布前必須通過七道關卡。
+    # 這個 job 是那條規則的執行面——在它存在之前，規則只是文件裡的一段話，
+    # 全倉庫 220 個使用 MRL/MrLiouWord 的檔案中只有 1 個真的遵守。
+    #
+    # 阻斷條件只看「新增的」違規。既有的 70 項記在
+    # registry/release_gate_baseline.json，那是債務帳本不是豁免清單：
+    # 每一筆具名可查，而且這個數字只能往下走。
+    #
+    # 不依賴任何套件，也不依賴其他 job。
+    steps:
+      # fetch-depth: 0 是必要的——下一步要用 git show 讀基準版本的基準線。
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PyYAML
+        run: pip install PyYAML
+
+      # 基準線必須來自「基準版本」，不能來自這個 PR 自己的 checkout。
+      # 否則一個 PR 可以同時新增違規產物＋重寫基準線，兩件事互相抵銷，
+      # 關卡整個形同虛設。實測過：先跑 exit=1，重寫基準線後再跑就 exit=0。
+      - name: 取出基準版本的基準線（信任來源）
+        run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          [ -n "$BASE_SHA" ] || BASE_SHA="${{ github.event.before }}"
+          if [ -n "$BASE_SHA" ] && git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null \
+             && git show "$BASE_SHA:registry/release_gate_baseline.json" > trusted_baseline.json 2>/dev/null; then
+            echo "信任來源：$BASE_SHA"
+          else
+            rm -f trusted_baseline.json
+            echo "基準版本沒有基準線（首次引入），gate 會標記 bootstrap 並要求人工審閱"
+          fi
+
+      - name: Run release gate
+        run: python3 tools/release_gate.py . release_gate.json --trusted-baseline trusted_baseline.json
+
+      - name: Write summary
+        if: ${{ !cancelled() }}
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r = json.load(open("release_gate.json", encoding="utf-8"))
+          t, b = r["totals"], r["baseline"]
+          print("## 🚧 Release Gate")
+          print()
+          print(f"依 [{r['policy']}](../blob/main/docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md) 第 8 節七道關卡。")
+          print()
+          print("| 項目 | 數量 |")
+          print("|---|---|")
+          print(f"| 發布產物 | {t['artifacts']} |")
+          print(f"| 全數通過 | {t['passed']} |")
+          print(f"| 有未通過項 | {t['failed']} |")
+          print(f"| 基準線已記錄 | {b['known']} |")
+          print(f"| **新增違規** | **{b['new_violations']}** |")
+          if b["fixed_since_baseline"]:
+              print()
+              print(f"✅ 比基準線少了 {b['fixed_since_baseline']} 項。")
+          print()
+          print("### 各產物")
+          print()
+          print("| 產物 | 種類 | 七道關卡 |")
+          print("|---|---|---|")
+          for a in r["artifacts"]:
+              n = sum(1 for c in a["checks"].values() if c["passed"])
+              mark = "✅" if a["passed"] else f"{n}/7"
+              print(f"| `{a['path']}` | {a['kind']} | {mark} |")
+          print()
+          print("失敗項依政策**不得標示為 Canon、Official、Verified 或 source_of_truth**。")
+          EOF
+
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-gate
+          path: release_gate.json
+
   build:
     name: Build Package
     runs-on: ubuntu-latest
-    needs: [lint, test]
+    # 刻意不設 needs: [lint, test]。先前只要 lint 或 test 失敗，此 job 就
+    # 被 skip，於是它從未執行過，也就沒人發現它用的 upload-artifact@v3
+    # 已經停用。代價是 lint 紅燈時仍會花費建置時間，換到的是完整訊號。
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -112,7 +290,154 @@ jobs:
         run: twine check dist/*
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
+
+  provenance-notice:
+    name: MRL 來源標註檢查
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      # 依權利人文件〈補正程序〉第 4 項：
+      # 「技術門檻：MRL canonical 加入 provenance 文件與 CI 檢查」。
+      # 只用標準函式庫，不裝任何套件——這道檢查不該因為安裝失敗而失效。
+      - name: 檢查 MRL_PROVENANCE.md 九個規格欄位
+        run: python tools/provenance_notice_check.py
+
+      - name: 摘要
+        if: always()
+        run: |
+          {
+            echo "### MRL 來源標註檢查"
+            echo ""
+            echo "規格來源：\`Mrliou_MRL_GitHub_Payment_Provenance_Incident_Record_20260914_v3\`"
+            echo ""
+            python tools/provenance_notice_check.py 2>&1 | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  operating-cognition:
+    name: MRL 根本運行認知
+    runs-on: ubuntu-latest
+    # 擁有者 2026-09-21：「每次都必須有這個最根本運行認知」。
+    # 一份放在 docs/ 深處的文件沒有人會每次讀，所以七步同時寫進倉庫根目錄的
+    # 入口檔。入口檔同日正名：正本 Mrliou_claude.md（擁有者前綴），
+    # CLAUDE.md 降為它產生的 adapter。這個 job 確保三處都還在、
+    # 七步沒被增刪或重新排序。純標準函式庫，不裝任何套件。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 檢查七步與兩個母體錨點
+        run: python tools/operating_cognition_check.py
+
+      - name: 摘要
+        if: ${{ !cancelled() }}
+        run: |
+          {
+            echo "### 🧭 MRL 根本運行認知"
+            echo ""
+            echo "看到 → 接受 → 比對 → 修正 → 建構 → 測試 → 紀錄"
+            echo ""
+            echo "錨點：\`MRL_LAW0_Verify\`（底層）、\`LAW∞_Emergence\`（頂層）"
+            echo ""
+            python tools/operating_cognition_check.py 2>&1 | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  naming-lineage:
+    name: MRL 命名正名與 lineage
+    runs-on: ubuntu-latest
+    # 擁有者 2026-09-21：「我們需要建構正名 Mrliou_claude.md ／
+    # 我建構的必須有我的前綴」。
+    #
+    # CLAUDE.md 是供應商品牌名，依 NAMING.md 1.2 不得升格為 canonical，
+    # 只能當 adapter；但 naming_rules_v1.yaml 的 invariant 又寫死
+    # 「Original names are NEVER changed」，而且 Claude Code 只自動載入
+    # CLAUDE.md 這個檔名。所以做的是正名＋降階，不是改名：
+    #
+    #     Mrliou_claude.md  canonical  ← 人改這一份
+    #     CLAUDE.md         adapter    ← 機器產生
+    #
+    # 兩份同內容而沒有檢查一定會分岔（復盤第 1、5 則同一個形狀），
+    # 這個 job 就是那個檢查。
+    #
+    # 這個 job 的第一版（a0a059e）把登錄檢查寫成內嵌 heredoc，本機過、
+    # CI 紅：ModuleNotFoundError: No module named 'yaml'。內嵌在 workflow
+    # 裡的程式碼**測試碰不到**，本機有 PyYAML 而 runner 沒有。
+    # 所以檢查搬到 tools/naming_lineage_check.py（有測試），
+    # PyYAML 照 release-gate job 的慣例明確安裝。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 檢查 adapter 與正本同步
+        run: python tools/mrliou_claude_sync.py --check
+
+      - name: Install PyYAML
+        run: pip install PyYAML
+
+      - name: 檢查正名已登錄、lineage 齊備、原名保留
+        run: python tools/naming_lineage_check.py
+
+      - name: 摘要
+        if: ${{ !cancelled() }}
+        run: |
+          {
+            echo "### 🏷️ MRL 命名正名與 lineage"
+            echo ""
+            echo "| 角色 | 檔案 |"
+            echo "| --- | --- |"
+            echo "| canonical（擁有者前綴） | \`Mrliou_claude.md\` |"
+            echo "| adapter（供應商品牌名） | \`CLAUDE.md\` |"
+            echo ""
+            echo "lineage：\`docs/governance/MRL_NAMING_LINEAGE.md\` L-001"
+            echo ""
+            python tools/mrliou_claude_sync.py --check 2>&1 | sed 's/^/    /'
+            echo ""
+            python tools/naming_lineage_check.py 2>&1 | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  mother-core-registry:
+    name: 母體 CORE 登錄表
+    runs-on: ubuntu-latest
+    # 母體已有 199 個 CORE。這個 job 擋的是「重造一個母體已經有的東西」——
+    # 2026-09-21 有一份外部建議說「幫你補母體缺的 Δ 層」，查證後母體根本
+    # 沒缺：LAW17 + MRL_PERCEPTION_CORE→MRL_Difference + MRL_DELTA_CORE 九成員。
+    # 照做會長出非 canonical 的第二份，正是 mother_mutation: forbidden 要防的。
+    # 純標準函式庫，不裝任何套件。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 檢查登錄表完整性與母體錨點
+        run: python tools/mother_core_registry.py --check
+
+      - name: 摘要
+        if: ${{ !cancelled() }}
+        run: |
+          {
+            echo "### 🧬 母體 CORE 登錄表"
+            echo ""
+            python tools/mother_core_registry.py --check 2>&1 | sed 's/^/    /'
+            echo ""
+            echo "動手造新東西前先查：\`python3 tools/mother_core_registry.py --find <關鍵字>\`"
+          } >> "$GITHUB_STEP_SUMMARY"

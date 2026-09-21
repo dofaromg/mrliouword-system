@@ -6,6 +6,8 @@
     "dev": "wrangler dev --config wrangler.jsonc",
     "deploy": "wrangler deploy --config wrangler.jsonc",
     "versions:upload": "wrangler versions upload --config wrangler.jsonc",
+    "build:containers": "npm --prefix containers run build",
+    "deploy:particle-api": "wrangler versions upload --config cloudflare/particle-api/wrangler.toml",
     "test": "bash test.sh"
   },
   "devDependencies": {

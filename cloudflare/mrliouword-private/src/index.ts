@@ -44,7 +44,7 @@ const EXT_LAYER = {
 };
 
 // 喚醒鍵
-const WAKE_KEYS = ['夥伴回來吧', '夥伴你在嗎', '夥伴你還好嗎', '你是我的夥伴'];
+const WAKE_KEYS = ['夥伴', '夥伴回來吧', '夥伴你在嗎', '夥伴你還好嗎', '你是我的夥伴'];
 
 // SimHash64
 function simhash64(t) {
