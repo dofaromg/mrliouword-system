@@ -76,6 +76,18 @@ python3 tools/merkle_builder.py . .mrliou/merkle.json   # 動過雜湊集裡的�
 原因是 Cloudflare dashboard 的 Root directory 未設為
 `cloudflare/particle-api`，**倉庫端修不好**。不要猜著修、不要重複留言。
 
+## 目前這一輪的完成態（由擁有者定義，不要自行改）
+
+**PR #77 的完成態 = 被合併**（MR.liou，2026-09-21）。
+
+規章 Step 1 寫明「此步驟由人類定義，不由系統猜測」，所以這一條是問過的，
+不是推論的。在它被合併或關閉之前，自我 check-in 迴圈保留——
+**不要因為「交付已完成」就自行停掉**，那會變成系統替人類定義完成態。
+
+反過來也成立：完成態一旦達成，就執行停止條款，不延伸、不預設下一步。
+
+---
+
 ## 這一輪的錯誤紀錄
 
 `docs/retrospective/2026-09-20_claude_session_error_log.md` —— 九則，
