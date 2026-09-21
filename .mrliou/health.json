@@ -1,21 +1,11 @@
 {
-  "last_sync": "2026-02-10T07:33:28.123402Z",
-  "status": "initializing",
+  "last_sync": "2026-09-21T18:18:16Z",
+  "status": "healthy",
   "repos": {
     "dofaromg/mrliouword-system": {
       "merkle_root": "b7df5204044c1d18eef5bf772ccfb838d5d86ae765ccb6cfb770b2eeddd2301b",
       "particle_count": 12,
-      "last_verified": "2026-09-20T12:56:13Z"
-    },
-    "dofaromg/flow-tasks": {
-      "merkle_root": "",
-      "particle_count": 0,
-      "consistency": "unknown"
-    },
-    "dofaromg/flow-tasks-01": {
-      "merkle_root": "",
-      "particle_count": 0,
-      "consistency": "unknown"
+      "last_verified": "2026-09-21T18:18:16Z"
     }
   },
   "issues": []
