@@ -36,7 +36,13 @@ preserved_at: "2026-09-22"
    有任何一條驗不了就寫 `partial`
 4. 逐節填寫下方八節
 5. 跑 `## 動手前先跑這幾個` 那批閘門，把 exit code 寫進第六節
-6. commit 時附實測輸出，不要只寫「已完成」
+6. commit 時附實測輸出，不要只寫「已完成」。
+   commit message 裡的統計（新增行、刪除行、刪除檔數）只能從
+   `git diff --cached --shortstat` 與 `git diff --cached --diff-filter=D --name-only`
+   的輸出複製，在 message 裡註明是哪個指令的輸出。
+   **不要寫「零刪除」這類未定義的模板句**——2026-09-22 的紀錄裡它被寫了 7 次，
+   從未先跑指令，行層面 3 次為假；commit message 依 `append_only` 不改寫，
+   所以那 7 句永遠留在歷史裡。
 
 ---
 
