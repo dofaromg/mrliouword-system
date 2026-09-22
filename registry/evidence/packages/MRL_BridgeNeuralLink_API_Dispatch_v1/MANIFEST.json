@@ -1,0 +1,143 @@
+{
+  "expected": [
+    "dispatch.py",
+    "commercial_gate.py",
+    "bridge-client.mjs",
+    "test_dispatch.py",
+    "README.md",
+    "GOVERNANCE_ADDENDUM.md",
+    "PACKAGE_AUDIT.py",
+    "policy.json",
+    "task-example.json",
+    "registry-example.json",
+    "evidence/commercial-gap-result.json",
+    "evidence/validation.json",
+    "governance/3c38eeeec5b581bda54ee462e627b3e0.json",
+    "governance/3bb8eeeec5b581238cf4dbc2548f6006.json",
+    "upstream/TaskChannel.ts",
+    "upstream/BridgeOrchestrator.ts",
+    "upstream/BaseChannel.ts",
+    "upstream/SocketTransport.ts",
+    "upstream/index.ts",
+    "upstream/SOURCES.json"
+  ],
+  "files": [
+    {
+      "path": "dispatch.py",
+      "bytes": 18876,
+      "sha256": "6a073bb31c617135dafaa99bb676dbfeae22608c452ecd0419928231ecd0eae1"
+    },
+    {
+      "path": "commercial_gate.py",
+      "bytes": 2435,
+      "sha256": "e9c73436b87b4c07367e4cee286ed88d27d8f089ddc5baf189e303ee3bc6f11c"
+    },
+    {
+      "path": "bridge-client.mjs",
+      "bytes": 2126,
+      "sha256": "fd9cf6e6373cd2b108806da39e2b327b1f9a2d1293601f219771380c3539aaba"
+    },
+    {
+      "path": "test_dispatch.py",
+      "bytes": 6514,
+      "sha256": "6360fa51d0e4111302153f8205671d28226cc8487101918c428b3cd46f6ba463"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6620,
+      "sha256": "63bb6d3518b24e2d41b8b4c4381cf03e7e1acb36d84cde338f31581465938189"
+    },
+    {
+      "path": "GOVERNANCE_ADDENDUM.md",
+      "bytes": 13389,
+      "sha256": "328b1c2c8b93a568582ba68f3a84e5d1d5cdd9407ac46c83c5a003b95e5febfd"
+    },
+    {
+      "path": "PACKAGE_AUDIT.py",
+      "bytes": 3062,
+      "sha256": "30f7e94735834e4cf034aa925bc6494adb9514c46f0776cf271ac32128c9bd17"
+    },
+    {
+      "path": "policy.json",
+      "bytes": 2697,
+      "sha256": "14ff51ffd51ae6c5eaeea81285e1e1179bbfc32aa2863567194430d0d0aacd9b"
+    },
+    {
+      "path": "task-example.json",
+      "bytes": 854,
+      "sha256": "5a9687788136ad231700ecf9ca773d0ae80719289561d6afae7f41a97974587e"
+    },
+    {
+      "path": "registry-example.json",
+      "bytes": 3449,
+      "sha256": "d093e8ebf7893740fe25a90935829e01ffd9da1faaa792b33cbd6b59dedfc36e"
+    },
+    {
+      "path": "evidence/commercial-gap-result.json",
+      "bytes": 944,
+      "sha256": "085bd4262a705996616e6416ca0f8f54b66cf4b592c386ef396f22d8d3885c3c"
+    },
+    {
+      "path": "evidence/validation.json",
+      "bytes": 1325,
+      "sha256": "926f1441d9d93f725faf2ecf4f07e82c883459c568cefb227f5659c6efc56304"
+    },
+    {
+      "path": "governance/3c38eeeec5b581bda54ee462e627b3e0.json",
+      "bytes": 5243,
+      "sha256": "405abd19904ff523a316be0230726477b6f6bcdc43035f8c47e695fa658dae61"
+    },
+    {
+      "path": "governance/3bb8eeeec5b581238cf4dbc2548f6006.json",
+      "bytes": 8557,
+      "sha256": "b7a4f6674d90c6ea5e2a9f8810d59e13e50bfdcc818b49c8b6b836d8169dd9ee"
+    },
+    {
+      "path": "upstream/TaskChannel.ts",
+      "bytes": 6350,
+      "sha256": "7044fda04f8af21421238f0e4819aab31e2cd6236e3f657ccafb0a7f45f2961a"
+    },
+    {
+      "path": "upstream/BridgeOrchestrator.ts",
+      "bytes": 10105,
+      "sha256": "9f614640f68a2a45b3484e99082c965813c0f20eade52de06c3a53f0c3a0219e"
+    },
+    {
+      "path": "upstream/BaseChannel.ts",
+      "bytes": 3310,
+      "sha256": "6340d9d461dc0cf00150932fbce1c552ba21a313554da4cc9643bfa8e11fc7eb"
+    },
+    {
+      "path": "upstream/SocketTransport.ts",
+      "bytes": 7535,
+      "sha256": "4fd064006ba15671ba49442fe7d1ef0b3cd1cdf57a0cc08efd19c26692309b78"
+    },
+    {
+      "path": "upstream/index.ts",
+      "bytes": 272,
+      "sha256": "c2231deaff18ad1eb0ab69ce088e403d00d7cc4e5dfc7887711f40f4fde688e9"
+    },
+    {
+      "path": "upstream/SOURCES.json",
+      "bytes": 773,
+      "sha256": "d3807728a4cd4c8cc5f2bb8c7dd931c558f499cb17251a6ed562cebdf2f6b7ae"
+    }
+  ],
+  "missing": [],
+  "extra": [],
+  "mismatch": [],
+  "empty": [],
+  "orphan": [],
+  "excluded": [
+    "__pycache__ (runtime cache)",
+    "MANIFEST.json (self-hash recursion)"
+  ],
+  "package_content_status": "PASS",
+  "full_system_status": "NOT_LIVE_VALIDATED",
+  "upstream_dependency_gaps": [
+    "ExtensionChannel.ts",
+    "exact dependency lockfile",
+    "Socket.IO server source"
+  ],
+  "governance_status": "BUILT_FOR_REVIEW / COMMERCIAL_UNRESOLVED"
+}

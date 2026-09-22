@@ -1,0 +1,12 @@
+{
+  "schema": "Mrliou_MRL_Compatibility_Consistency_Result_v1",
+  "origin_signature": "MrLiouWord",
+  "context_sha256": "205c640fe7e1082ca1b74aa5976c54323cb67c2685e65794685d23f1d74a055a",
+  "consistency": "PASS",
+  "completed_operations": 1,
+  "observation_kind": "fixture",
+  "authenticity": "NOT_VERIFIED_BY_THIS_ADAPTER",
+  "hardware_acceptance": "OPEN",
+  "source_claim": "OBSERVATION_ONLY",
+  "note": "Digests bind declared context and evidence. Trusted host provenance and real execution require separate evidence."
+}

@@ -31,6 +31,8 @@
 | `DELTA_canonical_root_unresolved.md` | projection | ⚠️ 兩份文件指向不同 canonical root，記成 delta 等 Root Owner 裁決 |
 | `EXTERNAL_FORK_REFERENCES.md` | projection | 新撰的核對索引：經核對確認**不屬於 MRL 原創層**的外部上游，含授權與著作權歸屬 |
 | `../mrl_global_file_index_2026-07-29.json` | mirror | Google Drive 側 170 檔全域索引 —— 在 `claude/partner-jjchvg-connect` 分支，尚未合併進 main |
+| `Mrliou_MRL_Backfill_20260921_v1.index.md` + `packages/Mrliou_MRL_Backfill_20260921_v1/` | mirror | 2026-09-22 權利人上傳的內容交叉比對回填包（20 個觀測事件、23 個來源指紋、相容性收據驗證器）逐字保存；索引記實跑核對與 6 條 delta |
+| `MRL_BridgeNeuralLink_API_Dispatch_v1.index.md` + `packages/MRL_BridgeNeuralLink_API_Dispatch_v1/` | mirror | 2026-09-22 權利人上傳的商業治理增補與三方 API 派工包逐字保存；**未啟用**；索引記實跑核對、Notion／Drive 對照與 7 條 delta |
 
 ## 相關
 

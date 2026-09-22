@@ -1,0 +1,139 @@
+{
+  "commercial_record_id": "MRL-APIWORKS-BYOH-20260922-CANDIDATE",
+  "product_id": "MRL_APIWorks_BYOH_Deployment_Product_v1",
+  "canonical_name": "MRL APIWorks BYOH Deployment",
+  "origin_signature": "MrLiouWord",
+  "sku": "MRL-APIWORKS-BYOH-DEPLOY-V1",
+  "record_state": "CONSTRUCTION_CANDIDATE",
+  "creator": "Mr.liou (per Notion source; external rights evidence separately required)",
+  "product_authority": "Mr.liou (internal definition)",
+  "rights_granted": {
+    "access": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "use": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "deployment": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "modification": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "derivative": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "distribution": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "sublicense": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "data": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "source": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "core_technology": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "brand_naming": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    },
+    "commercialization": {
+      "state": "UNRESOLVED",
+      "grantor": null,
+      "grantee": null,
+      "scope": null,
+      "term": null,
+      "territory": null,
+      "grant_ref": null
+    }
+  },
+  "rights_retained": [
+    "MRL core / Mother / source / brand: no transfer inferred; transaction-specific scope unresolved"
+  ],
+  "third_party_licenses": [],
+  "contract_ref": null,
+  "customer_data_rights": null,
+  "termination_rules": null,
+  "export_rules": null,
+  "price_terms_ref": null,
+  "authority_registry_ref": null,
+  "governing_law_review_ref": null,
+  "supplier_data_terms_ref": null,
+  "evidence_refs": [],
+  "conflicts": [
+    "Site metadata vs direct Stripe evidence",
+    "Wrong Cloudflare account vs target account R2 claim"
+  ],
+  "source_ref": "https://app.notion.com/p/3bb8eeeec5b581299c21c8fda4a8c965",
+  "commercial_status": "COMMERCIAL_UNRESOLVED"
+}
