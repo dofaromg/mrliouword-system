@@ -1,0 +1,177 @@
+{
+  "particle_core/src/logic_pipeline.py": [
+    {
+      "sha": "5af3f14c87bb348f01c61f208cbd21e03058aed6",
+      "parents": [
+        "0851a5b60a079a4bbae2d192b3c7d92d11784447"
+      ],
+      "author": "Copilot",
+      "author_time": "2026-03-11T11:06:13Z",
+      "committer_time": "2026-03-11T11:06:13Z",
+      "message": "Refactor: extract duplicated pipeline constants to shared module (#427)",
+      "verified": true,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/5af3f14c87bb348f01c61f208cbd21e03058aed6"
+    },
+    {
+      "sha": "4cb4a7403c34a5a5446cea8a926b0380ab294633",
+      "parents": [
+        "fd233cea742e0eeb244ac625a1fbf5c52897c06b"
+      ],
+      "author": "Copilot",
+      "author_time": "2026-02-28T06:31:12Z",
+      "committer_time": "2026-02-28T06:31:12Z",
+      "message": "Fix merge conflict and inline import in particle_core (#424)\n\n* Initial plan\n\n* Fix merge conflict in logic_pipeline.py and move inline hashlib import to module level in memory_cache_disk.py\n\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>\n\n---------\n\nCo-authored-by: copilot-swe-agent[bot] <198982749+Copilot@users.noreply.github.com>\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>",
+      "verified": true,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/4cb4a7403c34a5a5446cea8a926b0380ab294633"
+    },
+    {
+      "sha": "fc54ba0b339156c74df159549f732319de38d43c",
+      "parents": [
+        "576dec3aa91b1e84388cae077abacd73c2b91366"
+      ],
+      "author": "Mr.liou",
+      "author_time": "2026-02-22T14:49:12Z",
+      "committer_time": "2026-02-22T14:49:12Z",
+      "message": "Add THX.md acknowledgment file (#52) (#124)\n\n* Add THX.md acknowledgment file (#52)\n\n* 更新 P.MetaEnv.openapi.yaml.txt\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\nSigned-off-by: Mr.liou <z814241@gmail.com>\n\n* 更新 src_server_api_Version3.py\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\nSigned-off-by: Mr.liou <z814241@gmail.com>\n\n---------\n\nSigned-off-by: Mr.liou <z814241@gmail.com>\nSigned-off-by: Mr.liou <217537952+dofaromg@users.noreply.github.com>\nCo-authored-by: Copilot <198982749+Copilot@users.noreply.github.com>\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>",
+      "verified": true,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/fc54ba0b339156c74df159549f732319de38d43c"
+    },
+    {
+      "sha": "a158120e39325b9933e2fcaf2036034bbfec546c",
+      "parents": [
+        "ff97c64e502e718608c4b2c34ab2d3173244ff6a"
+      ],
+      "author": "copilot-swe-agent[bot]",
+      "author_time": "2026-02-11T18:06:35Z",
+      "committer_time": "2026-02-11T18:06:35Z",
+      "message": "Address code review feedback: fix parallel_reduce bug, add constants, use faster hash, improve test encapsulation\n\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>",
+      "verified": false,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/a158120e39325b9933e2fcaf2036034bbfec546c"
+    },
+    {
+      "sha": "c84025ad3433452ad84ffc3dc223310cbe497d5f",
+      "parents": [
+        "b572ad72dcee638f5a7e2c400c1407c0ac5f0128"
+      ],
+      "author": "copilot-swe-agent[bot]",
+      "author_time": "2026-02-11T18:02:19Z",
+      "committer_time": "2026-02-11T18:02:19Z",
+      "message": "Add enhanced computational capabilities: parallel execution, caching, primitives, and advanced AI fusion\n\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>",
+      "verified": false,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/c84025ad3433452ad84ffc3dc223310cbe497d5f"
+    },
+    {
+      "sha": "ccf75635548f93b90e251e7bb633163aa36e16db",
+      "parents": [
+        "42369b602c13f0e82e271b68ffee5b3bcaa69b4c"
+      ],
+      "author": "copilot-swe-agent[bot]",
+      "author_time": "2026-02-01T07:46:35Z",
+      "committer_time": "2026-02-01T07:46:35Z",
+      "message": "Fix critical duplicate code and add performance caching\n\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>",
+      "verified": false,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/ccf75635548f93b90e251e7bb633163aa36e16db"
+    },
+    {
+      "sha": "31f6fda1d79df29afe2070d26f57eab64b95732d",
+      "parents": [
+        "92a661ce70e816c1b841866247d9d36ac94ce0ea",
+        "cdc7059773172ca64320e179b5e6c066d8e4d3ea"
+      ],
+      "author": "Mr.liou",
+      "author_time": "2026-01-26T16:59:39Z",
+      "committer_time": "2026-01-26T16:59:39Z",
+      "message": "Merge branch 'dofaromg-patch-1' into main\n\nSigned-off-by: Mr.liou <z814241@gmail.com>",
+      "verified": true,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/31f6fda1d79df29afe2070d26f57eab64b95732d"
+    },
+    {
+      "sha": "9881507fd43a6afff41a1c0dda4e3a222d4eea82",
+      "parents": [
+        "b731d476922d971bdb1968f845878d838eaa01f3"
+      ],
+      "author": "Copilot",
+      "author_time": "2025-12-06T08:02:12Z",
+      "committer_time": "2025-12-06T08:02:12Z",
+      "message": "Improve variable and function names for better code readability (#112)\n\n* Initial plan\n\n* Improve variable and function names for better readability\n\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>\n\n---------\n\nCo-authored-by: copilot-swe-agent[bot] <198982749+Copilot@users.noreply.github.com>\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>",
+      "verified": true,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/9881507fd43a6afff41a1c0dda4e3a222d4eea82"
+    },
+    {
+      "sha": "cdc7059773172ca64320e179b5e6c066d8e4d3ea",
+      "parents": [
+        "4acb69de0bab4d9f335814437c6038ea34cf5686"
+      ],
+      "author": "Copilot",
+      "author_time": "2025-11-25T09:44:44Z",
+      "committer_time": "2025-11-25T09:44:44Z",
+      "message": "Add Particle Language Core v1 specification files (#46)",
+      "verified": true,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/cdc7059773172ca64320e179b5e6c066d8e4d3ea"
+    },
+    {
+      "sha": "b995550f3b9ede067de4e135ee949a0bc679dcbf",
+      "parents": [
+        "751200ef1bc34283cb3f08a23549c42c0dfb65f6"
+      ],
+      "author": "Copilot",
+      "author_time": "2025-11-17T16:44:58Z",
+      "committer_time": "2025-11-17T16:44:58Z",
+      "message": "Improve variable and function naming clarity across particle core modules (#64)",
+      "verified": true,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/b995550f3b9ede067de4e135ee949a0bc679dcbf"
+    },
+    {
+      "sha": "1942188aa516e5fd1e11d78f70749054d3062310",
+      "parents": [
+        "6110bc6a96e9006cc9b31a26caacafa6602658f0"
+      ],
+      "author": "google-labs-jules[bot]",
+      "author_time": "2025-09-14T05:12:13Z",
+      "committer_time": "2025-09-14T05:12:13Z",
+      "message": "Fix: Use UTC for consistent result filenames\n\nThe `store_result` function in `logic_pipeline.py` was using `datetime.now()` to generate timestamps for filenames. This could lead to inconsistencies when the code is run in different timezones.\n\nThis commit changes the implementation to use `datetime.utcnow()` for generating filenames, ensuring that all timestamps are in UTC and therefore consistent across all environments.\n\nA new test case has been added to verify that the timestamp in the filename is consistent with the UTC timestamp stored in the file's content.",
+      "verified": false,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/1942188aa516e5fd1e11d78f70749054d3062310"
+    },
+    {
+      "sha": "c11801dca737959d4fd7160c83fe66c3333791a2",
+      "parents": [
+        "4bc04ca1cad2881c803ff28eabe72725b3a30e07"
+      ],
+      "author": "Copilot",
+      "author_time": "2025-08-02T05:39:10Z",
+      "committer_time": "2025-08-02T05:39:10Z",
+      "message": "Implement MRLiou Particle Language Core system for FlowAgent tasks (#14)\n\n* Initial plan\n\n* Implement MRLiou Particle Language Core system with complete functionality\n\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>\n\n* Add comprehensive implementation summary and final verification\n\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>\n\n---------\n\nCo-authored-by: copilot-swe-agent[bot] <198982749+Copilot@users.noreply.github.com>\nCo-authored-by: dofaromg <217537952+dofaromg@users.noreply.github.com>",
+      "verified": true,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/c11801dca737959d4fd7160c83fe66c3333791a2"
+    }
+  ],
+  "MRL_Mother/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_ReplayRestore_Core.py": [
+    {
+      "sha": "91c38ed4bb8cbae989fbe908bcd7a36ab4a6018c",
+      "parents": [
+        "ffcc18d92b6378a03a98e6ace45abbab8b2a6685"
+      ],
+      "author": "Claude",
+      "author_time": "2026-07-10T19:47:47Z",
+      "committer_time": "2026-07-13T18:34:46Z",
+      "message": "feat: absorb full MRL_AI_SYSTEM into MRL_Mother (3916 files)\n\nComplete absorption of dofaromg/MRL_AI_SYSTEM (branch MrliouAI)\ninto flow-tasks/MRL_Mother/:\n\nCore layers (00-08):\n- 00_rootlaw: LAW-0 governance definition\n- 01_schema: JSON schemas (action, decision, trace, runtime)\n- 02_principles: rules.aup_v1 + defaults\n- 03_memory: merkle chain + vector store\n- 04_runtime: flowcore_loop + DL580 WaveStack\n- 05_persona: codepartner + world_module + Globe\n- 06_trace: chronicle + approvals + runtime traces\n- 07_ingest: allowlist/denylist configs\n- 08_sources: DL580 evidence chain + FlowAgent recovery\n\n09_workflow (+74 modules):\n- AgentHarness suite (Kernel, PolicyGate, ToolLoop, HookLattice, TriggerPulse)\n- LawEngine, NativeReasoning, ViolationEnforcer, OriginBoundary\n- Billing, ProductFactory, FinanceWorld, DataIdentity\n- LLM adapters, tool router, scheduler, streaming, conversation mgr\n- Fluin analyzer/recorder/vault, world sync, persistent loop daemon\n\nRuntime systems:\n- MRL_UniversalRuntimeLanguage_Core_v1 (MetaIR/ParticleIR compilers, parser, perception kernel)\n- MRL_RuntimeOS_v1_4_0 (enterprise platform: 22 subsystems, BlenderBridge, language adapters)\n- MRL_Runtime (PIDScope workflow + Terminal + LAW0 signature)\n- MRL_MotherModel (bridge modules, management scripts, registry)\n- MRL_FireCore_v1_0 (Firebase: auth, live, push, store, trace, vault)\n\nSpecialized modules:\n- MRL_BaseWorld_DB_v1 (PostgreSQL schema + deploy)\n- MRL_3DScanner_ProductBridge (iOS + Node backend)\n- MRL_MotherSystem_ControlPanel\n- MRL_Symbolic (4 symbolic layers)\n- MRL_Adapters (6 adapter specs)\n\nArchive:\n- MRL_MotherSource_Lineage_v1 (FlowAgent v1-v56, 3030 files)\n- 母體收斂包_v1 (convergence pack)\n- 52 test files from MRL_AI_SYSTEM test suite\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01VTkQZge74QPvPJJGWjg3v9",
+      "verified": false,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/91c38ed4bb8cbae989fbe908bcd7a36ab4a6018c"
+    }
+  ],
+  "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_passport_registry_v1.py": [
+    {
+      "sha": "19590ef7a8a5dca903f29e79b7aeee51ef34f2fa",
+      "parents": [
+        "45b10c7d03124f90609c6ce63c7b0c9325e9b90f"
+      ],
+      "author": "Mr.liou",
+      "author_time": "2026-08-28T07:53:02Z",
+      "committer_time": "2026-08-28T08:01:32Z",
+      "message": "feat(MRL): deliver verified BYOH AI mother runtime baseline\n\nLinearized with the synchronized MRL evidence topology for the repository's rebase-only merge policy. Full source lineage remains at MRL_Evidence_PR632_PreLinearization_f7ef604.",
+      "verified": false,
+      "url": "https://github.com/dofaromg/flow-tasks/commit/19590ef7a8a5dca903f29e79b7aeee51ef34f2fa"
+    }
+  ]
+}

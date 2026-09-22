@@ -1,0 +1,47 @@
+{
+  "authority": "NOTION_MRL_WORLD_MODEL",
+  "origin_signature": "MrLiouWord",
+  "parent_module": "Mrliou_MRL_RooClaudeCode_BridgeNeuralLink_v1",
+  "sources": [
+    {
+      "url": "https://app.notion.com/p/3bb8eeeec5b581238cf4dbc2548f6006?pvs=204",
+      "title": "🏛️ Mrliou_MRL_Commercial_Governance_Constitution_v1",
+      "page_last_edited_at": "2026-08-13T11:24:10.044Z",
+      "snapshot": "governance/3bb8eeeec5b581238cf4dbc2548f6006.json",
+      "sha256": "b7a4f6674d90c6ea5e2a9f8810d59e13e50bfdcc818b49c8b6b836d8169dd9ee",
+      "native_verification": "unverified"
+    },
+    {
+      "url": "https://app.notion.com/p/3c38eeeec5b581bda54ee462e627b3e0?pvs=204",
+      "title": "🌐 MRL 世界模型頂層規則修訂暨命名治理 v1.1 — 雙容器／全域容納／粒子轉譯／自動拓撲",
+      "page_last_edited_at": "2026-08-21T17:36:18.958Z",
+      "snapshot": "governance/3c38eeeec5b581bda54ee462e627b3e0.json",
+      "sha256": "405abd19904ff523a316be0230726477b6f6bcdc43035f8c47e695fa658dae61",
+      "native_verification": "unverified"
+    }
+  ],
+  "live_enabled": false,
+  "valid_until_epoch": 0,
+  "models": {
+    "openai": "",
+    "anthropic": "",
+    "gemini": ""
+  },
+  "rules": {
+    "definition_authority": "Notion MRL world model and its referenced governance pages; local projection is derived only",
+    "provenance": "Preserve original names, attribution, source lineage and External-to-MRL mappings. No competing mother line.",
+    "commercial_roles": "Suppliers, AI workers and hosting/storage providers do not automatically acquire product authority.",
+    "rights": "Name and separate access/use/deployment/modification/derivative/distribution/sublicense/data/source/core/brand/commercialization rights; unspecified rights NOT_GRANTED / UNRESOLVED.",
+    "commercial_gate": "Creator, product authority, retained core rights, third-party licenses, customer data rights and termination export must be clear before COMMERCIAL_APPROVED; this review adapter cannot approve transactions.",
+    "conflicts": "Record conflicts for review; do not overwrite Notion definitions with generated findings.",
+    "legal_effect": "Internal governance baseline; third-party terms, signed contracts and applicable law remain distinct per constitution section 11.",
+    "evidence": "Definition, code, deployment, payment and customer acceptance are separate evidence states."
+  },
+  "worker_roles": {
+    "openai": "Cross-source architecture and dependency review",
+    "anthropic": "Implementation and runtime evidence review",
+    "gemini": "Drive/document mapping and provenance review"
+  },
+  "scope": "review_only",
+  "snapshot_status": "FETCHED_NOT_LIVE_REVALIDATED"
+}

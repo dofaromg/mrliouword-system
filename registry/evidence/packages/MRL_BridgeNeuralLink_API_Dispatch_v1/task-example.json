@@ -1,0 +1,11 @@
+{
+  "idempotency_key": "mrl-commercial-law-review-20260922-v1",
+  "workspace": "mrl",
+  "scope": "review_only",
+  "policy_sha256": "2b720899e6b404a5885e304f664ddd4cfd15795057dc6e99853b054f8cf08412",
+  "source_refs": [
+    "https://app.notion.com/p/3e38eeeec5b581ed9b54cc274d3be698",
+    "https://docs.google.com/document/u/0/d/1qBknjUoLuSFQMtU_eepKRYMOa5dbgnjtQEH0n1qXhsc/mobilebasic"
+  ],
+  "prompt": "任務：核對 MRL 商業治理的證據判定。已知材料摘要：站內 Stripe metadata 宣告 charges_enabled；Cloudflare 連接器帳號與目標帳號不一致；routes/run 回 token/cost 但未提供 output。請指出每項只能支持何種 gate、缺少什麼證據、應如何補證。禁止把這些摘要宣稱為你直接實測，不自行核准交易或改動 production。URL 是來源參照，本任务沒有提供其全文。"
+}
