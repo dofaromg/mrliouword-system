@@ -66,18 +66,30 @@ particle-api` 這顆長期紅燈。兩者都是 Cloudflare 側，分別處理。
 在本 session 的暫存目錄用一把**丟棄用** RSA-2048 key 實跑 CSR 產生指令，驗證產物可解析：
 
 ```
+# 於暫存目錄 $S 內執行；每一條指令後緊接其實際輸出
 $ openssl req -new -newkey rsa:2048 -nodes -keyout throwaway.key -out origin.csr \
     -subj "/CN=mrliouword.com" \
-    -addext "subjectAltName=DNS:mrliouword.com,DNS:*.mrliouword.com"
+    -addext "subjectAltName=DNS:mrliouword.com,DNS:*.mrliouword.com" 2>&1 | tail -1
+-----                                   ← 金鑰生成進度的最後一行，非錯誤
+
 $ openssl req -in origin.csr -noout -verify
 Certificate request self-signature verify OK
+
+$ openssl req -in origin.csr -noout -subject -text \
+    | grep -E 'Subject:|DNS:|Public Key Algorithm|Public-Key'
         Subject: CN = mrliouword.com
             Public Key Algorithm: rsaEncryption
                 Public-Key: (2048 bit)
                     DNS:mrliouword.com, DNS:*.mrliouword.com
+
+$ head -1 origin.csr; tail -1 origin.csr
 -----BEGIN CERTIFICATE REQUEST-----
 -----END CERTIFICATE REQUEST-----
-980            ← 位元組數
+
+$ wc -c origin.csr | awk '{print $1}'
+980
+
+$ cd / && rm -rf "$S" && echo "丟棄用 key 與 CSR 已刪除"
 丟棄用 key 與 CSR 已刪除
 ```
 
@@ -137,8 +149,9 @@ r2_buckets_list     → 403 {"code":10042,"message":"Please enable R2 through th
 ```
 
 而建構通知的帳號 `0b36a4577da7fced6df2e062fa5f6fa2` 有至少兩個 Worker，且倉庫的
-particle-api 使用 R2。**結論：本 session 的 Cloudflare MCP 所連帳號不是託管網站的帳號，
-或其 token 範圍不含這些資源。** 本 session 因此無法對真正的帳號做任何讀寫。
+particle-api 使用 R2。**結論：本 session 的 Cloudflare MCP 所及範圍不含託管網站的任何資源——要嘛綁到的
+不是那個帳號，要嘛 token 範圍不足；三個探測結果無法區分這兩者。** 本 session 因此
+無法對託管網站的帳號做任何讀寫。
 MCP 沒有 whoami 類工具，連的是哪個帳號驗不了——delta 4。
 
 ### 2.6 子 session 的新阻塞
@@ -164,7 +177,7 @@ needs_action:  org admin grant contents:write to Claude GitHub App, or reconnect
 | **Claude Code**（本 session） | 查文件、驗倉庫、實測 CSR 指令、探 MCP 帳號、寫本紀錄；無法碰真正的 Cloudflare 帳號 |
 | **Cloudflare dashboard** | Origin CA 表單回「CSR parsed as empty」，未說明原因；Pro 購買流程正常完成 |
 | **Cloudflare 文件（經 MCP）** | 給出 Origin CA 兩種模式與 API 路徑；給出 Workers Builds 名稱相符規則——egress 擋掉 `developers.cloudflare.com`，MCP 是本輪唯一能讀到官方文件的路徑 |
-| **Cloudflare MCP** | 三個列表探測顯示其所連帳號無 Workers、無 KV、未啟用 R2——**不是託管網站的帳號** |
+| **Cloudflare MCP** | 三個列表探測顯示其所及範圍無 Workers、無 KV、未啟用 R2——**要嘛綁到的不是託管網站的帳號，要嘛 token 範圍不含這些資源**；兩者從探測結果分不出來（delta 4）。日後排查要同時檢查帳號選擇與權限範圍 |
 | **egress proxy** | `developers.cloudflare.com` 直連被擋（承上輪）；`dash.cloudflare.com` 需登入，本來就不可達 |
 | **GitHub App（Claude）** | 對 `Mrliou/mrliouword-system` 缺 `contents:write`，擋住子 session 推送 |
 | **子 session** | 通過 `add_repo` 批准，patch 備好，卡在 GitHub App 權限 |
@@ -176,9 +189,16 @@ needs_action:  org admin grant contents:write to Claude GitHub App, or reconnect
 
 | # | 錯誤 | 誰抓到 | 現在擋著它的是什麼 |
 | --- | --- | --- | --- |
-| — | 本輪截至撰稿未發現。可能存在但未被抓到——上一輪的經驗是「由我自己抓到的：0」，所以「未發現」不等於「無」 | — | 外部審閱（Codex 會在 PR 上跑）；下一輪回頭讀 |
+| 1 | 第三節表格把「MCP 所及範圍為空」寫成定論「**不是託管網站的帳號**」，而 2.5 與 delta 4 保留了「或 token 範圍不足」——文件內部自相矛盾 | **Codex**（PR #79 P2） | 第三節與第六節改為條件式陳述，兩種可能並列；本列 |
+| 2 | 2.2 的實測區塊只列一條 `-verify` 指令，其下卻堆了另外四條指令（`-text \| grep`、`head/tail`、`wc -c`、`rm`）的輸出，且第六節引之為「實測輸出」——**證據無法照著重現** | **Codex**（PR #79 P2） | 2.2 改為每條指令緊接其輸出；本列 |
 
-寫「未發現」而不寫「無」，理由在上一輪 9.3 節：同形的錯五次，自己抓到零次。
+初稿此處寫的是「本輪截至撰稿未發現」。**推送後 5 分鐘內被外部抓到兩則**，
+與上一輪 9.3 的比例一致（自己抓到：0）。
+
+第 1 則與上一輪第四節第 1 則、本紀錄 10.3 節同形：**用措辭把不確定收斂成定論**。
+在第十節承認這個形狀的同一份文件裡，第三節正在犯它。
+第 2 則是新形狀：**輸出有了，產生它的指令沒寫全**——「附實測輸出」的規章要求，
+實際上要的是「附能重現該輸出的指令」，兩者不同。
 
 ---
 
@@ -202,7 +222,7 @@ delta 4 直接決定了本輪的能力邊界：**所有 Cloudflare 側的修復�
 | 問題 | 修法 | 誰能做 |
 | --- | --- | --- |
 | Origin CA「CSR parsed as empty」 | 桌機瀏覽器選「Generate private key and CSR with Cloudflare」（RSA 2048）；或在自己機器跑 2.2 的 openssl 指令、把 `origin.csr` 內容貼進「Use my private key and CSR」；或用 API `POST /certificates`（token 權限 `Zone › SSL and Certificates › Edit`） | 擁有者 |
-| `particle-api` 建構紅燈 | dashboard → Workers & Pages → particle-api → Settings → Build → Root directory = `cloudflare/particle-api` | 擁有者（本 session 的 MCP 連錯帳號，且無 build 設定工具） |
+| `particle-api` 建構紅燈 | dashboard → Workers & Pages → particle-api → Settings → Build → Root directory = `cloudflare/particle-api` | 擁有者（本 session 的 MCP 所及範圍無此 Worker——帳號或權限問題，見 delta 4——且工具集無 build 設定工具） |
 | 子 session 推送被擋 | 對 `Mrliou/mrliouword-system` 給 Claude GitHub App `contents:write`：`github.com/apps/claude/installations/select_target` | Mrliou org admin |
 
 實測輸出見 2.2（CSR 指令）、2.3（wrangler 名稱清單）、2.5（MCP 三探測）、2.6（子 session 狀態）。
@@ -246,7 +266,7 @@ delta 4 直接決定了本輪的能力邊界：**所有 Cloudflare 側的修復�
 ## 九、矛盾處
 
 - **9.1 文件規則 vs 觀察到的行為**：Workers Builds 名稱相符規則（文件）與 `mrliouword-system` 建構成功（事實）衝突。記為 delta 3，不強解。
-- **9.2 「修復完成建構」vs 能力邊界**：擁有者要的是修好，本 session 能給的是路徑。原因不是不肯做，是 MCP 連錯帳號（2.5，三探測為證）且 dashboard 需登入。**這一條要講清楚，不能用「已提供修法」把「沒修好」蓋過去。**
+- **9.2 「修復完成建構」vs 能力邊界**：擁有者要的是修好，本 session 能給的是路徑。原因不是不肯做，是 MCP 所及範圍不含網站資源（2.5，三探測為證；帳號或權限問題分不出，delta 4）且 dashboard 需登入。**這一條要講清楚，不能用「已提供修法」把「沒修好」蓋過去。**
 - **9.3 紀錄的完整性 vs 資料的敏感性**：擁有者說「這些幫我記錄起來」，我省略了卡號與行名。這是本輪唯一一處我沒有照字面執行的地方，理由與裁示權都寫在第一節。
 - **9.4 上一輪的「子 session 卡在批准」 vs 本輪的「批准過了但推不上去」**：上一輪紀錄把阻塞歸在「等擁有者批准」；本輪證實批准之後還有一層（GitHub App 權限）。上一輪的敘述沒錯，但**不完整**——它把「批准」寫成了唯一阻塞，實際上是第一層。
 
