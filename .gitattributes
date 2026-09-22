@@ -33,3 +33,9 @@
 
 # Exceptions: Keep SHA256 checksum files as regular text
 *.sha256 !filter !diff !merge text
+
+# Vendored upstream Git source (see vendor/git/PROVENANCE.yaml).
+# 2026-09-22：410 個 Git 上游檔自根目錄與 integrations/ 以 git mv 搬入，
+# 歷史完整保留。標為 linguist-vendored 讓 GitHub 語言統計與 CodeQL 自動偵測
+# 不再把本倉庫當成 C 專案——那正是 CodeQL c-cpp 矩陣失敗的根因。
+vendor/git/** linguist-vendored

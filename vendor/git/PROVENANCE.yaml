@@ -1,0 +1,110 @@
+# ============================================================================
+#  vendor/git 來源鏈記錄
+#
+#  依 docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md 第 4 節，
+#  倉庫內任何匯入產物都必須宣告完整來源鏈。
+#
+#  這一份記錄的是「不是 MRL 的東西」：本目錄 410 個檔全部是 Git 上游
+#  （git/git）的原始碼、shell 腳本、CI 腳本、Windows 建置檔與專案文件，
+#  著作權屬 Git 貢獻者，授權為 GPL-2.0（見 integrations/COPYING）。
+#  MRL / MrLiouWord / Mr.liou 對這些檔**沒有著作權主張**；下方
+#  canonical_authority 等欄位描述的是「本倉庫對這份紀錄的權責」，
+#  不是對內容的權責。兩者不可混淆——混淆即為署名事件紀錄所稱的反向混淆。
+#
+#  為什麼搬、為什麼是搬不是刪：
+#  這批檔在 2026-01-27 以 GitHub 網頁上傳（commit 0663a34，597 檔）進入
+#  倉庫時被攤平在根目錄與 integrations/，沒有任何標註。後果是 GitHub 與
+#  CodeQL 把整個倉庫偵測為 C 專案，CodeQL c-cpp 矩陣在鏡像倉庫持續失敗；
+#  本倉庫自有的 C（mrliou/ 17 檔、core/atom_t.h）反而被淹沒。
+#  2026-09-22 擁有者裁示方案 C：以 git mv 搬入 vendor/git/，歷史完整保留，
+#  零刪除（擁有者規則：任何刪除須反覆確認、不允許刪除歷史）。
+# ============================================================================
+
+canonical_authority: Mr.liou            # 對本紀錄的權責，非對內容
+origin_signature: MrLiouWord            # 本倉庫記錄之簽章，非內容之簽章
+source_repo: dofaromg/mrliouword-system
+source_artifact: vendor/git/
+source_version: 0663a34                 # 匯入 commit；搬移 commit 見 relocation
+derivative_role: vendored_import        # 逐字匯入、未修改、非 MRL 著作
+artifact_owner: Git contributors        # 內容著作權人
+verification_status: partial
+
+upstream:
+  project: git/git
+  license: GPL-2.0-only
+  license_file: integrations/COPYING
+  version: undetermined                 # 見 not_performed
+  note: >
+    檔案佈局為攤平後的 Git 原始碼樹：根目錄的 *.c/*.h 混合了 Git 頂層
+    原始碼與 compat/（access.c、mingw.h、inet_ntop.c …）；ci/ 腳本
+    （lib.sh、run-*.sh、install-dependencies.sh …）、compat/vcbuild/
+    （README、find_vs_env.bat、vcpkg_*.bat）、頂層 git-*.sh 與 git-p4.py
+    亦被攤平在根目錄。本目錄保留攤平後的佈局，不重建上游樹——
+    重建會是二次改寫，且無法在無版本資訊下驗證正確性。
+
+imported_verbatim:
+  method: GitHub 網頁上傳（「Add files via upload」）
+  provided_by: Mr.liou
+  import_commit: 0663a34
+  import_date: "2026-01-27"
+  import_commit_scope: >
+    該 commit 共 597 檔，混合 Git 上游與 MRL 自有內容（core/、docs/、
+    containers/ …）。分類以逐檔判定為準，不以 commit 為準。
+
+relocation:
+  date: "2026-09-22"
+  method: git mv                        # 410 檔，git 判定 R100（內容 100% 相同）
+  decided_by: Mr.liou
+  decision_record: docs/retrospective/2026-09-22_vendor_git_relocation_session_record.md
+  from_to:
+    - from: "<repo root>/*.c, *.h"
+      to: vendor/git/
+      count: 267
+    - from: integrations/*.c, integrations/*.h
+      to: vendor/git/integrations/
+      count: 92
+    - from: "<repo root>/ Git 腳本、建置檔、git.manifest、git-p4.py、README(VS build)"
+      to: vendor/git/
+      count: 43
+    - from: integrations/{CODE_OF_CONDUCT.md,COPYING,INSTALL,README.md,SECURITY.md,check-builtins.sh,command-list.txt,meson_options.txt}
+      to: vendor/git/integrations/
+      count: 8
+  total: 410
+  manifest: MANIFEST.sha256             # 410 行，搬移後逐檔 sha256
+  manifest_sha256: b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564403c60c93fd16bfd4349
+  internal_references_now_dangling:
+    - generate-hooklist.sh              # 引用同批 C 檔名；上游腳本，本倉庫從未執行
+    - integrations/check-builtins.sh    # 同上
+  gitattributes: "vendor/git/** linguist-vendored"
+
+not_relocated:
+  held_unknown_origin:
+    - path: labeler.ts.txt
+      reason: GitHub Actions labeler 腳本，無法判定是否來自 Git 上游；依「查清楚再動」原則留在原位
+  excluded_false_positives:            # 掃描曾誤判為 Git，經逐檔查證為 MRL 自有
+    - AUTH_COMMAND_README.md            # commit 55e36ba，MRL 的 gt auth 文件
+    - IMPLEMENTATION_COMPLETE.md        # commit bb54c07，同上
+    - gt                                # commit 55e36ba，MRL 的 git 包裝腳本
+    - 228.patch                         # Mr.liou 自己的 patch 系列 [PATCH 1/8]
+  mrl_owned_c_kept_in_place:
+    - mrliou/                           # 17 檔，1,888 行，本倉庫自有
+    - core/atom_t.h                     # Author: MR.liou
+
+contributors:
+  - name: Git contributors
+    role: 內容著作權人（上游）
+  - name: Mr.liou
+    role: canonical_authority｜2026-01-27 匯入｜2026-09-22 裁示搬移範圍
+  - name: Claude Code
+    role: tool｜依賴查驗、分類、預演、執行 git mv、撰寫本紀錄
+
+verification:
+  performed:
+    - 依賴查驗：50 個建置檔／腳本、GitHub workflows、Python/JS/TS、release_gate 基準線、Merkle 葉、自有文件的路徑引用——對這 410 檔的硬依賴為 0
+    - 兩次暫存副本預演（範圍 1 的 359 檔、範圍 2 的 410 檔）：七支閘門全 exit 0；release_gate 產物 15／全過 4／未過 11／基準線 70 不變；Merkle root 相同、12 葉不變
+    - 正式搬移：git diff --cached -M100% 判定 410 檔全部 R100
+    - 血緣判定：359 個 C 檔以 mrl_/mrliou 全文比對命中 0；非 C 檔逐檔以匯入 commit 與內容判定
+  not_performed:
+    - 上游 Git 版本識別（倉庫內無 GIT-VERSION-GEN、RelNotes、版本字串）
+    - 與上游任一 release 的逐檔 sha256 比對（需網路取得上游 tarball，本環境 egress 不允許）
+  note: 因此 verification_status 為 partial；version 記為 undetermined，不猜。
