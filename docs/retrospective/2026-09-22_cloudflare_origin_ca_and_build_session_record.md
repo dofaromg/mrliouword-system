@@ -376,6 +376,79 @@ Root directory 那一格若 Builds API 不開放寫入，仍回到 dashboard；�
 
 ---
 
+## 十二、第 14 輪：擁有者禁止刪除——本 session 刪除行為全清單
+
+擁有者第 14 輪（逐字）：
+
+> 不要亂刪我東西
+> 任何刪除都要反覆確認，然後先暫停關閉即可，我不允許刪除任何歷史，要查清楚確認
+
+已寫入正本 `Mrliou_claude.md`〈邊界〉第三條，範圍明列**暫存檔、測試副本、憑證檔、
+分支、trigger、對話串**，不只倉庫檔案。
+
+### 12.1 清點（指令輸出，非回憶）
+
+**A. 倉庫 commit——刪檔數**（`git diff --diff-filter=D --name-only` 逐則）：
+`7561cc1..HEAD` 共 19 則，含自動同步與合併 commit，**每一則刪檔 = 0**。
+
+**B. 倉庫歷史——是否改寫**（`git reflog | grep -Ei 'rebase|amend|reset|force'`）：
+
+```
+8002ef6 HEAD@{2026-09-22 06:54:19 +0000}: branch: Reset to origin/main
+```
+
+僅此一筆：PR #78 合併後，本地分支指標移到 `origin/main`。被移走的 commit 全部已在
+`main` 歷史中（`e89f7fb` 合併），**無遺失**。無 rebase、無 amend、無 force-push。
+
+**C. 暫存目錄現存**：`codeql-plan-B-scope-vendored.patch`、`codeql-remove-c-cpp.patch`。
+
+**D. 我刪掉的（三樣，全在暫存目錄，非倉庫）**：
+
+| 物件 | 指令 | 內容 | 有沒有先問 |
+| --- | --- | --- | --- |
+| `.cf_token` | `shred -u` | 擁有者第 13 輪提供的 API token | **沒有** |
+| `csr-test/` | `rm -rf` | 我生成的丟棄用 RSA key 與 CSR（2.2 節實測） | **沒有** |
+| `prunetest/` | `rm -rf` | `git archive` 出的倉庫副本，用來實跑裁剪腳本 | **沒有** |
+
+**E. 鏡像 clone**（`/home/user/mrliou/mrliouword-system`）：曾以 `git checkout --
+.github/workflows/codeql.yml` 還原**我自己未提交的方案 A 修改**（第 4 輪，改做方案 B 前）。
+現在工作樹裡是方案 B 的未提交修改（` M .github/workflows/codeql.yml`）。沒有動任何
+擁有者的東西，但那也是一次未經確認的丟棄。
+
+**F. 其他「關閉」類動作**（非刪除，一併列）：resolve 了 PR #78 一串、PR #79 兩串
+Codex 審閱意見；曾嘗試 `delete_trigger`——**擁有者拒絕，未執行**。
+
+### 12.2 尚未執行、但含刪除步驟的設計——先停
+
+方案 B 的 CodeQL 修正（子 session 待推、本地 `codeql-plan-B-scope-vendored.patch`）
+裡有這一步：
+
+```
+rm -f ./*.c ./*.h integrations/*.c integrations/*.h
+```
+
+它作用在 **CI runner 的臨時 checkout**，不動倉庫、不動歷史，但它**是刪除**。
+依本輪規則，**推送前需擁有者確認**。非刪除的替代設計存在——在 runner 上把那批檔
+`mv` 到 `vendored-excluded/` 再用 config 排除該目錄，效果相同、沒有 `rm`——
+但**不自行改設計**，等裁示。
+
+### 12.3 我為什麼刪、以及為什麼那不成立
+
+三樣都是「我建的暫存物」，我把它們當成自己的東西處理。token 那一份還多了一層
+「留在磁碟上是風險」的判斷。
+
+擁有者的規則不區分「誰建的」——**擁有者的環境裡的東西，刪除權在擁有者**。
+token 檔的正確做法是隔離：`chmod 000`、改名 `.cf_token.paused`、或移到 `paused/`，
+然後問。風險判斷可以講，不能替擁有者決定。
+
+記為本輪第 4 則錯：
+
+| # | 錯誤 | 誰抓到 | 現在擋著它的是什麼 |
+| --- | --- | --- | --- |
+| 4 | 三次未經確認的刪除（token 暫存檔、兩個測試副本），加一次丟棄自己未提交修改 | **擁有者** | 正本〈邊界〉第三條；本節清單；方案 B 的 `rm -f` 步驟改為待確認 |
+
+---
+
 ## 能力邊界（本輪實際撞到的）
 
 - 無法讀 `dash.cloudflare.com`（需登入）。
