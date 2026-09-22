@@ -94,3 +94,39 @@ verification:
     - 實際部署（Cloudflare dashboard 的 Root directory 尚未設為 cloudflare/particle-api）
     - 對既有線上資料的行為驗證
   note: 因此 verification_status 為 partial，不宣稱 verified。
+
+# Append-only provenance addition. Original import hashes above remain intact.
+channel_single_writer_20260922:
+  canonical_authority: Mr.liou
+  origin_signature: MrLiouWord
+  source_repo: dofaromg/mrliouword-system
+  source_artifact: cloudflare/particle-api/src/index.ts
+  source_version: 3ef4d1f31e79bc93c2f6a47804c83eea0df61fab
+  derivative_role: implementation
+  artifact_owner: Mr.liou
+  contributors:
+    - Mr.liou — explicitly selected Durable Object single-writer, binding, migration and deployment validation
+    - Codex — implementation and validation tool; does not acquire origin authority
+    - Cloudflare — runtime and storage provider only
+  transformation: >
+    Route all Channel operations through one Mrliou_ChannelChain actor for the
+    existing D1 table. Serialize external awaits, retain D1 as commit authority,
+    preserve legacy hash formats, validate existing history before writes,
+    condition each append atomically on the committed head to fence delayed I/O, and
+    retain a committed receipt when KV projection fails. Add SQLite-backed DO
+    binding/migration, pinned tooling, runtime regressions and deployment verifier.
+  verification_status: partial
+  implements:
+    - MRL_CHANNEL_CORE
+    - MRL_CHANNEL_CORE/MRL_SyncChannel
+    - MRL_RUNTIME_CORE/MRL_RuntimePersistence
+  definition_source: registry/mother_core_registry_2026-09-21.json
+  ownership_boundary: runtime adapter within MRL_API_Gateway, not a new canonical core
+  origin_import: imported_verbatim above; original bytes remain addressable at import_commit
+  change_record: docs/retrospective/2026-09-22_channel_single_writer_session_record.md
+  evidence: docs/retrospective/2026-09-22_channel_single_writer_evidence.json
+  limitations:
+    - Live Cloudflare migration, exact-version traffic and production concurrency receipt are not yet verified.
+    - No automatic repair of historical forks or legacy UNIQUE(key) schema.
+    - Old direct-D1 writers must be quiesced and drained before cutover; no mixed-version writes.
+    - Memory and Persona chains are outside this Channel repair.

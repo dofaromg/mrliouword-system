@@ -68,6 +68,9 @@ interface Env {
   DB: D1Database;
   PARTICLES: R2Bucket;
   MASTER_KEY?: string;
+  // PR #77: one DO identity for the entire existing D1 chain, never per key.
+  MRL_CHANNEL_CHAIN: DurableObjectNamespace;
+  MRL_BUILD_SHA?: string;
 }
 
 // ============================================
@@ -279,49 +282,93 @@ class Persona {
 
 class Channel {
   private chainHead = "0".repeat(64);
+  private syncedAt = 0;
+  private count = 0;
   constructor(private kv: KVNamespace, private db: D1Database, private r2: R2Bucket) {}
 
+  get checkpoint() { return `${this.count}:${this.chainHead}`; }
+
+  private prepareAppend(values: (string | number)[], expectedHead: string) {
+    // Fence late D1 requests from a previous actor incarnation. The DO queue is
+    // the writer; this atomic precondition rejects an unexpectedly changed head
+    // instead of publishing a sibling. No new table constraint or data rewrite.
+    return this.db.prepare(`INSERT INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at)
+      SELECT ?,?,?,?,?,?,?,?,?,? WHERE COALESCE(
+        (SELECT merkle FROM channel_sync ORDER BY synced_at DESC, rowid DESC LIMIT 1),
+        '0000000000000000000000000000000000000000000000000000000000000000'
+      ) = ?`).bind(...values, expectedHead);
+  }
+
   async init() {
-    await this.db.exec(`
-      CREATE TABLE IF NOT EXISTS channel_sync (
+    // D1 exec splits input on newlines; prepare/batch keeps the multiline
+    // CREATE TABLE as one statement (verified against the workerd D1 binding).
+    await this.db.batch([
+      this.db.prepare(`CREATE TABLE IF NOT EXISTS channel_sync (
         id TEXT PRIMARY KEY, key TEXT NOT NULL, value TEXT, layer TEXT DEFAULT 'L7',
         simhash TEXT, merkle TEXT, prev TEXT, source TEXT DEFAULT 'kv', created_at INTEGER, synced_at INTEGER
-      );
-      CREATE INDEX IF NOT EXISTS idx_key ON channel_sync(key);
-      CREATE INDEX IF NOT EXISTS idx_layer ON channel_sync(layer);
-    `);
+      )`),
+      this.db.prepare("CREATE INDEX IF NOT EXISTS idx_key ON channel_sync(key)"),
+      this.db.prepare("CREATE INDEX IF NOT EXISTS idx_layer ON channel_sync(layer)"),
+    ]);
     // 同一批寫入的 synced_at 會相同（Date.now() 在迴圈內不變），
     // 只靠 synced_at 排序無法決定鏈尾。rowid 是插入序，即鏈的順序。
-    const head = await this.db.prepare("SELECT merkle FROM channel_sync ORDER BY synced_at DESC, rowid DESC LIMIT 1").first<{merkle:string}>();
-    if (head) this.chainHead = head.merkle;
+    const head = await this.db.prepare("SELECT merkle, synced_at FROM channel_sync ORDER BY synced_at DESC, rowid DESC LIMIT 1").first<{merkle:string; synced_at:number}>();
+    if (head) { this.chainHead = head.merkle; this.syncedAt = head.synced_at; }
+    const count = await this.db.prepare("SELECT COUNT(*) AS c FROM channel_sync").first<{c:number}>();
+    this.count = count?.c || 0;
+  }
+
+  async assertWritable() {
+    // Existing UNIQUE(key) schemas need a separately reviewed, data-preserving
+    // migration. Never silently rebuild the live table or replace old records.
+    const indexes = await this.db.prepare("PRAGMA index_list(channel_sync)").all<{name:string; unique:number}>();
+    for (const index of indexes.results) {
+      if (!index.unique) continue;
+      const columns = await this.db.prepare("SELECT name FROM pragma_index_info(?)").bind(index.name).all<{name:string}>();
+      if (columns.results.length === 1 && columns.results[0].name === "key") {
+        throw new ChannelBlocked("CHANNEL_LEGACY_UNIQUE_KEY");
+      }
+    }
+    const result = await this.verify();
+    if (!result.valid) throw new ChannelBlocked("CHANNEL_HISTORY_INVALID");
   }
 
   async emit(key: string, value: string) {
     const id = uuid(), layer = getLayer(key), simhash = simhash64(value), ts = Date.now();
     const merkle = await sha256(key + value + simhash + ts + this.chainHead);
-    
-    const entry = { id, key, value, layer, simhash, merkle, prev: this.chainHead, source: "kv", created_at: ts, synced_at: ts };
-    
-    await this.kv.put(key, value);
-    await this.kv.put(`channel:meta:${key}`, JSON.stringify(entry));
-    await this.db.prepare(`INSERT INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
-      .bind(id, key, value, layer, simhash, merkle, this.chainHead, "kv", ts, ts).run();
-    
+    // Preserve observed creation time and hash format. The ordering timestamp
+    // cannot move behind the committed head when the wall clock moves backwards.
+    const syncedAt = Math.max(ts, this.syncedAt);
+    const entry = { id, key, value, layer, simhash, merkle, prev: this.chainHead, source: "kv", created_at: ts, synced_at: syncedAt };
+
+    // D1 is the commit point. A failed insert must not publish a KV-only entry.
+    const committed = await this.prepareAppend(
+      [id, key, value, layer, simhash, merkle, this.chainHead, "kv", ts, syncedAt], this.chainHead
+    ).run();
+    if (committed.meta.changes !== 1) throw new ChannelBlocked("CHANNEL_HEAD_CHANGED");
     this.chainHead = merkle;
+    this.syncedAt = syncedAt;
+    this.count++;
+    try {
+      await this.kv.put(key, value);
+      await this.kv.put(`channel:meta:${key}`, JSON.stringify(entry));
+    } catch {
+      // Keep the committed evidence and return its identity; do not invite a
+      // blind retry that appends the same logical event a second time.
+      throw new ChannelProjectionError(entry);
+    }
     return entry;
   }
 
   async recall(key: string) {
+    // A committed channel record is authoritative even after a KV projection
+    // failed or a remote KV cache still returns an older version.
+    const row = await this.db.prepare("SELECT * FROM channel_sync WHERE key = ? ORDER BY synced_at DESC, rowid DESC LIMIT 1").bind(key).first();
+    if (row) return { value: row.value, meta: row };
     const value = await this.kv.get(key);
     const meta = await this.kv.get(`channel:meta:${key}`);
     if (value) return { value, meta: meta ? JSON.parse(meta) : null };
     
-    // 同一個 key 現在可以有多列（鏈是 append-only），取最新的那一列。
-    const row = await this.db.prepare("SELECT * FROM channel_sync WHERE key = ? ORDER BY synced_at DESC, rowid DESC LIMIT 1").bind(key).first();
-    if (row) {
-      await this.kv.put(key, (row as any).value);
-      return { value: (row as any).value, meta: row };
-    }
     return { value: null, meta: null };
   }
 
@@ -332,7 +379,7 @@ class Channel {
     
     if (layer) { sql += " AND layer = ?"; params.push(layer); }
     if (prefix) { sql += " AND key LIKE ?"; params.push(`${prefix}%`); }
-    sql += " ORDER BY synced_at DESC LIMIT ?";
+    sql += " ORDER BY synced_at DESC, rowid DESC LIMIT ?";
     params.push(limit);
     
     const result = await this.db.prepare(sql).bind(...params).all();
@@ -378,20 +425,30 @@ class Channel {
     do {
       const list = await this.r2.list({ prefix, limit: pageLimit, cursor });
 
-      // 先算完雜湊鏈再成批寫入。Merkle 鏈本身是有序的，批次送出不影響
-      // 順序，因為 prev 在這個迴圈中已經逐一串好。
-      const statements = [];
-      for (const obj of list.objects) {
-        const id = uuid(), layer = getLayer(obj.key), simhash = simhash64(obj.key);
-        const merkle = await sha256(obj.key + obj.size + simhash + this.chainHead);
-        statements.push(
-          this.db.prepare(`INSERT INTO channel_sync (id,key,value,layer,simhash,merkle,prev,source,created_at,synced_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
-            .bind(id, obj.key, `[R2:${obj.size}]`, layer, simhash, merkle, this.chainHead, "r2", obj.uploaded.getTime(), Date.now())
-        );
-        this.chainHead = merkle;
-      }
-      for (let i = 0; i < statements.length; i += D1_BATCH_SIZE) {
-        await this.db.batch(statements.slice(i, i + D1_BATCH_SIZE));
+      // All batches share the DO queue with emit and KV sync. Publish the head
+      // only after each atomic D1 batch commits, never ahead of durable data.
+      for (let i = 0; i < list.objects.length; i += D1_BATCH_SIZE) {
+        const objects = list.objects.slice(i, i + D1_BATCH_SIZE);
+        const statements = [];
+        let head = this.chainHead, syncedAt = this.syncedAt;
+        for (const obj of objects) {
+          const id = uuid(), layer = getLayer(obj.key), simhash = simhash64(obj.key);
+          const merkle = await sha256(obj.key + obj.size + simhash + head);
+          syncedAt = Math.max(Date.now(), syncedAt);
+          statements.push(
+            this.prepareAppend(
+              [id, obj.key, `[R2:${obj.size}]`, layer, simhash, merkle, head, "r2", obj.uploaded.getTime(), syncedAt], head
+            )
+          );
+          head = merkle;
+        }
+        const committed = await this.db.batch(statements);
+        // A changed initial head makes the first condition false; the following
+        // rows depend on that uncommitted hash, so the entire batch writes zero.
+        if (committed.some(result => result.meta.changes !== 1)) throw new ChannelBlocked("CHANNEL_HEAD_CHANGED");
+        this.chainHead = head;
+        this.syncedAt = syncedAt;
+        this.count += objects.length;
       }
 
       synced += list.objects.length;
@@ -411,6 +468,12 @@ class Channel {
     let prev = "0".repeat(64);
     for (const row of (rows.results || []) as any[]) {
       if (row.prev !== prev) errors.push(`Chain broken at ${row.key}`);
+      // Retain the two historical hash formats; do not re-hash stored rows.
+      const r2Size = /^\[R2:(\d+)\]$/.exec(row.value || "");
+      const input = row.source === "r2" && r2Size
+        ? row.key + r2Size[1] + row.simhash + row.prev
+        : row.key + row.value + row.simhash + row.created_at + row.prev;
+      if (await sha256(input) !== row.merkle) errors.push(`Hash mismatch at ${row.key}`);
       prev = row.merkle;
     }
     return { valid: errors.length === 0, errors, checked: rows.results?.length || 0 };
@@ -448,6 +511,104 @@ const cors = {
 const json = (data: any, status = 200) => new Response(JSON.stringify({ ...data, origin: ORIGIN, origin_signature: ORIGIN }, null, 2), { status, headers: cors });
 const err = (msg: string, status = 400) => new Response(JSON.stringify({ error: msg, origin: ORIGIN, origin_signature: ORIGIN }), { status, headers: cors });
 
+// Runtime adapter for MRL_CHANNEL_CORE; source/authority remain in PROVENANCE.yaml.
+// The identity is fixed for this D1 table. Changing it or using key-scoped IDs
+// creates multiple writers and requires a separately reviewed cutover.
+const CHANNEL_OBJECT_NAME = "MRL_API_Gateway:channel_sync:v1";
+const CHANNEL_WRITE_PATHS = new Set(["/channel/emit", "/channel/sync/kv-to-d1", "/channel/sync/r2-index"]);
+
+class ChannelBlocked extends Error {}
+class ChannelProjectionError extends Error {
+  constructor(readonly entry: Record<string, unknown>) { super("CHANNEL_KV_PROJECTION_FAILED"); }
+}
+
+async function channelRequest(request: Request, env: Env): Promise<Response> {
+  if (!env.MRL_CHANNEL_CHAIN) return err("CHANNEL_SINGLE_WRITER_UNAVAILABLE", 503);
+  try {
+    const id = env.MRL_CHANNEL_CHAIN.idFromName(CHANNEL_OBJECT_NAME);
+    return await env.MRL_CHANNEL_CHAIN.get(id).fetch(request);
+  } catch {
+    return err("CHANNEL_SINGLE_WRITER_UNAVAILABLE", 503);
+  }
+}
+
+export class Mrliou_ChannelChain {
+  private queue: Promise<void> = Promise.resolve();
+  private verifiedCheckpoint: string | undefined;
+  constructor(_state: DurableObjectState, private env: Env) {}
+
+  fetch(request: Request): Promise<Response> {
+    // A DO alone does not serialize external D1/KV awaits. This actor-local
+    // queue covers read -> hash -> insert -> projection and releases on errors.
+    // Do not wrap a 1000-object sync in blockConcurrencyWhile: its 30s timeout
+    // can reset the object mid-job. D1, not a volatile head, is authoritative.
+    const result = this.queue.then(() => this.dispatch(request));
+    this.queue = result.then(() => undefined, () => undefined);
+    return result;
+  }
+
+  private async dispatch(request: Request): Promise<Response> {
+    const path = new URL(request.url).pathname;
+    const channel = new Channel(this.env.MRLIOUWORD_VAULT, this.env.DB, this.env.PARTICLES);
+    const body = async () => { try { return await request.json(); } catch { return {}; } };
+    const write = request.method === "POST" && CHANNEL_WRITE_PATHS.has(path);
+    try {
+      await channel.init();
+      // Validate at startup, after any failed request, or if D1 changed outside
+      // this actor. Historical forks/old UNIQUE(key) are reported, never erased.
+      if (write && this.verifiedCheckpoint !== channel.checkpoint) await channel.assertWritable();
+      const response = await this.route(request, path, body, channel);
+      if (write && response.ok) this.verifiedCheckpoint = channel.checkpoint;
+      return response;
+    } catch (e) {
+      this.verifiedCheckpoint = undefined;
+      if (e instanceof ChannelProjectionError) {
+        return json({ error: e.message, entry: e.entry, committed: true, kv_sync: false }, 503);
+      }
+      return err((e as Error).message || "Internal Error", e instanceof ChannelBlocked ? 409 : 500);
+    }
+  }
+
+  private async route(request: Request, path: string, body: () => Promise<unknown>, channel: Channel): Promise<Response> {
+      // === Channel ===
+      if (path === "/channel/emit" && request.method === "POST") {
+        const b = await body() as any;
+        if (typeof b.key !== "string" || !b.key || typeof b.value !== "string") return err("Invalid channel key/value", 400);
+        return json({ entry: await channel.emit(b.key, b.value) });
+      }
+
+      if (path === "/channel/recall" && request.method === "POST") {
+        const b = await body() as any;
+        return json(await channel.recall(b.key));
+      }
+
+      if (path === "/channel/stream" && request.method === "POST") {
+        const b = await body() as any;
+        return json({ results: await channel.stream(b) });
+      }
+
+      if (path === "/channel/sync/kv-to-d1" && request.method === "POST") {
+        const b = await body() as any;
+        return json(await channel.syncKVtoD1(b.prefix || "", b.cursor || undefined));
+      }
+
+      if (path === "/channel/sync/r2-index" && request.method === "POST") {
+        const b = await body() as any;
+        return json(await channel.indexR2(b.prefix || "", b.cursor || undefined));
+      }
+
+      if (path === "/channel/verify") { return json(await channel.verify()); }
+      if (path === "/channel/stats") {
+        return json({ ...await channel.stats(), single_writer: {
+          class_name: "Mrliou_ChannelChain", object_name: CHANNEL_OBJECT_NAME,
+          build_sha: this.env.MRL_BUILD_SHA || null,
+        } });
+      }
+
+      return err("Not Found", 404);
+  }
+}
+
 // ============================================
 // Worker 入口
 // ============================================
@@ -467,11 +628,14 @@ export default {
 
     const memory = new Memory(env.MRLIOUWORD_VAULT, env.DB);
     const persona = new Persona(env.MRLIOUWORD_VAULT);
-    const channel = new Channel(env.MRLIOUWORD_VAULT, env.DB, env.PARTICLES);
 
     const body = async () => { try { return await request.json(); } catch { return {}; } };
 
     try {
+      // PR #77: every Channel route reaches the same named object. There is no
+      // direct-D1 fallback if the binding is missing or the actor is unavailable.
+      if (path.startsWith("/channel/")) return channelRequest(request, env);
+
       // === 系統 ===
       if (path === "/" && request.method === "GET") {
         return json({
@@ -490,8 +654,9 @@ export default {
 
       if (path === "/status") {
         const ms = await memory.stats(), ap = await persona.getActive();
-        await channel.init();
-        const cs = await channel.stats();
+        const channelResponse = await channelRequest(new Request(new URL("/channel/stats", request.url)), env);
+        if (!channelResponse.ok) return channelResponse;
+        const { origin, origin_signature, ...cs } = await channelResponse.json() as any;
         return json({ version: VERSION, awakened: !!ap, persona: ap?.name || "dormant", memory: ms, channel: cs, heartbeat: heartbeat() });
       }
 
@@ -558,40 +723,6 @@ export default {
 
       if (path === "/persona/sleep" && request.method === "POST") return json({ success: await persona.sleep() });
       if (path === "/persona/list") return json({ personas: await persona.list() });
-
-      // === Channel ===
-      if (path === "/channel/emit" && request.method === "POST") {
-        await channel.init();
-        const b = await body() as any;
-        return json({ entry: await channel.emit(b.key, b.value) });
-      }
-
-      if (path === "/channel/recall" && request.method === "POST") {
-        await channel.init();
-        const b = await body() as any;
-        return json(await channel.recall(b.key));
-      }
-
-      if (path === "/channel/stream" && request.method === "POST") {
-        await channel.init();
-        const b = await body() as any;
-        return json({ results: await channel.stream(b) });
-      }
-
-      if (path === "/channel/sync/kv-to-d1" && request.method === "POST") {
-        await channel.init();
-        const b = await body() as any;
-        return json(await channel.syncKVtoD1(b.prefix || "", b.cursor || undefined));
-      }
-
-      if (path === "/channel/sync/r2-index" && request.method === "POST") {
-        await channel.init();
-        const b = await body() as any;
-        return json(await channel.indexR2(b.prefix || "", b.cursor || undefined));
-      }
-
-      if (path === "/channel/verify") { await channel.init(); return json(await channel.verify()); }
-      if (path === "/channel/stats") { await channel.init(); return json(await channel.stats()); }
 
       return err("Not Found", 404);
     } catch (e) {

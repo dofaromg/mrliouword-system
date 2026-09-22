@@ -1,0 +1,261 @@
+{
+  "canonical_authority": "Mr.liou",
+  "origin_signature": "MrLiouWord",
+  "source_repo": "dofaromg/mrliouword-system",
+  "source_artifact": "docs/retrospective/2026-09-22_channel_single_writer_evidence.json",
+  "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+  "derivative_role": "generated",
+  "artifact_owner": "Mr.liou",
+  "contributors": [
+    "Mr.liou — canonical authority and selected design",
+    "Codex — implementation and verification tool"
+  ],
+  "transformation": "Observed local runtime, deployment bundle and governance checks; hash current source payload, without claiming live deployment.",
+  "verification_status": "partial",
+  "recorded_at": "2026-09-22T15:50:39.070823+00:00",
+  "base_main": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+  "pr77_merge_commit": "7561cc16c3c5e217753ac426f13d25299220d0ab",
+  "initial_main": "e6ef2dbf1fe11e5f97ae1b647cdddcdfa770a480",
+  "upstream_channel_diff": "",
+  "Expected_File_List": [
+    ".github/workflows/mrl-channel-single-writer.yml",
+    "cloudflare/particle-api/PROVENANCE.yaml",
+    "cloudflare/particle-api/README.md",
+    "cloudflare/particle-api/package.json",
+    "cloudflare/particle-api/package-lock.json",
+    "cloudflare/particle-api/src/index.ts",
+    "cloudflare/particle-api/wrangler.toml",
+    "cloudflare/particle-api/scripts/channel-preflight.sql",
+    "cloudflare/particle-api/scripts/verify-channel-deployment.mjs",
+    "cloudflare/particle-api/tests/channel-single-writer.test.mjs",
+    "docs/retrospective/2026-09-22_channel_single_writer_session_record.md",
+    "docs/retrospective/2026-09-22_channel_single_writer_evidence.json"
+  ],
+  "Expected_Dependency_Tree": {
+    "worker": [
+      "cloudflare/particle-api/src/index.ts",
+      "cloudflare/particle-api/wrangler.toml"
+    ],
+    "pinned_toolchain": [
+      "cloudflare/particle-api/package.json",
+      "cloudflare/particle-api/package-lock.json"
+    ],
+    "runtime_and_ci": [
+      "cloudflare/particle-api/tests/channel-single-writer.test.mjs",
+      ".github/workflows/mrl-channel-single-writer.yml"
+    ],
+    "deployment_validation": [
+      "cloudflare/particle-api/scripts/channel-preflight.sql",
+      "cloudflare/particle-api/scripts/verify-channel-deployment.mjs"
+    ],
+    "provenance_and_evidence": [
+      "cloudflare/particle-api/PROVENANCE.yaml",
+      "cloudflare/particle-api/README.md",
+      "docs/retrospective/2026-09-22_channel_single_writer_session_record.md",
+      "docs/retrospective/2026-09-22_channel_single_writer_evidence.json"
+    ]
+  },
+  "payload_files": [
+    {
+      "path": ".github/workflows/mrl-channel-single-writer.yml",
+      "bytes": 1147,
+      "sha256": "675e59d4fb0b67d88c8c65e7329fba4a85c73db90a7695073050161352ce0fb0"
+    },
+    {
+      "path": "cloudflare/particle-api/PROVENANCE.yaml",
+      "bytes": 6485,
+      "sha256": "5d5ed541a7f3b9edb15dbc659803c345effc9e807b013a280bc62fb1db9d430b"
+    },
+    {
+      "path": "cloudflare/particle-api/README.md",
+      "bytes": 14518,
+      "sha256": "cf880b25bf898e926c201f0ea519bd9486cad498d80e72a949bc50cca4534e0d"
+    },
+    {
+      "path": "cloudflare/particle-api/package.json",
+      "bytes": 917,
+      "sha256": "4cf03366db552a50d6deaf9b49e3eb86761e4317645db2f4548e933b3e27cd47"
+    },
+    {
+      "path": "cloudflare/particle-api/package-lock.json",
+      "bytes": 49816,
+      "sha256": "f85cd8b12bda8f2aa66a42d4f5cad9c73dc662b82bbe008839e84c911e7eab5d"
+    },
+    {
+      "path": "cloudflare/particle-api/src/index.ts",
+      "bytes": 31137,
+      "sha256": "cb3e17f318f4a55d97c9c47506a518afd81d77383cb387a89cae22ea8dc1aa86"
+    },
+    {
+      "path": "cloudflare/particle-api/wrangler.toml",
+      "bytes": 862,
+      "sha256": "75ea566ef3fa6122439b1bc32c93891cbf40f1cf70ddcc29752697fe9030372f"
+    },
+    {
+      "path": "cloudflare/particle-api/scripts/channel-preflight.sql",
+      "bytes": 1027,
+      "sha256": "58d2a22b63835818266c7e728d99f8bc0ab0bf4ed593524195599325a168b09d"
+    },
+    {
+      "path": "cloudflare/particle-api/scripts/verify-channel-deployment.mjs",
+      "bytes": 5657,
+      "sha256": "cbc8e266a98fc72aa0edf0486c2bd0a41bf62f810bed04570c5498a68ad41d2c"
+    },
+    {
+      "path": "cloudflare/particle-api/tests/channel-single-writer.test.mjs",
+      "bytes": 17967,
+      "sha256": "0ab3426a7c93c7d3306fd450d4369b7ab2e3d0175457d5f521153f1c87347067"
+    },
+    {
+      "path": "docs/retrospective/2026-09-22_channel_single_writer_session_record.md",
+      "bytes": 11152,
+      "sha256": "619873554e6fb69620cde44b9addf66f40076ad3f240ff9b281ead4dac7f7a42"
+    }
+  ],
+  "self_integrity": "This evidence file is excluded from its own SHA-256 list; its bytes are anchored by the containing Git commit. No self-hash is claimed.",
+  "runtime": {
+    "command": "npm test",
+    "working_directory": "cloudflare/particle-api",
+    "exit_code": 0,
+    "summary": {
+      "tests": 16,
+      "pass": 16,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "stdout_stderr": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> particle-api@3.0.0 test\n> node --test tests/*.test.mjs\n\n✔ 96 parallel emits across three Worker instances create one linear chain (955.588843ms)\n✔ same-key emits retain every row and recall the latest committed version (502.438914ms)\n✔ emit, KV sync, and multi-batch R2 indexing use the same writer (1212.127532ms)\n✔ restart resumes the existing D1 head and preserves historical rows byte-for-byte (787.945919ms)\n✔ D1 rejection leaves KV untouched and does not poison the queue (360.348446ms)\n✔ R2 batch failure rolls back its batch, retains earlier batches and resumes from committed head (778.344673ms)\n✔ pre-existing sibling history is retained and all new writes fail closed (362.551326ms)\n✔ legacy UNIQUE(key) is reported without rewriting the schema or history (311.920578ms)\n✔ old future timestamp does not reorder a new emit behind the chain head (353.261767ms)\n✔ KV failure returns the committed receipt; D1-backed recall is consistent (400.864882ms)\n✔ missing DO binding fails closed without a direct-D1 fallback (1.478478ms)\n✔ auth, public routes, input rejection, response provenance and unknown routes remain compatible (364.41571ms)\n✔ deployment verifier writes exact-SHA concurrency receipt against the local runtime (744.623902ms)\n✔ unavailable DO returns a provenance-bearing 503 and never touches D1 (1.242291ms)\n✔ R2 cursor continues after 1000 objects and an intervening emit (4205.422155ms)\n✔ late actor write is fenced when the D1 head changes before commit (429.306017ms)\nℹ tests 16\nℹ suites 0\nℹ pass 16\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 12163.768126\n",
+    "scope": "Local Miniflare/workerd using actual DO, D1, KV and R2 bindings; explicit wrappers inject KV failure and late D1 commit."
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exit_code": 0
+  },
+  "deploy_dry_run": {
+    "command": "WRANGLER_SEND_METRICS=false npm run deploy:check",
+    "exit_code": 0,
+    "stdout_stderr": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> particle-api@3.0.0 deploy:check\n> wrangler deploy --config wrangler.toml --dry-run --outdir .wrangler/deploy-check\n\nProxy environment variables detected. We'll use your proxy for fetch requests.\n\n ⛅️ wrangler 4.60.0\n───────────────────\nTotal Upload: 24.75 KiB / gzip: 7.27 KiB\nYour Worker has access to the following bindings:\nBinding                                                       Resource            \nenv.MRL_CHANNEL_CHAIN (Mrliou_ChannelChain)                   Durable Object      \nenv.MRLIOUWORD_VAULT (01275832766148bfbcaa00ee4aeb9946)       KV Namespace        \nenv.DB (mrliouword-db)                                        D1 Database         \nenv.PARTICLES (mrlioubook)                                    R2 Bucket           \n\n--dry-run: exiting now.\n",
+    "scope": "Local configuration/bundle only; no Cloudflare authentication, migration or upload."
+  },
+  "negative_control": {
+    "baseline_source": "e6ef2dbf1fe11e5f97ae1b647cdddcdfa770a480:cloudflare/particle-api/src/index.ts",
+    "normalization": "Only multiline D1.exec DDL normalized to prepare/batch to allow setup under workerd. Original emit race unchanged.",
+    "command": "MRL_BASELINE_FILE=.wrangler/baseline-index.ts npm test",
+    "exit_code": 0,
+    "stdout_stderr": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> particle-api@3.0.0 test\n> node --test tests/*.test.mjs\n\n{\"baseline_requests\":32,\"baseline_valid\":false,\"baseline_chain_errors\":29}\n✔ negative control: baseline emit with DDL-only compatibility normalization forks D1 (515.368023ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 836.041193\n"
+  },
+  "governance_checks": [
+    {
+      "command": [
+        "python3",
+        "tools/release_gate.py",
+        ".",
+        "/tmp/mrl-channel-final-release-gate.json",
+        "--trusted-baseline",
+        "registry/release_gate_baseline.json"
+      ],
+      "exit_code": 0,
+      "stdout": "🚧 發布 Gate（政策第 8 節）\n   產物            15\n   全數通過        4\n   有未通過項      11\n   基準線已記錄    70（來源：registry/release_gate_baseline.json）\n\n   📝 報告寫入 /tmp/mrl-channel-final-release-gate.json\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/connection_audit.py",
+        ".",
+        "/tmp/mrl-channel-final-connection-audit.json"
+      ],
+      "exit_code": 0,
+      "stdout": "🔗 連接稽核\n   來源盤點      cloudflare_inventory_2026-03-12.json\n   雲端 Worker   140\n   倉庫可部署    3\n   設定不完整    1（wrangler 讀得到，但必要欄位仍是佔位字串，部署會失敗）\n   服務註冊表    3\n   客戶端有參照  4\n   legacy alias  2\n   ⚠️  wrangler 讀不到的設定檔 1\n   ⚠️  參照了盤點中沒有的 Worker 1\n   📝 報告寫入 /tmp/mrl-channel-final-connection-audit.json\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/provenance_notice_check.py"
+      ],
+      "exit_code": 0,
+      "stdout": "MRL 來源標註檢查通過：MRL_PROVENANCE.md 規格表九列齊備且順序正確，機器標記存在。\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/operating_cognition_check.py"
+      ],
+      "exit_code": 0,
+      "stdout": "MRL 根本運行認知檢查通過：看到→接受→比對→修正→建構→測試→紀錄 七步齊備且順序正確，兩個母體錨點都在，正本 Mrliou_claude.md 與 adapter CLAUDE.md 都在。\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/mother_core_registry.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "母體 CORE 登錄表檢查通過：199 個 CORE / 2264 個成員，錨點相符，MRL_DELTA_CORE 九成員齊全。\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/naming_lineage_check.py"
+      ],
+      "exit_code": 0,
+      "stdout": "命名正名與 lineage 檢查通過：Mrliou_claude.md 為 canonical（mrl_Mrliou_claude），CLAUDE.md 登錄為 adapter 且原名保留，lineage L-001 在。\n",
+      "stderr": ""
+    }
+  ],
+  "release_debt": {
+    "artifacts": 15,
+    "passed": 4,
+    "failed": 11,
+    "findings": 70
+  },
+  "deployment": {
+    "status": "NOT_PERFORMED",
+    "reason": "Cloudflare dashboard remained on security verification challenge; no live account metadata or cutover prerequisites verified.",
+    "unverified": [
+      "existing D1 schema and history",
+      "all legacy direct writers quiesced and drained",
+      "migration tag and DO namespace existence",
+      "deployed version and exact-SHA traffic",
+      "unchanged live route settings",
+      "production concurrency receipt"
+    ]
+  },
+  "requested_vs_generated": [
+    {
+      "requested": "Durable Object single writer",
+      "generated": "Fixed identity; queue across external awaits; atomic D1 expected-head condition",
+      "status": "LOCAL_RUNTIME_VERIFIED"
+    },
+    {
+      "requested": "append-only, provenance and existing routes",
+      "generated": "Retained historical rows/import hashes; no original Worker/binding/route config changes; compatibility and failure tests",
+      "status": "LOCAL_RUNTIME_AND_SOURCE_VERIFIED"
+    },
+    {
+      "requested": "binding and migration",
+      "generated": "MRL_CHANNEL_CHAIN and mrliou-channel-chain-v1 new_sqlite_classes migration",
+      "status": "LOCAL_BUNDLE_VERIFIED_LIVE_UNVERIFIED"
+    },
+    {
+      "requested": "concurrency invariants and deployment validation",
+      "generated": "Runtime regressions, preflight SQL, exact-SHA receipt CLI, cutover runbook and CI",
+      "status": "LOCAL_RUNTIME_VERIFIED_LIVE_UNVERIFIED"
+    }
+  ],
+  "source_delivery_audit": {
+    "scope": "Expected source files versus staged Git files only; does not count live deployment as delivered",
+    "requested_files": 12,
+    "generated_files": 12,
+    "missing": [],
+    "extra": [],
+    "mismatch": [],
+    "coverage_percent": 100.0,
+    "result": "SOURCE_FILES_MATCH"
+  }
+}
