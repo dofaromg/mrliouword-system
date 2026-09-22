@@ -189,3 +189,28 @@ preserved_at: "2026-09-22"
 本地 workerd 證明受控 writer 路徑的 invariant，不證明全球 production 已完成切換。
 stats 的 build_sha 是部署注入值，需搭配 Cloudflare version／namespace 回執，
 不能單靠 API 自報 SHA 宣稱部署證明。所有線上 delta 保留在第五節。
+
+### 發布後追加紀錄
+
+命令列 `git push` 回 `fatal: could not read Username for 'https://github.com'`。
+改用已連接的 GitHub API 寫入相同 blob／tree；沒有尋找或轉存 token。
+本地初始提交 `ca64bacabdf7e64beb6aa01aefcc9cb55f519252` 保留在原分支。
+遠端提交 `c0f02b01eb05b6431a244da736fd2c6e765de5da` 的 tree 與本地均為
+`e23d2d7ca7d93b5bef5b5bbf8494a387d1fc63d8`，fetch 後 `git diff --exit-code`
+確認一致。另建本地 published 分支追蹤遠端，沒有 reset、force-push 或刪分支。
+
+已建立 [Draft PR #82](https://github.com/dofaromg/mrliouword-system/pull/82)，
+base 為本紀錄的 main SHA。GitHub 回 `draft: true`、`merged: false`、`mergeable: true`。
+對該遠端 SHA 查到以下實際 workflow 結果：
+
+| 工作流 | Run ID | 結果 |
+| --- | --- | --- |
+| MRL Channel Single Writer | 35750315093 | completed / success |
+| Mrliouword SDK CI/CD Pipeline | 35750314818 | completed / success |
+
+新工作 `Channel runtime and deployment preflight` 的 job ID 為 `106822419792`；
+`npm ci`、typecheck、test、deploy:check 各步均 success。它是明確出現並完成的
+預期工作，沒有用「pending=0」或空集合推論成功。命令列未提供 GitHub token，
+以已連接的 GitHub API 查 exact SHA 的 runs/jobs；不宣稱已執行需要 token 的
+`wait_for_checks.py`。此結果只解除第五節 GitHub CI 的 delta，其他 live delta 仍未解除。
+本次追加僅更新紀錄與其雜湊清單，不改 runtime 程式。

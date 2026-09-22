@@ -108,8 +108,8 @@
     },
     {
       "path": "docs/retrospective/2026-09-22_channel_single_writer_session_record.md",
-      "bytes": 11152,
-      "sha256": "619873554e6fb69620cde44b9addf66f40076ad3f240ff9b281ead4dac7f7a42"
+      "bytes": 12678,
+      "sha256": "78c65f0a081dec634bc943c5ae4f9cac66aa050f0e7a58c2c1c6dc7b158af550"
     }
   ],
   "self_integrity": "This evidence file is excluded from its own SHA-256 list; its bytes are anchored by the containing Git commit. No self-hash is claimed.",
@@ -257,5 +257,31 @@
     "mismatch": [],
     "coverage_percent": 100.0,
     "result": "SOURCE_FILES_MATCH"
+  },
+  "publication_receipt": {
+    "pr": "https://github.com/dofaromg/mrliouword-system/pull/82",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "validated_head": "c0f02b01eb05b6431a244da736fd2c6e765de5da",
+    "validated_tree": "e23d2d7ca7d93b5bef5b5bbf8494a387d1fc63d8",
+    "local_original_commit": "ca64bacabdf7e64beb6aa01aefcc9cb55f519252",
+    "transport": "GitHub connector after unauthenticated CLI push failed; blob hashes and complete tree matched local commit",
+    "workflows": [
+      {
+        "run_id": 35750315093,
+        "name": "MRL Channel Single Writer",
+        "status": "completed",
+        "conclusion": "success",
+        "job_id": 106822419792
+      },
+      {
+        "run_id": 35750314818,
+        "name": "Mrliouword SDK CI/CD Pipeline",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "scope": "Records completed CI on the initial runtime commit; this receipt adds only session/evidence documentation. Production deployment remains unverified."
   }
 }
