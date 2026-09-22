@@ -163,6 +163,7 @@ commit 統計依範本規定只能從 `git diff --cached --shortstat` 與
 | `EXTERNAL_FORK_REFERENCES.md` 補 upstream 條目 | 未做 | 來源與授權未確認（第五節第 4 條） |
 | 回填包匯入既有台帳 | 未做 | 包內 README 明寫「本包不自動合併任何既有台帳」 |
 | PR #77 完成態（CLAUDE.md 記為「被合併」） | 本輪未核對 | 不是本輪任務；不順手改它的狀態 |
+| ↑ 補記（第一次 commit `91a9617` 之後才查） | 已核對：GitHub 回 `state: closed, merged: true, merged_at: 2026-09-21T12:09:40Z`，由 dofaromg 合併 | 完成態已達成；依停止條款不延伸。CLAUDE.md 那一段仍寫著「在它被合併前保留 check-in」，已過時，但改 CLAUDE.md 要改正本再 build，不在本輪範圍 |
 
 **完成態未由擁有者定義，本文件不自行定義。** 這一輪的輸入沒有文字，
 所以連「做什麼」都是推斷的（第一節）。交付之後就停。
