@@ -178,6 +178,34 @@ mrliou/main.c        95 行
 | 1 | 把 `mrliou/` 的 17 個自有 C 檔含混歸進「那不是本倉庫要掃描的程式碼」 | 我自己，在做影響分析時 | 本文件 2.3／2.4 的逐目錄分類；`codeql.yml` 註解寫死 18 個保留檔 |
 | 2 | 分類寫成 267+92+17=376，漏掉 `core/atom_t.h`，實際 377 | **實測輸出**，不是我的推理 | 裁剪腳本每次執行都印出 `before → after` 與完整保留清單 |
 | 3 | 原本打算整個目錄排除 `integrations/` | 查證（未實際犯錯） | 排除規則精確到副檔名層級：`integrations/*.c integrations/*.h` |
+| 4 | 說「Merkle 集涵蓋 6 個檔」——把 JSON 的頂層鍵當成檔案清單 | 我自己，第二次查時 | 本節的更正；查 `nodes` 而非頂層鍵 |
+
+### 4.1 第 4 則的更正內容
+
+`.mrliou/merkle.json` 的頂層鍵是 `version`／`merkle_root`／`tree_height`／
+`leaf_count`／`hash_algorithm`／`nodes` 六個。我把這六個鍵當成「六個檔案」，
+得出「Merkle 集涵蓋 6 個檔」。
+
+實際結構：`leaf_count: 12`，檔案清單在 `nodes` 陣列裡（24 個節點，level 0 為葉），
+**全部位於 `.mrliou/` 之下**。
+
+```
+$ python3 -c "... json.load(open('.mrliou/merkle.json')) ..."
+leaf_count: 12  hash: sha256
+nodes 型別: list 長度: 24
+  含 'Mrliou_claude.md': False
+  含 'CLAUDE.md': False
+  含 'docs/retrospective': False
+```
+
+**結論不變**（本輪改動不在雜湊集內，不需重建），但**數字與理由都是錯的**。
+
+這則錯誤的擴散範圍：commit `ac84959` 的 message 與 PR #78 的內文都寫了
+「Merkle 雜湊集涵蓋的 6 個檔」。依 `history_policy: append_only`，
+commit message **不改寫**；更正以本節為準，PR 內文另行更新。
+
+這是本輪第二次「用結構直覺代替實際解析」——第 2 則是分類漏算，這則是
+把鍵當成值。兩者同源：**沒有把資料真的攤開看，就開始數。**
 
 **第 1 則與既有錯誤紀錄第 1 則同形**：把「我沒分類清楚」說成「它不是你的」。
 既有紀錄裡那一則是把「我沒查到」說成「它不存在」。形狀一樣——
