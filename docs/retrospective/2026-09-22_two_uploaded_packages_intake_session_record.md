@@ -102,6 +102,7 @@ docs/retrospective/（本檔）
 | 1 | **沒讀就跑** `PACKAGE_AUDIT.py`。它會改寫同目錄 `MANIFEST.json` 並在上層目錄產生 zip。跑在暫存區，沒傷到倉庫，但下一次若跑在 `packages/` 裡就會改到 mirror | 我自己——它印出的 zip 路徑對不上任何既有檔案，才回頭讀原始碼 | `packages/README.md` 規則 2 明寫；事後 `diff` 原 zip 的 MANIFEST 與被改寫版為空（exit 0），確認內容未變 |
 | 2 | **在指令執行前寫下結論**：跑 pytest 蒐集檢查時，我把「上面這一跑證明 pytest 不會碰新檔」這句 echo **先寫進指令裡**，結果 pytest 根本沒裝，那一跑什麼也沒證明 | 輸出 `No module named pytest` | 第三節 pytest 那一列改成只引 `pytest.ini` 設定，明寫「不是實跑結果」。同形於 2026-09-22 CodeQL 紀錄第 6 則與觀測重點第 1 條 |
 | 3 | 第一次憑證掃描的 grep 命中了錯誤 1 產生的 zip（二進位），輸出多了三行雜訊 | 我自己，在讀輸出時 | 是錯誤 1 的副作用，不另設閘；重跑在乾淨解壓目錄，零筆 |
+| 4 | **「逐字保存」在第一次 commit 裡是假的**：`.gitignore` 的 `*.jsonl` 規則把回填包 `runtime_records/` 的兩個事件帳本與 passport 記錄（3 檔）擋在 commit 外。commit 統計 `44 files changed` 是照抄的，但我沒拿它跟該有的 47 比——磁碟上 42 檔、`git ls-files` 只有 39 檔。索引第 2.4 節寫的 20/20/1 行數在乾淨 checkout 上根本不存在，`sha256sum -c` 也會缺 3 行 | Codex review（P1，`91a9617`） | 第二次 commit 用 `git add -f` 補上，並在同一次輸出裡比對 `git ls-files` 與 `find` 的檔數相等。同形於「照抄數字卻不比對」：數字是真的，判斷是缺的 |
 
 錯誤 2 與既有紀錄**同形**：「先寫結果，再跑指令」。這是第五次（前四次見 2026-09-22 CodeQL 紀錄）。
 形狀一樣：把指令的**用途**寫成它的**結果**。這次是 echo 字串，不是數字，但機制相同。
