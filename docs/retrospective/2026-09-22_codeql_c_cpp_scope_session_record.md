@@ -57,9 +57,18 @@ queued 畫面，以及數則 NVIDIA/Megatron-LM 的 PR 通知。
 
 ### 2.1 活躍倉庫的狀態
 
-`dofaromg/mrliouword-system` main = `7561cc1`，即 PR #77 的合併 commit。
+`7561cc1` 是 **PR #77 的合併 commit**，不是分支 tip。
+撰稿當下 `dofaromg/mrliouword-system` 的 `origin/main` tip 是 `de76fae`
+（`docs: auto-update system status`，`7561cc1` 的子 commit）——本輪工作分支
+即由該點分出（`git rev-list --left-right --count origin/main...HEAD` 回 `0 0`）。
+
+`origin/main` 其後又前進至 `c206028`（`🔄 [Auto-Sync] Update closure metadata
+and health status`）。**main 會被自動化 commit 持續推進，所以任何「main =
+某個 SHA」的陳述都必須附觀測時點。**
+
 依 `Mrliou_claude.md` 記載「PR #77 的完成態 = 被合併」（擁有者，2026-09-21），
-該輪完成態**已達成**。
+該輪完成態**已達成**——達成的憑據是 `7561cc1` 這個合併 commit 存在於 main 的
+歷史中，與 tip 是誰無關。
 
 main 上唯一紅燈是 `Deploy to Cloudflare Workers`
 （[run 35597928511](https://github.com/dofaromg/mrliouword-system/actions/runs/35597928511)）。
@@ -179,6 +188,7 @@ mrliou/main.c        95 行
 | 2 | 分類寫成 267+92+17=376，漏掉 `core/atom_t.h`，實際 377 | **實測輸出**，不是我的推理 | 裁剪腳本每次執行都印出 `before → after` 與完整保留清單 |
 | 3 | 原本打算整個目錄排除 `integrations/` | 查證（未實際犯錯） | 排除規則精確到副檔名層級：`integrations/*.c integrations/*.h` |
 | 4 | 說「Merkle 集涵蓋 6 個檔」——把 JSON 的頂層鍵當成檔案清單 | 我自己，第二次查時 | 本節的更正；查 `nodes` 而非頂層鍵 |
+| 5 | 寫「main = `7561cc1`」——把**合併 commit**當成**分支 tip** | **Codex**（PR #78 的 P2 審閱意見） | 2.1 節改寫為附觀測時點的陳述；本節第 4.2 段 |
 
 ### 4.1 第 4 則的更正內容
 
@@ -206,6 +216,34 @@ commit message **不改寫**；更正以本節為準，PR 內文另行更新。
 
 這是本輪第二次「用結構直覺代替實際解析」——第 2 則是分類漏算，這則是
 把鍵當成值。兩者同源：**沒有把資料真的攤開看，就開始數。**
+
+### 4.2 第 5 則：Codex 抓到的「合併 commit ≠ 分支 tip」
+
+原文寫「`dofaromg/mrliouword-system` main = `7561cc1`，即 PR #77 的合併 commit」。
+Codex 在 PR #78 的 P2 審閱意見指出這兩件事被混為一談，屬實。實測：
+
+```
+$ git rev-parse --short de76fae^
+7561cc1                      ← 7561cc1 是 de76fae 的父 commit
+
+$ git merge-base --is-ancestor 7561cc1 origin/main
+7561cc1 是 origin/main 的祖先（非 tip）
+
+$ git rev-parse --short origin/main
+c206028  🔄 [Auto-Sync] Update closure metadata and health status
+```
+
+撰稿當下的 tip 是 `de76fae`（本輪工作分支即由該點分出），現在已是 `c206028`。
+**這個倉庫的 main 會被自動化 commit 持續推進**，所以「main = 某個 SHA」
+若不附觀測時點，本身就是會過期的陳述——第二節開頭自稱「每一步都附可複查的
+憑據」，這一條卻寫成了不可複查的形式。
+
+完成態的判定不受影響：PR #77 是否被合併，看的是 `7561cc1` 是否存在於 main 的
+歷史中，與 tip 是誰無關。**但錯的陳述仍是錯的，不因結論不變而免記。**
+
+這是本輪**第三次**同形的錯（第 2 則漏算、第 4 則把鍵當成值、本則把祖先當成 tip），
+也是**唯一一則由外部抓到的**——與 `2026-09-20_claude_session_error_log.md`
+記載的比例一致：那份九則裡，過半不是自己發現的。
 
 **第 1 則與既有錯誤紀錄第 1 則同形**：把「我沒分類清楚」說成「它不是你的」。
 既有紀錄裡那一則是把「我沒查到」說成「它不存在」。形狀一樣——
