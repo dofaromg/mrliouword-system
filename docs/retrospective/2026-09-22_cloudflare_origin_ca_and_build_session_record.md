@@ -324,6 +324,58 @@ dashboard 設定，修復只能擁有者做，我的上限是把每一格該填�
 
 ---
 
+## 十一、第 13 輪：擁有者提供 API token，網路層擋住
+
+擁有者第 13 輪（逐字，token 值本身**不記入**）：
+
+> 把剛剛不能做的操作完成補上修復並且建構一切。直到完成任務沒有任何理由，我之後會更換
+
+附一張 Cloudflare「您的 API 金鑰」截圖與 token 字串（`cfk_` 開頭）。
+
+### 11.1 實際發生了什麼
+
+| 步驟 | 指令／動作 | 結果 |
+| --- | --- | --- |
+| 存 token | 寫入 scratchpad `.cf_token`，`umask 077`、`chmod 600`；**不在倉庫內** | 完成 |
+| 探 egress | `curl … https://api.cloudflare.com/client/v4/user/tokens/verify` | `curl: (56) CONNECT tunnel failed, response 403` |
+| verify／accounts／zones／workers scripts | 同上四條 | 五次全部 `CONNECT 403`；proxy 記為 `connect_rejected (organization policy)` |
+| 單次重試 | `curl -o /dev/null -w '%{http_code}' https://api.cloudflare.com/client/v4/` | `HTTP 000`，同一錯誤 |
+| 銷毀 | `shred -u .cf_token`；`ls` 確認 | `No such file or directory` |
+| 查環境 | `list_environments` | 只有一個：`env_012WWnnYyqgiBTUTDvdBFWNv`「Yu Lin」，無備選 |
+
+**token 沒有送出過任何一個請求**——連線在 CONNECT 階段就被 proxy 拒絕，token 尚未進入 HTTP 層。
+
+### 11.2 這是什麼、不是什麼
+
+- 這**不是** token 錯、不是權限不足、不是 Cloudflare 拒絕。是本環境的網路政策（organization policy）不放行 `api.cloudflare.com`，與先前 `docs.github.com`、`developers.cloudflare.com` 被擋同一類。
+- 擁有者說「沒有任何理由」。這一條不是理由，是**牆**：在這個環境裡，沒有任何指令能把封包送到 `api.cloudflare.com`。換 token、換寫法、換工具（wrangler、WebFetch）都走同一個 egress，結果相同。
+
+### 11.3 能解鎖的條件（擁有者側，兩步）
+
+1. **環境網路政策**：claude.ai → Claude Code → 環境「Yu Lin」→ 網路存取，放行 `api.cloudflare.com`（或改為不受限）。文件：`https://code.claude.com/docs/en/claude-code-on-the-web`。
+2. **token 改走環境變數**：在同一個環境設定裡加 `CLOUDFLARE_API_TOKEN`（用**更換後**的新 token），不要再貼進對話——本次貼入的那一個已出現在對話紀錄中，依擁有者所言應立即更換。
+
+兩步完成後，本 session 的執行計畫（已備妥，不需再問）：
+
+```
+verify token → 列 zones 取 mrliouword.com zone_id → 列 workers scripts 取 particle-api tag
+→ Workers Builds API 設 root_directory = cloudflare/particle-api → 觸發建構並讀 log
+→ Origin CA：本機生 key + CSR → POST /certificates → 交付 cert 與 key 檔（不進倉庫）
+```
+
+Root directory 那一格若 Builds API 不開放寫入，仍回到 dashboard；這點要實測才知道，不預先斷言。
+
+### 11.4 本輪的錯
+
+| # | 錯誤 | 誰抓到 | 現在擋著它的是什麼 |
+| --- | --- | --- | --- |
+| 3 | 上一則回覆列「兩條路」時，把「環境變數給 token」寫成可行路徑，**沒有先探 `api.cloudflare.com` 通不通**。擁有者照做了，撞牆。「提出解法早於評估代價」再犯一次 | 擁有者的 token 撞上 403 | 本節 11.3 把網路政策列為第 1 步，token 為第 2 步；範本第八節第一項檢查 |
+
+這一則的代價是真的：擁有者因為我的路徑建議而把一個 token 貼進了對話。
+路徑本身沒錯（環境變數是對的做法），順序錯了——該先驗網路，再要 token。
+
+---
+
 ## 能力邊界（本輪實際撞到的）
 
 - 無法讀 `dash.cloudflare.com`（需登入）。
