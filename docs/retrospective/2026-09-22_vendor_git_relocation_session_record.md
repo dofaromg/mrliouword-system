@@ -70,6 +70,22 @@ $ git show --stat --format= 0663a34 | tail -1
 `0663a34` 是**混合上傳**：Git 上游與 MRL 自有內容（`core/atom_t.h` 也在其中）同一次進來。
 **分類不能按 commit，只能逐檔。**
 
+**更正（PR #83 Codex 審閱後）**：`--diff-filter=A` 只回最早的新增點。逐檔 `git log --follow`
+顯示 409 檔另有三個平行新增 commit（`40a883f`、`6db3640`、`515db3d`，copilot-swe-agent，
+各 409 files / 200688 insertions，純新增、內容相同），以及**三個檔有本地修改**：
+
+```
+09fc693 2026-02-05 copilot-swe-agent[bot]  Add auth command implementation
+  auth.c                 | 39 +   （新增，非上游）
+  git.c                  |  1 +   + { "auth", cmd_auth, RUN_SETUP_GENTLY },
+  integrations/builtin.h |  1 +   + int cmd_auth(...)
+d2cc487 2026-02-05 copilot-swe-agent[bot]  Fix trailing whitespace and add security notes
+  auth.c                 |  1 +, 1 -
+```
+
+這三個檔是本倉庫的衍生修改，已在 PROVENANCE `local_modifications` 如實標註；是否搬出
+`vendor/git/` 待擁有者裁示（第四節第 5 則）。
+
 ### 2.3 逐檔分類
 
 | 集合 | 判定方法 | 數量 |
@@ -115,7 +131,8 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 | 角色／平台 | 本輪的實際作為 |
 | --- | --- |
 | **Mr.liou** | 問「哪個選項最有利」；裁示 C；要求先查依賴；AskUserQuestion 選範圍 2 |
-| **Claude Code** | 依賴查驗、逐檔分類（含一次腳本錯誤與三個誤判，第四節）、兩次預演、執行 410 檔 git mv、寫 PROVENANCE 與本紀錄 |
+| **Claude Code** | 依賴查驗、逐檔分類（含一次腳本錯誤與三個誤判，第四節）、兩次預演、執行 410 檔 git mv、寫 PROVENANCE 與本紀錄；PROVENANCE 初版把本倉庫自有的 auth.c 寫成上游（第四節第 5 則） |
+| **Codex（PR #83 審閱）** | 抓到 `09fc693`：auth.c 是本地新增、git.c／builtin.h 各有 1 行本地修改，PROVENANCE 初版的「逐字未改」是錯的。**本輪唯一不是我自己抓到的錯** |
 | **git** | `-M100%` 判定 410 檔全為 R100，是「搬移非刪除」的機器證據 |
 | **GitHub 網頁上傳（2026-01-27）** | 把 Git 原始碼樹攤平上傳到根目錄，無標註——本輪處理的根因 |
 | **release_gate / connection_audit / Merkle** | 兩次預演與正式樹上皆不受影響 |
@@ -130,6 +147,17 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 | 2 | 第一版分類腳本用 `for f in $(git ls-files …)`，檔名含空白／中文者被拆成碎片，表格對那些檔不可信 | 我自己（看到亂碼列） | 改用 `git ls-files -z` + `while IFS= read -r` |
 | 3 | 第二版腳本 `grep -c … \|\| echo 0`：grep 沒命中時印 `0` 且回非零，再印一個 `0`，變數成兩行，整數比較全炸，輸出「判為 Git 上游：0」——**一個假的 0** | 我自己（看到 `integer expression expected` 錯誤） | 改為 `n=$(grep -c …); n=${n:-0}`；本列 |
 | 4 | 分類標記把 `AUTH_COMMAND_README.md`、`IMPLEMENTATION_COMPLETE.md`、`gt` 判為 Git（因為它們講 `gt auth`，git 標記多） | 我自己（逐檔看匯入 commit 與首行） | 誤判清單寫進 PROVENANCE `excluded_false_positives`；規則：標記只能篩候選，判定要看 commit 與內容 |
+| 5 | 血緣測試「全文找 `mrl_`／`mrliou`」對 C 檔是**假陰性**：`auth.c`（本倉庫新增的 `gt auth` 實作，39 行）、`git.c`（+1 行）、`integrations/builtin.h`（+1 行）是本倉庫的衍生修改，不提 MRL，被當成上游「逐字未改」搬入並寫進 PROVENANCE | **Codex**（PR #83 P2，commit `09fc693`） | PROVENANCE 加 `local_modifications`；`.gitattributes` 對 `auth.c` 加 `-linguist-vendored`；血緣判定改為**逐檔 `git log --follow`**，不靠字串 |
+| 6 | 驗證 Codex 意見時寫的系統性掃描，路徑處理錯（從 MANIFEST 取 `./git.c` 後剝掉 `vendor/git/` 前綴），`[ -f ]` 全失敗、全跳過，印出「有其他 commit 歷史的檔數: 0」——**又一個假 0**，且同一輸出的上一段明明列出四個非匯入 commit | 我自己（前後兩段輸出互相矛盾） | 修正後重掃：410 檔全有平行新增歷史、3 檔有本地修改；規則：掃描結果為 0 時，先找一個已知應命中的樣本反證 |
+| 7 | 修 PROVENANCE 時把 `note:` 鍵寫進 YAML 清單裡，檔案**無法解析**；第一次 `yaml.safe_load` 抓到、改了一處，**同一錯在第二段 `parallel_additions` 又犯一次**，第二次 parse 才抓到 | 我自己（`yaml.safe_load` 兩次報 ParserError） | 兩處都改成同層級的 `*_note` 鍵；commit 前 `yaml.safe_load` 必須 exit 0（見第六節） |
+
+第 7 則要老實寫：七支閘門在 YAML 壞掉的狀態下**全部 exit 0**——它們不解析這個檔。
+如果我沒有另外跑 `yaml.safe_load`，一個壞掉的來源鏈檔會通過 CI 進 main。
+「閘門全綠」證明的只是「閘門檢查的那些東西沒壞」，不是「沒壞」。
+
+第 5 則的形狀與上一份紀錄第四節第 1 則相同——**用一個測試的邊界替事實下定論**：
+「沒提到 MRL」不等於「不是 MRL 的」。第 6 則與 Cloudflare 紀錄第四節第 3 則同形
+（假 0），**同一天內第二次**，而且是在我剛寫完「假 0 比沒跑更危險」之後。
 
 第 3 則是觀測重點第 1 條的變形：不是「執行前寫下結果」，是**執行了、結果是錯的、
 而錯的結果長得像正常的 0**。假 0 比沒跑更危險，因為它會被當成「查過了，沒有」。
@@ -154,12 +182,32 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 | 交付物 | 內容 |
 | --- | --- |
 | `vendor/git/`（410 檔，R100） | 搬移，零刪除 |
-| `vendor/git/PROVENANCE.yaml` | 來源鏈：內容為 Git 上游、GPL-2.0、非 MRL 著作；匯入與搬移的 commit、方法、數量、manifest 雜湊、未搬與誤判清單 |
+| `vendor/git/PROVENANCE.yaml` | 來源鏈：409 檔為 Git 上游、GPL-2.0、非 MRL 著作；`local_modifications` 三檔（auth.c 本地新增、git.c／builtin.h 各 1 行本地修改）；匯入 commit 0663a34 加三個根 commit 的平行新增；搬移的方法、數量、manifest 雜湊、未搬與誤判清單 |
 | `vendor/git/MANIFEST.sha256` | 410 行逐檔 sha256 |
-| `.gitattributes` | 加 `vendor/git/** linguist-vendored`，附為什麼 |
+| `.gitattributes` | 加 `vendor/git/** linguist-vendored`，附為什麼；`vendor/git/auth.c -linguist-vendored` 例外 |
 | 本紀錄 | |
 
 正式樹上的閘門結果見 commit message（數字由指令輸出代入）。
+
+**Codex P2 修正後的實測輸出**（2026-09-22，第二次提交前）：
+
+```
+$ for c in 40a883f 6db3640 515db3d 09fc693; do git merge-base --is-ancestor 0663a34 $c && echo 是 || echo 否; done
+40a883f 是 0663a34 的後代: 否
+6db3640 是 0663a34 的後代: 否
+515db3d 是 0663a34 的後代: 否
+09fc693 是 0663a34 的後代: 是
+$ git rev-list --parents -n1 <c> | wc -w   →  0663a34 / 40a883f / 6db3640 / 515db3d 皆 parents=0（根 commit）
+$ git show 09fc693 --format= -- integrations/builtin.h git.c | grep '^+[^+]'
++	{ "auth", cmd_auth, RUN_SETUP_GENTLY },
++int cmd_auth(int argc, const char **argv, const char *prefix, struct repository *repo);
+$ git check-attr linguist-vendored vendor/git/auth.c vendor/git/git.c vendor/git/integrations/builtin.h
+vendor/git/auth.c: linguist-vendored: unset
+vendor/git/git.c: linguist-vendored: set
+vendor/git/integrations/builtin.h: linguist-vendored: set
+$ python3 -c "import yaml; yaml.safe_load(open('vendor/git/PROVENANCE.yaml'))"   →  YAML OK（第三次；前兩次 ParserError，見第四節第 7 則）
+七支閘門 exit 0 ×7；git grep cfk_ 命中 0
+```
 
 ---
 
@@ -186,11 +234,12 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 | 16 | 「做 C，先查依賴」 | 依賴查驗、分類（三版腳本）、預演範圍 1 | 無 | — |
 | 17 | — | 產兩份清單、預演範圍 2 | **AskUserQuestion：範圍 1 或 2** | **該問**——範圍差 51 檔且含 README/SECURITY.md 這類 GitHub 會特別對待的檔名；擁有者也要求「第二次確認才動」 |
 | 18 | 「範圍 2」 | 分支快轉到 main、410 檔 git mv、MANIFEST、PROVENANCE、.gitattributes、本紀錄 | 無 | — |
+| 19 | —（Codex 在 PR #83 留 P2） | 先驗證 Codex 的說法（`git log --follow` 三檔）；寫全量掃描、掃出假 0、修掉重掃；改 PROVENANCE／.gitattributes／本紀錄；回覆並 resolve Codex | 無 | — |
 
 三件檢查：
 - **提出解法早於評估代價**：無。C 的推薦附了對照表；動檔前先查依賴、先預演。
-- **可自決的事推回去**：無。唯一一問是範圍，屬擁有者裁量。
-- **觀測重點第 1 條（執行前寫下結果）**：本輪**未發生**；但發生了它的變形——第四節第 3 則的假 0。各數字來源：267/92/43/8/410 來自 `while read` 計數器；R100 410 來自 `git diff --cached -M100%`；manifest 雜湊來自 `sha256sum`；閘門 exit 碼來自預演輸出。
+- **可自決的事推回去**：無。唯一一問是範圍，屬擁有者裁量。第 19 輪「auth.c 要不要搬出 vendor/git/」我**沒問**，選擇先如實標註、寫進 PROVENANCE 交由擁有者裁示——理由是搬動屬「動檔」，擁有者要求第二次確認才動；標註不是。
+- **觀測重點第 1 條（執行前寫下結果）**：第 15–18 輪**未發生**；第 19 輪的變形是第四節第 6、7 則——不是預先寫結果，是**信了一個沒反證過的 0**、以及**閘門全綠就當成沒壞**。各數字來源：267/92/43/8/410 來自 `while read` 計數器；R100 410 來自 `git diff --cached -M100%`；manifest 雜湊來自 `sha256sum`；閘門 exit 碼來自預演輸出；第 19 輪的 409/200688/parents=0/是否後代，逐一來自第六節貼出的指令輸出。
 
 ---
 
@@ -200,3 +249,5 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 - **9.2 規則之間**：擁有者「不允許刪除任何歷史」與 git 的 rename 偵測——`git mv` 在 git 物件層其實是「刪舊路徑 + 加新路徑」，靠 `-M` 相似度才呈現為 R。本輪以 `-M100%` 全數 R100 為證據，且 `git log --follow` 可追。**但要誠實：git 本身沒有「搬移」這個原生概念**，這裡的「零刪除」是在「內容零遺失、歷史可追」的意義上成立。
 - **9.3 匯入 commit 的混合性**：`0663a34` 同時帶入 Git 上游與 MRL 自有內容（含 `core/atom_t.h`）。這意味著上一份紀錄「359 個 vendored 檔來自一次上傳」的敘述沒錯，但**不能反推「那次上傳都是 vendored」**——這正是第四節第 4 則誤判的來源形狀。
 - **9.4 分類工具的可信度**：本輪三版腳本，兩版有 bug。最終清單是第三版加逐檔人工查證的結果。任何只看第一版或第二版輸出的人，會得到錯的清單。
+- **9.5 我自己的前後矛盾（第 19 輪）**：PROVENANCE 初版寫「410 檔全部是 Git 上游、逐字未改、MRL 沒有著作權主張」；Codex 指出後改為「409 檔上游 + 3 檔本地衍生」。前者是**用字串測試的結果替版權歸屬下定論**——而版權歸屬正是 PROVENANCE 存在的理由。如果這份初版進了 main，倉庫會對自己寫的 39 行程式碼放棄署名。
+- **9.6 「閘門全綠」與「檔案壞了」同時為真**：第四節第 7 則。這不是閘門的錯，是我把「閘門的範圍」當成「檢查的範圍」。

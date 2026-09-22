@@ -4,12 +4,21 @@
 #  依 docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md 第 4 節，
 #  倉庫內任何匯入產物都必須宣告完整來源鏈。
 #
-#  這一份記錄的是「不是 MRL 的東西」：本目錄 410 個檔全部是 Git 上游
-#  （git/git）的原始碼、shell 腳本、CI 腳本、Windows 建置檔與專案文件，
-#  著作權屬 Git 貢獻者，授權為 GPL-2.0（見 integrations/COPYING）。
-#  MRL / MrLiouWord / Mr.liou 對這些檔**沒有著作權主張**；下方
-#  canonical_authority 等欄位描述的是「本倉庫對這份紀錄的權責」，
-#  不是對內容的權責。兩者不可混淆——混淆即為署名事件紀錄所稱的反向混淆。
+#  這一份記錄的是「大部分不是 MRL 的東西」：本目錄 410 個檔中，
+#  **409 個**是 Git 上游（git/git）的原始碼、shell 腳本、CI 腳本、Windows
+#  建置檔與專案文件，著作權屬 Git 貢獻者，授權為 GPL-2.0（見
+#  integrations/COPYING）；MRL / MrLiouWord / Mr.liou 對這 409 個檔**沒有
+#  著作權主張**。
+#
+#  **例外（本倉庫自有的衍生修改，見 local_modifications）**：
+#    auth.c                 —— 本倉庫新增（非上游），實作 `gt auth` 指令
+#    git.c                  —— 上游檔 + 本倉庫 1 行修改（註冊 "auth" 指令）
+#    integrations/builtin.h —— 上游檔 + 本倉庫 1 行修改（cmd_auth 原型）
+#  這三個是 PR #83 的 Codex 審閱指出的（commit 09fc693），初版本紀錄把
+#  它們一併寫成「逐字未改、屬 Git 貢獻者」是錯的——已更正。
+#
+#  下方 canonical_authority 等欄位描述的是「本倉庫對這份紀錄的權責」，
+#  不是對上游內容的權責。兩者不可混淆——混淆即為署名事件紀錄所稱的反向混淆。
 #
 #  為什麼搬、為什麼是搬不是刪：
 #  這批檔在 2026-01-27 以 GitHub 網頁上傳（commit 0663a34，597 檔）進入
@@ -25,9 +34,31 @@ origin_signature: MrLiouWord            # 本倉庫記錄之簽章，非內容�
 source_repo: dofaromg/mrliouword-system
 source_artifact: vendor/git/
 source_version: 0663a34                 # 匯入 commit；搬移 commit 見 relocation
-derivative_role: vendored_import        # 逐字匯入、未修改、非 MRL 著作
-artifact_owner: Git contributors        # 內容著作權人
+derivative_role: vendored_import_with_local_patch   # 409 逐字上游 + 1 本地新增 + 2 上游檔各 1 行本地修改
+artifact_owner: Git contributors        # 409 個上游檔的內容著作權人；local_modifications 三檔的本地部分屬本倉庫（Mr.liou）
 verification_status: partial
+
+local_modifications_note: >
+  是否把 auth.c 搬出 vendor/git/（例如到 mrliou/ 或 patches/）由擁有者裁示；
+  它與 git.c / builtin.h 的修改是同一個功能單元，搬出會使三者分離。
+  本紀錄先如實標註，不自行搬動。
+
+local_modifications:                    # 不是上游的部分——PR #83 Codex 審閱指出，逐檔 git log --follow 驗證
+  - path: auth.c
+    kind: local_addition                # 上游沒有這個檔
+    commits: [09fc693, d2cc487]
+    author_in_repo: copilot-swe-agent[bot]   # 於本倉庫內撰寫；權責屬本倉庫，非 Git 上游
+    lines: 39
+    purpose: 實作 `gt auth` 指令（見根目錄 gt、AUTH_COMMAND_README.md、IMPLEMENTATION_COMPLETE.md）
+    gitattributes: "vendor/git/auth.c -linguist-vendored"   # 不得被當成可拋棄的上游程式碼
+  - path: git.c
+    kind: upstream_plus_local_patch
+    commits: [09fc693]
+    patch: '+ { "auth", cmd_auth, RUN_SETUP_GENTLY },'      # 1 行，註冊指令
+  - path: integrations/builtin.h
+    kind: upstream_plus_local_patch
+    commits: [09fc693]
+    patch: '+ int cmd_auth(int argc, const char **argv, const char *prefix, struct repository *repo);'   # 1 行，原型
 
 upstream:
   project: git/git
@@ -50,6 +81,25 @@ imported_verbatim:
   import_commit_scope: >
     該 commit 共 597 檔，混合 Git 上游與 MRL 自有內容（core/、docs/、
     containers/ …）。分類以逐檔判定為準，不以 commit 為準。
+  parallel_additions:                   # 逐檔 git log --follow 顯示的其他新增點（純新增、內容相同）
+    - commit: 40a883f
+      date: "2026-01-27"
+      author: copilot-swe-agent[bot]
+      stat: 409 files changed, 200688 insertions(+)
+    - commit: 6db3640
+      date: "2026-01-28"
+      author: copilot-swe-agent[bot]
+      stat: 409 files changed, 200688 insertions(+)
+    - commit: 515db3d
+      date: "2026-01-29"
+      author: copilot-swe-agent[bot]
+      stat: 409 files changed, 200688 insertions(+)
+  parallel_additions_note: >
+      三者皆為無父 commit 的根 commit（git rev-list --parents 顯示 parents=0），
+      不是 0663a34 的後代（git merge-base --is-ancestor 回「否」）；對這 409 檔
+      皆為 insertions-only、行數相同，屬同一批內容在獨立根分支上被重複加入，
+      非內容修改。初版本紀錄只列 0663a34，不完整；此處補全。
+      真正的內容修改只有 local_modifications 所列（09fc693 是 0663a34 的後代）。
 
 relocation:
   date: "2026-09-22"
@@ -103,7 +153,8 @@ verification:
     - 依賴查驗：50 個建置檔／腳本、GitHub workflows、Python/JS/TS、release_gate 基準線、Merkle 葉、自有文件的路徑引用——對這 410 檔的硬依賴為 0
     - 兩次暫存副本預演（範圍 1 的 359 檔、範圍 2 的 410 檔）：七支閘門全 exit 0；release_gate 產物 15／全過 4／未過 11／基準線 70 不變；Merkle root 相同、12 葉不變
     - 正式搬移：git diff --cached -M100% 判定 410 檔全部 R100
-    - 血緣判定：359 個 C 檔以 mrl_/mrliou 全文比對命中 0；非 C 檔逐檔以匯入 commit 與內容判定
+    - 血緣判定（初版）：359 個 C 檔以 mrl_/mrliou 全文比對命中 0；非 C 檔逐檔以匯入 commit 與內容判定
+    - 血緣判定（更正，PR #83 Codex 審閱後）：字串比對對「本地寫的、但不提 MRL 的程式碼」是假陰性。改為 410 檔逐一 git log --follow，找出 0663a34 以外的所有 commit——結果：409 檔另有三個根 commit 的平行新增（見 parallel_additions）、3 檔有本地修改（見 local_modifications）
   not_performed:
     - 上游 Git 版本識別（倉庫內無 GIT-VERSION-GEN、RelNotes、版本字串）
     - 與上游任一 release 的逐檔 sha256 比對（需網路取得上游 tarball，本環境 egress 不允許）
