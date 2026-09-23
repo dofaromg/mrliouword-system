@@ -8,6 +8,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFile } from 'node:child_process';
+import { createServer } from 'node:http';
 import { promisify } from 'node:util';
 import { pathToFileURL } from 'node:url';
 import { build } from 'esbuild';
@@ -280,6 +281,51 @@ if (process.env.MRL_BASELINE_FILE) {
       '--expected-sha', 'b'.repeat(40), '--append', '2',
     ], { env: { ...process.env, MRL_MASTER_KEY: KEY } }));
     await assertVerified(s, 12);
+  });
+
+  test('deployment verifier accounts for committed writes whose responses are lost or malformed', async t => {
+    const s = await setup(t);
+    const seen = [];
+    // Forward into real workerd/D1, then lose the response after commit. The
+    // verifier cannot infer "not committed" from a transport or JSON error.
+    const proxy = createServer(async (req, res) => {
+      let raw = '';
+      for await (const chunk of req) raw += chunk;
+      const body = raw ? JSON.parse(raw) : undefined;
+      const result = await s.request(req.url, body);
+      if (req.url === '/channel/emit') {
+        seen.push(body.key);
+        const index = JSON.parse(body.value).index;
+        if (index === 0) { res.destroy(); return; }
+        if (index === 1) { res.writeHead(200); res.end('{'); return; }
+      }
+      res.writeHead(result.status, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(result.data));
+    });
+    await new Promise(resolve => proxy.listen(0, '127.0.0.1', resolve));
+    t.after(() => new Promise(resolve => proxy.close(resolve)));
+    const receiptPath = join(s.root, 'uncertain-receipt.json');
+    let receipt;
+    await assert.rejects(promisify(execFile)(process.execPath, [
+      'scripts/verify-channel-deployment.mjs', '--url', `http://127.0.0.1:${proxy.address().port}`,
+      '--expected-sha', 'a'.repeat(40), '--append', '3', '--receipt', receiptPath,
+    ], { env: { ...process.env, MRL_MASTER_KEY: KEY } }), error => {
+      receipt = JSON.parse(error.stdout);
+      assert.equal(receipt.result, 'CHANNEL_VERIFICATION_FAIL');
+      return true;
+    });
+    assert.deepEqual(JSON.parse(await readFile(receiptPath, 'utf8')), receipt);
+    await assertVerified(s, 3);
+    assert.equal(seen.length, 3, 'no implicit retries after uncertain commits');
+    const attempts = receipt.operations.filter(op => op.path === '/channel/emit');
+    assert.equal(attempts.length, 3, 'every attempted write must survive transport failures');
+    assert.deepEqual(new Set(attempts.map(op => op.key)), new Set(seen));
+    const failed = attempts.filter(op => op.outcome === 'failed');
+    assert.equal(failed.length, 2);
+    assert.ok(failed.every(op => op.commit_state === 'unknown' && op.error));
+    assert.equal(attempts.filter(op => op.outcome === 'succeeded').length, 1);
+    assert.ok(attempts.every(op => op.started_at && op.finished_at));
+    assert.ok(!JSON.stringify(receipt).includes(KEY), 'credentials stay out of receipts');
   });
 
   test('unavailable DO returns a provenance-bearing 503 and never touches D1', async () => {

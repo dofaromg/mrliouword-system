@@ -228,6 +228,11 @@ CI 工作流 `MRL Channel Single Writer` 執行同樣的測試，不從 PR 取�
    `--receipt` 在任何 HTTP 請求前以 exclusive create 保留新檔名；路徑已存在或
    無法建立時，不送請求、不追加資料、不覆蓋舊證據。程序中斷留下的空回執僅表示
    未完成，須保留並核對 D1，不可視為成功或自動重送。
+   每個請求在送出前登記 operation，保留 path、寫入 key、開始／結束時間及結果。
+   斷線、逾時、回應 body 損壞或 JSON 解析失敗仍保留該筆 operation；emit 的
+   `commit_state: unknown` 表示須查 D1，不能推定未寫入。明確的 committed 回執
+   或帶 entry.id 的成功回應才標 `committed`。這些欄位附加於原回執，沒有自動重送。
+   正常結束時才將完整回執落盤；強制終止仍可能留下空 reservation，須保留查證。
 7. 只有 live 版本、綁定、歷史完整性、並行 receipt 與原路由均驗證，才能恢復生產者
    寫入並宣告 production PASS。出錯時保持暫停，修正後再前進；**不可回滾成舊的
    直接 D1 寫入程式**，不可刪除 DO class／namespace 或更改固定 object identity。
@@ -242,6 +247,7 @@ CI 工作流 `MRL Channel Single Writer` 執行同樣的測試，不從 PR 取�
 | 故障不污染後續 head | D1 拒寫無 KV 發布；R2 失敗批次不留部分列；下一筆接實際鏈尾 |
 | 延遲提交不能越過新 head | 在讀 head 與 INSERT 間注入競爭提交，延遲寫入被拒絕，既有鏈仍完整 |
 | KV 部分失敗可追溯 | 回 committed receipt、D1 保留列、recall 讀到同一 id |
+| 並行驗收遇到不確定回應仍可追查 | 提交後斷線／JSON 損壞，所有嘗試 key 均留在 receipt；unknown 不當作未提交，無重送 |
 | 重啟與時間漂移安全 | DO 重啟接回 D1，時鐘倒退不重排原始列 |
 | 既有錯誤不被抹除 | 舊 fork／UNIQUE(key) 明確阻擋追加，原始證據完整留存 |
 | 精確線上版本 | Cloudflare version + namespace + exact SHA + live receipt，不能用 dry-run 代替 |

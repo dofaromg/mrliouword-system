@@ -153,3 +153,27 @@ channel_receipt_reservation_20260923:
   limitations:
     - Abrupt termination can leave an incomplete reservation; retain it and inspect D1 before retrying.
     - Production deployment and Mother runtime ingestion are not established by this local repair.
+
+# R04 extends the existing verifier; it does not create another canonical core.
+channel_uncertain_receipt_20260923:
+  canonical_authority: Mr.liou
+  origin_signature: MrLiouWord
+  source_repo: dofaromg/mrliouword-system
+  source_artifact: cloudflare/particle-api/scripts/verify-channel-deployment.mjs
+  source_version: 8467eaefd37d61ff84a8532cddea8139a50af859
+  derivative_role: implementation
+  artifact_owner: Mr.liou
+  contributors:
+    - Mr.liou — directed the expanded five-step verification and preservation loop
+    - Codex — implementation and validation tool
+  transformation: >
+    Register every deployment-verifier request before HTTP I/O and preserve its
+    key, timing and outcome even when a committed response is lost or malformed.
+    Keep commit state unknown unless a success or explicit committed receipt is
+    observed. Add a real workerd/D1 regression with post-commit response faults.
+  verification_status: partial
+  change_record: docs/retrospective/2026-09-23_channel_uncertain_receipt_session_record.md
+  evidence: docs/retrospective/2026-09-23_channel_uncertain_receipt_evidence.json
+  limitations:
+    - Receipts are flushed at orderly completion; forced termination still requires D1 reconciliation.
+    - No live deployment, account configuration or Mother runtime consumption is established here.

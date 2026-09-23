@@ -36,22 +36,42 @@ try {
   receipt.origin = url.origin;
   receipt.expected_sha = expected || null;
   async function call(path, body) {
-    const response = await fetch(new URL(path, url), {
-      method: body === undefined ? 'GET' : 'POST', redirect: 'manual',
-      headers: { 'Content-Type': 'application/json', 'X-Master-Key': key },
-      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-      signal: AbortSignal.timeout(30_000),
-    });
-    const raw = await response.text();
-    receipt.operations.push({ path, http_status: response.status, response_sha256: sha256(raw) });
-    assert.ok(![301, 302, 303, 307, 308].includes(response.status), 'redirect rejected; credentials were not forwarded');
-    const data = JSON.parse(raw);
-    assert.equal(data.origin_signature, 'MrLiouWord');
-    if (body?.key) receipt.operations.at(-1).key = body.key;
-    if (data.entry) receipt.operations.at(-1).entry = data.entry;
-    if (data.committed !== undefined) receipt.operations.at(-1).committed = data.committed;
-    assert.equal(response.status, 200, `HTTP ${response.status}: ${data.error || 'request failed'}; inspect receipts before any retry`);
-    return data;
+    // Record the attempt before external I/O: a lost response may follow a
+    // committed append. Keep its key and uncertainty instead of losing it.
+    const operation = { path, started_at: new Date().toISOString(), outcome: 'pending' };
+    if (body?.key) operation.key = body.key;
+    if (path === '/channel/emit') operation.commit_state = 'unknown';
+    receipt.operations.push(operation);
+    try {
+      const response = await fetch(new URL(path, url), {
+        method: body === undefined ? 'GET' : 'POST', redirect: 'manual',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': key },
+        ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+        signal: AbortSignal.timeout(30_000),
+      });
+      operation.http_status = response.status;
+      const raw = await response.text();
+      operation.response_sha256 = sha256(raw);
+      assert.ok(![301, 302, 303, 307, 308].includes(response.status), 'redirect rejected; credentials were not forwarded');
+      const data = JSON.parse(raw);
+      assert.equal(data.origin_signature, 'MrLiouWord');
+      if (data.entry) operation.entry = data.entry;
+      if (data.committed !== undefined) operation.committed = data.committed;
+      if (path === '/channel/emit' && data.committed === true) operation.commit_state = 'committed';
+      assert.equal(response.status, 200, `HTTP ${response.status}: ${data.error || 'request failed'}; inspect receipts before any retry`);
+      if (path === '/channel/emit') {
+        assert.ok(data.entry?.id, 'successful append must include an entry id');
+        operation.commit_state = 'committed';
+      }
+      operation.outcome = 'succeeded';
+      return data;
+    } catch (error) {
+      operation.outcome = 'failed';
+      operation.error = String(error);
+      throw error;
+    } finally {
+      operation.finished_at = new Date().toISOString();
+    }
   }
   const before = await call('/channel/verify');
   assert.equal(before.valid, true, 'existing chain must verify before any append');
