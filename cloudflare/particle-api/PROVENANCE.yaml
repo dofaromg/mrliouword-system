@@ -130,3 +130,26 @@ channel_single_writer_20260922:
     - No automatic repair of historical forks or legacy UNIQUE(key) schema.
     - Old direct-D1 writers must be quiesced and drained before cutover; no mixed-version writes.
     - Memory and Persona chains are outside this Channel repair.
+
+# Follow-up delta from the owner-requested 查→修→建→復盤→保存 loop.
+channel_receipt_reservation_20260923:
+  canonical_authority: Mr.liou
+  origin_signature: MrLiouWord
+  source_repo: dofaromg/mrliouword-system
+  source_artifact: cloudflare/particle-api/scripts/verify-channel-deployment.mjs
+  source_version: c8bf1fa88f8aa5d7bf616ea0d5bcbb42d9efc6db
+  derivative_role: implementation
+  artifact_owner: Mr.liou
+  contributors:
+    - Mr.liou — directed the repeated check, repair, build, retrospective and preservation loop
+    - Codex — implementation and verification tool
+  transformation: >
+    Atomically reserve the deployment receipt path before any HTTP request.
+    A reused path now fails without appending probe records or overwriting the
+    previous receipt. Add a regression asserting no requests and no extra rows.
+  verification_status: partial
+  change_record: docs/retrospective/2026-09-23_channel_single_writer_recheck_session_record.md
+  evidence: docs/retrospective/2026-09-23_channel_single_writer_recheck_evidence.json
+  limitations:
+    - Abrupt termination can leave an incomplete reservation; retain it and inspect D1 before retrying.
+    - Production deployment and Mother runtime ingestion are not established by this local repair.

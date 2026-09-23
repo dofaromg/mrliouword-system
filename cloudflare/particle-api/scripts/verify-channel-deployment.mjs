@@ -4,7 +4,7 @@
  * Source/authority: ../PROVENANCE.yaml.
  */
 import { createHash, randomUUID } from 'node:crypto';
-import { writeFile } from 'node:fs/promises';
+import { open } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 const args = process.argv.slice(2);
@@ -17,7 +17,11 @@ const receipt = {
 const sha256 = value => createHash('sha256').update(value).digest('hex');
 const output = option('--receipt');
 let failure;
+let receiptFile;
 try {
+  // Reserve the receipt atomically before any HTTP request. Detecting EEXIST
+  // after --append would create permanent rows without a new receipt.
+  if (output) receiptFile = await open(output, 'wx');
   const url = new URL(option('--url') || process.env.MRL_CHANNEL_URL);
   assert.ok(!url.username && !url.password && !url.search && !url.hash && url.pathname === '/', 'URL must be a bare origin');
   assert.ok(url.protocol === 'https:' || (url.protocol === 'http:' && ['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname)), 'HTTPS is required outside loopback');
@@ -91,7 +95,10 @@ try {
 } finally {
   receipt.finished_at = new Date().toISOString();
   const text = JSON.stringify(receipt, null, 2) + '\n';
-  if (output) await writeFile(output, text, { flag: 'wx' });
+  if (receiptFile) {
+    try { await receiptFile.writeFile(text); await receiptFile.sync(); }
+    finally { await receiptFile.close(); }
+  }
   process.stdout.write(text);
 }
 if (failure) process.exitCode = 1;

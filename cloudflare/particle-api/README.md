@@ -225,7 +225,9 @@ CI 工作流 `MRL Channel Single Writer` 執行同樣的測試，不從 PR 取�
    唯讀驗收：
    `node scripts/verify-channel-deployment.mjs --url "$MRL_CHANNEL_URL" --expected-sha "$mrl_release_sha" --receipt "$MRL_RECEIPT_PATH"`。
    並行驗收另外指定 `--append 32`：會永久追加具名測試事件；不刪除、不自動重試。
-   `--receipt` 使用新檔名，以 exclusive create 防止覆蓋舊證據。
+   `--receipt` 在任何 HTTP 請求前以 exclusive create 保留新檔名；路徑已存在或
+   無法建立時，不送請求、不追加資料、不覆蓋舊證據。程序中斷留下的空回執僅表示
+   未完成，須保留並核對 D1，不可視為成功或自動重送。
 7. 只有 live 版本、綁定、歷史完整性、並行 receipt 與原路由均驗證，才能恢復生產者
    寫入並宣告 production PASS。出錯時保持暫停，修正後再前進；**不可回滾成舊的
    直接 D1 寫入程式**，不可刪除 DO class／namespace 或更改固定 object identity。

@@ -261,6 +261,20 @@ if (process.env.MRL_BASELINE_FILE) {
     assert.equal(result.concurrent_appends, 12);
     assert.deepEqual(JSON.parse(await readFile(receiptPath, 'utf8')), result);
     await assertVerified(s, 12);
+    // Reusing a receipt must fail before sending any request or appending rows.
+    const originalReceipt = await readFile(receiptPath, 'utf8');
+    await assert.rejects(promisify(execFile)(process.execPath, [
+      'scripts/verify-channel-deployment.mjs', '--url', url,
+      '--expected-sha', 'a'.repeat(40), '--append', '2', '--receipt', receiptPath,
+    ], { env: { ...process.env, MRL_MASTER_KEY: KEY } }), error => {
+      const rejected = JSON.parse(error.stdout);
+      assert.equal(rejected.result, 'CHANNEL_VERIFICATION_FAIL');
+      assert.deepEqual(rejected.operations, []);
+      assert.match(rejected.error, /EEXIST/);
+      return true;
+    });
+    assert.equal(await readFile(receiptPath, 'utf8'), originalReceipt);
+    await assertVerified(s, 12);
     await assert.rejects(promisify(execFile)(process.execPath, [
       'scripts/verify-channel-deployment.mjs', '--url', url,
       '--expected-sha', 'b'.repeat(40), '--append', '2',
