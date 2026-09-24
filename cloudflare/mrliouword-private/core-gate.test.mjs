@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { build } from 'esbuild';
 import { webcrypto } from 'node:crypto';
 
 globalThis.crypto ??= webcrypto;
-const source = await readFile(new URL('./index.ts', import.meta.url), 'utf8');
+const bundle = await build({ entryPoints: [new URL('./src/index.ts', import.meta.url).pathname], bundle: true, format: 'esm', write: false, platform: 'browser' });
+const source = bundle.outputFiles[0].text;
 const worker = (await import(`data:text/javascript,${encodeURIComponent(source)}`)).default;
 const vault = {
   values: new Map(),
@@ -24,7 +25,7 @@ test('public metadata and health retain owner origin', async () => {
   const root = await request('/');
   assert.equal(root.status, 200);
   assert.equal(root.body.origin, 'MrLiouWord');
-  assert.equal(root.body.endpoints.length, 20);
+  assert.equal(root.body.endpoints.length, 22);
   assert.equal(root.body.capability_state['runtimeos/ai'], 'unavailable');
   assert.equal((await request('/health')).body.origin_signature, 'MrLiouWord');
 });
@@ -44,15 +45,16 @@ test('wrong key cannot write and valid key reveals unavailable stubs', async () 
   assert.equal(wrong.status, 401);
   assert.equal(vault.values.size, 0);
   const headers = { Authorization: 'Bearer owner-only-secret' };
-  for (const [path, method] of [['/api/mrl/runtimeos/ai/models', 'GET'], ['/api/mrl/runtimeos/ai/generate', 'POST'], ['/api/mrl/tools/execute', 'POST'], ['/api/mrl/files/upload', 'POST'], ['/api/mrl/audit/traces', 'GET']]) {
-    const r = await request(path, { method, headers }, env);
+  for (const [path, method] of [['/api/mrl/runtimeos/ai/models', 'GET'], ['/api/mrl/runtimeos/ai/generate', 'POST'], ['/api/mrl/files/upload', 'POST'], ['/api/mrl/audit/traces', 'GET']]) {
+    const r = await request(path, { method, headers, ...(method === 'POST' ? { body: '{}' } : {}) }, env);
     assert.equal(r.status, 503, path);
     assert.equal(r.body.ok, false);
     assert.equal(r.body.origin_signature, 'MrLiouWord');
   }
-  for (const [path, method] of [['/particles', 'GET'], ['/wake', 'POST'], ['/sleep', 'POST']]) {
-    const r = await request(path, { method, headers }, env);
+  for (const [path, method] of [['/particles', 'GET'], ['/memory/stats', 'GET']]) {
+    const r = await request(path, { method, headers, ...(method === 'POST' ? { body: '{}' } : {}) }, env);
     assert.equal(r.status, 503, path);
     assert.equal(r.body.ok, false);
   }
 });
+

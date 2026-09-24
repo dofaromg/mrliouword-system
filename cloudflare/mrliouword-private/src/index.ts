@@ -1,3 +1,7 @@
+import { MemoryClient, Mrliou_CoreMemory } from './memory.mjs';
+import { runtime, uploadFile, executeTool, boundedBytes } from './services.mjs';
+export { Mrliou_CoreMemory };
+
 /**
  * MRL System Core Service
  * 
@@ -112,67 +116,6 @@ function matchesSecret(provided, expected) {
   return diff === 0;
 }
 
-// 記憶系統
-class Memory {
-  constructor(kv) { this.kv = kv; }
-  
-  async commit(content, type = 'semantic', tags = [], meta = {}) {
-    const id = uuid(), simhash = simhash64(content), ts = Date.now();
-    const prev = await this.kv.get('mem:head') || '0'.repeat(64);
-    const merkle = await sha256(content + simhash + ts + prev);
-    
-    const e = { id, content, type, simhash, tags, layer: 'L7', ts, merkle, prev, meta };
-    await this.kv.put(`mem:${id}`, JSON.stringify(e));
-    await this.kv.put('mem:head', merkle);
-    
-    const idx = JSON.parse(await this.kv.get('mem:idx') || '[]');
-    idx.push({ id, simhash, tags, layer: 'L7', ts });
-    await this.kv.put('mem:idx', JSON.stringify(idx));
-    
-    return e;
-  }
-  
-  async recall(q, limit = 10) {
-    const qh = simhash64(q);
-    const idx = JSON.parse(await this.kv.get('mem:idx') || '[]');
-    const scored = idx.map(i => ({ ...i, d: hamming(qh, i.simhash) })).sort((a, b) => a.d - b.d);
-    
-    const res = [];
-    for (const i of scored.slice(0, limit)) {
-      const e = await this.kv.get(`mem:${i.id}`);
-      if (e) res.push(JSON.parse(e));
-    }
-    return res;
-  }
-  
-  async stats() {
-    const idx = JSON.parse(await this.kv.get('mem:idx') || '[]');
-    const byLayer = {};
-    for (const i of idx) byLayer[i.layer] = (byLayer[i.layer] || 0) + 1;
-    return { total: idx.length, byLayer, chainHead: await this.kv.get('mem:head') || '' };
-  }
-  
-  async verify() {
-    const errors = [];
-    const idx = JSON.parse(await this.kv.get('mem:idx') || '[]').sort((a, b) => a.ts - b.ts);
-    let prev = '0'.repeat(64);
-    
-    for (const i of idx) {
-      const e = await this.kv.get(`mem:${i.id}`);
-      if (!e) { errors.push(`Missing:${i.id}`); continue; }
-      
-      const entry = JSON.parse(e);
-      if (entry.prev !== prev) errors.push(`Chain broken at ${i.id}`);
-      
-      const computed = await sha256(entry.content + entry.simhash + entry.ts + entry.prev);
-      if (computed !== entry.merkle) errors.push(`Hash mismatch at ${i.id}`);
-      
-      prev = entry.merkle;
-    }
-    return { valid: !errors.length, errors };
-  }
-}
-
 // 人格系統
 class Persona {
   constructor(kv) { this.kv = kv; this.active = null; }
@@ -183,6 +126,7 @@ class Persona {
       this.active.state = 'active';
       this.active.updated = now();
       await this.save(this.active);
+      await this.kv.put('persona:active', this.active.id);
       return {
         awakened: true,
         persona: this.active,
@@ -195,7 +139,10 @@ class Persona {
   }
   
   async sleep() {
-    if (!this.active) return false;
+    const activeId = await this.kv.get('persona:active');
+    const raw = activeId ? await this.kv.get(`persona:${activeId}`) : null;
+    this.active = raw ? JSON.parse(raw) : null;
+    if (!this.active || this.active.state !== 'active') return false;
     this.active.state = 'dormant';
     this.active.updated = now();
     await this.save(this.active);
@@ -301,8 +248,9 @@ export default {
     const cors = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Master-Key',
-      'Content-Type': 'application/json'
+      'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Master-Key,Idempotency-Key',
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store'
     };
     
     if (req.method === 'OPTIONS') {
@@ -321,12 +269,19 @@ export default {
       }
     }
     
-    const mem = new Memory(env.MRLIOUWORD_VAULT);
+    const mem = new MemoryClient(env);
     const persona = new Persona(env.MRLIOUWORD_VAULT);
     
-    const json = async () => { try { return await req.json(); } catch { return {}; } };
+    const json = async () => {
+      try {
+        const bytes = await boundedBytes(req.body, 262144);
+        const body = JSON.parse(new TextDecoder().decode(bytes));
+        if (!body || typeof body !== 'object' || Array.isArray(body)) throw new Error('Object required');
+        return body;
+      } catch (error) { throw Object.assign(new Error(error.status === 413 ? error.message : 'Invalid JSON object'), { status: error.status || 400 }); }
+    };
     const ok = (d) => new Response(JSON.stringify({ ...d, origin: ORIGIN }), { headers: cors });
-    const err = (m, s = 400) => new Response(JSON.stringify({ error: m, origin: ORIGIN }), { status: s, headers: cors });
+    const err = (m, s = 400) => new Response(JSON.stringify({ ok: false, error: m, origin: ORIGIN }), { status: s, headers: cors });
     const unavailable = (service, reason) => new Response(JSON.stringify({ ok: false, service, version: VERSION, origin_signature: ORIGIN, error: reason }), { status: 503, headers: cors });
     
     try {
@@ -337,18 +292,18 @@ export default {
           version: VERSION,
           philosophy: '怎麼過去，就怎麼回來',
           capability_state: {
-            'runtimeos/ai': 'unavailable',
-            'tools/execute': 'unavailable',
-            'files/upload': 'unavailable',
-            'audit/traces': 'unavailable',
-            'particles': 'unavailable',
-            'persona/wake': 'runtime_not_connected',
-            'memory/chain': 'KV_CONCURRENCY_UNVERIFIED'
+            'runtimeos/ai': env.MRL_API_BASE_URL && env.MRL_RUNTIME_API_KEY ? 'configured_unverified' : 'unavailable',
+            'tools/execute': 'local_allowlist',
+            'files/upload': env.MRLIOUBOOK ? 'r2_readback' : 'unavailable',
+            'audit/traces': env.MRL_CORE_MEMORY ? 'memory_commit_log' : 'unavailable',
+            'particles': env.MRLIOUBOOK ? 'r2_inventory' : 'unavailable',
+            'persona/wake': 'persistent_persona_state',
+            'memory/chain': env.MRL_CORE_MEMORY ? 'durable_object_migration_required_or_ready' : 'unavailable'
           },
           endpoints: [
             'GET /status', 'POST /wake', 'POST /sleep',
             'POST /memory/commit', 'POST /memory/recall',
-            'GET /memory/stats', 'POST /memory/verify',
+            'GET /memory/stats', 'POST /memory/verify', 'POST /memory/migrate',
             'GET /particles', 'GET /frequencies',
             'GET /persona/list', 'POST /persona/register',
             'DELETE /persona/deregister', 'GET /persona/registry',
@@ -359,7 +314,7 @@ export default {
             'POST /api/mrl/memory/search',
             'POST /api/mrl/tools/execute',
             'POST /api/mrl/files/upload',
-            'GET /api/mrl/audit/traces'
+            'GET /api/mrl/audit/traces', 'POST /api/mrl/memory/commit'
           ]
         });
       }
@@ -375,6 +330,8 @@ export default {
           ok: true,
           service: 'MRL_API_Gateway',
           version: VERSION,
+          build_sha: env.MRL_BUILD_SHA || null,
+          worker_version_id: env.MRL_WORKER_VERSION?.id || null,
           origin_signature: ORIGIN,
           timestamp: Date.now()
         });
@@ -382,18 +339,18 @@ export default {
 
       // GET /api/mrl/runtimeos/ai/models
       if (path === '/api/mrl/runtimeos/ai/models' && req.method === 'GET') {
-        return unavailable('mrl-ai', 'No verified model runtime is connected');
+        return ok({ ok: true, service: 'mrl-ai', origin_signature: ORIGIN, data: await runtime(env, 'models') });
       }
 
       // POST /api/mrl/runtimeos/ai/generate
       if (path === '/api/mrl/runtimeos/ai/generate' && req.method === 'POST') {
-        return unavailable('mrl-ai', 'No verified model runtime is connected');
+        return ok({ ok: true, service: 'mrl-ai', origin_signature: ORIGIN, data: await runtime(env, 'generate', await json()) });
       }
 
       // POST /api/mrl/memory/search
       if (path === '/api/mrl/memory/search' && req.method === 'POST') {
         const b = await json();
-        const results = await mem.recall(b.query || '', b.limit || 10);
+        const results = await mem.recall(b.query, b.limit ?? 10);
         return ok({
           ok: true,
           service: 'mrl-memory',
@@ -407,7 +364,7 @@ export default {
       if (path === '/api/mrl/memory/commit' && req.method === 'POST') {
         const b = await json();
         if (!b.content) return err('缺少 content 欄位');
-        const entry = await mem.commit(b.content, b.type, b.tags, b.meta);
+        const entry = await mem.commit(b.content, b.type, b.tags, b.meta, req.headers.get('Idempotency-Key'));
         return ok({
           ok: true,
           service: 'mrl-memory',
@@ -419,17 +376,18 @@ export default {
 
       // POST /api/mrl/tools/execute
       if (path === '/api/mrl/tools/execute' && req.method === 'POST') {
-        return unavailable('mrl-tools', 'Tool registry is not connected');
+        const b = await json();
+        return ok({ ok: true, service: 'mrl-tools', origin_signature: ORIGIN, data: { tool: b.tool, result: await executeTool(mem, b) } });
       }
 
       // POST /api/mrl/files/upload
       if (path === '/api/mrl/files/upload' && req.method === 'POST') {
-        return unavailable('mrl-files', 'File storage is not connected');
+        return ok({ ok: true, service: 'mrl-files', origin_signature: ORIGIN, data: await uploadFile(env, req) });
       }
 
       // GET /api/mrl/audit/traces
       if (path === '/api/mrl/audit/traces' && req.method === 'GET') {
-        return unavailable('mrl-audit', 'Audit store is not connected');
+        return ok({ ok: true, service: 'mrl-audit', origin_signature: ORIGIN, data: await mem.traces(Number(url.searchParams.get('limit') ?? 20)) });
       }
 
       // GET /api/mrl/ui-state/:userId
@@ -481,16 +439,20 @@ export default {
       
       // 喚醒/休眠
       if (path === '/wake' && req.method === 'POST') {
-        return unavailable('mrl-persona', 'Persona runtime is not connected');
+        const b = await json();
+        if (typeof b.message !== 'string') return err('message must be a string');
+        return ok(await persona.wake(b.message));
       }
       if (path === '/sleep' && req.method === 'POST') {
-        return unavailable('mrl-persona', 'Persona runtime is not connected');
+        return ok({ success: await persona.sleep() });
       }
       
+      // Explicit owner-controlled migration; legacy KV is retained byte-for-byte.
+      if (path === '/memory/migrate' && req.method === 'POST') return ok(await mem.migrate(await json()));
       // 記憶
       if (path === '/memory/commit' && req.method === 'POST') {
         const b = await json();
-        return ok({ entry: await mem.commit(b.content, b.type, b.tags, b.metadata) });
+        return ok({ entry: await mem.commit(b.content, b.type, b.tags, b.metadata, req.headers.get('Idempotency-Key')) });
       }
       if (path === '/memory/recall' && req.method === 'POST') {
         const b = await json();
@@ -505,7 +467,11 @@ export default {
       
       // 頻率
       if (path === '/particles' && req.method === 'GET') {
-        return unavailable('mrl-particles', 'Particle inventory is not connected');
+        if (!env.MRLIOUBOOK) return unavailable('mrl-particles', 'MRLIOUBOOK storage is not configured');
+        const limit = Number(url.searchParams.get('limit') ?? 20);
+        if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100) return err('limit must be between 1 and 100');
+        const result = await env.MRLIOUBOOK.list({ prefix: 'particles/', limit, ...(url.searchParams.get('cursor') ? { cursor: url.searchParams.get('cursor') } : {}) });
+        return ok({ particles: result.objects.map(o => ({ key: o.key, size: o.size, etag: o.etag })), truncated: result.truncated, cursor: result.truncated ? result.cursor : null });
       }
       if (path === '/frequencies' && req.method === 'GET') {
         return ok({ schumann: SCHUMANN, phi: PHI, layers: FREQ });
@@ -532,7 +498,8 @@ export default {
       
       return err('Not Found', 404);
     } catch (e) {
-      return new Response(JSON.stringify({ error: e.message, origin: ORIGIN }), { status: 500, headers: cors });
+      return new Response(JSON.stringify({ ok: false, error: e.message, origin: ORIGIN, origin_signature: ORIGIN }), { status: e.status || 500, headers: cors });
     }
   }
 };
+
