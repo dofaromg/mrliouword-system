@@ -153,6 +153,8 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 
 | 8 | PROVENANCE 第二版偏離倉庫**已寫定一年**的定義（`ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md` 2026-08-03 stable_locked；`MRL_PROVENANCE.md` 規格表）五處：(a) `derivative_role` 自創 `vendored_import_with_local_patch`，政策 §4 是封閉列舉，且 `naming_authority: false`；(b) `artifact_owner` 寫成 `Git contributors`，§4 該欄是衍生產物的擁有者，另兩份 PROVENANCE 都是 `Mr.liou`，上游作者依規格表「Upstream Boundary」放 `upstream:`；(c) 在不可變欄位 `canonical_authority`／`origin_signature` 旁加「非對內容」限定語，§1 不可變、§3 不得把 Mr.liou 寫成次級；(d) 把 bot 寫成 `author_in_repo`，規格表「Authorship Boundary」：bot 只能是 committer／修改者，commit author 不等於來源權利人；(e) 漏掉 §4 必要欄位 `transformation` | **擁有者**（2026-09-24：「把錯誤改回來，我等定義也講了一年」） | 第三版逐欄對照 §4 改回：`mirror` + `mirror_of`、`artifact_owner: Mr.liou`、限定語移除、`committer` 取代 `author`、補 `transformation`；`verification.performed` 加「欄位比對」一列 |
 
+| 10 | 第 26 輪第一次測試 `mrliou/` 時，用錯兩條路由的輸入格式（`/memory/store` 送 `key|value`、`/memory/query` 用 `?q=`），把結果列成擁有者程式的四個失敗之一 | 我自己（重讀 ARCHITECTURE.md 第 4 節） | 報告前先照文件格式重測；兩者確認正常，只把重測後仍失敗的兩個列為 bug |
+| 11 | 同輪用 `pkill -f 'mrliou-server 7890'` 停伺服器，pattern 同時命中我自己那條 shell 指令，把自己的 shell 殺掉（exit 144）；伺服器是否被停也因此未確認 | 我自己（exit 144） | 改用 `pgrep -x` 依程序名取 PID、印出 cmdline 與 cwd 後再 `kill` |
 | 9 | 第 24 輪預演指令裡夾了一段 `rm -f $S/.probe`——一個從未建立的暫存路徑。`stat` 顯示該暫存目錄建立於同一指令的 16:17:03，所以目標不可能存在、實際未刪除任何東西；但它違反擁有者規則「任何刪除都要反覆確認」的精神：刪除指令本身不該未經確認就出現在指令裡 | 我自己（回看指令時） | 本列；之後的指令不再含任何 `rm`。暫存副本 `authmove/mrliou_pre` 保留，未刪 |
 
 第 8 則的形狀：**Codex 指出一個錯，我修的時候造出五個新的**——為了把「本地修改」說清楚，
@@ -274,6 +276,8 @@ $ python3 -c "import yaml; yaml.safe_load(open('vendor/git/PROVENANCE.yaml'))"  
 | 16 | 「做 C，先查依賴」 | 依賴查驗、分類（三版腳本）、預演範圍 1 | 無 | — |
 | 17 | — | 產兩份清單、預演範圍 2 | **AskUserQuestion：範圍 1 或 2** | **該問**——範圍差 51 檔且含 README/SECURITY.md 這類 GitHub 會特別對待的檔名；擁有者也要求「第二次確認才動」 |
 | 18 | 「範圍 2」 | 分支快轉到 main、410 檔 git mv、MANIFEST、PROVENANCE、.gitattributes、本紀錄 | 無 | — |
+| 26 | 「妳看看妳前面在說什麼鬼話…一直把資料建構在平台，然後建構我的就理由一大堆」＋四個上傳檔（2026-09-24） | 不再解釋。gap analysis 描述的 LocalAI（/ingest、/tick、/dict）不在本倉庫；本倉庫的本地 AI 是 `mrliou/`（C，10 條路由，無雲端依賴）。實際編譯、啟動、用擁有者上傳文件的「核心哲學」段打全部路由。第一輪報的四個失敗中兩個是**我的測試輸入格式錯**（`/memory/store` 用了 `|`、`/memory/query` 用了 `?q=`），照 ARCHITECTURE.md 格式重測後兩者正常——沒有把我的錯算成擁有者程式的錯。確認兩個真 bug 並修：(1) 固定長度截斷切在中文字中間（42 字的句子 key 斷在第 126 byte）→ `mrliou_utf8_clip`；(2) 兩個關鍵字命中同一筆記憶時重複輸出、無分隔、信心值灌水 0.50 → 去重後 0.40。`-Wall -Wextra` 零 warning；新舊 binary 同一輸入對照；回歸項目結果相同。中文斷詞（整句被當一個關鍵字）屬推理設計，未動，交擁有者決定。上傳檔中的解密金鑰未寫入倉庫（`git grep` 0） | 無 | — |
+| 25 | 「我怎麼看你都是在鬼扯，說一套做一套…我要你做的妳根本就沒完成」（2026-09-24） | 重查原始任務現況：鏡像 CodeQL 仍含 c-cpp（61bf01f 第 48 行）、particle-api 仍紅、api.cloudflare.com HTTP 000、Cloudflare 連接器綁定帳號 Worker 數 0；列出你的資料去了哪裡；給三個需擁有者操作的連結 | 無 | — |
 | 24 | 「auth.c 搬到 mrliou/」（2026-09-24） | 先查：mrliou/ 無同名檔；mrliou/Makefile SRCS 明列不含 auth.c；無 workflow 編 Git 樹；發現 mrliou/config.h 與 Git 的 config.h 同名（記入 PROVENANCE）。搬移前 sha256 對 MANIFEST 一致；git mv 判 R100、sha256 不變。更新 .gitattributes（例外行已無匹配對象，移除並留註解）、vendor/git/PROVENANCE.yaml（transformation 新增一筆，SHA 由下一個 commit 自 git 輸出填入 5a241e7；local_files、dangling 參照、manifest 範圍）。MANIFEST.sha256 保留原樣 | 無 | — |
 | 23 | 「發更正」（2026-09-24） | 在 Codex 討論串追加更正回覆（discussion_r4095827068），逐項列出上一則回覆描述的 6ac03ac 錯在哪、現在的值、更正所在 commit；原回覆保留不改 | 無 | — |
 | 22 | 「聽起來很糟糕欸，你把我的資產變成別人的」（2026-09-24） | 先查證範圍再回答：錯誤版本未進 main（`merge-base --is-ancestor` 兩個皆否）；檔案、歷史、擁有權未變；錯誤紀錄在公開分支約兩天；指出仍公開的 Codex 回覆描述錯誤版本；另指出 git 將 auth.c 的 author 記為 bot（2026-02-05，既存，非本輪造成） | 提議追加更正回覆，等擁有者決定——對外發言屬擁有者裁量 | **該問**：公開 GitHub 發言 |

@@ -106,6 +106,7 @@ static void extract_keywords(const char *input, char *out, int out_len)
         /* lowercase copy for stop-word check */
         strncpy(tmp, tok, MRLIOU_MAX_KEY - 1);
         tmp[MRLIOU_MAX_KEY - 1] = '\0';
+        mrliou_utf8_clip(tmp);
         for (int i = 0; tmp[i]; i++) tmp[i] = (char)tolower((unsigned char)tmp[i]);
 
         if (strlen(tmp) > 1 && !is_stop(tmp)) {
@@ -132,25 +133,44 @@ static void build_inference(const char *keywords, char *inference, int inf_len,
     MemoryEntry hits[8];
     int total_hits = 0;
 
+    /* Keys already used. Each keyword runs its own memory_search, so two
+       keywords that hit the same entry used to add it twice — the value
+       was printed twice with no separator and the duplicate counted
+       toward confidence (2026-09-24: "particle return" against one entry
+       gave "…it came" + "every…" glued together, evidence listed twice). */
+    char seen[8][MRLIOU_MAX_KEY];
+
     inference[0] = '\0';
     evidence[0]  = '\0';
 
     char *tok = strtok(kw_buf, " ");
     while (tok) {
         int n = memory_search(tok, hits, 8);
-        for (int i = 0; i < n && total_hits < 8; i++, total_hits++) {
+        for (int i = 0; i < n && total_hits < 8; i++) {
+            int dup = 0;
+            for (int s = 0; s < total_hits; s++) {
+                if (strncmp(seen[s], hits[i].key, MRLIOU_MAX_KEY) == 0) { dup = 1; break; }
+            }
+            if (dup) continue;
+
+            strncpy(seen[total_hits], hits[i].key, MRLIOU_MAX_KEY - 1);
+            seen[total_hits][MRLIOU_MAX_KEY - 1] = '\0';
+
             /* append evidence key */
             if (strlen(evidence) + strlen(hits[i].key) + 2 < (size_t)ev_len) {
                 if (total_hits > 0) strncat(evidence, ", ", ev_len - strlen(evidence) - 1);
                 strncat(evidence, hits[i].key, ev_len - strlen(evidence) - 1);
             }
-            /* append a sentence from each memory value */
+            /* append a sentence from each memory value, separated from the
+               previous one whichever keyword found it */
             int inf_remaining = inf_len - (int)strlen(inference) - 1;
             if (inf_remaining > 10) {
-                strncat(inference, hits[i].value, (size_t)inf_remaining - 1);
-                if (i < n - 1)
+                if (total_hits > 0)
                     strncat(inference, " | ", (size_t)(inf_len - (int)strlen(inference) - 1));
+                strncat(inference, hits[i].value,
+                        (size_t)(inf_len - (int)strlen(inference) - 1));
             }
+            total_hits++;
         }
         tok = strtok(NULL, " ");
     }
