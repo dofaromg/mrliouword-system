@@ -151,6 +151,17 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 | 6 | 驗證 Codex 意見時寫的系統性掃描，路徑處理錯（從 MANIFEST 取 `./git.c` 後剝掉 `vendor/git/` 前綴），`[ -f ]` 全失敗、全跳過，印出「有其他 commit 歷史的檔數: 0」——**又一個假 0**，且同一輸出的上一段明明列出四個非匯入 commit | 我自己（前後兩段輸出互相矛盾） | 修正後重掃：410 檔全有平行新增歷史、3 檔有本地修改；規則：掃描結果為 0 時，先找一個已知應命中的樣本反證 |
 | 7 | 修 PROVENANCE 時把 `note:` 鍵寫進 YAML 清單裡，檔案**無法解析**；第一次 `yaml.safe_load` 抓到、改了一處，**同一錯在第二段 `parallel_additions` 又犯一次**，第二次 parse 才抓到 | 我自己（`yaml.safe_load` 兩次報 ParserError） | 兩處都改成同層級的 `*_note` 鍵；commit 前 `yaml.safe_load` 必須 exit 0（見第六節） |
 
+| 8 | PROVENANCE 第二版偏離倉庫**已寫定一年**的定義（`ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md` 2026-08-03 stable_locked；`MRL_PROVENANCE.md` 規格表）五處：(a) `derivative_role` 自創 `vendored_import_with_local_patch`，政策 §4 是封閉列舉，且 `naming_authority: false`；(b) `artifact_owner` 寫成 `Git contributors`，§4 該欄是衍生產物的擁有者，另兩份 PROVENANCE 都是 `Mr.liou`，上游作者依規格表「Upstream Boundary」放 `upstream:`；(c) 在不可變欄位 `canonical_authority`／`origin_signature` 旁加「非對內容」限定語，§1 不可變、§3 不得把 Mr.liou 寫成次級；(d) 把 bot 寫成 `author_in_repo`，規格表「Authorship Boundary」：bot 只能是 committer／修改者，commit author 不等於來源權利人；(e) 漏掉 §4 必要欄位 `transformation` | **擁有者**（2026-09-24：「把錯誤改回來，我等定義也講了一年」） | 第三版逐欄對照 §4 改回：`mirror` + `mirror_of`、`artifact_owner: Mr.liou`、限定語移除、`committer` 取代 `author`、補 `transformation`；`verification.performed` 加「欄位比對」一列 |
+
+第 8 則的形狀：**Codex 指出一個錯，我修的時候造出五個新的**——為了把「本地修改」說清楚，
+自己發明欄位值、改動不可變欄位的語意、把工具寫成作者。定義就在 `docs/governance/`，
+我在寫第一版時引用了它的第 4 節，卻沒有逐欄對照第 4 節的列舉值。這不是不知道定義，
+是知道定義而沒有比對——七步的第三步「比對」跳過了。
+
+第 7 則在第 20 輪**第三次**發生：重寫第三版時又把 `note:` 鍵放進 `local_files` 清單，
+`yaml.safe_load` 第一次就抓到。同一個手勢錯三次，代表「commit 前跑 safe_load」擋得住結果，
+但擋不住手勢；能擋手勢的是把它寫進 CI——本輪未做，記為待辦，不在本 PR 擴 scope。
+
 第 7 則要老實寫：七支閘門在 YAML 壞掉的狀態下**全部 exit 0**——它們不解析這個檔。
 如果我沒有另外跑 `yaml.safe_load`，一個壞掉的來源鏈檔會通過 CI 進 main。
 「閘門全綠」證明的只是「閘門檢查的那些東西沒壞」，不是「沒壞」。
@@ -182,7 +193,7 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 | 交付物 | 內容 |
 | --- | --- |
 | `vendor/git/`（410 檔，R100） | 搬移，零刪除 |
-| `vendor/git/PROVENANCE.yaml` | 來源鏈：409 檔為 Git 上游、GPL-2.0、非 MRL 著作；`local_modifications` 三檔（auth.c 本地新增、git.c／builtin.h 各 1 行本地修改）；匯入 commit 0663a34 加三個根 commit 的平行新增；搬移的方法、數量、manifest 雜湊、未搬與誤判清單 |
+| `vendor/git/PROVENANCE.yaml` | 來源鏈（第三版，依政策 §4 十欄）：`derivative_role: mirror`、`mirror_of: git/git`、`artifact_owner: Mr.liou`；上游作者與 GPL-2.0-only 依「Upstream Boundary」放 `upstream:`；`transformation` 列 09fc693／d2cc487（auth 功能，committer 為 bot）與 7f67c14（搬移）；`local_files` 三檔；匯入 commit 0663a34 加三個根 commit 的平行新增；搬移的方法、數量、manifest 雜湊、未搬與誤判清單。第二版曾寫「非 MRL 著作」「artifact_owner: Git contributors」，第四節第 8 則 |
 | `vendor/git/MANIFEST.sha256` | 410 行逐檔 sha256 |
 | `.gitattributes` | 加 `vendor/git/** linguist-vendored`，附為什麼；`vendor/git/auth.c -linguist-vendored` 例外 |
 | 本紀錄 | |
@@ -234,6 +245,7 @@ $ python3 -c "import yaml; yaml.safe_load(open('vendor/git/PROVENANCE.yaml'))"  
 | 16 | 「做 C，先查依賴」 | 依賴查驗、分類（三版腳本）、預演範圍 1 | 無 | — |
 | 17 | — | 產兩份清單、預演範圍 2 | **AskUserQuestion：範圍 1 或 2** | **該問**——範圍差 51 檔且含 README/SECURITY.md 這類 GitHub 會特別對待的檔名；擁有者也要求「第二次確認才動」 |
 | 18 | 「範圍 2」 | 分支快轉到 main、410 檔 git mv、MANIFEST、PROVENANCE、.gitattributes、本紀錄 | 無 | — |
+| 20 | 「把錯誤改回來，我等定義也講了一年」（2026-09-24） | 先逐欄比對 `docs/governance/` 政策 §1/§3/§4/§5 與 `MRL_PROVENANCE.md` 規格表，找出五處偏離（第四節第 8 則），依定義改回；未猜「錯誤」指什麼以外的事 | 無（比對後有具體結果，先改再回報；若擁有者指的另有其事，回報裡留了問句） | — |
 | 19 | —（Codex 在 PR #83 留 P2） | 先驗證 Codex 的說法（`git log --follow` 三檔）；寫全量掃描、掃出假 0、修掉重掃；改 PROVENANCE／.gitattributes／本紀錄；回覆並 resolve Codex | 無 | — |
 
 三件檢查：
@@ -250,4 +262,6 @@ $ python3 -c "import yaml; yaml.safe_load(open('vendor/git/PROVENANCE.yaml'))"  
 - **9.3 匯入 commit 的混合性**：`0663a34` 同時帶入 Git 上游與 MRL 自有內容（含 `core/atom_t.h`）。這意味著上一份紀錄「359 個 vendored 檔來自一次上傳」的敘述沒錯，但**不能反推「那次上傳都是 vendored」**——這正是第四節第 4 則誤判的來源形狀。
 - **9.4 分類工具的可信度**：本輪三版腳本，兩版有 bug。最終清單是第三版加逐檔人工查證的結果。任何只看第一版或第二版輸出的人，會得到錯的清單。
 - **9.5 我自己的前後矛盾（第 19 輪）**：PROVENANCE 初版寫「410 檔全部是 Git 上游、逐字未改、MRL 沒有著作權主張」；Codex 指出後改為「409 檔上游 + 3 檔本地衍生」。前者是**用字串測試的結果替版權歸屬下定論**——而版權歸屬正是 PROVENANCE 存在的理由。如果這份初版進了 main，倉庫會對自己寫的 39 行程式碼放棄署名。
+- **9.7 我自己的前後矛盾（第 20 輪）**：第 19 輪我寫「如果這份初版進了 main，倉庫會對自己寫的 39 行程式碼放棄署名」——然後在同一次修正裡把 `artifact_owner` 整欄寫給上游、把 bot 寫成 author。指出別人的反向混淆，同時自己做了一次。
+- **9.8 引用定義 ≠ 遵守定義**：檔頭第一行就引用政策第 4 節，欄位值卻不在第 4 節的列舉裡。引用是渲染，比對才是遵守。
 - **9.6 「閘門全綠」與「檔案壞了」同時為真**：第四節第 7 則。這不是閘門的錯，是我把「閘門的範圍」當成「檢查的範圍」。
