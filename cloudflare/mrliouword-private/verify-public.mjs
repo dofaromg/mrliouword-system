@@ -24,7 +24,7 @@ const receipt = {
     'A 200 response alone cannot prove model inference, persistence, or audit integrity'],
 };
 const secret = process.env.MRL_CORE_API_KEY;
-for (const path of paths) {
+receipt.paths = await Promise.all(paths.map(async (path) => {
   const entry = { path, method: 'GET', verdict: 'UNVERIFIED' };
   try {
     const response = await fetch(new URL(path, base), {
@@ -57,8 +57,8 @@ for (const path of paths) {
   } catch (error) {
     entry.transport_error = error?.name ?? 'NetworkError';
   }
-  receipt.paths.push(entry);
-}
+  return entry;
+}));
 receipt.coverage = {
   expected_get_paths: paths.length, observed_get_paths: receipt.paths.filter(p => p.status).length,
   verified_full_20_endpoint_cycle: false,
