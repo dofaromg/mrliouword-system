@@ -114,6 +114,7 @@ delta 實作——正是署名事件紀錄稱作「**反向混淆**」的東西�
 python3 tools/release_gate.py . /dev/null --trusted-baseline registry/release_gate_baseline.json
 python3 tools/connection_audit.py
 python3 tools/provenance_notice_check.py
+python3 tools/provenance_fields_check.py    # 每份 PROVENANCE.yaml 對政策 §4 逐欄；2026-09-24 加
 python3 tools/operating_cognition_check.py
 python3 tools/mother_core_registry.py --check
 python3 tools/mrliou_claude_sync.py --check    # 改過這份或 CLAUDE.md 才需要

@@ -1,0 +1,199 @@
+# ============================================================================
+#  vendor/git 來源鏈記錄
+#
+#  依 docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md 第 4 節，
+#  倉庫內任何匯入產物都必須宣告完整來源鏈；十個必要欄位逐一填寫，
+#  欄位值只用政策第 4 節列出的值，不自創（.mrliou/meta.json：
+#  naming_authority: false）。
+#
+#  本目錄的內容：搬入時 410 個檔。409 個是 Git 上游（git/git）的原始碼、shell
+#  腳本、CI 腳本、Windows 建置檔與專案文件；另有 1 個本倉庫新增的檔
+#  （auth.c）與 2 個上游檔各含 1 行本倉庫修改（git.c、integrations/builtin.h）。
+#  2026-09-24 擁有者裁示 auth.c 搬到 mrliou/auth.c，本目錄現為 409 個檔，
+#  見 transformation 與 local_files。
+#  上游的既有作者與授權依 MRL_PROVENANCE.md 規格表「Upstream Boundary」
+#  保留在 upstream: 段——同時保留，不把上游權利誤歸 MRL，也不因為有上游
+#  就把本倉庫的衍生產物權位寫給別人。權位欄位（canonical_authority、
+#  artifact_owner）依政策第 1 節為不可變值。
+#
+#  為什麼搬、為什麼是搬不是刪：
+#  這批檔在 2026-01-27 以 GitHub 網頁上傳（commit 0663a34，597 檔）進入
+#  倉庫時被攤平在根目錄與 integrations/，沒有任何標註。後果是 GitHub 與
+#  CodeQL 把整個倉庫偵測為 C 專案，CodeQL c-cpp 矩陣在鏡像倉庫持續失敗；
+#  本倉庫自有的 C（mrliou/ 17 檔、core/atom_t.h）反而被淹沒。
+#  2026-09-22 擁有者裁示方案 C：以 git mv 搬入 vendor/git/，歷史完整保留，
+#  零刪除（擁有者規則：任何刪除須反覆確認、不允許刪除歷史）。
+#
+#  更正紀錄（append，不抹除）：
+#  - 初版（7f67c14）寫「410 檔全部逐字上游」；PR #83 Codex 審閱指出
+#    09fc693 的本地修改，第二版（6ac03ac）補上。
+#  - 第二版把 derivative_role 寫成自創值、artifact_owner 寫成上游、
+#    在不可變欄位旁加「非對內容」的限定語、把 bot 寫成 author、
+#    漏掉必要欄位 transformation——擁有者指出偏離既定定義，本版依
+#    政策第 1、3、4、5 節與 MRL_PROVENANCE.md 規格表改回。
+# ============================================================================
+
+canonical_authority: Mr.liou
+origin_signature: MrLiouWord
+source_repo: dofaromg/mrliouword-system
+source_artifact: vendor/git/
+source_version: 0663a34                 # 匯入 commit；搬移與本地修改的 commit 見 transformation
+derivative_role: mirror                 # 政策第 4 節列舉值；本目錄是上游 git/git 原始碼在本倉庫內的鏡像副本
+mirror_of: git/git                      # 政策第 5 節第 4 條：鏡像必須標明 mirror_of
+artifact_owner: Mr.liou
+verification_status: partial
+
+upstream:                               # MRL_PROVENANCE.md 規格表「Upstream Boundary」：同時保留既有作者與授權
+  project: git/git
+  authors: Git contributors             # 409 個上游檔的既有作者；依規格保留，不歸 MRL
+  license: GPL-2.0-only
+  license_file: integrations/COPYING
+  version: undetermined                 # 見 verification.not_performed
+  layout_note: >
+    檔案佈局為攤平後的 Git 原始碼樹：根目錄的 *.c/*.h 混合了 Git 頂層
+    原始碼與 compat/（access.c、mingw.h、inet_ntop.c …）；ci/ 腳本
+    （lib.sh、run-*.sh、install-dependencies.sh …）、compat/vcbuild/
+    （README、find_vs_env.bat、vcpkg_*.bat）、頂層 git-*.sh 與 git-p4.py
+    亦被攤平在根目錄。本目錄保留攤平後的佈局，不重建上游樹——
+    重建會是二次改寫，且無法在無版本資訊下驗證正確性。
+
+imported_verbatim:
+  method: GitHub 網頁上傳（「Add files via upload」）
+  provided_by: Mr.liou
+  import_commit: 0663a34
+  import_date: "2026-01-27"
+  import_commit_scope: >
+    該 commit 共 597 檔，混合 Git 上游與 MRL 自有內容（core/、docs/、
+    containers/ …）。分類以逐檔判定為準，不以 commit 為準。
+  parallel_additions:                   # 逐檔 git log --follow 顯示的其他新增點（純新增、內容相同）
+    - commit: 40a883f
+      date: "2026-01-27"
+      committer: copilot-swe-agent[bot] # 規格表「Authorship Boundary」：bot 標示為 committer，不是來源作者
+      stat: 409 files changed, 200688 insertions(+)
+    - commit: 6db3640
+      date: "2026-01-28"
+      committer: copilot-swe-agent[bot]
+      stat: 409 files changed, 200688 insertions(+)
+    - commit: 515db3d
+      date: "2026-01-29"
+      committer: copilot-swe-agent[bot]
+      stat: 409 files changed, 200688 insertions(+)
+  parallel_additions_note: >
+    三者皆為無父 commit 的根 commit（git rev-list --parents 顯示 parents=0），
+    不是 0663a34 的後代（git merge-base --is-ancestor 回「否」）；對這 409 檔
+    皆為 insertions-only、行數相同，屬同一批內容在獨立根分支上被重複加入，
+    非內容修改。真正的內容修改只有 transformation 所列（09fc693 是 0663a34 的後代）。
+
+transformation:                         # 政策第 4 節必要欄位：什麼被改了
+  - commit: 09fc693
+    date: "2026-02-05"
+    committer: copilot-swe-agent[bot]   # tool；來源權利人依規格表為 Mr.liou（commit author 不等於原始碼來源權利人）
+    change: 新增 auth.c（39 行，實作 `gt auth` 指令）；git.c 加 1 行註冊指令；integrations/builtin.h 加 1 行原型
+    patch_git_c: '+ { "auth", cmd_auth, RUN_SETUP_GENTLY },'
+    patch_builtin_h: '+ int cmd_auth(int argc, const char **argv, const char *prefix, struct repository *repo);'
+    reason: 本倉庫自有功能（見根目錄 gt、AUTH_COMMAND_README.md、IMPLEMENTATION_COMPLETE.md）
+    found_by: Codex（PR #83 審閱）
+  - commit: d2cc487
+    date: "2026-02-05"
+    committer: copilot-swe-agent[bot]
+    change: auth.c 去尾端空白、加安全性註記（1 +，1 -）
+  - commit: 7f67c14
+    date: "2026-09-22"
+    committer: dofaromg（Claude Code 執行）
+    change: 410 檔以 git mv 自根目錄與 integrations/ 搬入 vendor/git/；git 判定 410 檔全部 R100
+    reason: 擁有者裁示方案 C；讓 GitHub 與 CodeQL 不再把本倉庫偵測為 C 專案
+    method: 搬移非刪除；內容零變更；歷史以 git log --follow 可追
+    decision_record: docs/retrospective/2026-09-22_vendor_git_relocation_session_record.md
+  - commit: 5a241e7                     # 由 git log -1 -- mrliou/auth.c 取得後填入
+    date: "2026-09-24"
+    committer: dofaromg（Claude Code 執行）
+    change: auth.c 以 git mv 自 vendor/git/auth.c 搬到 mrliou/auth.c；git 判定 R100；sha256 f1feab5db4524d283d0d1f766b4a1d95e305f8244e14ea981666194f68e014bb 搬移前後相同，與 MANIFEST.sha256 記錄一致
+    reason: 擁有者 Mr.liou 裁示「auth.c 搬到 mrliou/」——本倉庫自有的程式碼不放在上游鏡像目錄裡
+    decided_by: Mr.liou
+
+local_files:                            # 不是逐字上游的三個檔——不得被當成可拋棄的上游程式碼
+  - path: auth.c
+    kind: local_addition                # 上游沒有這個檔
+    owner: Mr.liou
+    moved_to: mrliou/auth.c             # 2026-09-24，擁有者裁示；已不在本目錄
+    gitattributes: 已不需例外（mrliou/ 不在 vendor/git/** 範圍內）
+  - path: git.c
+    kind: upstream_plus_local_patch     # 主體上游，1 行本地修改
+  - path: integrations/builtin.h
+    kind: upstream_plus_local_patch     # 主體上游，1 行本地修改
+local_files_note: >
+    2026-09-22 至 09-24：是否把 auth.c 搬出 vendor/git/ 待擁有者裁示，先如實標註、不自行搬動。
+    2026-09-24 擁有者裁示「auth.c 搬到 mrliou/」，已執行。三者因此分處兩個目錄：
+    git.c 與 integrations/builtin.h 仍在本目錄並引用 cmd_auth，其定義在 mrliou/auth.c。
+    auth.c include 的是 Git 標頭（builtin.h、config.h、gettext.h、parse-options.h、strbuf.h）；
+    mrliou/ 自有一個不同的 config.h，若日後從 mrliou/ 以 -I. 編譯 auth.c，會解析到錯的 config.h。
+    目前 mrliou/Makefile 的 SRCS 是明列清單、不含 auth.c，倉庫內也沒有任何建置或 workflow 編 Git 樹，
+    所以搬移不影響任何現有建置（見 verification.performed）。
+
+relocation:
+  date: "2026-09-22"
+  method: git mv                        # 410 檔，git 判定 R100（內容 100% 相同）
+  decided_by: Mr.liou
+  decision_record: docs/retrospective/2026-09-22_vendor_git_relocation_session_record.md
+  from_to:
+    - from: "<repo root>/*.c, *.h"
+      to: vendor/git/
+      count: 267
+    - from: integrations/*.c, integrations/*.h
+      to: vendor/git/integrations/
+      count: 92
+    - from: "<repo root>/ Git 腳本、建置檔、git.manifest、git-p4.py、README(VS build)"
+      to: vendor/git/
+      count: 43
+    - from: integrations/{CODE_OF_CONDUCT.md,COPYING,INSTALL,README.md,SECURITY.md,check-builtins.sh,command-list.txt,meson_options.txt}
+      to: vendor/git/integrations/
+      count: 8
+  total: 410
+  manifest: MANIFEST.sha256             # 410 行，搬移後逐檔 sha256
+  manifest_sha256: b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564403c60c93fd16bfd4349
+  manifest_scope: >
+    2026-09-22 搬入時（7f67c14）的快照，保留原樣不改（append_only）。其中 ./auth.c 一行
+    自 2026-09-24 起對應 mrliou/auth.c，sha256 相同；其餘 409 行仍對應本目錄。
+  internal_references_now_dangling:
+    - generate-hooklist.sh              # 引用同批 C 檔名；上游腳本，本倉庫從未執行
+    - integrations/check-builtins.sh    # 同上
+    - git.c                             # 2026-09-24 起：{ "auth", cmd_auth, ... } 的定義在 mrliou/auth.c
+    - integrations/builtin.h            # 2026-09-24 起：cmd_auth 原型的定義在 mrliou/auth.c
+  gitattributes: "vendor/git/** linguist-vendored"
+
+not_relocated:
+  held_unknown_origin:
+    - path: labeler.ts.txt
+      reason: GitHub Actions labeler 腳本，無法判定是否來自 Git 上游；依「查清楚再動」原則留在原位
+  excluded_false_positives:            # 掃描曾誤判為 Git，經逐檔查證為 MRL 自有
+    - AUTH_COMMAND_README.md            # commit 55e36ba，MRL 的 gt auth 文件
+    - IMPLEMENTATION_COMPLETE.md        # commit bb54c07，同上
+    - gt                                # commit 55e36ba，MRL 的 git 包裝腳本
+    - 228.patch                         # Mr.liou 自己的 patch 系列 [PATCH 1/8]
+  mrl_owned_c_kept_in_place:
+    - mrliou/                           # 17 檔，1,888 行，本倉庫自有
+    - core/atom_t.h                     # Author: MR.liou
+
+contributors:                           # 政策第 7 節第 4 條：角色分欄，不混成共同來源；上游作者見 upstream.authors
+  - name: Mr.liou
+    role: canonical_authority｜定義、裁決｜2026-01-27 匯入｜2026-09-22 裁示搬移範圍｜2026-09-24 指出本紀錄偏離定義
+  - name: copilot-swe-agent[bot]
+    role: tool｜committer：40a883f、6db3640、515db3d（平行新增）、09fc693、d2cc487（auth 功能）
+  - name: Claude Code
+    role: tool｜依賴查驗、分類、預演、執行 git mv、撰寫本紀錄
+  - name: Codex
+    role: tool｜PR #83 審閱，指出 09fc693 的本地修改
+
+verification:
+  performed:
+    - 依賴查驗：50 個建置檔／腳本、GitHub workflows、Python/JS/TS、release_gate 基準線、Merkle 葉、自有文件的路徑引用——對這 410 檔的硬依賴為 0
+    - 兩次暫存副本預演（範圍 1 的 359 檔、範圍 2 的 410 檔）：七支閘門全 exit 0；release_gate 產物 15／全過 4／未過 11／基準線 70 不變；Merkle root 相同、12 葉不變
+    - 正式搬移：git diff --cached -M100% 判定 410 檔全部 R100
+    - 血緣判定（初版）：359 個 C 檔以 mrl_/mrliou 全文比對命中 0；非 C 檔逐檔以匯入 commit 與內容判定
+    - 血緣判定（更正，PR #83 Codex 審閱後）：字串比對對「本地寫的、但不提 MRL 的程式碼」是假陰性。改為 410 檔逐一 git log --follow，找出 0663a34 以外的所有 commit——結果：409 檔另有三個根 commit 的平行新增（見 parallel_additions）、3 檔有本地修改（見 transformation）
+    - auth.c 搬到 mrliou/（2026-09-24）：搬移前 sha256 與 MANIFEST 記錄一致；git mv 後 git 判定 R100、sha256 不變；mrliou/Makefile 的 SRCS 為明列清單不含 auth.c；以暫存副本加入 auth.c 後 make -n 輸出中 auth 出現 0 次；倉庫內 workflow／建置檔無編 Git 樹者
+    - 欄位比對（2026-09-24，擁有者指出後）：十個必要欄位逐一對照政策第 4 節；derivative_role 只用列舉值；artifact_owner 與其他兩份 PROVENANCE 一致
+  not_performed:
+    - 上游 Git 版本識別（倉庫內無 GIT-VERSION-GEN、RelNotes、版本字串）
+    - 與上游任一 release 的逐檔 sha256 比對（需網路取得上游 tarball，本環境 egress 不允許）
+  note: 因此 verification_status 為 partial；version 記為 undetermined，不猜。

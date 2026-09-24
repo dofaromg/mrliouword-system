@@ -77,6 +77,7 @@ int memory_store(const char *key, const char *value, float weight)
         if (strncmp(g_table[i].key, key, MRLIOU_MAX_KEY) == 0) {
             strncpy(g_table[i].value, value, MRLIOU_MAX_TEXT - 1);
             g_table[i].value[MRLIOU_MAX_TEXT - 1] = '\0';
+            mrliou_utf8_clip(g_table[i].value);
             g_table[i].weight    = weight;
             g_table[i].timestamp = time(NULL);
 #if MRLIOU_PERSIST_ON_WRITE
@@ -93,6 +94,8 @@ int memory_store(const char *key, const char *value, float weight)
     strncpy(g_table[g_count].value, value, MRLIOU_MAX_TEXT - 1);
     g_table[g_count].key[MRLIOU_MAX_KEY - 1]    = '\0';
     g_table[g_count].value[MRLIOU_MAX_TEXT - 1]  = '\0';
+    mrliou_utf8_clip(g_table[g_count].key);
+    mrliou_utf8_clip(g_table[g_count].value);
     g_table[g_count].weight    = weight;
     g_table[g_count].timestamp = time(NULL);
     g_count++;
