@@ -9,8 +9,8 @@
  * - 吸收系統 (Absorb) - 外部素材粒子化
  * - 掃描系統 (Scanner) - 3D 掃描處理
  * 
- * Author: MR.liou × Claude
- * Version: 2.0.0
+ * Origin: MrLiouWord
+ * Version: 2.1.0
  */
 
 // 常數定義
@@ -100,6 +100,17 @@ function getLayer(f) {
 
 const uuid = () => crypto.randomUUID();
 const now = () => new Date().toISOString();
+
+// Keep the existing paths, but refuse private requests unless the owner has
+// provisioned a secret on this Worker. Never put that secret in source or vars.
+function matchesSecret(provided, expected) {
+  if (typeof provided !== 'string' || typeof expected !== 'string' || !expected) return false;
+  const a = new TextEncoder().encode(provided);
+  const b = new TextEncoder().encode(expected);
+  let diff = a.length ^ b.length;
+  for (let i = 0; i < Math.max(a.length, b.length); i++) diff |= (a[i] || 0) ^ (b[i] || 0);
+  return diff === 0;
+}
 
 // 記憶系統
 class Memory {
@@ -297,6 +308,18 @@ export default {
     if (req.method === 'OPTIONS') {
       return new Response(null, { headers: cors });
     }
+
+    const publicPath = req.method === 'GET' && ['/', '/health', '/frequencies'].includes(path);
+    if (!publicPath) {
+      if (!env.MRL_CORE_API_KEY) {
+        return new Response(JSON.stringify({ ok: false, error: 'Private API unavailable: owner key not configured', origin_signature: ORIGIN }), { status: 503, headers: cors });
+      }
+      const bearer = req.headers.get('Authorization')?.match(/^Bearer (.+)$/i)?.[1];
+      const supplied = bearer || req.headers.get('X-Master-Key');
+      if (!matchesSecret(supplied, env.MRL_CORE_API_KEY)) {
+        return new Response(JSON.stringify({ ok: false, error: 'Unauthorized', origin_signature: ORIGIN }), { status: 401, headers: cors });
+      }
+    }
     
     const mem = new Memory(env.MRLIOUWORD_VAULT);
     const persona = new Persona(env.MRLIOUWORD_VAULT);
@@ -304,6 +327,7 @@ export default {
     const json = async () => { try { return await req.json(); } catch { return {}; } };
     const ok = (d) => new Response(JSON.stringify({ ...d, origin: ORIGIN }), { headers: cors });
     const err = (m, s = 400) => new Response(JSON.stringify({ error: m, origin: ORIGIN }), { status: s, headers: cors });
+    const unavailable = (service, reason) => new Response(JSON.stringify({ ok: false, service, version: VERSION, origin_signature: ORIGIN, error: reason }), { status: 503, headers: cors });
     
     try {
       // 根路徑
@@ -312,6 +336,15 @@ export default {
           name: 'MRL System Core Service',
           version: VERSION,
           philosophy: '怎麼過去，就怎麼回來',
+          capability_state: {
+            'runtimeos/ai': 'unavailable',
+            'tools/execute': 'unavailable',
+            'files/upload': 'unavailable',
+            'audit/traces': 'unavailable',
+            'particles': 'unavailable',
+            'persona/wake': 'runtime_not_connected',
+            'memory/chain': 'KV_CONCURRENCY_UNVERIFIED'
+          },
           endpoints: [
             'GET /status', 'POST /wake', 'POST /sleep',
             'POST /memory/commit', 'POST /memory/recall',
@@ -349,33 +382,12 @@ export default {
 
       // GET /api/mrl/runtimeos/ai/models
       if (path === '/api/mrl/runtimeos/ai/models' && req.method === 'GET') {
-        // TODO: proxy to DL580 local runtime or return static list
-        return ok({
-          ok: true,
-          service: 'mrl-ai',
-          version: VERSION,
-          origin_signature: ORIGIN,
-          data: [
-            { id: 'mrl-local-default', name: 'MRL Local Default', type: 'text', contextWindow: 8192 }
-          ]
-        });
+        return unavailable('mrl-ai', 'No verified model runtime is connected');
       }
 
       // POST /api/mrl/runtimeos/ai/generate
       if (path === '/api/mrl/runtimeos/ai/generate' && req.method === 'POST') {
-        const b = await json();
-        // TODO: proxy to DL580 local runtime (MRL_API_BASE_URL)
-        return ok({
-          ok: true,
-          service: 'mrl-ai',
-          version: VERSION,
-          origin_signature: ORIGIN,
-          data: {
-            model: b.model || 'mrl-local-default',
-            content: '(stub) 請設定 MRL_API_BASE_URL 指向本地 runtime',
-            usage: { input_tokens: 0, output_tokens: 0 }
-          }
-        });
+        return unavailable('mrl-ai', 'No verified model runtime is connected');
       }
 
       // POST /api/mrl/memory/search
@@ -407,50 +419,17 @@ export default {
 
       // POST /api/mrl/tools/execute
       if (path === '/api/mrl/tools/execute' && req.method === 'POST') {
-        const b = await json();
-        // TODO: route to tool registry
-        return ok({
-          ok: true,
-          service: 'mrl-tools',
-          version: VERSION,
-          origin_signature: ORIGIN,
-          data: {
-            tool: b.tool || 'unknown',
-            status: 'stub',
-            message: '工具執行端點尚未完整實作，請配置 tool registry'
-          }
-        });
+        return unavailable('mrl-tools', 'Tool registry is not connected');
       }
 
       // POST /api/mrl/files/upload
       if (path === '/api/mrl/files/upload' && req.method === 'POST') {
-        // TODO: stream to R2 / MinIO
-        return ok({
-          ok: true,
-          service: 'mrl-files',
-          version: VERSION,
-          origin_signature: ORIGIN,
-          data: {
-            key: `uploads/${Date.now()}`,
-            status: 'stub',
-            message: '檔案上傳端點尚未完整實作，請配置 R2/MinIO 連接'
-          }
-        });
+        return unavailable('mrl-files', 'File storage is not connected');
       }
 
       // GET /api/mrl/audit/traces
       if (path === '/api/mrl/audit/traces' && req.method === 'GET') {
-        // TODO: query audit log from D1 or Postgres
-        return ok({
-          ok: true,
-          service: 'mrl-audit',
-          version: VERSION,
-          origin_signature: ORIGIN,
-          data: {
-            traces: [],
-            message: '審計記錄端點尚未完整實作，請配置 D1/Postgres 查詢'
-          }
-        });
+        return unavailable('mrl-audit', 'Audit store is not connected');
       }
 
       // GET /api/mrl/ui-state/:userId
@@ -502,11 +481,10 @@ export default {
       
       // 喚醒/休眠
       if (path === '/wake' && req.method === 'POST') {
-        const b = await json();
-        return ok(await persona.wake(b.message || ''));
+        return unavailable('mrl-persona', 'Persona runtime is not connected');
       }
       if (path === '/sleep' && req.method === 'POST') {
-        return ok({ success: await persona.sleep() });
+        return unavailable('mrl-persona', 'Persona runtime is not connected');
       }
       
       // 記憶
@@ -526,6 +504,9 @@ export default {
       }
       
       // 頻率
+      if (path === '/particles' && req.method === 'GET') {
+        return unavailable('mrl-particles', 'Particle inventory is not connected');
+      }
       if (path === '/frequencies' && req.method === 'GET') {
         return ok({ schumann: SCHUMANN, phi: PHI, layers: FREQ });
       }
