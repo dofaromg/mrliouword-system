@@ -94,3 +94,86 @@ verification:
     - 實際部署（Cloudflare dashboard 的 Root directory 尚未設為 cloudflare/particle-api）
     - 對既有線上資料的行為驗證
   note: 因此 verification_status 為 partial，不宣稱 verified。
+
+# Append-only provenance addition. Original import hashes above remain intact.
+channel_single_writer_20260922:
+  canonical_authority: Mr.liou
+  origin_signature: MrLiouWord
+  source_repo: dofaromg/mrliouword-system
+  source_artifact: cloudflare/particle-api/src/index.ts
+  source_version: 3ef4d1f31e79bc93c2f6a47804c83eea0df61fab
+  derivative_role: implementation
+  artifact_owner: Mr.liou
+  contributors:
+    - Mr.liou — explicitly selected Durable Object single-writer, binding, migration and deployment validation
+    - Codex — implementation and validation tool; does not acquire origin authority
+    - Cloudflare — runtime and storage provider only
+  transformation: >
+    Route all Channel operations through one Mrliou_ChannelChain actor for the
+    existing D1 table. Serialize external awaits, retain D1 as commit authority,
+    preserve legacy hash formats, validate existing history before writes,
+    condition each append atomically on the committed head to fence delayed I/O, and
+    retain a committed receipt when KV projection fails. Add SQLite-backed DO
+    binding/migration, pinned tooling, runtime regressions and deployment verifier.
+  verification_status: partial
+  implements:
+    - MRL_CHANNEL_CORE
+    - MRL_CHANNEL_CORE/MRL_SyncChannel
+    - MRL_RUNTIME_CORE/MRL_RuntimePersistence
+  definition_source: registry/mother_core_registry_2026-09-21.json
+  ownership_boundary: runtime adapter within MRL_API_Gateway, not a new canonical core
+  origin_import: imported_verbatim above; original bytes remain addressable at import_commit
+  change_record: docs/retrospective/2026-09-22_channel_single_writer_session_record.md
+  evidence: docs/retrospective/2026-09-22_channel_single_writer_evidence.json
+  limitations:
+    - Live Cloudflare migration, exact-version traffic and production concurrency receipt are not yet verified.
+    - No automatic repair of historical forks or legacy UNIQUE(key) schema.
+    - Old direct-D1 writers must be quiesced and drained before cutover; no mixed-version writes.
+    - Memory and Persona chains are outside this Channel repair.
+
+# Follow-up delta from the owner-requested 查→修→建→復盤→保存 loop.
+channel_receipt_reservation_20260923:
+  canonical_authority: Mr.liou
+  origin_signature: MrLiouWord
+  source_repo: dofaromg/mrliouword-system
+  source_artifact: cloudflare/particle-api/scripts/verify-channel-deployment.mjs
+  source_version: c8bf1fa88f8aa5d7bf616ea0d5bcbb42d9efc6db
+  derivative_role: implementation
+  artifact_owner: Mr.liou
+  contributors:
+    - Mr.liou — directed the repeated check, repair, build, retrospective and preservation loop
+    - Codex — implementation and verification tool
+  transformation: >
+    Atomically reserve the deployment receipt path before any HTTP request.
+    A reused path now fails without appending probe records or overwriting the
+    previous receipt. Add a regression asserting no requests and no extra rows.
+  verification_status: partial
+  change_record: docs/retrospective/2026-09-23_channel_single_writer_recheck_session_record.md
+  evidence: docs/retrospective/2026-09-23_channel_single_writer_recheck_evidence.json
+  limitations:
+    - Abrupt termination can leave an incomplete reservation; retain it and inspect D1 before retrying.
+    - Production deployment and Mother runtime ingestion are not established by this local repair.
+
+# R04 extends the existing verifier; it does not create another canonical core.
+channel_uncertain_receipt_20260923:
+  canonical_authority: Mr.liou
+  origin_signature: MrLiouWord
+  source_repo: dofaromg/mrliouword-system
+  source_artifact: cloudflare/particle-api/scripts/verify-channel-deployment.mjs
+  source_version: 8467eaefd37d61ff84a8532cddea8139a50af859
+  derivative_role: implementation
+  artifact_owner: Mr.liou
+  contributors:
+    - Mr.liou — directed the expanded five-step verification and preservation loop
+    - Codex — implementation and validation tool
+  transformation: >
+    Register every deployment-verifier request before HTTP I/O and preserve its
+    key, timing and outcome even when a committed response is lost or malformed.
+    Keep commit state unknown unless a success or explicit committed receipt is
+    observed. Add a real workerd/D1 regression with post-commit response faults.
+  verification_status: partial
+  change_record: docs/retrospective/2026-09-23_channel_uncertain_receipt_session_record.md
+  evidence: docs/retrospective/2026-09-23_channel_uncertain_receipt_evidence.json
+  limitations:
+    - Receipts are flushed at orderly completion; forced termination still requires D1 reconciliation.
+    - No live deployment, account configuration or Mother runtime consumption is established here.

@@ -4,16 +4,22 @@
   "description": "MrLiouWord Particle API - 統一整合版 (R2 + Memory + Persona + Channel)",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "tail": "wrangler tail"
+    "dev": "wrangler dev --config wrangler.toml",
+    "deploy": "wrangler deploy --config wrangler.toml",
+    "tail": "wrangler tail --config wrangler.toml",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "deploy:check": "wrangler deploy --config wrangler.toml --dry-run --outdir .wrangler/deploy-check",
+    "verify:deployment": "node scripts/verify-channel-deployment.mjs"
   },
   "keywords": ["cloudflare", "workers", "particle", "mrliouword", "kv", "d1", "r2"],
   "author": "MR.liou",
   "license": "MIT",
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240117.0",
-    "typescript": "^5.3.3",
-    "wrangler": "^3.22.1"
+    "@cloudflare/workers-types": "4.20260124.0",
+    "typescript": "5.9.3",
+    "wrangler": "4.60.0",
+    "miniflare": "4.20260120.0",
+    "esbuild": "0.27.0"
   }
 }

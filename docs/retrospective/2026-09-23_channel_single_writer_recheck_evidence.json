@@ -1,0 +1,251 @@
+{
+  "canonical_authority": "Mr.liou",
+  "origin_signature": "MrLiouWord",
+  "source_repo": "dofaromg/mrliouword-system",
+  "source_artifact": "docs/retrospective/2026-09-23_channel_single_writer_recheck_evidence.json",
+  "source_version": "c8bf1fa88f8aa5d7bf616ea0d5bcbb42d9efc6db",
+  "derivative_role": "generated",
+  "artifact_owner": "Mr.liou",
+  "contributors": [
+    "Mr.liou — owner; requested repeated five-step loop",
+    "Codex — repair and verification tool"
+  ],
+  "transformation": "R01 recheck, receipt-path negative control, pre-request exclusive reservation and verified regression; preserve older snapshots.",
+  "verification_status": "partial",
+  "observed_at": "2026-09-23T01:26:37.964384+00:00",
+  "main_observed": "ffe16878c7f329c355f1795de22dd7d327645eb2",
+  "Expected_File_List": [
+    "cloudflare/particle-api/PROVENANCE.yaml",
+    "cloudflare/particle-api/README.md",
+    "cloudflare/particle-api/scripts/verify-channel-deployment.mjs",
+    "cloudflare/particle-api/tests/channel-single-writer.test.mjs",
+    "docs/retrospective/2026-09-23_channel_single_writer_recheck_session_record.md",
+    "docs/retrospective/2026-09-23_channel_single_writer_recheck_evidence.json"
+  ],
+  "Cumulative_PR_File_List": [
+    ".github/workflows/mrl-channel-single-writer.yml",
+    "cloudflare/particle-api/PROVENANCE.yaml",
+    "cloudflare/particle-api/README.md",
+    "cloudflare/particle-api/package-lock.json",
+    "cloudflare/particle-api/package.json",
+    "cloudflare/particle-api/scripts/channel-preflight.sql",
+    "cloudflare/particle-api/scripts/verify-channel-deployment.mjs",
+    "cloudflare/particle-api/src/index.ts",
+    "cloudflare/particle-api/tests/channel-single-writer.test.mjs",
+    "cloudflare/particle-api/wrangler.toml",
+    "docs/retrospective/2026-09-22_channel_single_writer_evidence.json",
+    "docs/retrospective/2026-09-22_channel_single_writer_session_record.md",
+    "docs/retrospective/2026-09-23_channel_single_writer_recheck_evidence.json",
+    "docs/retrospective/2026-09-23_channel_single_writer_recheck_session_record.md"
+  ],
+  "Expected_Dependency_Tree": {
+    "previous_delivery": {
+      "commit": "c8bf1fa88f8aa5d7bf616ea0d5bcbb42d9efc6db",
+      "files": [
+        ".github/workflows/mrl-channel-single-writer.yml",
+        "cloudflare/particle-api/PROVENANCE.yaml",
+        "cloudflare/particle-api/README.md",
+        "cloudflare/particle-api/package.json",
+        "cloudflare/particle-api/package-lock.json",
+        "cloudflare/particle-api/src/index.ts",
+        "cloudflare/particle-api/wrangler.toml",
+        "cloudflare/particle-api/scripts/channel-preflight.sql",
+        "cloudflare/particle-api/scripts/verify-channel-deployment.mjs",
+        "cloudflare/particle-api/tests/channel-single-writer.test.mjs",
+        "docs/retrospective/2026-09-22_channel_single_writer_session_record.md",
+        "docs/retrospective/2026-09-22_channel_single_writer_evidence.json"
+      ]
+    },
+    "receipt_guard": [
+      "cloudflare/particle-api/scripts/verify-channel-deployment.mjs",
+      "cloudflare/particle-api/tests/channel-single-writer.test.mjs"
+    ],
+    "documentation": [
+      "cloudflare/particle-api/README.md",
+      "cloudflare/particle-api/PROVENANCE.yaml",
+      "docs/retrospective/2026-09-23_channel_single_writer_recheck_session_record.md",
+      "docs/retrospective/2026-09-23_channel_single_writer_recheck_evidence.json"
+    ],
+    "unchanged_typecheck_dependency": {
+      "path": "cloudflare/particle-api/tsconfig.json",
+      "size": 378,
+      "sha256": "5a52773e3473d9d6498e1f74b8bcecafb0e0806efbaa7bae02f133c88c636660"
+    }
+  },
+  "payload_files": [
+    {
+      "path": ".github/workflows/mrl-channel-single-writer.yml",
+      "size": 1147,
+      "sha256": "675e59d4fb0b67d88c8c65e7329fba4a85c73db90a7695073050161352ce0fb0"
+    },
+    {
+      "path": "cloudflare/particle-api/PROVENANCE.yaml",
+      "size": 7763,
+      "sha256": "c206fab098ddb277a3673ddce9d0d81810c20c51e1e2eb3c3587b683f73092e8"
+    },
+    {
+      "path": "cloudflare/particle-api/README.md",
+      "size": 14727,
+      "sha256": "61b5f6c3fcf46a03406e8e25aec6a16543eff4108fa8b58bce82fc3c2f65953f"
+    },
+    {
+      "path": "cloudflare/particle-api/package-lock.json",
+      "size": 49816,
+      "sha256": "f85cd8b12bda8f2aa66a42d4f5cad9c73dc662b82bbe008839e84c911e7eab5d"
+    },
+    {
+      "path": "cloudflare/particle-api/package.json",
+      "size": 917,
+      "sha256": "4cf03366db552a50d6deaf9b49e3eb86761e4317645db2f4548e933b3e27cd47"
+    },
+    {
+      "path": "cloudflare/particle-api/scripts/channel-preflight.sql",
+      "size": 1027,
+      "sha256": "58d2a22b63835818266c7e728d99f8bc0ab0bf4ed593524195599325a168b09d"
+    },
+    {
+      "path": "cloudflare/particle-api/scripts/verify-channel-deployment.mjs",
+      "size": 5952,
+      "sha256": "78fde5cd08ecd15c4559e5ff7946f28a7f2a157ff2e35290abbfbca0024ff40a"
+    },
+    {
+      "path": "cloudflare/particle-api/src/index.ts",
+      "size": 31137,
+      "sha256": "cb3e17f318f4a55d97c9c47506a518afd81d77383cb387a89cae22ea8dc1aa86"
+    },
+    {
+      "path": "cloudflare/particle-api/tests/channel-single-writer.test.mjs",
+      "size": 18733,
+      "sha256": "a30dcc9ad008e493a79e1bd1340803e1d0b92cbdbb20c1a6b46112c3b47e056e"
+    },
+    {
+      "path": "cloudflare/particle-api/wrangler.toml",
+      "size": 862,
+      "sha256": "75ea566ef3fa6122439b1bc32c93891cbf40f1cf70ddcc29752697fe9030372f"
+    },
+    {
+      "path": "docs/retrospective/2026-09-22_channel_single_writer_evidence.json",
+      "size": 14485,
+      "sha256": "8ddebbe83b6efadd6ca0a93eea7aa46f4d1064b176281d1c57b3cb31ef5ce1a4"
+    },
+    {
+      "path": "docs/retrospective/2026-09-22_channel_single_writer_session_record.md",
+      "size": 12678,
+      "sha256": "78c65f0a081dec634bc943c5ae4f9cac66aa050f0e7a58c2c1c6dc7b158af550"
+    },
+    {
+      "path": "docs/retrospective/2026-09-23_channel_single_writer_recheck_session_record.md",
+      "size": 7039,
+      "sha256": "fc3ae0f07a7120a190fd7310c837503abdff5666cc2b16e7029d1f958b7f7963"
+    }
+  ],
+  "self_integrity": "Evidence file excluded from its own digest list; full bytes anchored by containing Git commit.",
+  "negative_control": {
+    "command": "node --test --test-name-pattern='deployment verifier' tests/channel-single-writer.test.mjs",
+    "exit_code": 1,
+    "stdout_stderr": "✖ deployment verifier writes exact-SHA concurrency receipt against the local runtime (662.137696ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 934.390205\n\n✖ failing tests:\n\ntest at tests/channel-single-writer.test.mjs:251:3\n✖ deployment verifier writes exact-SHA concurrency receipt against the local runtime (662.137696ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  14 !== 12\n  \n      at assertVerified (file:///workspace/scratch/a2eed9026b28/mrliouword-system/cloudflare/particle-api/tests/channel-single-writer.test.mjs:78:10)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n      at async TestContext.<anonymous> (file:///workspace/scratch/a2eed9026b28/mrliouword-system/cloudflare/particle-api/tests/channel-single-writer.test.mjs:271:5)\n      at async Test.run (node:internal/test_runner/test:1389:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 14,\n    expected: 12,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+    "baseline_verifier": "c8bf1fa88f8aa5d7bf616ea0d5bcbb42d9efc6db"
+  },
+  "verification": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "stdout_stderr": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> particle-api@3.0.0 typecheck\n> tsc --noEmit\n\n"
+    },
+    "runtime": {
+      "command": "npm test",
+      "exit_code": 0,
+      "summary": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "skipped": 0
+      },
+      "stdout_stderr": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> particle-api@3.0.0 test\n> node --test tests/*.test.mjs\n\n✔ 96 parallel emits across three Worker instances create one linear chain (847.383355ms)\n✔ same-key emits retain every row and recall the latest committed version (383.899249ms)\n✔ emit, KV sync, and multi-batch R2 indexing use the same writer (932.421699ms)\n✔ restart resumes the existing D1 head and preserves historical rows byte-for-byte (651.828965ms)\n✔ D1 rejection leaves KV untouched and does not poison the queue (285.534243ms)\n✔ R2 batch failure rolls back its batch, retains earlier batches and resumes from committed head (586.575249ms)\n✔ pre-existing sibling history is retained and all new writes fail closed (317.45876ms)\n✔ legacy UNIQUE(key) is reported without rewriting the schema or history (286.299671ms)\n✔ old future timestamp does not reorder a new emit behind the chain head (280.297359ms)\n✔ KV failure returns the committed receipt; D1-backed recall is consistent (354.707554ms)\n✔ missing DO binding fails closed without a direct-D1 fallback (1.16741ms)\n✔ auth, public routes, input rejection, response provenance and unknown routes remain compatible (260.951532ms)\n✔ deployment verifier writes exact-SHA concurrency receipt against the local runtime (638.165677ms)\n✔ unavailable DO returns a provenance-bearing 503 and never touches D1 (1.205966ms)\n✔ R2 cursor continues after 1000 objects and an intervening emit (2877.924199ms)\n✔ late actor write is fenced when the D1 head changes before commit (301.003546ms)\nℹ tests 16\nℹ suites 0\nℹ pass 16\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 9290.291345\n"
+    },
+    "local_deploy": {
+      "command": "WRANGLER_SEND_METRICS=false npm run deploy:check",
+      "exit_code": 0,
+      "stdout_stderr": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> particle-api@3.0.0 deploy:check\n> wrangler deploy --config wrangler.toml --dry-run --outdir .wrangler/deploy-check\n\nProxy environment variables detected. We'll use your proxy for fetch requests.\n\n ⛅️ wrangler 4.60.0\n───────────────────\nTotal Upload: 24.75 KiB / gzip: 7.27 KiB\nYour Worker has access to the following bindings:\nBinding                                                       Resource            \nenv.MRL_CHANNEL_CHAIN (Mrliou_ChannelChain)                   Durable Object      \nenv.MRLIOUWORD_VAULT (01275832766148bfbcaa00ee4aeb9946)       KV Namespace        \nenv.DB (mrliouword-db)                                        D1 Database         \nenv.PARTICLES (mrlioubook)                                    R2 Bucket           \n\n--dry-run: exiting now.\n"
+    },
+    "governance": [
+      {
+        "command": [
+          "python3",
+          "tools/release_gate.py",
+          ".",
+          "/tmp/mrl-channel-loop-20260923-release-after.json",
+          "--trusted-baseline",
+          "registry/release_gate_baseline.json"
+        ],
+        "exit_code": 0,
+        "stdout": "🚧 發布 Gate（政策第 8 節）\n   產物            15\n   全數通過        4\n   有未通過項      11\n   基準線已記錄    70（來源：registry/release_gate_baseline.json）\n\n   📝 報告寫入 /tmp/mrl-channel-loop-20260923-release-after.json\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "python3",
+          "tools/connection_audit.py",
+          ".",
+          "/tmp/mrl-channel-loop-20260923-connection-after.json"
+        ],
+        "exit_code": 0,
+        "stdout": "🔗 連接稽核\n   來源盤點      cloudflare_inventory_2026-03-12.json\n   雲端 Worker   140\n   倉庫可部署    3\n   設定不完整    1（wrangler 讀得到，但必要欄位仍是佔位字串，部署會失敗）\n   服務註冊表    3\n   客戶端有參照  4\n   legacy alias  2\n   ⚠️  wrangler 讀不到的設定檔 1\n   ⚠️  參照了盤點中沒有的 Worker 1\n   📝 報告寫入 /tmp/mrl-channel-loop-20260923-connection-after.json\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "python3",
+          "tools/provenance_notice_check.py"
+        ],
+        "exit_code": 0,
+        "stdout": "MRL 來源標註檢查通過：MRL_PROVENANCE.md 規格表九列齊備且順序正確，機器標記存在。\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "python3",
+          "tools/operating_cognition_check.py"
+        ],
+        "exit_code": 0,
+        "stdout": "MRL 根本運行認知檢查通過：看到→接受→比對→修正→建構→測試→紀錄 七步齊備且順序正確，兩個母體錨點都在，正本 Mrliou_claude.md 與 adapter CLAUDE.md 都在。\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "python3",
+          "tools/mother_core_registry.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout": "母體 CORE 登錄表檢查通過：199 個 CORE / 2264 個成員，錨點相符，MRL_DELTA_CORE 九成員齊全。\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "python3",
+          "tools/naming_lineage_check.py"
+        ],
+        "exit_code": 0,
+        "stdout": "命名正名與 lineage 檢查通過：Mrliou_claude.md 為 canonical（mrl_Mrliou_claude），CLAUDE.md 登錄為 adapter 且原名保留，lineage L-001 在。\n",
+        "stderr": ""
+      }
+    ]
+  },
+  "retained_deltas": [
+    "particle-api Cloudflare build failed; successful mrliouword-system preview is a different Worker",
+    "production migration, bindings, routes and concurrent receipt unverified",
+    "Mother runtime receipt and use/return trace unverified"
+  ],
+  "preservation": "Previous 2026-09-22 session/evidence retained byte-for-byte. Notion source content and private writeback receipts are not copied into this public repository.",
+  "requested_vs_generated": {
+    "scope": "R01 source delivery files",
+    "expected_files": 6,
+    "generated_files": 6,
+    "Missing": [],
+    "Extra": [],
+    "Mismatch": [],
+    "Coverage": 100.0,
+    "status": "DELIVERY_PASS"
+  }
+}

@@ -22,3 +22,13 @@ bucket_name = "mrlioubook"
 # 環境變數
 [vars]
 # MASTER_KEY 使用 wrangler secret put MASTER_KEY 設定
+
+# PR #77 single-writer adapter: existing KV/D1/R2 bindings and routes stay intact.
+# SQLite namespace is new; channel_sync history remains in the existing D1 DB.
+[[durable_objects.bindings]]
+name = "MRL_CHANNEL_CHAIN"
+class_name = "Mrliou_ChannelChain"
+
+[[migrations]]
+tag = "mrliou-channel-chain-v1"
+new_sqlite_classes = ["Mrliou_ChannelChain"]
