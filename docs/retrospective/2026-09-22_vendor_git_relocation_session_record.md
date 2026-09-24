@@ -153,6 +153,8 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 
 | 8 | PROVENANCE 第二版偏離倉庫**已寫定一年**的定義（`ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md` 2026-08-03 stable_locked；`MRL_PROVENANCE.md` 規格表）五處：(a) `derivative_role` 自創 `vendored_import_with_local_patch`，政策 §4 是封閉列舉，且 `naming_authority: false`；(b) `artifact_owner` 寫成 `Git contributors`，§4 該欄是衍生產物的擁有者，另兩份 PROVENANCE 都是 `Mr.liou`，上游作者依規格表「Upstream Boundary」放 `upstream:`；(c) 在不可變欄位 `canonical_authority`／`origin_signature` 旁加「非對內容」限定語，§1 不可變、§3 不得把 Mr.liou 寫成次級；(d) 把 bot 寫成 `author_in_repo`，規格表「Authorship Boundary」：bot 只能是 committer／修改者，commit author 不等於來源權利人；(e) 漏掉 §4 必要欄位 `transformation` | **擁有者**（2026-09-24：「把錯誤改回來，我等定義也講了一年」） | 第三版逐欄對照 §4 改回：`mirror` + `mirror_of`、`artifact_owner: Mr.liou`、限定語移除、`committer` 取代 `author`、補 `transformation`；`verification.performed` 加「欄位比對」一列 |
 
+| 9 | 第 24 輪預演指令裡夾了一段 `rm -f $S/.probe`——一個從未建立的暫存路徑。`stat` 顯示該暫存目錄建立於同一指令的 16:17:03，所以目標不可能存在、實際未刪除任何東西；但它違反擁有者規則「任何刪除都要反覆確認」的精神：刪除指令本身不該未經確認就出現在指令裡 | 我自己（回看指令時） | 本列；之後的指令不再含任何 `rm`。暫存副本 `authmove/mrliou_pre` 保留，未刪 |
+
 第 8 則的形狀：**Codex 指出一個錯，我修的時候造出五個新的**——為了把「本地修改」說清楚，
 自己發明欄位值、改動不可變欄位的語意、把工具寫成作者。定義就在 `docs/governance/`，
 我在寫第一版時引用了它的第 4 節，卻沒有逐欄對照第 4 節的列舉值。這不是不知道定義，
@@ -272,6 +274,7 @@ $ python3 -c "import yaml; yaml.safe_load(open('vendor/git/PROVENANCE.yaml'))"  
 | 16 | 「做 C，先查依賴」 | 依賴查驗、分類（三版腳本）、預演範圍 1 | 無 | — |
 | 17 | — | 產兩份清單、預演範圍 2 | **AskUserQuestion：範圍 1 或 2** | **該問**——範圍差 51 檔且含 README/SECURITY.md 這類 GitHub 會特別對待的檔名；擁有者也要求「第二次確認才動」 |
 | 18 | 「範圍 2」 | 分支快轉到 main、410 檔 git mv、MANIFEST、PROVENANCE、.gitattributes、本紀錄 | 無 | — |
+| 24 | 「auth.c 搬到 mrliou/」（2026-09-24） | 先查：mrliou/ 無同名檔；mrliou/Makefile SRCS 明列不含 auth.c；無 workflow 編 Git 樹；發現 mrliou/config.h 與 Git 的 config.h 同名（記入 PROVENANCE）。搬移前 sha256 對 MANIFEST 一致；git mv 判 R100、sha256 不變。更新 .gitattributes（例外行已無匹配對象，移除並留註解）、vendor/git/PROVENANCE.yaml（transformation 新增一筆，SHA 待 commit 後填；local_files、dangling 參照、manifest 範圍）。MANIFEST.sha256 保留原樣 | 無 | — |
 | 23 | 「發更正」（2026-09-24） | 在 Codex 討論串追加更正回覆（discussion_r4095827068），逐項列出上一則回覆描述的 6ac03ac 錯在哪、現在的值、更正所在 commit；原回覆保留不改 | 無 | — |
 | 22 | 「聽起來很糟糕欸，你把我的資產變成別人的」（2026-09-24） | 先查證範圍再回答：錯誤版本未進 main（`merge-base --is-ancestor` 兩個皆否）；檔案、歷史、擁有權未變；錯誤紀錄在公開分支約兩天；指出仍公開的 Codex 回覆描述錯誤版本；另指出 git 將 auth.c 的 author 記為 bot（2026-02-05，既存，非本輪造成） | 提議追加更正回覆，等擁有者決定——對外發言屬擁有者裁量 | **該問**：公開 GitHub 發言 |
 | 21 | 「這太扯了，這麼嚴重的錯誤，在幹嘛」（2026-09-24） | 不辯護；回答發生了什麼、為什麼、嚴重度判斷也錯了；把 §4 做成 CI 檢查，用兩個真實失敗版本測試 | 無 | — |
