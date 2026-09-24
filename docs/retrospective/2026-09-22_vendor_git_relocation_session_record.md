@@ -160,7 +160,33 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 
 第 7 則在第 20 輪**第三次**發生：重寫第三版時又把 `note:` 鍵放進 `local_files` 清單，
 `yaml.safe_load` 第一次就抓到。同一個手勢錯三次，代表「commit 前跑 safe_load」擋得住結果，
-但擋不住手勢；能擋手勢的是把它寫進 CI——本輪未做，記為待辦，不在本 PR 擴 scope。
+但擋不住手勢；能擋手勢的是把它寫進 CI。
+
+**建構（第 21 輪，擁有者：「這太扯了，這麼嚴重的錯誤，在幹嘛」）**：復盤寫了三次認錯清單
+（第 5、7、8 則），每次下一輪照犯——這正是規章「建構」那一列說的跳過形狀。所以第 8 則的
+修正不再只是改檔，而是 `tools/provenance_fields_check.py` + CI job「MRL 來源鏈欄位檢查」：
+每份 `PROVENANCE.yaml` 必須可解析、§4 十欄齊備、`derivative_role`／`verification_status`
+只准列舉值、`canonical_authority`／`origin_signature` 為 §1 不可變值、`artifact_owner` 為
+`Mr.liou`（上游作者放 `upstream:`）、`mirror` 必附 `mirror_of`、AI／bot 的 contributor role
+必標 `tool`、任何 `author*` 鍵的值不得是 bot。每一條逐字對應政策條文，不自行擴充；
+第一版曾多加「`transformation` 必須是清單」，跑到 particle-memory 的字串值才發現 §4 只寫
+`<what changed>`，那是我自己加的規則，已拿掉。
+
+**測試素材不是自己捏的**：直接拿 git 歷史裡兩個真實失敗版本跑——
+
+```
+$ python3 tools/provenance_fields_check.py <7f67c14 的 vendor/git/PROVENANCE.yaml>
+未通過（3 項）：缺 transformation；derivative_role='vendored_import' 不在列舉；artifact_owner='Git contributors'
+$ python3 tools/provenance_fields_check.py <6ac03ac 的 vendor/git/PROVENANCE.yaml>
+未通過（7 項）：上述 3 項 + author_in_repo／author×3 = 'copilot-swe-agent[bot]'
+$ python3 tools/provenance_fields_check.py <把 local_files_note 塞回清單的重現版>
+未通過（1 項）：YAML 無法解析
+$ python3 tools/provenance_fields_check.py
+通過：3 份 PROVENANCE.yaml
+```
+
+也就是說：Codex 抓到的那版、擁有者抓到的那版、我錯了三次的那個 YAML 手勢，這支檢查在
+CI 上都會擋。檢查跑不了（缺 pyyaml）時 exit 2，算失敗不算通過。
 
 第 7 則要老實寫：七支閘門在 YAML 壞掉的狀態下**全部 exit 0**——它們不解析這個檔。
 如果我沒有另外跑 `yaml.safe_load`，一個壞掉的來源鏈檔會通過 CI 進 main。
@@ -196,6 +222,7 @@ MANIFEST.sha256: 410 行；sha256 = b1f4d5fc32cc3b309783494cdbca2ebc5a36b3aff564
 | `vendor/git/PROVENANCE.yaml` | 來源鏈（第三版，依政策 §4 十欄）：`derivative_role: mirror`、`mirror_of: git/git`、`artifact_owner: Mr.liou`；上游作者與 GPL-2.0-only 依「Upstream Boundary」放 `upstream:`；`transformation` 列 09fc693／d2cc487（auth 功能，committer 為 bot）與 7f67c14（搬移）；`local_files` 三檔；匯入 commit 0663a34 加三個根 commit 的平行新增；搬移的方法、數量、manifest 雜湊、未搬與誤判清單。第二版曾寫「非 MRL 著作」「artifact_owner: Git contributors」，第四節第 8 則 |
 | `vendor/git/MANIFEST.sha256` | 410 行逐檔 sha256 |
 | `.gitattributes` | 加 `vendor/git/** linguist-vendored`，附為什麼；`vendor/git/auth.c -linguist-vendored` 例外 |
+| `tools/provenance_fields_check.py` + CI job「MRL 來源鏈欄位檢查」 | 政策 §4 的機器檢查（第四節第 8 則之後的建構）；`Mrliou_claude.md`「動手前先跑這幾個」加一行，`CLAUDE.md` 由 sync --build 重生 |
 | 本紀錄 | |
 
 正式樹上的閘門結果見 commit message（數字由指令輸出代入）。
@@ -245,6 +272,7 @@ $ python3 -c "import yaml; yaml.safe_load(open('vendor/git/PROVENANCE.yaml'))"  
 | 16 | 「做 C，先查依賴」 | 依賴查驗、分類（三版腳本）、預演範圍 1 | 無 | — |
 | 17 | — | 產兩份清單、預演範圍 2 | **AskUserQuestion：範圍 1 或 2** | **該問**——範圍差 51 檔且含 README/SECURITY.md 這類 GitHub 會特別對待的檔名；擁有者也要求「第二次確認才動」 |
 | 18 | 「範圍 2」 | 分支快轉到 main、410 檔 git mv、MANIFEST、PROVENANCE、.gitattributes、本紀錄 | 無 | — |
+| 21 | 「這太扯了，這麼嚴重的錯誤，在幹嘛」（2026-09-24） | 不辯護；回答發生了什麼、為什麼、嚴重度判斷也錯了；把 §4 做成 CI 檢查，用兩個真實失敗版本測試 | 無 | — |
 | 20 | 「把錯誤改回來，我等定義也講了一年」（2026-09-24） | 先逐欄比對 `docs/governance/` 政策 §1/§3/§4/§5 與 `MRL_PROVENANCE.md` 規格表，找出五處偏離（第四節第 8 則），依定義改回；未猜「錯誤」指什麼以外的事 | 無（比對後有具體結果，先改再回報；若擁有者指的另有其事，回報裡留了問句） | — |
 | 19 | —（Codex 在 PR #83 留 P2） | 先驗證 Codex 的說法（`git log --follow` 三檔）；寫全量掃描、掃出假 0、修掉重掃；改 PROVENANCE／.gitattributes／本紀錄；回覆並 resolve Codex | 無 | — |
 

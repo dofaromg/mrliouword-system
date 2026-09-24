@@ -323,6 +323,40 @@ jobs:
             python tools/provenance_notice_check.py 2>&1 | sed 's/^/    /'
           } >> "$GITHUB_STEP_SUMMARY"
 
+  provenance-fields:
+    name: MRL 來源鏈欄位檢查
+    runs-on: ubuntu-latest
+    # 2026-09-24 擁有者：「把錯誤改回來，我等定義也講了一年」。
+    # PR #83 的 vendor/git/PROVENANCE.yaml 在同一個 PR 裡兩次把本倉庫自己的
+    # 程式碼署名給別人，而七支既有閘門沒有一支解析 PROVENANCE.yaml，YAML 壞掉
+    # CI 仍全綠。這個 job 把政策 §4 十欄、§1 不可變值、§3/§6 工具角色、
+    # 規格表 Authorship Boundary 做成機器檢查。需要 pyyaml（requirements.txt 已列）；
+    # 裝不到時腳本以 exit 2 失敗——檢查跑不了要算失敗，不能算通過。
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 安裝 pyyaml
+        run: pip install "pyyaml>=6.0"
+
+      - name: 逐份 PROVENANCE.yaml 對照政策 §4
+        run: python tools/provenance_fields_check.py
+
+      - name: 摘要
+        if: always()
+        run: |
+          {
+            echo "### MRL 來源鏈欄位檢查"
+            echo ""
+            echo "依據：\`docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md\` §1 / §3 / §4 / §5.4 / §6"
+            echo ""
+            python tools/provenance_fields_check.py 2>&1 | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"
+
   operating-cognition:
     name: MRL 根本運行認知
     runs-on: ubuntu-latest
