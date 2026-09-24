@@ -104,7 +104,7 @@ transformation:                         # 政策第 4 節必要欄位：什麼�
     reason: 擁有者裁示方案 C；讓 GitHub 與 CodeQL 不再把本倉庫偵測為 C 專案
     method: 搬移非刪除；內容零變更；歷史以 git log --follow 可追
     decision_record: docs/retrospective/2026-09-22_vendor_git_relocation_session_record.md
-  - commit: pending                     # 本 commit 產生後由下一個 commit 填入 SHA，不預填（觀測重點第 1 條）
+  - commit: 5a241e7                     # 由 git log -1 -- mrliou/auth.c 取得後填入
     date: "2026-09-24"
     committer: dofaromg（Claude Code 執行）
     change: auth.c 以 git mv 自 vendor/git/auth.c 搬到 mrliou/auth.c；git 判定 R100；sha256 f1feab5db4524d283d0d1f766b4a1d95e305f8244e14ea981666194f68e014bb 搬移前後相同，與 MANIFEST.sha256 記錄一致

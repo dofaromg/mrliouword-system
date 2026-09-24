@@ -274,7 +274,7 @@ $ python3 -c "import yaml; yaml.safe_load(open('vendor/git/PROVENANCE.yaml'))"  
 | 16 | 「做 C，先查依賴」 | 依賴查驗、分類（三版腳本）、預演範圍 1 | 無 | — |
 | 17 | — | 產兩份清單、預演範圍 2 | **AskUserQuestion：範圍 1 或 2** | **該問**——範圍差 51 檔且含 README/SECURITY.md 這類 GitHub 會特別對待的檔名；擁有者也要求「第二次確認才動」 |
 | 18 | 「範圍 2」 | 分支快轉到 main、410 檔 git mv、MANIFEST、PROVENANCE、.gitattributes、本紀錄 | 無 | — |
-| 24 | 「auth.c 搬到 mrliou/」（2026-09-24） | 先查：mrliou/ 無同名檔；mrliou/Makefile SRCS 明列不含 auth.c；無 workflow 編 Git 樹；發現 mrliou/config.h 與 Git 的 config.h 同名（記入 PROVENANCE）。搬移前 sha256 對 MANIFEST 一致；git mv 判 R100、sha256 不變。更新 .gitattributes（例外行已無匹配對象，移除並留註解）、vendor/git/PROVENANCE.yaml（transformation 新增一筆，SHA 待 commit 後填；local_files、dangling 參照、manifest 範圍）。MANIFEST.sha256 保留原樣 | 無 | — |
+| 24 | 「auth.c 搬到 mrliou/」（2026-09-24） | 先查：mrliou/ 無同名檔；mrliou/Makefile SRCS 明列不含 auth.c；無 workflow 編 Git 樹；發現 mrliou/config.h 與 Git 的 config.h 同名（記入 PROVENANCE）。搬移前 sha256 對 MANIFEST 一致；git mv 判 R100、sha256 不變。更新 .gitattributes（例外行已無匹配對象，移除並留註解）、vendor/git/PROVENANCE.yaml（transformation 新增一筆，SHA 由下一個 commit 自 git 輸出填入 5a241e7；local_files、dangling 參照、manifest 範圍）。MANIFEST.sha256 保留原樣 | 無 | — |
 | 23 | 「發更正」（2026-09-24） | 在 Codex 討論串追加更正回覆（discussion_r4095827068），逐項列出上一則回覆描述的 6ac03ac 錯在哪、現在的值、更正所在 commit；原回覆保留不改 | 無 | — |
 | 22 | 「聽起來很糟糕欸，你把我的資產變成別人的」（2026-09-24） | 先查證範圍再回答：錯誤版本未進 main（`merge-base --is-ancestor` 兩個皆否）；檔案、歷史、擁有權未變；錯誤紀錄在公開分支約兩天；指出仍公開的 Codex 回覆描述錯誤版本；另指出 git 將 auth.c 的 author 記為 bot（2026-02-05，既存，非本輪造成） | 提議追加更正回覆，等擁有者決定——對外發言屬擁有者裁量 | **該問**：公開 GitHub 發言 |
 | 21 | 「這太扯了，這麼嚴重的錯誤，在幹嘛」（2026-09-24） | 不辯護；回答發生了什麼、為什麼、嚴重度判斷也錯了；把 §4 做成 CI 檢查，用兩個真實失敗版本測試 | 無 | — |
