@@ -16,6 +16,8 @@ if (base.protocol !== 'https:' || base.username || base.password || base.search 
 
 const paths = ['/', '/health', '/status', '/memory/stats', '/particles', '/frequencies',
   '/persona/list', '/persona/registry', '/api/mrl/runtimeos/ai/models', '/api/mrl/audit/traces'];
+const privateReads = new Set(['/status', '/memory/stats', '/persona/list', '/persona/registry',
+  '/api/mrl/runtimeos/ai/models', '/api/mrl/audit/traces']);
 const receipt = {
   schema: 'MRL_CORE_PUBLIC_READONLY_RECEIPT_v1', origin_signature: 'MrLiouWord',
   observed_at: new Date().toISOString(), target_origin: base.origin,
@@ -36,6 +38,9 @@ receipt.paths = await Promise.all(paths.map(async (path) => {
     entry.content_type = response.headers.get('content-type')?.split(';')[0] ?? null;
     entry.sha256 = createHash('sha256').update(bytes).digest('hex');
     entry.size_bytes = bytes.length;
+    if (!secret && privateReads.has(path) && response.status === 200) {
+      entry.access = 'PRIVATE_READ_WITHOUT_AUTH';
+    }
     let body;
     try { body = JSON.parse(bytes.toString('utf8')); } catch { /* challenge or non-JSON */ }
     if (body && typeof body === 'object') {
@@ -61,6 +66,7 @@ receipt.paths = await Promise.all(paths.map(async (path) => {
 }));
 receipt.coverage = {
   expected_get_paths: paths.length, observed_get_paths: receipt.paths.filter(p => p.status).length,
+  unguarded_private_reads: receipt.paths.filter(p => p.access === 'PRIVATE_READ_WITHOUT_AUTH').length,
   verified_full_20_endpoint_cycle: false,
 };
 await writeFile(output, `${JSON.stringify(receipt, null, 2)}\n`, { flag: 'wx', mode: 0o600 });
