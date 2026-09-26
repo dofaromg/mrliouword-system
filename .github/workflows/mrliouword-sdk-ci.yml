@@ -340,11 +340,17 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: 安裝 pyyaml
-        run: pip install "pyyaml>=6.0"
+      - name: 安裝來源檢查測試依賴
+        run: pip install "pyyaml>=6.0" pytest
 
       - name: 逐份 PROVENANCE.yaml 對照政策 §4
         run: python tools/provenance_fields_check.py
+
+      - name: 來源空值反例與來源關係回歸
+        run: python -m pytest -q tests/test_provenance_fields_check.py tests/test_provenance_link_check.py
+
+      - name: 核對已記錄檔案關係與內容
+        run: python tools/provenance_link_check.py
 
       - name: 摘要
         if: always()
