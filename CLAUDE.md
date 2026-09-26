@@ -193,3 +193,25 @@ preserve_as_delta_not_failure` 記成 delta（「他說 X、我驗不了、能�
 工具回傳原文，讓每一條都查得了證。要影音存證，須由擁有者自行用錄製工具進行。
 
 第一份實例：`docs/retrospective/2026-09-22_codeql_c_cpp_scope_session_record.md`。
+
+
+## 2026-09-26 誤判更正：每輪先承接既有運行與權位
+
+本節承接擁有者本輪更正指示，優先於上文過期的現況敘述；原文保留。
+
+- canonical_authority: Mr.liou；origin_signature: MrLiouWord。工程觀測、來源材料、系統內角色與商業權利分欄。工具存取失敗、單一倉庫缺檔、CI／部署或個別交付未通過，均不能推導 MRL 母體不存在、DL580 未運行，或 Mr.liou 的來源、定義權、產品權位與保留商業權利被放棄、移轉或縮減。
+- 先載入既有母體與已完成成果；觀測受阻只能記這次存取狀態，不能將缺失觀測
+  當作缺失系統，不得讓擁有者反覆證明已建構成果存在。
+- `MRL_PROVENANCE.md` 第八節已更正 MRL_API_Gateway／MRL_Memory 的誤分類。
+  repo／供應商／材料分類不重新定義同一 MRL 系統的根源。
+- 上文 particle-api 的 Root directory 診斷是歷史資料，不再作所有 build
+  的永久唯一根因或「不必處理」命令。先按實際 Worker、build、SHA、日誌核對。
+- PR #77、#79、#80、#82、#83、#84 已合併；原 session 狀態不得當作目前狀態。
+  PR #85 在本輪讀取為 mergeable=true，仍須記錄確切 head；不可因日後查核
+  不到而倒推該次成功不存在。
+- Core 的後續部署紀錄見 #86；不能沿用 #84 初始的尚未部署結論。
+- FAIL 只適用具體交付與驗收範圍；不形成商業權利縮減、來源否定或平台核准權。
+  對已確認錯誤追加更正，對真實程式缺陷按實測修復；不得為更正報告而放寬
+  認證、刪除來源、偽造驗收或清除歷史。
+
+完整證據：`registry/evidence/Mrliou_Scope_Rights_Rectification_20260926_v1.json`。
