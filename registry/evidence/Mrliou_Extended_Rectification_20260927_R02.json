@@ -1,0 +1,131 @@
+{
+  "canonical_authority": "Mr.liou",
+  "origin_signature": "MrLiouWord",
+  "source_repo": "dofaromg/mrliouword-system",
+  "source_artifact": "registry/evidence/Mrliou_Extended_Rectification_20260927_R02.json",
+  "source_version": "ca43dc28957fab48f61b9e7bc546c3f635e6c24d",
+  "derivative_role": "generated",
+  "artifact_owner": "Mr.liou",
+  "contributors": [
+    "Mr.liou（指示與來源權位）",
+    "ChatGPT / Codex（查核與更正工具）"
+  ],
+  "transformation": "追加更正與修正錯誤狀態產生器；保留原文、歷史與原包",
+  "verification_status": "partial",
+  "observed_date": "2026-09-27",
+  "timezone": "Asia/Taipei",
+  "parent_correction_commit": "f9da5974da0b0dd4ea8d7765bdd434850426da94",
+  "findings": [
+    {
+      "id": "R2-01",
+      "target": ".github/workflows/deploy.yml / docs/STATUS.md",
+      "finding": "generate-docs 沒有部署依賴且固定產生兩項成功勾選",
+      "change": "改依 deploy-cloudflare 結果追加 run/SHA 紀錄，未觀測的 gateway 與主機不推定結果",
+      "verification": "兩個回歸測試通過，含五種失敗或未知輸入；workflow dependency/result binding 檢查通過"
+    },
+    {
+      "id": "R2-02",
+      "target": "MRL_PROVENANCE.md §3.1",
+      "finding": "61d7e54 有 parent，不能寫成最早 commit 或所有採用日期",
+      "change": "追加真正 Git 根與四個具名本倉入庫 commit、各自 hash；不宣稱最初創作日期"
+    },
+    {
+      "id": "R2-03",
+      "target": "MRL_PROVENANCE.md §3.3",
+      "finding": "當時 session 讀取限制被寫成來源鏈永久障礙",
+      "change": "追加既有 Trace 稽核已取得來源政策的事實，保留尚待建立的跨倉轉換關係"
+    },
+    {
+      "id": "R2-04",
+      "target": "registry/evidence/README.md",
+      "finding": "目錄來源位置、材料歸屬與 MRL 系統角色混為一談；索引引用舊概括分類",
+      "change": "追加索引分類與日期優先說明，保留原文"
+    },
+    {
+      "id": "R2-05",
+      "target": "registry/evidence/MRL_BridgeNeuralLink_API_Dispatch_v1.index.md",
+      "finding": "Notion 唯一根源文字可能把儲存平台提升為來源 authority",
+      "change": "依現行規章區分來源權位與記憶／規則入口，原包不變"
+    },
+    {
+      "id": "R2-06",
+      "target": "registry/evidence/Mrliou_MRL_Backfill_20260921_v1.index.md D-5",
+      "finding": "沒有任何東西能改變狀態屬過度永久化",
+      "change": "限縮為特定封包本次未得回執，允許後續可信證據追加新狀態"
+    },
+    {
+      "id": "R2-07",
+      "target": "flow-tasks #652 / #653 授權執行狀態",
+      "finding": "早期 OPEN 在舊報告未銜接後續 CLOSED_VERIFIED",
+      "change": "回讀合併及 main run 35306164580 的回歸成功、拒絕後下游 skipped、artifacts=0，將舊 OPEN 限定為歷史"
+    },
+    {
+      "id": "R2-08",
+      "target": "mrliouword-system #77 Channel review",
+      "finding": "舊未修補說明未銜接 #82；DO 解決 Memory forget 的說法超出實作",
+      "change": "記錄 #82 已合併與當前 DO binding／路由；Memory 舊問題分開保留，未新測正式部署"
+    },
+    {
+      "id": "R2-09",
+      "target": "flow-tasks run 36215035721 / Mrliou system run 36214116486",
+      "finding": "兩者不能當成共同 runtime startup failure",
+      "change": "前者依 job/log 為 connector not_configured；後者 target 驗證先失敗，checkout skipped 後缺報告腳本是次生錯誤"
+    }
+  ],
+  "local_ingress": [
+    {
+      "path": "core/atom_t.h",
+      "ingress_commit": "8112602ecf0b442b6b1133597b5211d36e6e7711",
+      "author_date": "2026-01-08T16:10:23+08:00",
+      "ingress_sha256": "17a981f4c9062bb7c1c653962e9022da21954d57b6fd03f23c9a4682a7f57654",
+      "current_sha256": "17a981f4c9062bb7c1c653962e9022da21954d57b6fd03f23c9a4682a7f57654",
+      "same_bytes": true
+    },
+    {
+      "path": "core/simhash64.py",
+      "ingress_commit": "b4e2cd7ef0a3789c4579ea4601ad137f4aaaf3a0",
+      "author_date": "2026-01-08T16:10:23+08:00",
+      "ingress_sha256": "373bf2b65901c143b444ce66930c04b00b4b50227f69eeb5993ec3014b9f2d75",
+      "current_sha256": "373bf2b65901c143b444ce66930c04b00b4b50227f69eeb5993ec3014b9f2d75",
+      "same_bytes": true
+    },
+    {
+      "path": "core/merkle.py",
+      "ingress_commit": "7ba6e5bb6889079031a879ed82298649971006c1",
+      "author_date": "2026-01-08T16:10:24+08:00",
+      "ingress_sha256": "3ec5a62c07ee223bd262f0f6702ea578acd1222af527916ad6470af060e16ec5",
+      "current_sha256": "3ec5a62c07ee223bd262f0f6702ea578acd1222af527916ad6470af060e16ec5",
+      "same_bytes": true
+    },
+    {
+      "path": "core/particle_dict.json",
+      "ingress_commit": "de8259182f1b5870a80317fb5fcd2b8035f034e0",
+      "author_date": "2026-01-08T16:10:24+08:00",
+      "ingress_sha256": "0d456f2b552e634bfa9814d3000a148f5f1039d06f6b1cd8c182ac4ca480022d",
+      "current_sha256": "eff41745da6596d90b1dcae2f286cc92894740eeac8553007b41b88b1f209695",
+      "same_bytes": false
+    }
+  ],
+  "expected_changed_paths": [
+    ".github/workflows/deploy.yml",
+    "tools/Mrliou_deployment_status.py",
+    "tests/test_Mrliou_deployment_status.py",
+    "docs/STATUS.md",
+    "registry/evidence/README.md",
+    "registry/evidence/MRL_BridgeNeuralLink_API_Dispatch_v1.index.md",
+    "registry/evidence/Mrliou_MRL_Backfill_20260921_v1.index.md",
+    "MRL_PROVENANCE.md",
+    "registry/evidence/Mrliou_Extended_Rectification_20260927_R02.json",
+    "docs/retrospective/2026-09-27_extended_rectification_session_record.md"
+  ],
+  "retained_real_issues": [
+    "Memory forget index traversal does not include forgotten nodes / head comparison",
+    "mrl_universal_container ORIGIN_SIGNATURE remains MrLiou in existing runtime; no historical packet rewrite",
+    "flow-tasks #654 policy regex misses list-leading uses; not dismissed as false review"
+  ],
+  "limits": [
+    "No main, DNS, routes, runtime or deployed settings changed",
+    "Existing historical code defects are not blanket dismissed",
+    "All-repository historical coverage remains incomplete; document/source observations cannot reduce owner rights"
+  ]
+}

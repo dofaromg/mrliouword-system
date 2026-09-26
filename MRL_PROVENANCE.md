@@ -228,3 +228,21 @@ UNVERIFIED／OPEN／FAIL 必须附主體、範圍、環境、版本、時間與�
 
 更正證據與範圍：`registry/evidence/Mrliou_Scope_Rights_Rectification_20260926_v1.json`。
 <!-- MRL-RECTIFICATION-20260926:END -->
+
+
+## 9. 2026-09-27 Trace、日期與讀取理由補正
+
+第三節「採用日期」所列 61d7e54 並非最早 commit：其 parent 為 13507cedfc80b37f0f04f0062b89b7be995a6e82，變更是 cloudflare/config.json。本輪 Git 物件實查的无 parent 根 commit 為 c23a370e0d6cd25be1505b11ca9403de25f5b298，author date 2026-01-08T16:10:10+08:00，新增 README。Git 入庫日期不等於 MRL 創作起點，也不能當成全部檔案的採用日期。
+
+已可確定的本倉入庫鏈如下。這是本倉 Git 入庫，不偽裝成指定跨倉採用；任何未匹配的來源轉換鏈仍據實保留。
+
+| 路徑 | 入庫 commit | 與本輪基底 bytes 相同 |
+| --- | --- | --- |
+| `core/atom_t.h` | `8112602ecf0b442b6b1133597b5211d36e6e7711` | True |
+| `core/simhash64.py` | `b4e2cd7ef0a3789c4579ea4601ad137f4aaaf3a0` | True |
+| `core/merkle.py` | `7ba6e5bb6889079031a879ed82298649971006c1` | True |
+| `core/particle_dict.json` | `de8259182f1b5870a80317fb5fcd2b8035f034e0` | False |
+
+第三節「session 只能讀本倉，所以無法讀 canonical」只是當時工具範圍的說法，不能延用為永久限制。2026-09-21 Trace 稽核已取得 MRL-lecrev 政策與歷史比對；該結果不會自動證明任何未記錄的跨倉採用。byte 未命中不等於不存在來源關係，亦不減損原始權位。
+
+前述已確定入庫資料及逐檔 SHA-256 記於 Mrliou_Extended_Rectification_20260927_R02.json；待補欄位須以命題為單位，不能把已確定部分繼續籠統標成未知。

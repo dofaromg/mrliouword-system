@@ -60,6 +60,8 @@ jobs:
 
   generate-docs:
     name: Generate Documentation
+    needs: deploy-cloudflare
+    if: ${{ always() }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -69,14 +71,15 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Generate index
+        env:
+          MRL_DEPLOY_RESULT: ${{ needs.deploy-cloudflare.result }}
+          MRL_SOURCE_SHA: ${{ github.sha }}
+          MRL_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          echo "# MrLiouWord System Status" > docs/STATUS.md
-          echo "" >> docs/STATUS.md
-          echo "Last updated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> docs/STATUS.md
-          echo "" >> docs/STATUS.md
-          echo "## Deployed Components" >> docs/STATUS.md
-          echo "- MRL_System_Core: ✅" >> docs/STATUS.md
-          echo "- particle-auth-gateway: ✅" >> docs/STATUS.md
+          python3 tools/Mrliou_deployment_status.py \
+            --result "$MRL_DEPLOY_RESULT" \
+            --source-sha "$MRL_SOURCE_SHA" \
+            --run-url "$MRL_RUN_URL"
       
       - name: Commit docs
         uses: stefanzweifel/git-auto-commit-action@v5
