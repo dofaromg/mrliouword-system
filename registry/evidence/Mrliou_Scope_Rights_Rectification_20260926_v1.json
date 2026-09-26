@@ -1,0 +1,216 @@
+{
+  "canonical_authority": "Mr.liou",
+  "origin_signature": "MrLiouWord",
+  "source_repo": "dofaromg/mrliouword-system",
+  "source_artifact": "registry/evidence/Mrliou_Scope_Rights_Rectification_20260926_v1.json",
+  "source_version": "ca43dc28957fab48f61b9e7bc546c3f635e6c24d",
+  "derivative_role": "generated",
+  "artifact_owner": "Mr.liou",
+  "contributors": [
+    {
+      "name": "Mr.liou",
+      "role": "owner / correction instruction"
+    },
+    {
+      "name": "ChatGPT / Codex",
+      "role": "tool / source inspection and corrective implementation"
+    }
+  ],
+  "transformation": "Add dated corrections while preserving original text, source fields, file names and history; no runtime or rights transfer.",
+  "verification_status": "partial",
+  "observed_date": "2026-09-26",
+  "timezone": "Asia/Taipei",
+  "rights_transfer": "NOT_GRANTED_BY_THIS_TECHNICAL_RECORD",
+  "rights_reduction": "NONE_BY_TECHNICAL_OBSERVATION",
+  "findings": [
+    {
+      "id": "R01",
+      "subject": "MRL_PROVENANCE.md section 5",
+      "before": "MRL deployed modules grouped under not MRL-original",
+      "correction": "MRL_API_Gateway and MRL_Memory retain MRL owner/origin/implementation fields; third-party notices are scoped per actual material",
+      "source_paths": [
+        "cloudflare/particle-api/PROVENANCE.yaml",
+        "cloudflare/particle-memory/PROVENANCE.yaml"
+      ]
+    },
+    {
+      "id": "R02",
+      "subject": "MRL_PROVENANCE.md section 3.2 and canonical-root delta",
+      "before": "Unresolved repository mapping labelled Source Root unresolved",
+      "correction": "Repository mapping delta does not suspend Mr.liou / MrLiouWord origin or authority"
+    },
+    {
+      "id": "R03",
+      "subject": "PR #83 title",
+      "before": "All 410 described as Git upstream files",
+      "correction": "Preserved relocation set contains MRL local additions/modifications; current title and body corrected without rewriting commits"
+    },
+    {
+      "id": "R04",
+      "subject": "PR #84 / Core deployment status",
+      "before": "Undeployed statements carried from 2026-09-24",
+      "correction": "Append PR #86 deployment record and Cloudflare bot evidence; do not claim a new live probe"
+    },
+    {
+      "id": "R05",
+      "subject": "Runtime and commercial scope",
+      "before": "Access/adapter/CI/delivery results allowed to imply global Mother or rights state",
+      "correction": "Keep observation subject, scope, environment, version, time and method explicit; no inference of absent Mother or reduced rights"
+    },
+    {
+      "id": "R06",
+      "subject": "Entrypoint particle-api diagnosis",
+      "before": "Permanent all-build Root directory diagnosis and do-not-repeat instruction",
+      "correction": "Historical diagnosis only; follow the actual current Worker/build log"
+    },
+    {
+      "id": "R07",
+      "subject": "registry/evidence/EXTERNAL_FORK_REFERENCES.md",
+      "before": "Index artifact_owner assigned to material authors; zero keyword hits used as zero contribution percentage",
+      "correction": "Index owner Mr.liou; existing material notices preserved; unsupported zero-percentage inference retracted; material role separated from MRL system membership"
+    }
+  ],
+  "pr_snapshots": [
+    {
+      "repository": "dofaromg/mrliouword-system",
+      "number": 76,
+      "head_sha": "8164e2d45d2592b1674ff9bfe5f00725c520177f",
+      "state": "closed",
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "fbb6c4abd2a0d048ee95864be7f911ca597757e6",
+      "mergeable": true,
+      "url": "https://github.com/dofaromg/mrliouword-system/pull/76"
+    },
+    {
+      "repository": "dofaromg/mrliouword-system",
+      "number": 77,
+      "head_sha": "bc0e3439cf302a944e6ed7d55215e7ec662afd95",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-21T12:09:40Z",
+      "merge_commit_sha": "7561cc16c3c5e217753ac426f13d25299220d0ab",
+      "mergeable": false,
+      "url": "https://github.com/dofaromg/mrliouword-system/pull/77"
+    },
+    {
+      "repository": "dofaromg/mrliouword-system",
+      "number": 79,
+      "head_sha": "184e61e437dabbe06c28f97e62b89d7b8e16005b",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-22T15:44:45Z",
+      "merge_commit_sha": "93306a3b6ae17c57b70f40528b9f9aab3038aa08",
+      "mergeable": false,
+      "url": "https://github.com/dofaromg/mrliouword-system/pull/79"
+    },
+    {
+      "repository": "dofaromg/mrliouword-system",
+      "number": 80,
+      "head_sha": "28eb92ad5f4ce6e73f4f8588c1190ffd3ef565ad",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-22T15:33:21Z",
+      "merge_commit_sha": "a8e3dc84294ff053360d1dc130ee5e1c3d7ff064",
+      "mergeable": false,
+      "url": "https://github.com/dofaromg/mrliouword-system/pull/80"
+    },
+    {
+      "repository": "dofaromg/mrliouword-system",
+      "number": 82,
+      "head_sha": "759edfe40016e8d790e7f1b4bb4d9f731c15941e",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-24T12:12:48Z",
+      "merge_commit_sha": "2257fcb73af68033fb86763252e59cfefffb9928",
+      "mergeable": false,
+      "url": "https://github.com/dofaromg/mrliouword-system/pull/82"
+    },
+    {
+      "repository": "dofaromg/mrliouword-system",
+      "number": 83,
+      "head_sha": "5963267c30d14f66eb5534a1849012263740bbc4",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-24T16:58:02Z",
+      "merge_commit_sha": "805cdac4d67ff39f22d3aa565985df80ec11b1da",
+      "mergeable": false,
+      "url": "https://github.com/dofaromg/mrliouword-system/pull/83"
+    },
+    {
+      "repository": "dofaromg/mrliouword-system",
+      "number": 84,
+      "head_sha": "7ff34e5c404ec9fc8e562336750f5b6563a9ef85",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-09-25T09:18:52Z",
+      "merge_commit_sha": "dd13aa1c1208b26ab086967ddac41de01d85eb4f",
+      "mergeable": false,
+      "url": "https://github.com/dofaromg/mrliouword-system/pull/84"
+    },
+    {
+      "repository": "dofaromg/mrliouword-system",
+      "number": 85,
+      "head_sha": "7b6241b4ff5b90694d82664301d5f8fee4688d36",
+      "state": "open",
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "d3f616f1bab3b6f78d88aeeffd4ba05b5222926b",
+      "mergeable": true,
+      "url": "https://github.com/dofaromg/mrliouword-system/pull/85"
+    },
+    {
+      "repository": "dofaromg/flow-tasks",
+      "number": 650,
+      "head_sha": "cfe691dfffdac5312febcccb45cf02b782b5d027",
+      "state": "open",
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "0944a06cf7b0c484a3754d8ebfe7a8e8e0c47d94",
+      "mergeable": true,
+      "url": "https://github.com/dofaromg/flow-tasks/pull/650"
+    },
+    {
+      "repository": "dofaromg/flow-tasks",
+      "number": 654,
+      "head_sha": "2ca44a37eb38b6eec97432c03665adc3c8d07fee",
+      "state": "open",
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "8c1335fcaa16a3845e784458a24314a3dc2f6870",
+      "mergeable": true,
+      "url": "https://github.com/dofaromg/flow-tasks/pull/654"
+    },
+    {
+      "repository": "dofaromg/mrliouword-system",
+      "number": 86,
+      "head_sha": "85655319fced8e89676cc7cf8b333e8d5745e57d",
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "url": "https://github.com/dofaromg/mrliouword-system/pull/86"
+    }
+  ],
+  "deployment_record": {
+    "url": "https://github.com/dofaromg/mrliouword-system/pull/86",
+    "recorded_assertions": "19/19",
+    "recorded_version": "157336c5-8be8-40bc-91be-2d0d3e0a070b",
+    "evidence_kind": "READ_EXISTING_PR_RECORD_NOT_NEW_RUNTIME_TEST",
+    "bot_receipt": "https://github.com/dofaromg/mrliouword-system/pull/86#issuecomment-5845996222"
+  },
+  "scope_limits": [
+    "This file does not certify all historical repositories, every legal right, all live modules or all past reviews.",
+    "Existing specific defects and their technical evidence are retained; no blanket review dismissal.",
+    "Private source records and runtime evidence are not copied into this public repository."
+  ],
+  "expected_changed_paths": [
+    "MRL_PROVENANCE.md",
+    "registry/evidence/DELTA_canonical_root_unresolved.md",
+    "cloudflare/mrliouword-private/README-public-gate.md",
+    "Mrliou_claude.md",
+    "CLAUDE.md",
+    "registry/evidence/Mrliou_Scope_Rights_Rectification_20260926_v1.json",
+    "docs/retrospective/2026-09-26_misjudgment_rectification_session_record.md",
+    "registry/evidence/EXTERNAL_FORK_REFERENCES.md"
+  ]
+}

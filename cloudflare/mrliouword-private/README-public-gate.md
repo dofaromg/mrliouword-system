@@ -95,3 +95,26 @@ preview still requires the authorization/cutover repair before private content
 is suitable for that public endpoint. The live test used non-sensitive synthetic
 content only, under explicit owner authorization.
 
+
+
+## 2026-09-26 current-status correction
+
+The earlier source and deployment statements are dated historical observations.
+PR #84 was merged as dd13aa1c1208b26ab086967ddac41de01d85eb4f.
+[PR #86](https://github.com/dofaromg/mrliouword-system/pull/86) records a subsequent
+production deployment and 19/19 live assertions for version
+157336c5-8be8-40bc-91be-2d0d3e0a070b.
+[Cloudflare's receipt](https://github.com/dofaromg/mrliouword-system/pull/86#issuecomment-5845996222)
+reports a successful build deployment at head
+85655319fced8e89676cc7cf8b333e8d5745e57d. This correction reads those stored records;
+it does not claim to have repeated their live tests.
+
+An unconfigured or unverified adapter in this Worker does not establish that the
+owner's existing DL580/MRL Mother or its services are absent or stopped.
+Record Worker adapter status, Mother runtime status, observations and individual
+commercial transaction status separately. Tool access failures and scoped gates
+cannot waive or transfer the owner's origin, product authority or retained rights.
+The previous dated constraints remain evidence of that investigation only.
+
+No Worker runtime, authentication, route, DNS or storage setting is changed by this
+documentation correction. The separate particle-api status is not inferred from Core.

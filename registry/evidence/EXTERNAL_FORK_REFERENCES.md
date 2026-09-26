@@ -5,7 +5,7 @@ source_repo: 外部（權利人上傳，非本倉庫產出）
 source_artifact: 見下方逐項
 source_version: 見下方逐項
 derivative_role: projection   # 新撰的核對索引，非逐字轉錄
-artifact_owner: 各上游作者
+artifact_owner: Mr.liou  # 本索引產物；被引用材料的作者／授權另依逐項來源保留
 contributors:
   - Claude（本倉庫：核對授權與作者歸屬，未修改任何上游檔案）
 transformation: 僅解壓讀取、計算雜湊、統計 MRL 字樣出現次數。未修改、未匯入原始碼。
@@ -68,3 +68,24 @@ preserved_at: "2026-09-20"
 本檔是該分類的第一筆實例，示範核對方法：
 **解壓 → 讀 LICENSE 與 CODEOWNERS → 全樹搜尋 MRL 字樣 → 記錄雜湊**。
 命中 0 就是 0，不因為檔案是從 MRL 側交來的就推定它屬於 MRL。
+
+## 2026-09-26 追加更正（優先於上文的總括判定）
+
+本索引原 front matter 的 `artifact_owner: 各上游作者` 混淆了索引產物與被索引材料。
+現行索引所有者更正為 `Mr.liou`；原值保留於本段。Microsoft 的既有材料作者與
+MIT 授權紀錄完整保留，並不因索引歸屬更正而改寫。
+
+「MRL 內容佔比 0」只根據 `mrl`／`mrliou`／`MrLiouWord` 關鍵字零命中，
+不能作為內容來源比例或無本地變換的證明。該比例結論撤回：本輪僅讀取此索引，
+沒有重做原封存與指定來源 commit 的逐檔對照；原搜尋結果、封存 SHA 與授權記錄
+照原時間保留。來源貢獻比例需依原始內容、commit 與變換證據查核，不能靠名稱猜定。
+
+External Fork Reference 是材料來源記錄角色；不能據此將 MRL 對材料的索引、
+選擇、組合、轉譯、修改或下游使用／回傳紀錄排除於同一 MRL 系統之外。
+上文「不得列入 MRL canonical」不得被擴大為禁止記錄 canonical 系統所引用的
+材料；它只限制將別人的原始材料冒稱為 MRL 原創根源。MRL 根源與保留商業權利
+不因該材料分類、零命中或稽核未完成而縮減。
+
+既有 `verification_status: verified` 僅保留原查核紀錄的歷史狀態，不替被撤回的
+比例推論提供背書。現行更正與範圍見
+`Mrliou_Scope_Rights_Rectification_20260926_v1.json`。
