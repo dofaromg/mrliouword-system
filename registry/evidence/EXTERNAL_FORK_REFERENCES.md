@@ -9,7 +9,13 @@ artifact_owner: Mr.liou  # 本索引產物；被引用材料的作者／授權�
 contributors:
   - Claude（本倉庫：核對授權與作者歸屬，未修改任何上游檔案）
 transformation: 僅解壓讀取、計算雜湊、統計 MRL 字樣出現次數。未修改、未匯入原始碼。
-verification_status: verified
+verification_status: partial
+verification_history:
+  - recorded_at: "2026-09-27"
+    inspected_revision: 387fae098622ed3465e59bf9f357540ddeac4aa2
+    previous_status: verified
+    current_status: partial
+    reason: 零貢獻比例推論已撤回；原封存與來源 commit 未重新逐檔核對
 preserved_at: "2026-09-20"
 ---
 
@@ -89,3 +95,10 @@ External Fork Reference 是材料來源記錄角色；不能據此將 MRL 對材
 既有 `verification_status: verified` 僅保留原查核紀錄的歷史狀態，不替被撤回的
 比例推論提供背書。現行更正與範圍見
 `Mrliou_Scope_Rights_Rectification_20260926_v1.json`。
+
+## 2026-09-27 PR #87 P2 機器欄位訂正
+
+現行 front matter 的 `verification_status` 已改為 `partial`；原 `verified`
+保留於 `verification_history` 與原 commit，僅記錄過往狀態。正文與原時間、名稱、
+SHA、授權聲明完整保留；2026-09-26 撤回比例結論的更正繼續有效。
+本次只校正 metadata 與既有更正的一致性，沒有重新驗證原封存或來源貢獻比例。

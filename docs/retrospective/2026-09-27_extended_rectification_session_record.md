@@ -3,7 +3,16 @@ canonical_authority: Mr.liou
 origin_signature: MrLiouWord
 source_repo: dofaromg/mrliouword-system
 source_artifact: docs/retrospective/2026-09-27_extended_rectification_session_record.md
-source_version: f9da5974da0b0dd4ea8d7765bdd434850426da94
+source_version: 387fae098622ed3465e59bf9f357540ddeac4aa2
+inspected_baseline_commit: f9da5974da0b0dd4ea8d7765bdd434850426da94
+source_version_role: first_preserved_artifact_revision
+source_artifact_sha256: 52ed4f50f7840bb183a47898f08382a1c7e7168d77c1c02c6d57e3309eb1ed39
+provenance_corrections:
+  - recorded_at: "2026-09-27"
+    field: source_version
+    previous_value: f9da5974da0b0dd4ea8d7765bdd434850426da94
+    corrected_value: 387fae098622ed3465e59bf9f357540ddeac4aa2
+    reason: 原值為查核基準且不含本檔；現值可取得首次保存原件，本次訂正由後續 PR commit 留存
 derivative_role: generated
 artifact_owner: Mr.liou
 contributors: [Mr.liou, ChatGPT / Codex（查核與修正工具）]
@@ -127,3 +136,20 @@ workflow 的 needs 與結果 env 綁定已以解析後值核對。新增測試�
 authorization workflow failure 可是預期拒絕；deploy docs success 不代表部署 success。結果必須連到執行主體與步驟。
 ### 9.4 尚未被驗證的地方
 新部署實機、所有歷史權利事件、未讀取倉庫及封包消費不由本輪測試結果替代。
+
+## 2026-09-27 PR #87 來源版本追加訂正
+
+原 `source_version: f9da5974da0b0dd4ea8d7765bdd434850426da94` 不含本檔，現另存為
+`inspected_baseline_commit`。現行 `source_version: 387fae098622ed3465e59bf9f357540ddeac4aa2`
+指向已驗證可讀取的首次保存原件；`source_artifact_sha256` 是該版本原件的 SHA-256，
+不是本次訂正後檔案的 hash。本輪訂正另由 PR 的新 commit 及
+`MRL_PR87_Provenance_Closure_20260927_session_record.md` 留存，不宣稱預知自身 commit SHA。
+原正文、測試輸出與時間均保留。
+
+原「沒有執行部署 workflow」限於上一輪未手動呼叫部署的行為紀錄；不可推導平台
+沒有自動部署。PR #87 的 Cloudflare bot 回執已記錄 `mrliouword-system` 對
+`387fae098622ed3465e59bf9f357540ddeac4aa2` 在 2026-09-26 16:46 UTC 部署成功，
+build `19332b71-c577-4770-adea-98252d7b8bbe`：
+https://github.com/dofaromg/mrliouword-system/pull/87#issuecomment-5847242368 。
+此為自動部署回執取證；本次没有新增 live route-response 探測，也不把該舊 SHA
+的成功套用到後續修補 SHA。

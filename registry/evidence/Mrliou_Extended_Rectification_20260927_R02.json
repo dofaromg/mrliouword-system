@@ -3,7 +3,7 @@
   "origin_signature": "MrLiouWord",
   "source_repo": "dofaromg/mrliouword-system",
   "source_artifact": "registry/evidence/Mrliou_Extended_Rectification_20260927_R02.json",
-  "source_version": "ca43dc28957fab48f61b9e7bc546c3f635e6c24d",
+  "source_version": "387fae098622ed3465e59bf9f357540ddeac4aa2",
   "derivative_role": "generated",
   "artifact_owner": "Mr.liou",
   "contributors": [
@@ -127,5 +127,17 @@
     "No main, DNS, routes, runtime or deployed settings changed",
     "Existing historical code defects are not blanket dismissed",
     "All-repository historical coverage remains incomplete; document/source observations cannot reduce owner rights"
+  ],
+  "inspected_baseline_commit": "ca43dc28957fab48f61b9e7bc546c3f635e6c24d",
+  "source_version_role": "first_preserved_artifact_revision",
+  "source_artifact_sha256": "9b42cfe686598a0ddf63966bdadb4c2fa51f3faf578753ae66add35776ed3bd7",
+  "provenance_corrections": [
+    {
+      "recorded_at": "2026-09-27",
+      "field": "source_version",
+      "previous_value": "ca43dc28957fab48f61b9e7bc546c3f635e6c24d",
+      "corrected_value": "387fae098622ed3465e59bf9f357540ddeac4aa2",
+      "reason": "The prior revision was an inspected baseline and did not contain source_artifact. source_version now retrieves the first preserved artifact revision; this metadata correction is carried by the subsequent PR commit."
+    }
   ]
 }

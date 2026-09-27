@@ -3,7 +3,16 @@ canonical_authority: Mr.liou
 origin_signature: MrLiouWord
 source_repo: dofaromg/mrliouword-system
 source_artifact: docs/retrospective/2026-09-26_misjudgment_rectification_session_record.md
-source_version: ca43dc28957fab48f61b9e7bc546c3f635e6c24d
+source_version: f9da5974da0b0dd4ea8d7765bdd434850426da94
+inspected_baseline_commit: ca43dc28957fab48f61b9e7bc546c3f635e6c24d
+source_version_role: first_preserved_artifact_revision
+source_artifact_sha256: 31d028167bfab340fbb07001b3354c2e65d4dd9a965b3acf33b128e7a36d6acb
+provenance_corrections:
+  - recorded_at: "2026-09-27"
+    field: source_version
+    previous_value: ca43dc28957fab48f61b9e7bc546c3f635e6c24d
+    corrected_value: f9da5974da0b0dd4ea8d7765bdd434850426da94
+    reason: 原值為查核基準且不含本檔；現值可取得首次保存原件，本次訂正由後續 PR commit 留存
 derivative_role: generated
 artifact_owner: Mr.liou
 contributors: [Mr.liou, ChatGPT / Codex（查證與更正工具）]
@@ -116,3 +125,12 @@ PR #83、#84 的更正已寫入。倉庫變更在修正分支待合併，main �
 舊 README 未部署與後來 PR #86 部署回執屬時間差，不能擇舊忽略新。GitHub mergeable 是當下快照，不是歷史衝突必然虛假的證明。
 ### 9.4 尚未被驗證的地方
 本次文件門檻檢查不是主機實測，也不是外部權利機關裁定；未核實部分依第五節留為 delta。
+
+## 2026-09-27 PR #87 來源版本追加訂正
+
+原 `source_version: ca43dc28957fab48f61b9e7bc546c3f635e6c24d` 不含本檔，現另存為
+`inspected_baseline_commit`。現行 `source_version: f9da5974da0b0dd4ea8d7765bdd434850426da94`
+指向已驗證可讀取的首次保存原件；`source_artifact_sha256` 是該版本原件的 SHA-256，
+不是本次訂正後檔案的 hash。本輪訂正另由 PR 的新 commit 及
+`MRL_PR87_Provenance_Closure_20260927_session_record.md` 留存，不宣稱預知自身 commit SHA。
+原正文、測試輸出與時間均保留。

@@ -3,7 +3,7 @@
   "origin_signature": "MrLiouWord",
   "source_repo": "dofaromg/mrliouword-system",
   "source_artifact": "registry/evidence/Mrliou_Scope_Rights_Rectification_20260926_v1.json",
-  "source_version": "ca43dc28957fab48f61b9e7bc546c3f635e6c24d",
+  "source_version": "f9da5974da0b0dd4ea8d7765bdd434850426da94",
   "derivative_role": "generated",
   "artifact_owner": "Mr.liou",
   "contributors": [
@@ -212,5 +212,17 @@
     "registry/evidence/Mrliou_Scope_Rights_Rectification_20260926_v1.json",
     "docs/retrospective/2026-09-26_misjudgment_rectification_session_record.md",
     "registry/evidence/EXTERNAL_FORK_REFERENCES.md"
+  ],
+  "inspected_baseline_commit": "ca43dc28957fab48f61b9e7bc546c3f635e6c24d",
+  "source_version_role": "first_preserved_artifact_revision",
+  "source_artifact_sha256": "630c798ea4440814acdb46301e3a171a79a97059d80cab5bc0099bc37578f663",
+  "provenance_corrections": [
+    {
+      "recorded_at": "2026-09-27",
+      "field": "source_version",
+      "previous_value": "ca43dc28957fab48f61b9e7bc546c3f635e6c24d",
+      "corrected_value": "f9da5974da0b0dd4ea8d7765bdd434850426da94",
+      "reason": "The prior revision was an inspected baseline and did not contain source_artifact. source_version now retrieves the first preserved artifact revision; this metadata correction is carried by the subsequent PR commit."
+    }
   ]
 }
