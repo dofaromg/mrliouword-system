@@ -1665,6 +1665,9 @@
     ]
   },
   "client_refs_not_in_inventory": {
+    "d54034aa-mrliouword-system": [
+      "cloudflare/mrliouword-private/README-public-gate.md"
+    ],
     "particle-edge": [
       "tools/deploy-enhanced.sh"
     ]
