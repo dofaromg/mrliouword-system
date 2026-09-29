@@ -40,6 +40,11 @@ on:
         description: "true = 寫入；false = 只列出現況"
         type: boolean
         default: true
+      mode:
+        description: "root_directory = 設定 Root directory；build_logs = 只讀出最近幾次建構與最近一次失敗的完整 log"
+        type: choice
+        options: [root_directory, build_logs]
+        default: root_directory
 
 permissions:
   contents: read
@@ -53,6 +58,7 @@ jobs:
       WORKER: ${{ inputs.worker_name }}
       ROOT_DIR: ${{ inputs.root_directory }}
       APPLY: ${{ inputs.apply }}
+      MODE: ${{ inputs.mode }}
     steps:
       - name: 檢查 secret 是否已設定
         run: |
@@ -85,6 +91,7 @@ jobs:
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: 列出觸發器並設定 root_directory
+        if: ${{ inputs.mode != 'build_logs' }}
         env:
           TAG: ${{ steps.tag.outputs.tag }}
         run: |
@@ -124,3 +131,34 @@ jobs:
           echo "修改後："
           curl -sS "$base/builds/workers/$TAG/triggers" -H "Authorization: Bearer $CF_TOKEN" \
             | jq '.result[] | {trigger_uuid, trigger_name, root_directory}'
+
+      # 2026-09-29 追加：第 5 次執行（run 36576917105）用真實 API 讀到 particle-api 的
+      # root_directory 早已是 "/cloudflare/particle-api"，所以「Root directory 未設」
+      # 這個診斷是錯的。要找真正失敗原因，只能讀 Cloudflare 自己的建構 log。
+      # 這一步只讀不寫：列出最近的建構，並印出最近一次失敗建構的 log 原文。
+      - name: 讀出最近建構與失敗 log（只讀）
+        if: ${{ inputs.mode == 'build_logs' }}
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          base="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT"
+          builds=$(curl -sS "$base/builds/workers/$TAG/builds?per_page=10" -H "Authorization: Bearer $CF_TOKEN")
+          if [ "$(echo "$builds" | jq -r .success)" != "true" ]; then
+            echo "$builds" | jq '.errors'; exit 1
+          fi
+          echo "最近的建構（原始欄位）："
+          echo "$builds" | jq -c '.result | (if type=="object" and has("builds") then .builds else . end) | .[:10][]
+            | {build_uuid, status, build_outcome, created_on, branch: .build_trigger_metadata.branch,
+               commit: .build_trigger_metadata.commit_hash, root: .build_trigger_metadata.root_directory,
+               trigger: (.trigger.trigger_name // null)}'
+          uuid=$(echo "$builds" | jq -r '.result | (if type=="object" and has("builds") then .builds else . end)
+            | map(select((.build_outcome // .status // "") | test("fail"; "i"))) | .[0].build_uuid // empty')
+          if [ -z "$uuid" ]; then echo "最近 10 次沒有失敗的建構。"; exit 0; fi
+          echo; echo "=== 最近一次失敗建構 $uuid 的 log（Cloudflare 原文）==="
+          logs=$(curl -sS "$base/builds/builds/$uuid/logs" -H "Authorization: Bearer $CF_TOKEN")
+          echo "$logs" | jq -r '.result
+            | if type=="object" and has("lines") then .lines[] | (if type=="array" then (.[1] // .[0]) else . end | tostring)
+              elif type=="array" then .[] | tostring
+              else tostring end' | tail -n 150
+          echo "$logs" | jq -c '{success, errors, truncated: (.result.truncated // null)}'
