@@ -1311,7 +1311,8 @@
         "DEPLOYMENT.md",
         "unified-resource-report.md",
         "test.sh",
-        "cloudflare/config.json"
+        "cloudflare/config.json",
+        "docs/retrospective/2026-09-29_cloudflare_secrets_wrong_deploy_session_record.md"
       ],
       "naming": {
         "status": "legacy_alias",
