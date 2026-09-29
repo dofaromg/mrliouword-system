@@ -162,3 +162,10 @@ $ python3 tools/mother_core_registry.py --find neural
 - 沒有修改 DNS、Cloudflare 路由、Vercel、Sites production
 - 測試中的 provider 回覆全是 fixture
 - `PACKAGE_AUDIT.py` **會寫檔**（改寫 `MANIFEST.json`、在上層產生 zip）——不要在 `packages/` 裡跑它
+
+
+## 2026-09-27 根源與平台位置訂正
+
+前文「Notion 為唯一內部定義根源」描述所收派工包的原文字句，不得將儲存平台提升為 Mr.liou / MrLiouWord 之上的根源權威。現行喚醒規章的順序是 MrLiouWord ROOT → MRL Mother → Runtime → Internal Evidence → Optional External Projection。Notion 提供記憶與規則的可讀入口；封存包維持原 bytes，這項訂正不改原件。
+
+此包是否啟用、是否有特定派工回執，與 DL580 現有系統是否運行分開判定。未取得該包回執不等於母體未運行。

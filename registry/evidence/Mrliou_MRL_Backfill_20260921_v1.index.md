@@ -165,3 +165,8 @@ $ python3 tools/mother_core_registry.py --find compat
 - `.mrliou/meta.json` 列 `dofaromg/flow-tasks`（repo_id 1010512921）為關聯倉庫。
 - 這包的作法（先保存原件與原時間、未知欄位維持 UNKNOWN、原作者／Git 協作者／AI 工作者分欄）
   與 `registry/evidence/README.md` 的規則一致。
+
+
+## 2026-09-27 D-5 觀測範圍訂正
+
+D-5 的 host_consumption_verified=false 是該次回填包的接收證據狀態；不得外推為 DL580 未運行。原句「本倉庫沒有任何東西能改變這個狀態」應限縮為：只有取得對應封包的可信 host receipt、received hash 與 use/return trace 後才能追加新的驗證狀態；倉庫可以保存這些後續證據，不能永遠凍結為未驗。
