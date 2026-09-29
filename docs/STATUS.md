@@ -52,3 +52,15 @@ https://github.com/dofaromg/mrliouword-system/pull/86#issuecomment-5845996222
 - particle-auth-gateway: NOT_OBSERVED_BY_THIS_WORKFLOW.
 - Live traffic, HTTP response and DL580 health: NOT_OBSERVED_BY_THIS_WORKFLOW.
 - This result records this run only; failure/skipped/unknown does not mean an existing deployment or DL580 stopped running.
+
+
+## Workflow observation 2026-09-29T17:53:17.518949+00:00
+
+- canonical_authority: Mr.liou; origin_signature: MrLiouWord
+- Source commit: `57363f805efa36a0e9d74f9398ab53032ad9df08`
+- Run: https://github.com/dofaromg/mrliouword-system/actions/runs/36608039267
+- MRL_System_Core deployment job: `DEPLOY_JOB_SUCCESS`
+- Scope: cloudflare/mrliouword-private only.
+- particle-auth-gateway: NOT_OBSERVED_BY_THIS_WORKFLOW.
+- Live traffic, HTTP response and DL580 health: NOT_OBSERVED_BY_THIS_WORKFLOW.
+- This result records this run only; failure/skipped/unknown does not mean an existing deployment or DL580 stopped running.
