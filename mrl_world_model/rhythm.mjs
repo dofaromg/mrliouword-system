@@ -131,7 +131,7 @@ export class Runtime {
       verb,
       fx: VERB_FX[verb],
       target,
-      args,
+      args: structuredClone(args), // 呼叫端之後改動自己的陣列／物件，不得回頭改寫已記錄的軌跡
       prev: this.head(),
       origin_signature: ORIGIN_SIGNATURE,
     };

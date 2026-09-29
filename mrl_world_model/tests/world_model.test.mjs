@@ -141,3 +141,29 @@ test('.fltnz 軌跡行格式 [ts] ::verb→ target', () => {
   assert.equal(lines.length, runtime.trace.length);
   for (const line of lines) assert.match(line, /^\[\d{6}\] ::[a-z]+→ \S/);
 });
+
+test('呼叫端事後改動傳入的陣列／物件，不影響已記錄的軌跡（Codex #88 P1）', () => {
+  const rt = new Runtime(dict);
+  const ids = [rt.jump('EXISTENCE', 1).id, rt.jump('EXISTENCE', 1).id];
+  const env = { resonance: 0.5 };
+  rt.collapse(ids, CombinationRule.HOMOGENEOUS, env);
+  const fields = structuredClone(OWNER_COMMAND);
+  rt.observe(fields);
+  const head = rt.head();
+  ids.push('mutated');
+  env.resonance = 0.9;
+  fields.state.text = 'mutated';
+  assert.equal(verifyTrace(rt.trace), head);
+  assert.equal(replay(rt.trace, dict).stateHash(), rt.stateHash());
+});
+
+test('Gate 拒絕跨越時，原觀測原地保留、不寫軌跡（Codex #88 P2）', () => {
+  const rt = new Runtime(dict);
+  rt.observe(OWNER_COMMAND);
+  const before = rt.stateHash();
+  const traceLen = rt.trace.length;
+  assert.throws(() => rt.cross({ world_id: 'REAL', domain_id: 'owner_command' }, 'lambda'), /只接受 AI/);
+  assert.throws(() => rt.cross({ world_id: 'REAL', domain_id: 'owner_command', index: 5 }, 'rho'), /no observation/);
+  assert.equal(rt.stateHash(), before);
+  assert.equal(rt.trace.length, traceLen);
+});
