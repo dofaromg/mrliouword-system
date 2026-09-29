@@ -143,3 +143,40 @@ delta 1、2 改變了技術決策：因為網路被擋，才新增離線包與 `
 - **9.2 規章內部的張力**：Notion「以 Notion 為準」只限導航；世界模型收斂紀錄本身是 archived。本實作以原文內容為準，不以封存狀態否定內容。
 - **9.3 平台層面的矛盾**：Notion 裡保存的操作文件含有可用憑證（喚醒首頁、Bridge 參考頁）。這與「憑證絕不提交」的精神衝突，但那是擁有者的私有工作區，本輪沒有改動它，只在這裡記下。
 - **9.4 尚未被驗證的地方**：DL580、Bridge、Halt Order 的現況，見第五節。
+
+## 十、追加：擁有者上傳 DL580 橋接包（2026-09-29，同一 session）
+
+擁有者上傳了五個檔，**未附文字指示**：
+
+| 檔 | SHA-256 |
+| --- | --- |
+| MRL_3DScanner_iOS_DL580_ProductBridge_v1_1_repaired.zip | 8e7095e485a3ba861e61aea421b373b03997db667900f392b695502011247457 |
+| MRL_3DScanner_iOS_DL580_ProductBridge_v1.zip | 0febfacfd68dacd404029b57685d2e195dc05c9f7a11fbde9b55ca9de1a1a357 |
+| MRL_Bridge_v3.1.0_DL580_Pkg_20260508.zip | d82909a7a38374d4e79d240fcbb140928a457af550985c03715356d6b8799386 |
+| MRL_install_bridge.sh | f072bd238e30430f1ab3e3fb5bf833f25cc59d456f95f510ce129276e3711d5f |
+| MRL_start_bridge.sh | d23f09bde69d2579f89629a8ba8ec2d572dd9c1e580cdb177e05648bf513d06c |
+
+所有內容都只解壓在 session scratchpad，**沒有放進倉庫**。Bridge 包的 `server.js`、`README.md` 和幾份備份檔裡寫死了 API 金鑰與 PG 密碼；倉庫是 public。
+
+**沙盒實跑 v1_1 的建構指令（Linux 版腳本）**
+
+| 步驟 | 結果 |
+| --- | --- |
+| CHECKSUMS.sha256 | 全部 OK（`sha256sum -c` exit 0） |
+| `node --check server.js` | PASS |
+| `python3 -m py_compile mrl3d_job_runner.py` | PASS |
+| install（`npm install`） | FAIL：`npm error 403 403 Forbidden - GET https://registry.npmjs.org/cors`；`--offline` 也失敗：`ENOTCACHED` |
+| install（`pip install` mrl3d） | FAIL：`No matching distribution found for setuptools>=68`；另外 `https://pypi.org/simple/numpy/` 回 403 |
+| start、health、upload、job、runner | 沒跑到（卡在 install） |
+
+失敗原因：這個 session 的網路政策擋了 npm 與 PyPI。這不是包本身的問題，但也因此**沒有**證明包能跑。DL580 實機沒有執行。
+
+**靜態讀碼發現**（未修改，等擁有者決定）
+
+1. `server.js` 的 `X-MRL-Scan-ID` header、job 的 `scanId` 與 `:id` 都直接拿去 `path.join`，沒有擋 `../`。上傳時又用了 `fs.move(..., { overwrite: true })`，所以可以寫出目錄、蓋掉既有檔案（包括 `server.js` 本身）。加上沒有認證、CORS 是 `*`、監聽所有介面，任何連得到 3050 的人都能利用。
+2. `runJob` 的判斷是 `code === 0 && (!report || report.status === 'completed')`：runner 如果 exit 0 卻沒寫報告，也會被標成 completed，和包內「不得假 completed」的規則衝突。
+3. 同一個 scanId、同名檔重複上傳會蓋掉舊檔，和「不得刪除既有 storage / uploads」衝突。
+4. `docs/01_CLAUDE_BUILD_COMMAND…md` 第二節少了換行：`Copy-Item -Recurse * D:\MRL_3DScanner_ProductBridge_v1cd D:\…`，照抄執行會複製到錯誤的路徑。
+5. Bridge v3.1.0：金鑰可以放在 query string（`?key=`），CORS 是 `*`；`/MRL_run` 與 `/MRL_exec` 會在 DL580 上執行任意 PowerShell，前面只有一把靜態金鑰。這把金鑰的原文同時出現在 Notion 頁、包內原始碼與 README。
+
+**delta**：Bridge 目前線上跑的版本是否仍與這個包相同，驗不了（網路被擋）。
