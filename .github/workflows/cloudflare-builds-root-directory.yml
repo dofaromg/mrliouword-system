@@ -40,6 +40,19 @@ on:
         description: "true = 寫入；false = 只列出現況"
         type: boolean
         default: true
+      token_source_worker:
+        description: "fix_build_token 用：從哪個能正常建構的 Worker 借用它的 build token"
+        default: "mrliouword-system"
+        required: false
+      bad_version:
+        description: "rollback 用：只有目前正式版本等於這個 version id 時才回滾（防呆）"
+        default: "d61d8a68-170e-4072-90cc-5cab38793cb8"
+        required: false
+      mode:
+        description: "root_directory = 設定 Root directory；build_logs = 只讀出建構與失敗 log；fix_build_token = 把建構 token 換成 token_source_worker 正在用的那個"
+        type: choice
+        options: [root_directory, build_logs, fix_build_token, build_main, rollback]
+        default: root_directory
 
 permissions:
   contents: read
@@ -53,6 +66,9 @@ jobs:
       WORKER: ${{ inputs.worker_name }}
       ROOT_DIR: ${{ inputs.root_directory }}
       APPLY: ${{ inputs.apply }}
+      MODE: ${{ inputs.mode }}
+      SRC_WORKER: ${{ inputs.token_source_worker }}
+      BAD_VERSION: ${{ inputs.bad_version }}
     steps:
       - name: 檢查 secret 是否已設定
         run: |
@@ -85,6 +101,7 @@ jobs:
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: 列出觸發器並設定 root_directory
+        if: ${{ inputs.mode == 'root_directory' }}
         env:
           TAG: ${{ steps.tag.outputs.tag }}
         run: |
@@ -124,3 +141,159 @@ jobs:
           echo "修改後："
           curl -sS "$base/builds/workers/$TAG/triggers" -H "Authorization: Bearer $CF_TOKEN" \
             | jq '.result[] | {trigger_uuid, trigger_name, root_directory}'
+
+      # 2026-09-29 追加：第 5 次執行（run 36576917105）用真實 API 讀到 particle-api 的
+      # root_directory 早已是 "/cloudflare/particle-api"，所以「Root directory 未設」
+      # 這個診斷是錯的。要找真正失敗原因，只能讀 Cloudflare 自己的建構 log。
+      # 這一步只讀不寫：列出最近的建構，並印出最近一次失敗建構的 log 原文。
+      - name: 讀出最近建構與失敗 log（只讀）
+        if: ${{ inputs.mode == 'build_logs' }}
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          base="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT"
+          builds=$(curl -sS "$base/builds/workers/$TAG/builds?per_page=10" -H "Authorization: Bearer $CF_TOKEN")
+          if [ "$(echo "$builds" | jq -r .success)" != "true" ]; then
+            echo "$builds" | jq '.errors'; exit 1
+          fi
+          echo "最近的建構（原始欄位）："
+          echo "$builds" | jq -c '.result | (if type=="object" and has("builds") then .builds else . end) | .[:10][]
+            | {build_uuid, status, build_outcome, created_on, branch: .build_trigger_metadata.branch,
+               commit: .build_trigger_metadata.commit_hash, root: .build_trigger_metadata.root_directory,
+               trigger: (.trigger.trigger_name // null)}'
+          uuid=$(echo "$builds" | jq -r '.result | (if type=="object" and has("builds") then .builds else . end)
+            | map(select((.build_outcome // .status // "") | test("fail"; "i"))) | .[0].build_uuid // empty')
+          if [ -z "$uuid" ]; then echo "最近 10 次沒有失敗的建構。"; exit 0; fi
+          echo; echo "=== 最近一次失敗建構 $uuid 的 log（Cloudflare 原文）==="
+          logs=$(curl -sS "$base/builds/builds/$uuid/logs" -H "Authorization: Bearer $CF_TOKEN")
+          echo "$logs" | jq -r '.result
+            | if type=="object" and has("lines") then .lines[] | (if type=="array" then (.[1] // .[0]) else . end | tostring)
+              elif type=="array" then .[] | tostring
+              else tostring end' | tail -n 150
+          echo "$logs" | jq -c '{success, errors, truncated: (.result.truncated // null)}'
+
+      # 2026-09-29 追加：build_logs 讀到 Cloudflare 原文——
+      #   "Build failed: Your build is configured with a build token that belongs to a
+      #    user who has left your organization. This token is no longer valid ..."
+      # 最近 10 次 particle-api 建構全部停在這裡，程式碼根本沒被建構。
+      # mrliouword-system 的建構會成功，表示它用的 build token 有效。
+      # 這一步把 particle-api 每個觸發器的 build_token_uuid 換成那個有效 token；
+      # apply=false 只印出會改什麼，apply=true 才寫入並觸發一次 main 的建構。
+      - name: 換成有效的 build token
+        if: ${{ inputs.mode == 'fix_build_token' }}
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          base="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT"
+          scripts=$(curl -sS "$base/workers/scripts" -H "Authorization: Bearer $CF_TOKEN")
+          src_tag=$(echo "$scripts" | jq -r --arg w "$SRC_WORKER" '.result[] | select(.id == $w) | .tag')
+          [ -n "$src_tag" ] || { echo "::error::找不到來源 Worker：$SRC_WORKER"; exit 1; }
+          src=$(curl -sS "$base/builds/workers/$src_tag/triggers" -H "Authorization: Bearer $CF_TOKEN")
+          echo "來源 $SRC_WORKER 的觸發器："
+          echo "$src" | jq -c '.result[] | {trigger_name, build_token_uuid, branch_includes}'
+          good=$(echo "$src" | jq -r '[.result[].build_token_uuid | select(. != null and . != "")] | unique | if length == 1 then .[0] else empty end')
+          [ -n "$good" ] || { echo "::error::來源觸發器的 build token 不是唯一一個，不自動選"; exit 1; }
+          echo "要改用的 build token：$good"
+          dst=$(curl -sS "$base/builds/workers/$TAG/triggers" -H "Authorization: Bearer $CF_TOKEN")
+          echo "目標 $WORKER 目前的觸發器："
+          echo "$dst" | jq -c '.result[] | {trigger_uuid, trigger_name, build_token_uuid, branch_includes, branch_excludes}'
+          if [ "$APPLY" != "true" ]; then echo "apply=false：只列出，不寫入。"; exit 0; fi
+          for uuid in $(echo "$dst" | jq -r '.result[].trigger_uuid'); do
+            out=$(curl -sS -X PATCH "$base/builds/triggers/$uuid" -H "Authorization: Bearer $CF_TOKEN" \
+                    -H "Content-Type: application/json" --data "$(jq -n --arg t "$good" '{build_token_uuid: $t}')")
+            if [ "$(echo "$out" | jq -r .success)" != "true" ]; then
+              echo "::error::PATCH $uuid 失敗"; echo "$out" | jq '.errors'; exit 1
+            fi
+            echo "$uuid：build_token_uuid → $(echo "$out" | jq -r .result.build_token_uuid)"
+          done
+          # main 目前由哪個觸發器接手，就用那個觸發器重建一次 main
+          tuuid=$(echo "$dst" | jq -r '.result[] | select((.branch_includes // []) | index("main")) | .trigger_uuid' | head -1)
+          [ -n "$tuuid" ] || tuuid=$(echo "$dst" | jq -r '.result[] | select((.branch_includes // []) | index("*")) | .trigger_uuid' | head -1)
+          if [ -n "$tuuid" ]; then
+            b=$(curl -sS -X POST "$base/builds/triggers/$tuuid/builds" -H "Authorization: Bearer $CF_TOKEN" \
+                  -H "Content-Type: application/json" --data '{"branch":"main"}')
+            echo "觸發 main 建構："; echo "$b" | jq -c '{success, errors, build_uuid: .result.build_uuid}'
+          else
+            echo "沒有觸發器涵蓋 main，未觸發建構。"
+          fi
+
+      # 2026-09-29 追加（擁有者裁示「改成 main，並立刻建構一次」）：
+      # particle-api 唯一的觸發器「部署預設分支」branch_includes 是
+      # ["copilot/update-deployment-guide-v4-0-0"]，main 沒有任何觸發器涵蓋。
+      # apply=true：把該觸發器改為只建構 main，觸發一次 main 建構，等它結束，印出結果與 log。
+      - name: 改為建構 main 並建構一次
+        if: ${{ inputs.mode == 'build_main' }}
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          base="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT"
+          dst=$(curl -sS "$base/builds/workers/$TAG/triggers" -H "Authorization: Bearer $CF_TOKEN")
+          echo "修改前："; echo "$dst" | jq -c '.result[] | {trigger_uuid, trigger_name, branch_includes, branch_excludes, build_token_uuid}'
+          tuuid=$(echo "$dst" | jq -r '.result[] | select(.trigger_name == "部署預設分支") | .trigger_uuid' | head -1)
+          [ -n "$tuuid" ] || tuuid=$(echo "$dst" | jq -r '.result[0].trigger_uuid')
+          if [ "$APPLY" != "true" ]; then echo "apply=false：只列出，不寫入。"; exit 0; fi
+          out=$(curl -sS -X PATCH "$base/builds/triggers/$tuuid" -H "Authorization: Bearer $CF_TOKEN" \
+                  -H "Content-Type: application/json" --data '{"branch_includes":["main"],"branch_excludes":[]}')
+          if [ "$(echo "$out" | jq -r .success)" != "true" ]; then echo "::error::PATCH 失敗"; echo "$out" | jq '.errors'; exit 1; fi
+          echo "修改後："; echo "$out" | jq -c '.result | {trigger_uuid, trigger_name, branch_includes, build_token_uuid, root_directory}'
+          b=$(curl -sS -X POST "$base/builds/triggers/$tuuid/builds" -H "Authorization: Bearer $CF_TOKEN" \
+                -H "Content-Type: application/json" --data '{"branch":"main"}')
+          echo "觸發 main 建構："; echo "$b" | jq -c '{success, errors, build_uuid: .result.build_uuid}'
+          buuid=$(echo "$b" | jq -r '.result.build_uuid // empty')
+          [ -n "$buuid" ] || exit 1
+          for i in $(seq 1 60); do
+            st=$(curl -sS "$base/builds/workers/$TAG/builds?per_page=5" -H "Authorization: Bearer $CF_TOKEN" \
+                   | jq -r --arg u "$buuid" '.result | (if type=="object" and has("builds") then .builds else . end)
+                       | .[] | select(.build_uuid == $u) | "\(.status) \(.build_outcome // "")"')
+            echo "[$i] $st"
+            case "$st" in stopped*) break ;; esac
+            sleep 10
+          done
+          echo "=== 建構 $buuid 的 log（Cloudflare 原文，最後 80 行）==="
+          curl -sS "$base/builds/builds/$buuid/logs" -H "Authorization: Bearer $CF_TOKEN" | jq -r '.result
+            | if type=="object" and has("lines") then .lines[] | (if type=="array" then (.[1] // .[0]) else . end | tostring)
+              elif type=="array" then .[] | tostring else tostring end' | tail -n 80
+          case "$st" in *success*) echo "建構成功。" ;; *) echo "::error::建構結果：$st"; exit 1 ;; esac
+
+      # 2026-09-29 追加（擁有者命令「完成我的建構」，先還原我造成的錯誤部署）：
+      # build_main（run 36577668927）在倉庫根目錄建構，把根目錄 wrangler.jsonc
+      # 的程式部署成 particle-api 版本 d61d8a68-170e-4072-90cc-5cab38793cb8。
+      # 只有目前正式部署確實含該版本時才回滾到前一次部署，並把觸發分支還原為
+      # copilot/update-deployment-guide-v4-0-0。不做 migration、不改路由、不動 D1。
+      # 輸出只印部署 ID、版本 ID 與分支，不印帳戶資源清單。
+      - name: 回滾 particle-api 並還原觸發器分支
+        if: ${{ inputs.mode == 'rollback' }}
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          base="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT"
+          deps=$(curl -sS "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN")
+          if [ "$(echo "$deps" | jq -r .success)" != "true" ]; then echo "$deps" | jq '.errors'; exit 1; fi
+          echo "目前正式部署："; echo "$deps" | jq -c '.result.deployments[0] | {created_on, versions}'
+          echo "$deps" | jq -e --arg v "$BAD_VERSION" '.result.deployments[0].versions | map(.version_id) | index($v) != null' >/dev/null \
+            || { echo "::error::目前正式部署不含 $BAD_VERSION，不回滾"; exit 1; }
+          prev=$(echo "$deps" | jq -c --arg v "$BAD_VERSION" '[.result.deployments[] | select((.versions | map(.version_id) | index($v)) == null)][0].versions')
+          { [ -n "$prev" ] && [ "$prev" != "null" ]; } || { echo "::error::找不到前一次部署"; exit 1; }
+          echo "將回滾到："; echo "$prev"
+          trig=$(curl -sS "$base/builds/workers/$TAG/triggers" -H "Authorization: Bearer $CF_TOKEN")
+          tuuid=$(echo "$trig" | jq -r '.result[] | select(.trigger_name == "部署預設分支") | .trigger_uuid' | head -1)
+          echo "觸發器分支（目前）："; echo "$trig" | jq -c '.result[] | {trigger_name, branch_includes}'
+          if [ "$APPLY" != "true" ]; then echo "apply=false：只列出，不寫入。"; exit 0; fi
+          body=$(jq -n --argjson v "$prev" '{strategy: "percentage", versions: ($v | map({version_id, percentage}))}')
+          out=$(curl -sS -X POST "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN" \
+                  -H "Content-Type: application/json" --data "$body")
+          echo "回滾結果："; echo "$out" | jq -c '{success, errors, versions: .result.versions}'
+          [ "$(echo "$out" | jq -r .success)" = "true" ] || exit 1
+          if [ -n "$tuuid" ]; then
+            t=$(curl -sS -X PATCH "$base/builds/triggers/$tuuid" -H "Authorization: Bearer $CF_TOKEN" \
+                  -H "Content-Type: application/json" \
+                  --data '{"branch_includes":["copilot/update-deployment-guide-v4-0-0"],"branch_excludes":[]}')
+            echo "觸發器分支還原："; echo "$t" | jq -c '{success, errors, branch_includes: .result.branch_includes}'
+          fi
+          echo "回滾後的正式部署："
+          curl -sS "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN" \
+            | jq -c '.result.deployments[0] | {created_on, versions}'
