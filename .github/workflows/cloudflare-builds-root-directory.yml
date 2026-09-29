@@ -288,12 +288,13 @@ jobs:
                   -H "Content-Type: application/json" --data "$body")
           echo "回滾結果："; echo "$out" | jq -c '{success, errors, versions: .result.versions}'
           [ "$(echo "$out" | jq -r .success)" = "true" ] || exit 1
-          if [ -n "$tuuid" ]; then
-            t=$(curl -sS -X PATCH "$base/builds/triggers/$tuuid" -H "Authorization: Bearer $CF_TOKEN" \
-                  -H "Content-Type: application/json" \
-                  --data '{"branch_includes":["copilot/update-deployment-guide-v4-0-0"],"branch_excludes":[]}')
-            echo "觸發器分支還原："; echo "$t" | jq -c '{success, errors, branch_includes: .result.branch_includes}'
-          fi
+          # 觸發器沒還原，下一次 main 更新會再部署一次錯誤版本，所以找不到或被拒都算失敗
+          [ -n "$tuuid" ] || { echo "::error::找不到觸發器「部署預設分支」，分支未還原"; exit 1; }
+          t=$(curl -sS -X PATCH "$base/builds/triggers/$tuuid" -H "Authorization: Bearer $CF_TOKEN" \
+                -H "Content-Type: application/json" \
+                --data '{"branch_includes":["copilot/update-deployment-guide-v4-0-0"],"branch_excludes":[]}')
+          echo "觸發器分支還原："; echo "$t" | jq -c '{success, errors, branch_includes: .result.branch_includes}'
+          [ "$(echo "$t" | jq -r .success)" = "true" ] || { echo "::error::觸發器分支還原被拒"; exit 1; }
           echo "回滾後的正式部署："
           curl -sS "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN" \
             | jq -c '.result.deployments[0] | {created_on, versions}'

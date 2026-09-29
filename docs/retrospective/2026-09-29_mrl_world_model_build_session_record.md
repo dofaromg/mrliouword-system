@@ -180,3 +180,13 @@ delta 1、2 改變了技術決策：因為網路被擋，才新增離線包與 `
 5. Bridge v3.1.0：金鑰可以放在 query string（`?key=`），CORS 是 `*`；`/MRL_run` 與 `/MRL_exec` 會在 DL580 上執行任意 PowerShell，前面只有一把靜態金鑰。這把金鑰的原文同時出現在 Notion 頁、包內原始碼與 README。
 
 **delta**：Bridge 目前線上跑的版本是否仍與這個包相同，驗不了（網路被擋）。
+
+## 十一、追加：PR #88 Codex 審閱的三則發現（全部成立，已修）
+
+| # | 發現 | 重現 | 修正 |
+| --- | --- | --- | --- |
+| P1 | `rhythm.mjs` 軌跡記錄直接引用呼叫端的陣列／物件，事後被改動會讓 `verifyTrace` 拒絕 runtime 自己產生的軌跡 | 修前實測：`trace 雜湊不符於 seq 3` | 記錄時先 `structuredClone(args)`。追查同一根因時又發現 `makeObservation` 的 `state` 和 `environment_snapshot` 也有相同的引用問題，一併改成複製 |
+| P2 | `world.cross` 先把觀測移出再翻譯；翻譯被拒時觀測就遺失 | 修前實測：`observations left = 0` | 先翻譯，成功後才移出 |
+| P1 | `rollback` 模式 PATCH 觸發器之後沒檢查 `success` | 讀碼確認 | 找不到觸發器、或 PATCH 被拒時，都以 exit 1 結束 |
+
+這三個錯都不是我自己抓到的。第一則和第四節第 3 則同形：驗收只測了「照正常路徑走」，沒測呼叫端事後改動輸入、以及操作被拒後的狀態。新增的兩個回歸測試就是在補這兩種情況。修後：`# tests 16`、`# pass 16`、`# fail 0`；cli 的狀態雜湊與修前相同（`6de26c8f…`、`49e2a4e8…`）；八道閘門全部 exit 0；rollback 那一步 `bash -n` 的 exit 為 0。

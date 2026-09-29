@@ -55,8 +55,8 @@ export function makeObservation(fields) {
     platform_ref: fields.platform_ref ?? null, // 平台只是投影位置，不是身分
     observer: fields.observer,
     observed_at: fields.observed_at,
-    state: fields.state ?? {},
-    evidence_refs: [...(fields.evidence_refs ?? [])],
+    state: structuredClone(fields.state ?? {}), // 不與呼叫端共用物件：事後改動不得改寫已觀測的狀態
+    evidence_refs: structuredClone(fields.evidence_refs ?? []),
     ontology_status: fields.ontology_status ?? ONTOLOGY_DEFAULT,
     origin_signature: ORIGIN_SIGNATURE,
     gate_path: [],
@@ -113,8 +113,9 @@ export class World {
   }
 
   cross(obsRef, via) {
-    const obs = this.#take(obsRef);
-    const moved = translate(obs, via);
+    // 先翻譯、成功後才移出來源：翻譯被拒時，原觀測必須原地保留
+    const moved = translate(this.#peek(obsRef), via);
+    this.#take(obsRef);
     this.#put(moved);
     return moved;
   }
@@ -141,10 +142,22 @@ export class World {
     bucket.push(obs);
   }
 
-  #take({ world_id, domain_id, index }) {
+  #locate({ world_id, domain_id, index }) {
     const bucket = this.sides[world_id]?.domains[domain_id];
     if (!bucket || bucket.length === 0) throw new Error(`no observation at ${world_id}/${domain_id}`);
     const i = index ?? bucket.length - 1;
+    if (!(i >= 0 && i < bucket.length)) throw new Error(`no observation at ${world_id}/${domain_id}[${i}]`);
+    return { bucket, i };
+  }
+
+  #peek(ref) {
+    const { bucket, i } = this.#locate(ref);
+    return bucket[i];
+  }
+
+  #take(ref) {
+    const { world_id, domain_id } = ref;
+    const { bucket, i } = this.#locate(ref);
     const [obs] = bucket.splice(i, 1);
     if (bucket.length === 0) delete this.sides[world_id].domains[domain_id];
     return obs;

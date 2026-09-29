@@ -168,7 +168,7 @@ export class GenesisField {
         structure,
         N_seed,
         η_seed,
-        environment_snapshot: { ...environment },
+        environment_snapshot: structuredClone(environment),
       },
       state: { age: 0, level: 0, chain: [], mutations: [], children: [] },
     };
