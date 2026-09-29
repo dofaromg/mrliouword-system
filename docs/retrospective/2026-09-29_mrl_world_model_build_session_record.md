@@ -190,3 +190,13 @@ delta 1、2 改變了技術決策：因為網路被擋，才新增離線包與 `
 | P1 | `rollback` 模式 PATCH 觸發器之後沒檢查 `success` | 讀碼確認 | 找不到觸發器、或 PATCH 被拒時，都以 exit 1 結束 |
 
 這三個錯都不是我自己抓到的。第一則和第四節第 3 則同形：驗收只測了「照正常路徑走」，沒測呼叫端事後改動輸入、以及操作被拒後的狀態。新增的兩個回歸測試就是在補這兩種情況。修後：`# tests 16`、`# pass 16`、`# fail 0`；cli 的狀態雜湊與修前相同（`6de26c8f…`、`49e2a4e8…`）；八道閘門全部 exit 0；rollback 那一步 `bash -n` 的 exit 為 0。
+
+## 十二、追加：PR #88 合併時機與 PR #89 的 Codex 第二輪
+
+- PR #88 在 17:06:00Z 由擁有者合併，合併點是 c5a1cf7。上一節那三項修正（ae45adc）在合併之後才推上分支，所以沒有進 main。依規則把分支重設到 main，再 cherry-pick 那個 commit（得到 5cbfb04），另開 PR #89。
+- #88 合併觸發了 `deploy.yml`，run 36602532746 成功，部署的是 `cloudflare/mrliouword-private`。這不是本 session 發動的。
+- Codex 在 #89 又提兩項，兩項都成立：
+  - **P1**：rollback 原本先回滾部署再還原觸發器；觸發器還原被拒時，重跑會被 BAD_VERSION 防護擋下，觸發器也就沒機會再還原。已改成先還原觸發器，再回滾部署。
+  - **P2**：`#locate` 拒絕負數 index，與 `find()` 的行為不一致。修前實測：`no observation at REAL/owner_command[-1]`。已改成負數從尾端算，並加了回歸測試。
+- 這一則和第十一節同形：上一輪修 rollback 時只想到「檢查結果」，沒想到「失敗之後怎麼重跑」。
+- 修後：`# tests 17`、`# pass 17`；八道閘門全部 exit 0；`bash -n` exit 0。
