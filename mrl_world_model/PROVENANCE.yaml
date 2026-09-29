@@ -1,0 +1,53 @@
+# ============================================================================
+#  mrl_world_model 來源鏈記錄
+#
+#  依 docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md 第 4 節。
+#  本目錄是母體既有定義的可執行實作（implementation），不是 canonical 本身，
+#  不宣稱自己是 MRL_BASEWORLD_CORE 或 Seed.PreParticle.v1（CLAUDE.md：
+#  倉庫側可以寫某個 CORE 的 implementation，但不得宣稱自己是那個 CORE）。
+# ============================================================================
+
+canonical_authority: Mr.liou
+origin_signature: MrLiouWord
+source_repo: dofaromg/mrliouword-system
+source_artifact: mrl_world_model/
+source_version: 2026-09-29
+derivative_role: implementation
+artifact_owner: Mr.liou
+verification_status: partial
+
+implements:
+  - ref: MRL_BASEWORLD_CORE
+    registry: registry/mother_core_registry_2026-09-21.json
+    note: 世界狀態、Mirror／Proof、Trace 的實作；本目錄不是該 CORE
+  - ref: Seed.PreParticle.v1
+    location: Google Drive「Seed.PreParticle.v1.pcode」（@signature MRSIG-SEED-PREPARTICLE-V1-COMPLETE）
+    note: genesis.mjs 逐段對應 SECTION 0–4；偏離之處寫在 genesis.mjs 檔頭
+  - ref: Mrliou_MRL_WorldModel_View_Convergence_Record_20260818
+    location: Notion 3bf8eeeec5b581729984f3bb1608522b
+    note: world.mjs 的分層、REAL⇄AI 對稱、Translation／Gate、World_State_Observation 欄位
+  - ref: 粒子.fltnz原理邏輯文件
+    location: Google Drive「粒子.fltnz原理邏輯文件」
+    note: zoom.mjs 的四級觀測尺度與不變性 I1–I7
+  - ref: core/particle_dict.json
+    note: rhythm.mjs 的動詞只綁定此字典既有的 fx，不另立粒子 schema
+
+contributors:
+  - name: Mr.liou
+    role: origin, definition, direction
+  - name: Claude Code
+    role: tool (implementation under owner direction)
+
+transformation:
+  - what: 將 Seed.PreParticle.v1.pcode 的 GenesisChain 寫成可執行 ESM；亂數、UUID、now() 改為 SHA-256 與因果序，以便 Replay 逐位元回驗
+  - what: 將世界模型收斂紀錄的 REAL⇄AI 視圖與 World_State_Observation 缺口寫成可執行結構與可逆 Gate
+  - what: 以 core/particle_dict.json 的 fx 綁定 Jump → Collapse → Trace → Replay 節奏
+  - what: 將 .fltnz 觀測容器的 I1–I7 寫成可實測的自檢
+
+verification:
+  performed:
+    - node --test mrl_world_model/tests/*.test.mjs（本機沙盒）
+    - node mrl_world_model/cli.mjs（本機沙盒）
+  not_performed:
+    - DL580 實機執行（bridge.mrliouword.com 在本 session 的網路政策下被擋）
+    - calculate_stability、calculate_entanglement_strength 的原始定義比對（原文未給，待找回）
