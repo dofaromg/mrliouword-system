@@ -44,10 +44,14 @@ on:
         description: "fix_build_token 用：從哪個能正常建構的 Worker 借用它的 build token"
         default: "mrliouword-system"
         required: false
+      bad_version:
+        description: "rollback 用：只有目前正式版本等於這個 version id 時才回滾（防呆）"
+        default: "d61d8a68-170e-4072-90cc-5cab38793cb8"
+        required: false
       mode:
         description: "root_directory = 設定 Root directory；build_logs = 只讀出建構與失敗 log；fix_build_token = 把建構 token 換成 token_source_worker 正在用的那個"
         type: choice
-        options: [root_directory, build_logs, fix_build_token, build_main]
+        options: [root_directory, build_logs, fix_build_token, build_main, rollback]
         default: root_directory
 
 permissions:
@@ -64,6 +68,7 @@ jobs:
       APPLY: ${{ inputs.apply }}
       MODE: ${{ inputs.mode }}
       SRC_WORKER: ${{ inputs.token_source_worker }}
+      BAD_VERSION: ${{ inputs.bad_version }}
     steps:
       - name: 檢查 secret 是否已設定
         run: |
@@ -252,3 +257,43 @@ jobs:
             | if type=="object" and has("lines") then .lines[] | (if type=="array" then (.[1] // .[0]) else . end | tostring)
               elif type=="array" then .[] | tostring else tostring end' | tail -n 80
           case "$st" in *success*) echo "建構成功。" ;; *) echo "::error::建構結果：$st"; exit 1 ;; esac
+
+      # 2026-09-29 追加（擁有者命令「完成我的建構」，先還原我造成的錯誤部署）：
+      # build_main（run 36577668927）在倉庫根目錄建構，把根目錄 wrangler.jsonc
+      # 的程式部署成 particle-api 版本 d61d8a68-170e-4072-90cc-5cab38793cb8。
+      # 只有目前正式部署確實含該版本時才回滾到前一次部署，並把觸發分支還原為
+      # copilot/update-deployment-guide-v4-0-0。不做 migration、不改路由、不動 D1。
+      # 輸出只印部署 ID、版本 ID 與分支，不印帳戶資源清單。
+      - name: 回滾 particle-api 並還原觸發器分支
+        if: ${{ inputs.mode == 'rollback' }}
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          base="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT"
+          deps=$(curl -sS "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN")
+          if [ "$(echo "$deps" | jq -r .success)" != "true" ]; then echo "$deps" | jq '.errors'; exit 1; fi
+          echo "目前正式部署："; echo "$deps" | jq -c '.result.deployments[0] | {created_on, versions}'
+          echo "$deps" | jq -e --arg v "$BAD_VERSION" '.result.deployments[0].versions | map(.version_id) | index($v) != null' >/dev/null \
+            || { echo "::error::目前正式部署不含 $BAD_VERSION，不回滾"; exit 1; }
+          prev=$(echo "$deps" | jq -c --arg v "$BAD_VERSION" '[.result.deployments[] | select((.versions | map(.version_id) | index($v)) == null)][0].versions')
+          { [ -n "$prev" ] && [ "$prev" != "null" ]; } || { echo "::error::找不到前一次部署"; exit 1; }
+          echo "將回滾到："; echo "$prev"
+          trig=$(curl -sS "$base/builds/workers/$TAG/triggers" -H "Authorization: Bearer $CF_TOKEN")
+          tuuid=$(echo "$trig" | jq -r '.result[] | select(.trigger_name == "部署預設分支") | .trigger_uuid' | head -1)
+          echo "觸發器分支（目前）："; echo "$trig" | jq -c '.result[] | {trigger_name, branch_includes}'
+          if [ "$APPLY" != "true" ]; then echo "apply=false：只列出，不寫入。"; exit 0; fi
+          body=$(jq -n --argjson v "$prev" '{strategy: "percentage", versions: ($v | map({version_id, percentage}))}')
+          out=$(curl -sS -X POST "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN" \
+                  -H "Content-Type: application/json" --data "$body")
+          echo "回滾結果："; echo "$out" | jq -c '{success, errors, versions: .result.versions}'
+          [ "$(echo "$out" | jq -r .success)" = "true" ] || exit 1
+          if [ -n "$tuuid" ]; then
+            t=$(curl -sS -X PATCH "$base/builds/triggers/$tuuid" -H "Authorization: Bearer $CF_TOKEN" \
+                  -H "Content-Type: application/json" \
+                  --data '{"branch_includes":["copilot/update-deployment-guide-v4-0-0"],"branch_excludes":[]}')
+            echo "觸發器分支還原："; echo "$t" | jq -c '{success, errors, branch_includes: .result.branch_includes}'
+          fi
+          echo "回滾後的正式部署："
+          curl -sS "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN" \
+            | jq -c '.result.deployments[0] | {created_on, versions}'
