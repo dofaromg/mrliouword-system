@@ -16,3 +16,15 @@ https://github.com/dofaromg/mrliouword-system/pull/86#issuecomment-5845996222
 以及 PR 本文版本 157336c5-8be8-40bc-91be-2d0d3e0a070b、19/19 記錄。這些既有證據不因舊狀態文件失準而失效。
 
 本修正改為依實際 deploy job 結果追加具 run URL 與 source SHA 的紀錄；尚未執行的 workflow 不冒充新部署。job failure/skipped/unknown 不表示已運行的 DL580 或既有部署停止。
+
+
+## Workflow observation 2026-09-29T14:25:15.447978+00:00
+
+- canonical_authority: Mr.liou; origin_signature: MrLiouWord
+- Source commit: `1c0e9596d6678612fa8fcfc5fce1b35347bea108`
+- Run: https://github.com/dofaromg/mrliouword-system/actions/runs/36582455650
+- MRL_System_Core deployment job: `DEPLOY_JOB_SUCCESS`
+- Scope: cloudflare/mrliouword-private only.
+- particle-auth-gateway: NOT_OBSERVED_BY_THIS_WORKFLOW.
+- Live traffic, HTTP response and DL580 health: NOT_OBSERVED_BY_THIS_WORKFLOW.
+- This result records this run only; failure/skipped/unknown does not mean an existing deployment or DL580 stopped running.
