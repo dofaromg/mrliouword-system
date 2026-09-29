@@ -145,8 +145,9 @@ export class World {
   #locate({ world_id, domain_id, index }) {
     const bucket = this.sides[world_id]?.domains[domain_id];
     if (!bucket || bucket.length === 0) throw new Error(`no observation at ${world_id}/${domain_id}`);
-    const i = index ?? bucket.length - 1;
-    if (!(i >= 0 && i < bucket.length)) throw new Error(`no observation at ${world_id}/${domain_id}[${i}]`);
+    const raw = index ?? -1;
+    const i = raw < 0 ? bucket.length + raw : raw; // 與 find() 的 Array.at() 相同：負數從尾端算
+    if (!(Number.isInteger(i) && i >= 0 && i < bucket.length)) throw new Error(`no observation at ${world_id}/${domain_id}[${i}]`);
     return { bucket, i };
   }
 

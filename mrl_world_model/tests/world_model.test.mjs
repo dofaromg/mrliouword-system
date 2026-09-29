@@ -167,3 +167,14 @@ test('Gate 拒絕跨越時，原觀測原地保留、不寫軌跡（Codex #88 P2
   assert.equal(rt.stateHash(), before);
   assert.equal(rt.trace.length, traceLen);
 });
+
+test('cross 的負數 index 與 find() 一致，從尾端算（Codex #89 P2）', () => {
+  const w = new World();
+  w.observe(OWNER_COMMAND);
+  w.observe({ ...OWNER_COMMAND, state: { text: 'second' } });
+  assert.equal(w.find('REAL', 'owner_command', -2).state.text, OWNER_COMMAND.state.text);
+  const moved = w.cross({ world_id: 'REAL', domain_id: 'owner_command', index: -2 }, 'rho');
+  assert.equal(moved.state.text, OWNER_COMMAND.state.text);
+  assert.equal(w.find('REAL', 'owner_command', -1).state.text, 'second');
+  assert.throws(() => w.cross({ world_id: 'REAL', domain_id: 'owner_command', index: -2 }, 'rho'), /no observation/);
+});

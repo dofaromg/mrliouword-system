@@ -283,18 +283,20 @@ jobs:
           tuuid=$(echo "$trig" | jq -r '.result[] | select(.trigger_name == "部署預設分支") | .trigger_uuid' | head -1)
           echo "觸發器分支（目前）："; echo "$trig" | jq -c '.result[] | {trigger_name, branch_includes}'
           if [ "$APPLY" != "true" ]; then echo "apply=false：只列出，不寫入。"; exit 0; fi
-          body=$(jq -n --argjson v "$prev" '{strategy: "percentage", versions: ($v | map({version_id, percentage}))}')
-          out=$(curl -sS -X POST "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN" \
-                  -H "Content-Type: application/json" --data "$body")
-          echo "回滾結果："; echo "$out" | jq -c '{success, errors, versions: .result.versions}'
-          [ "$(echo "$out" | jq -r .success)" = "true" ] || exit 1
-          # 觸發器沒還原，下一次 main 更新會再部署一次錯誤版本，所以找不到或被拒都算失敗
+          # 先還原觸發器、再回滾部署：觸發器沒還原，下一次 main 更新會再部署一次錯誤版本，
+          # 所以找不到或被拒都算失敗；放在回滾之前，失敗時部署尚未變動，重跑仍會通過 BAD_VERSION 防護。
+          # PATCH 是冪等的：若是回滾那一步失敗，重跑會再 PATCH 一次同樣的分支後接著回滾。
           [ -n "$tuuid" ] || { echo "::error::找不到觸發器「部署預設分支」，分支未還原"; exit 1; }
           t=$(curl -sS -X PATCH "$base/builds/triggers/$tuuid" -H "Authorization: Bearer $CF_TOKEN" \
                 -H "Content-Type: application/json" \
                 --data '{"branch_includes":["copilot/update-deployment-guide-v4-0-0"],"branch_excludes":[]}')
           echo "觸發器分支還原："; echo "$t" | jq -c '{success, errors, branch_includes: .result.branch_includes}'
           [ "$(echo "$t" | jq -r .success)" = "true" ] || { echo "::error::觸發器分支還原被拒"; exit 1; }
+          body=$(jq -n --argjson v "$prev" '{strategy: "percentage", versions: ($v | map({version_id, percentage}))}')
+          out=$(curl -sS -X POST "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN" \
+                  -H "Content-Type: application/json" --data "$body")
+          echo "回滾結果："; echo "$out" | jq -c '{success, errors, versions: .result.versions}'
+          [ "$(echo "$out" | jq -r .success)" = "true" ] || exit 1
           echo "回滾後的正式部署："
           curl -sS "$base/workers/scripts/$WORKER/deployments" -H "Authorization: Bearer $CF_TOKEN" \
             | jq -c '.result.deployments[0] | {created_on, versions}'
