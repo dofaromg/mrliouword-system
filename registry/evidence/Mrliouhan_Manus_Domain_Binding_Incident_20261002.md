@@ -87,3 +87,14 @@ Manus 不得被記為系統來源、canonical authority 或網域所有人，除
 ## 本輪界線
 
 本輪僅讀取 issue #64、其七則留言、PR #91／#83／#65 metadata 與本倉庫文件。未登入或操作 registrar、Cloudflare、Manus、Notion、Dropbox 或任何付款帳戶；未更動 DNS、部署、分享、token、專案、檔案或網域；未索取或保存憑證。故本文件不能代表外部狀態已修正，Issue #64 必須保持 `OPEN`。
+
+## 2026-10-02 追加：Issue 識別路徑差異
+
+保留前文的 source-repository API 讀取結果作為當時觀測。其後最後一次查核出現路徑差異：
+
+- `issue_read(owner=dofaromg, repo=mrliouword-system, issue_number=64)` 回傳 `number: 146`，URL 為 `https://github.com/dofaromg/MRL_AI_SYSTEM/issues/146`，狀態 `open`；回傳標題、正文、建立時間及七則留言與前文記錄的事件相同。
+- 對 `dofaromg/mrliouword-system` 的 issue 搜尋沒有找到此標題；對 `dofaromg/MRL_AI_SYSTEM` 的搜尋找到 open #146。直接讀取目標 #146 也回傳相同內容。
+- 這表示目前 GitHub API 的 issue 身分／路徑有變化或轉址；本輪沒有取得 transfer audit，也不據此斷言何時、由誰或以何種機制移轉。標記 `CONFLICT_REQUIRES_AUDIT`。
+- PR #91 仍是 `dofaromg/mrliouword-system` 的 open PR；target issue metadata 將它列在 linked/closing references 內，不等於驗收完成或 issue 已關閉。
+
+因此，前文「Issue #64 必須保持 OPEN」是引用原倉庫 issue 的歷史狀態；最新可觀測目標為 `dofaromg/MRL_AI_SYSTEM#146`, `open`。不得把兩個編號／倉庫靜默合併，也不得因來源 issue 搜尋不到而推論事件不存在或已完成。須由權利人確認 issue 移轉與 canonical tracking location。

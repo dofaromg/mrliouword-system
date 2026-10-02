@@ -158,3 +158,9 @@ Issue 留言記錄 Manus 說網址已搬回 Cloudflare／Express；同一事件�
 ### 9.4 尚未被驗證的地方
 
 Registrar、DNS、Custom Domain、Manus audit、Cloudflare audit、HTTP/origin、網站 metadata、專案匯出 Hash、帳務時間線、刪除確認與 Mr.liou 最終驗收均未完成。pytest-based 測試因環境缺少 pytest 未執行成功。這些缺口不證明權利人所述系統、歷史或平台資料不存在。
+
+## 2026-10-02 最後查核追加：Issue ID 路徑衝突
+
+前文第二、七節記錄的是當時 GitHub API 回傳 source repo #64 為 open 的結果，不覆寫。最後一次查核時，同一個 `issue_read` 請求（`dofaromg/mrliouword-system`, #64）回傳目標 repo `dofaromg/MRL_AI_SYSTEM`, #146，仍為 open，並有相同標題、正文、建立時間及七則留言；source repo 搜尋無匹配，target repo 搜尋及直接讀取 #146 則找到該事件。PR #91 仍為 source repo open PR。
+
+此變化支持 issue ID／路徑可能已移轉或重定向，但缺 transfer audit，故標記 `CONFLICT_REQUIRES_AUDIT`，不把它寫成已確認的移轉事件。先前 PR API 所列 #91 為關聯／closing reference 不代表驗收或關閉。需由 Mr.liou 確認 canonical tracking location；網域與事件驗收仍未完成。
