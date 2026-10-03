@@ -164,3 +164,35 @@ Registrar、DNS、Custom Domain、Manus audit、Cloudflare audit、HTTP/origin�
 前文第二、七節記錄的是當時 GitHub API 回傳 source repo #64 為 open 的結果，不覆寫。最後一次查核時，同一個 `issue_read` 請求（`dofaromg/mrliouword-system`, #64）回傳目標 repo `dofaromg/MRL_AI_SYSTEM`, #146，仍為 open，並有相同標題、正文、建立時間及七則留言；source repo 搜尋無匹配，target repo 搜尋及直接讀取 #146 則找到該事件。PR #91 仍為 source repo open PR。
 
 此變化支持 issue ID／路徑可能已移轉或重定向，但缺 transfer audit，故標記 `CONFLICT_REQUIRES_AUDIT`，不把它寫成已確認的移轉事件。先前 PR API 所列 #91 為關聯／closing reference 不代表驗收或關閉。需由 Mr.liou 確認 canonical tracking location；網域與事件驗收仍未完成。
+
+## 2026-10-03 續查追加：公開 DNS／RDAP／HTTP 嘗試
+
+應使用絕對日期命名的本紀錄已於 2026-10-02 首次建立；以下為 2026-10-03 追加，不回填成前一日已做。
+
+### 查詢原文與實際結果
+
+```text
+python3 socket.getaddrinfo("mrliouhan.ai", ...)
+A gaierror [Errno -3] Temporary failure in name resolution
+AAAA gaierror [Errno -5] No address associated with hostname
+```
+
+對 `A AAAA NS SOA DNSKEY CNAME TXT MX CAA` 逐項執行 `dig +time=2 +tries=1 mrliouhan.ai TYPE`。A、NS、SOA、DNSKEY、CNAME、TXT、MX、CAA 均回 `status: REFUSED`、`ANSWER: 0`，resolver 為 `127.0.0.53#53`；AAAA 回 `status: NOERROR`、`ANSWER: 0`、`AUTHORITY: 0`。兩個指定 resolver 的 A 查詢也被拒絕：
+
+```text
+dig +time=2 +tries=1 @1.1.1.1 mrliouhan.ai A
+status: REFUSED; ANSWER: 0; SERVER: 1.1.1.1#53
+
+dig +time=2 +tries=1 @8.8.8.8 mrliouhan.ai A
+status: REFUSED; ANSWER: 0; SERVER: 8.8.8.8#53
+```
+
+Web fetch 對 `https://mrliouhan.ai`、`https://rdap.org/domain/mrliouhan.ai`、`https://data.iana.org/rdap/dns.json` 都回：
+
+```text
+WebFetchBlockedUrlError: failed to lookup address information: No address associated with hostname
+```
+
+### 解讀邊界
+
+這些是 resolver 拒絕、無解析答案或取址失敗，不是 authoritative NXDOMAIN、registrar/RDAP 結果或 zone 匯出。不能推論網域未註冊、無 A/AAAA/其他 RRset，亦不能推論 Manus 未綁定。狀態保持 `DOMAIN_BINDING_UNVERIFIED`。本輪沒有登入、修改或查閱私人帳號及帳務，也沒有改 DNS／部署。須取得權利人授權的 registrar/DNS 匯出與平台 audit 資料才能繼續確認。

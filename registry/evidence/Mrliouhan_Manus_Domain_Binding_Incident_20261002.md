@@ -98,3 +98,17 @@ Manus 不得被記為系統來源、canonical authority 或網域所有人，除
 - PR #91 仍是 `dofaromg/mrliouword-system` 的 open PR；target issue metadata 將它列在 linked/closing references 內，不等於驗收完成或 issue 已關閉。
 
 因此，前文「Issue #64 必須保持 OPEN」是引用原倉庫 issue 的歷史狀態；最新可觀測目標為 `dofaromg/MRL_AI_SYSTEM#146`, `open`。不得把兩個編號／倉庫靜默合併，也不得因來源 issue 搜尋不到而推論事件不存在或已完成。須由權利人確認 issue 移轉與 canonical tracking location。
+
+## 2026-10-03 追加：本環境公開查詢結果
+
+本輪僅對公開 DNS／HTTP/RDAP 資料執行讀取；未登入 registrar、Cloudflare 或 Manus，未修改任何記錄。結果是**本環境的查詢狀態**，不代表網域不存在：
+
+| 查詢 | 工具回傳 | 可支持的結論 |
+| --- | --- | --- |
+| Python `socket.getaddrinfo` A／AAAA | `A gaierror [Errno -3] Temporary failure in name resolution`；`AAAA gaierror [Errno -5] No address associated with hostname` | 本環境 resolver 未給出可用解析結果；不是註冊狀態或權屬證據 |
+| `dig` 經環境 resolver `127.0.0.53`：A、NS、SOA、DNSKEY、CNAME、TXT、MX、CAA | 每項回 `status: REFUSED`，`ANSWER: 0`；例如 A：`SERVER: 127.0.0.53#53`、`WHEN: Sat Oct 03 16:34:33 UTC 2026` | 查詢被拒絕；沒有取得這些 RRset，不能推斷其不存在 |
+| `dig` 經環境 resolver `127.0.0.53`：AAAA | `status: NOERROR`、`ANSWER: 0`、`AUTHORITY: 0` | 這次回應沒有 AAAA answer；resolver 不提供 authority 欄位，不能用來斷言網域無註冊或不存在 |
+| `dig @1.1.1.1 mrliouhan.ai A` 及 `dig @8.8.8.8 mrliouhan.ai A` | 兩次都回 `status: REFUSED`、`ANSWER: 0`，分別列出指定 resolver IP | 從本環境對兩個指定位址的查詢都被拒絕；不是由此確認 authoritative DNS |
+| Web fetch `https://mrliouhan.ai`、`https://rdap.org/domain/mrliouhan.ai`、`https://data.iana.org/rdap/dns.json` | 三次均 `WebFetchBlockedUrlError: failed to lookup address information: No address associated with hostname` | 沒有取得網站、RDAP 或 IANA bootstrap 資料；RDAP/HTTP 狀態仍未知 |
+
+**結論仍為 `DOMAIN_BINDING_UNVERIFIED`。** 此環境無法取得可用 RDAP、權威 nameserver、完整 DNS zone 或 HTTP 回應。上述受阻及 REFUSED 結果須保留為 delta，不覆蓋留言所載直接畫面／歷史，也不證明不存在 Manus 綁定、網站或帳號事件。仍需權利人提供/授權取得 registrar 與 DNS 匯出、Manus/Cloudflare 記錄及同一時間線證據。
