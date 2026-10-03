@@ -193,6 +193,8 @@ Web fetch 對 `https://mrliouhan.ai`、`https://rdap.org/domain/mrliouhan.ai`、
 WebFetchBlockedUrlError: failed to lookup address information: No address associated with hostname
 ```
 
+另以 Playwright 導航 `https://mrliouhan.ai` 嘗試獨立瀏覽器路徑，MCP tool 回 `Transport closed`，未取得 navigation/page result；這是工具 transport 失敗，不能說成網站連線失敗或 domain 不存在。
+
 ### 解讀邊界
 
 這些是 resolver 拒絕、無解析答案或取址失敗，不是 authoritative NXDOMAIN、registrar/RDAP 結果或 zone 匯出。不能推論網域未註冊、無 A/AAAA/其他 RRset，亦不能推論 Manus 未綁定。狀態保持 `DOMAIN_BINDING_UNVERIFIED`。本輪沒有登入、修改或查閱私人帳號及帳務，也沒有改 DNS／部署。須取得權利人授權的 registrar/DNS 匯出與平台 audit 資料才能繼續確認。

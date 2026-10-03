@@ -112,6 +112,7 @@ Manus 不得被記為系統來源、canonical authority 或網域所有人，除
 | `dig` 經環境 resolver `127.0.0.53`：AAAA | `status: NOERROR`、`ANSWER: 0`、`AUTHORITY: 0` | 這次回應沒有 AAAA answer；resolver 不提供 authority 欄位，不能用來斷言網域無註冊或不存在 |
 | `dig @1.1.1.1 mrliouhan.ai A` 及 `dig @8.8.8.8 mrliouhan.ai A` | 兩次都回 `status: REFUSED`、`ANSWER: 0`，分別列出指定 resolver IP | 從本環境對兩個指定位址的查詢都被拒絕；不是由此確認 authoritative DNS |
 | Web fetch `https://mrliouhan.ai`、`https://rdap.org/domain/mrliouhan.ai`、`https://data.iana.org/rdap/dns.json` | 三次均 `WebFetchBlockedUrlError: failed to lookup address information: No address associated with hostname` | 沒有取得網站、RDAP 或 IANA bootstrap 資料；RDAP/HTTP 狀態仍未知 |
+| Playwright browser `https://mrliouhan.ai` | MCP tool returned `Transport closed` before navigation result | Browser tool did not return a page-level response; not evidence of domain response/status |
 
 **結論仍為 `DOMAIN_BINDING_UNVERIFIED`。** 此環境無法取得可用 RDAP、權威 nameserver、完整 DNS zone 或 HTTP 回應。上述受阻及 REFUSED 結果須保留為 delta，不覆蓋留言所載直接畫面／歷史，也不證明不存在 Manus 綁定、網站或帳號事件。仍需權利人提供/授權取得 registrar 與 DNS 匯出、Manus/Cloudflare 記錄及同一時間線證據。
 
