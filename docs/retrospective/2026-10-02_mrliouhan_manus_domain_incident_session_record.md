@@ -196,3 +196,33 @@ WebFetchBlockedUrlError: failed to lookup address information: No address associ
 ### 解讀邊界
 
 這些是 resolver 拒絕、無解析答案或取址失敗，不是 authoritative NXDOMAIN、registrar/RDAP 結果或 zone 匯出。不能推論網域未註冊、無 A/AAAA/其他 RRset，亦不能推論 Manus 未綁定。狀態保持 `DOMAIN_BINDING_UNVERIFIED`。本輪沒有登入、修改或查閱私人帳號及帳務，也沒有改 DNS／部署。須取得權利人授權的 registrar/DNS 匯出與平台 audit 資料才能繼續確認。
+
+## 2026-10-03 續查追加：補入根源路由與成功部署回執
+
+本輪依擁有者要求「缺少什麼就補跟修」，回查本倉庫引用的正式路由來源及 PR #91 的 Cloudflare check/comment，補上前兩輪遺漏的正向證據與其界線。
+
+### 根源層路由證據
+
+GitHub repository search 確認 `dofaromg/mrliouword-root` 公開、default branch `main`、repo ID `1040653851`。直接讀取其 `docs/MRL_PLATFORM_ROUTING.md`（API Git blob ID `d62ff7ea32b75c3cd8c2a32ee16bb9c16457c8cf`）及 `docs/SYSTEM_POSITIONING.md`（`c9ed68d0bffa48a40eb59b1ce4a5b63cd06c69c4`），內容明訂 `mrliouhan.ai` 為 official backend；routing 文件另外明列 `dns_ready`、adapter、validation、rollback 等平台回收 gate。`docs/SOVEREIGNTY.md`（`5053788d17fa25b15141aa84c891bf83f196619a`）與 `registry/MRL_REPOSITORY_MAP.json`（`8ceeef7933f977bab3f84d03a6d65f195a09db44`）分別將 `mrliouword-root` 定義為 Root Repository，並列 `dofaromg/MRL_AI_SYSTEM` 為母體運轉工程入口。
+
+這直接更正前述 evidence ledger 過度聚焦未驗證項、未呈現已有正式 backend route 定義的疏漏。它證明根源規格已指定該網域角色；**不**證明 registrar/DNS/Manus 控制、實際服務在線或平台遷移 gate 通過。issue 明列的 `source_of_truth: dofaromg/mrliouword-system` 是工程事件的指定，不可拿來抹掉根源倉庫，也不可把 route 規格當作實際 DNS 綁定證明。
+
+### Cloudflare 成功回執及設定名稱差異
+
+GitHub PR #91 的 Cloudflare bot 回執 `issuecomment-5960870179` 報告：2026-10-03 16:35 UTC，service `mrliouword-system`，build `978b7362-3b4c-48b2-9e76-ab5ef20cb5da`，commit `9fd9c1d6` 成功；PR check run `Workers Builds: mrliouword-system` 為 success。
+
+但本倉 `cloudflare/mrliouword-private/wrangler.jsonc` 第 3 行設定 `name: mrliouword-private`；同目錄 `README-public-gate.md` 第 71–74 行記錄觀測 live preview 為 `mrliouword-system` 且要求以 account evidence 解決名稱差異。故這是名為 `mrliouword-system` 的 Cloudflare service 對該 SHA 的成功建置／部署回執，尚未閉合 service ↔ repo config ↔ account/deployment ID 對應，不能直接聲稱該 Worker 就是 `.ai` official backend。
+
+更重要的是，該 build receipt 不含 `.ai` DNS／Custom Domain／HTTP Host 路由證據，不能證明 Manus binding 已解除或 domain cutover 成功。需另外取得 Cloudflare zone/audit 與對應 Worker custom-domain/routes、Manus custom-domain/deployment records，並做 HTTP origin/metadata 核對。
+
+### Issue 路徑及留言的目前對照
+
+重新讀取 target `dofaromg/MRL_AI_SYSTEM#146` 確認 `open`，7 則留言都存在且內容、時間戳分別對應先前讀取的 #64 留言；目前 comment ID 對照已追加至 incident record。這補足「留言是否仍在新 issue」的內容證據，但不提供 issue transfer audit。
+
+PR #91 目前 open、`draft: false`，head 為 `9fd9c1d6eae4a2da76bc750ac3ede75cc3b3001d`，body 保留 `Fixes #64`，#146 linked closing refs 也列 PR #91。由於 issue 驗收尚未完成，此 closing keyword 是需處理的合併風險：不可在沒有權利人最終驗收時合併以關閉事件。當前可讀工具未提供 PR body 編輯操作，本輪沒有假稱已移除該 keyword；需在可編輯 PR description 的介面移除／改成非 closing reference，或待完整驗收後再合併。
+
+### 本輪可證與未完成
+
+已補：正式 backend route 的來源證據、平台回收 gate、Cloudflare build success receipt、Worker config/service name mismatch、comment ID 對照，以及 PR 的 auto-close 風險。
+
+仍未取得：registrar/RDAP 註冊與控制權、完整 DNS zone/歷史、Cloudflare zone/custom hostname/audit、Manus account/project/custom-domain/audit/billing、該 Worker 的 account/deployment-ID mapping、`.ai` 的 live HTTP response、頁面 brand/metadata 修正及權利人最終驗收。這些不是用 issue 或本地 config 可以代替的。DNS/Manus/Cloudflare 私有設定未經使用者提供或授權，本輪沒有修改。
