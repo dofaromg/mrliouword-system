@@ -228,3 +228,9 @@ PR #91 目前 open、`draft: false`，head 為 `9fd9c1d6eae4a2da76bc750ac3ede75c
 已補：正式 backend route 的來源證據、平台回收 gate、Cloudflare build success receipt、Worker config/service name mismatch、comment ID 對照，以及 PR 的 auto-close 風險。
 
 仍未取得：registrar/RDAP 註冊與控制權、完整 DNS zone/歷史、Cloudflare zone/custom hostname/audit、Manus account/project/custom-domain/audit/billing、該 Worker 的 account/deployment-ID mapping、`.ai` 的 live HTTP response、頁面 brand/metadata 修正及權利人最終驗收。這些不是用 issue 或本地 config 可以代替的。DNS/Manus/Cloudflare 私有設定未經使用者提供或授權，本輪沒有修改。
+
+### 16:43 UTC PR head 與部署範圍更正
+
+在最後狀態回讀，PR #91 仍 open、`draft: false`，mergeable state `unstable`，head 已是 `3d54065a17c6928c4b2feca862e7a559a5fbf8ac`，而 PR body 仍包含 `Fixes #64`；MRL_AI_SYSTEM#146 仍 open 並列該 PR 為 closing reference。上一段提到的 Cloudflare receipt 是 commit `9fd9c1d6` 的回執，不是這個更新 head 的部署證據。故最新 PR commit 是否部署未知；未移除 closing keyword 或完成 issue acceptance 前，不應合併觸發自動關閉。
+
+本輪最後一項本地文件自檢曾把「舊 build SHA 不等於現行 PR head」硬性期待成特定原句，因措辭不同而失敗；文件已含兩個 SHA 及該區別。修正自檢為分別檢查 SHA、open 狀態及 `Fixes #64` 關鍵字後通過。這是 assertion 過度綁定文字的測試錯誤，不是證據矛盾。

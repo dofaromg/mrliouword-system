@@ -155,3 +155,7 @@ PR #91 的 Cloudflare bot 回執記錄：2026-10-03 16:35 UTC，Cloudflare dashb
 兩組 comment ID 的正文與時間戳相符；這比單靠 issue body 的 linked PR 資料更直接支持留言內容在新 issue 上保留。仍未取得 transfer audit，因此**issue 轉移機制／時間仍未確證**；最新追蹤 URL 記作 `dofaromg/MRL_AI_SYSTEM#146`，source #64 舊鏈結和資料保留。
 
 PR #91 狀態為 open、`draft: false`，head `9fd9c1d6eae4a2da76bc750ac3ede75cc3b3001d`。PR body 仍包含自動 closing keyword `Fixes #64`；而 #146 metadata 將 PR #91 列為 linked closing PR。當 domain/Manus/DNS/帳務/正名/權利人驗收條件仍未完成時，**不得僅因文件工作或 Worker build 成功而合併此 PR 使 issue 自動關閉**。merge 前需移除／更正 closing keyword，或先由權利人完成全部 issue acceptance；本輪沒有 PR body 編輯權限，未代為修改。
+
+### 16:43 UTC 狀態再確認（追加，不覆蓋上列較早觀測）
+
+GitHub API 隨後回報 PR #91 仍 open、`draft: false`，`mergeable_state: unstable`，head 已前進至 `3d54065a17c6928c4b2feca862e7a559a5fbf8ac`；PR body 仍有 `Fixes #64`，#146 仍 open 並繼續列此 PR 為 closing reference。因此，上述成功 build commit `9fd9c1d6` **不是目前 PR head**，不能視為最新提交的 deployment check。沒有新回執前，不宣稱 head `3d54065` 已部署。
