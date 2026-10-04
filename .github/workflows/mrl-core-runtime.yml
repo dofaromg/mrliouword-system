@@ -1,0 +1,27 @@
+name: MRL Core Runtime
+on:
+  pull_request:
+    paths:
+      - 'cloudflare/mrliouword-private/**'
+      - '.github/workflows/mrl-core-runtime.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  core-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: cloudflare/mrliouword-private
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: cloudflare/mrliouword-private/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - run: npm run build
+      # Local compilation only. No Cloudflare credentials or deployment action.

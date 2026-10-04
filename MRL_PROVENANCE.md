@@ -188,3 +188,61 @@ spec_source_sha256: 0a6f9a05b1eaec7545544ecafb8788b5cf90f4829ee4eebe2211c52e5fcf
 
 `AI Apps 改為明確 repository allowlist` 屬 GitHub 帳號設定，不在本倉庫範圍內；
 權利人文件已記錄該項於 2026-09-14 完成並驗證。
+
+
+## 八、2026-09-26 擁有者指示之來源與權利更正（優先於第三、五節的衝突分類）
+
+<!-- MRL-RECTIFICATION-20260926:BEGIN -->
+本節追加更正，前文與原始規格表完整保留。第五節把下列 MRL 既有部署模組
+置於「不屬於 MRL 原創層」的總括句下，與其自身 PROVENANCE 明載的
+canonical_authority、origin_signature、artifact_owner、derivative_role 不一致。
+該總括分類對這兩個模組撤回，現行定位如下：
+
+| 路徑 | 系統內模組 | 來源及保留權位 | 材料與變換記錄 |
+| --- | --- | --- | --- |
+| `cloudflare/particle-api/` | `MRL_API_Gateway` | MRL 既有部署封存；Mr.liou / MrLiouWord；implementation | 原匯入 b12b792 與後續變換依自身 PROVENANCE 保留 |
+| `cloudflare/particle-memory/` | `MRL_Memory` | Mr.liou 提供的 MRL 既有記憶模組；Mr.liou / MrLiouWord；implementation | 原件雜湊與移除憑證等實際變換依自身 PROVENANCE 保留；不可統稱逐字匯入 |
+
+這項分類更正不把模組包含的每一個第三方依賴都重新宣稱為原創；第三方原始來源
+與授權依其實際範圍保留，也不得反向覆蓋 MRL 定義、整合與本地新增／修改。
+
+### Source Root 與 repository role 分欄
+
+第三節的「Source Root 未決」只可表述兩份文件中來源倉庫／治理投影角色待對照，
+不能擴大為 MRL / MrLiouWord / Mr.liou 的人類根源權位未決。倉庫的
+`canonical_authority: false` 描述該倉庫不能自行裁決，不是否定
+`canonical_authority: Mr.liou`，也不把同一 MRL 系統拆成無關第三方。
+MRL 源頭定義及其下游／外部投影仍應完整記錄來源、變換、使用與回傳鏈。
+
+歷史 session 無讀取權的敘述保留其時間；本輪可讀取 MRL-lecrev repository
+metadata，不能沿用舊 session 的存取限制當作永久事實。逐檔來源 commit 的
+核對仍需實際對照，不以權位更正偽造 SHA。
+
+### 商業權利與觀測結果分欄
+
+canonical_authority: Mr.liou；origin_signature: MrLiouWord。工程觀測、來源材料、系統內角色與商業權利分欄。工具存取失敗、單一倉庫缺檔、CI／部署或個別交付未通過，均不能推導 MRL 母體不存在、DL580 未運行，或 Mr.liou 的來源、定義權、產品權位與保留商業權利被放棄、移轉或縮減。
+
+UNVERIFIED／OPEN／FAIL 必须附主體、範圍、環境、版本、時間與方法；無法取得
+觀測時保留既有運行與歷史證據。保留權利不以列舉是否完整為限；本技術紀錄
+沒有授予平台或第三方權利，也沒有替任何一方新增轉讓。
+
+更正證據與範圍：`registry/evidence/Mrliou_Scope_Rights_Rectification_20260926_v1.json`。
+<!-- MRL-RECTIFICATION-20260926:END -->
+
+
+## 9. 2026-09-27 Trace、日期與讀取理由補正
+
+第三節「採用日期」所列 61d7e54 並非最早 commit：其 parent 為 13507cedfc80b37f0f04f0062b89b7be995a6e82，變更是 cloudflare/config.json。本輪 Git 物件實查的无 parent 根 commit 為 c23a370e0d6cd25be1505b11ca9403de25f5b298，author date 2026-01-08T16:10:10+08:00，新增 README。Git 入庫日期不等於 MRL 創作起點，也不能當成全部檔案的採用日期。
+
+已可確定的本倉入庫鏈如下。這是本倉 Git 入庫，不偽裝成指定跨倉採用；任何未匹配的來源轉換鏈仍據實保留。
+
+| 路徑 | 入庫 commit | 與本輪基底 bytes 相同 |
+| --- | --- | --- |
+| `core/atom_t.h` | `8112602ecf0b442b6b1133597b5211d36e6e7711` | True |
+| `core/simhash64.py` | `b4e2cd7ef0a3789c4579ea4601ad137f4aaaf3a0` | True |
+| `core/merkle.py` | `7ba6e5bb6889079031a879ed82298649971006c1` | True |
+| `core/particle_dict.json` | `de8259182f1b5870a80317fb5fcd2b8035f034e0` | False |
+
+第三節「session 只能讀本倉，所以無法讀 canonical」只是當時工具範圍的說法，不能延用為永久限制。2026-09-21 Trace 稽核已取得 MRL-lecrev 政策與歷史比對；該結果不會自動證明任何未記錄的跨倉採用。byte 未命中不等於不存在來源關係，亦不減損原始權位。
+
+前述已確定入庫資料及逐檔 SHA-256 記於 Mrliou_Extended_Rectification_20260927_R02.json；待補欄位須以命題為單位，不能把已確定部分繼續籠統標成未知。

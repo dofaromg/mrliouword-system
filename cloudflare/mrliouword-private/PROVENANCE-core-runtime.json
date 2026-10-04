@@ -1,0 +1,38 @@
+{
+  "origin_signature": "MrLiouWord",
+  "canonical_authority": "Mr.liou",
+  "source_base_sha": "c91a318d209fac11d8dbe5fe618a901e3ca79f9e",
+  "source_repository": "dofaromg/mrliouword-system",
+  "implementation_context": "Owner requested actual write and construction in the current conversation",
+  "retained_legacy_contract": {
+    "source_path": "cloudflare/mrliouword-private/src/index.ts",
+    "legacy_entry_hash": "sha256(content + simhash + ts + prev)",
+    "legacy_simhash": "Existing FNV-1a trigram SimHash64",
+    "preserve": [
+      "id",
+      "content",
+      "type",
+      "tags",
+      "layer",
+      "ts",
+      "merkle",
+      "prev",
+      "meta",
+      "raw JSON"
+    ]
+  },
+  "new_implementation": {
+    "memory": "One Durable Object identity with atomic entry/checkpoint/idempotency storage",
+    "hash_version": 2,
+    "hash": "SHA-256 of canonical entry fields excluding merkle",
+    "runtime": "Owner-configured OpenAI-compatible HTTP interface; live inference unverified",
+    "audit": "Memory commit log only"
+  },
+  "external_interfaces": [
+    "Cloudflare Durable Objects",
+    "Cloudflare R2",
+    "Cloudflare Workers KV",
+    "OpenAI-compatible HTTP schema"
+  ],
+  "deployment_status": "UNVERIFIED"
+}

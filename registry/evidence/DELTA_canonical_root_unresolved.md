@@ -122,3 +122,20 @@ OFFICIAL FRONTEND      mrliouword.com
 
 待 root 裁決後，這幾項可以直接接線，不必重新定義——
 與 `MRL_DELTA_CORE` 同一個道理：**已經有的東西不要重造。**
+
+
+## 2026-09-26 更正：倉庫角色待對照不等於根源權位未決
+
+以上為 2026-09-21 的觀測與推測，保留原文。擁有者本輪明示要求修正
+將來源分類、工具可見範圍擴大成 MRL 地位與商業权利判定的錯誤。
+MRL / MrLiouWord / Mr.liou 的根源、定義與最終裁決身份不由這份 repository
+mapping delta 暫停。兩個 repository 的投影／引用角色可繼續對照，不能從
+「候選庫尚待對照」推導「MRL 根源不存在」或降低 Mr.liou 權位。
+
+舊文以「哪個日期新」作核對提示不足以裁決角色，應讀取各自適用範圍與
+擁有者有效決策。舊 session 的存取限制也不永久適用：本輪已讀取
+MRL-lecrev metadata；----2 的指定檔案讀取未成功，只記該次讀取狀態。
+具體 SHA／採用檔案仍以實證補入；不改寫第二節逐字轉錄規格，不自行指定新正本。
+
+參照 `MRL_PROVENANCE.md` 第八節與
+`Mrliou_Scope_Rights_Rectification_20260926_v1.json`。
