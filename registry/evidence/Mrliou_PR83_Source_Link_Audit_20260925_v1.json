@@ -1,0 +1,4162 @@
+{
+  "canonical_authority": "Mr.liou",
+  "origin_signature": "MrLiouWord",
+  "source_repo": "dofaromg/mrliouword-system",
+  "source_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+  "verification_status": "partial",
+  "scope": "Existing MRL system file and reference evidence; this record does not redefine system ownership or names.",
+  "observed_at": "2026-09-24T17:50:19.310700+00:00",
+  "expected_file_count": 410,
+  "file_links": [
+    {
+      "source_path": "auth.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "mrliou/auth.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 846,
+      "sha256": "f1feab5db4524d283d0d1f766b4a1d95e305f8244e14ea981666194f68e014bb",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "README",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/README",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4643,
+      "sha256": "e54efc0845d90ea32a3d7cd58c884021c2fe88d8eb075ee12fc9ab2ed9083752",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "access.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/access.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 669,
+      "sha256": "2d716d8ac915808118da667f0a85f1c33c1beed4d767cae8f653b3ebc075a9ff",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "add.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/add.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 17690,
+      "sha256": "401b0928f359c3250fb5979486a6e8df701199e4d702d71c2be0efee6e902336",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "am.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/am.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 67343,
+      "sha256": "dbc8c723a1ad9782193e4854949388de7051b7684d3a68b6e687624ff5d513f1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "annotate.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/annotate.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 742,
+      "sha256": "486521b6719b8f58dd7e5733a1302997d676c531cede709b41778d70aebd640d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "apple-common-crypto.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/apple-common-crypto.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2758,
+      "sha256": "1367212c6e8aa64523c4ca39954f8bbb9bb531866271ca1ea4177a859f5366f5",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "apply.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/apply.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1125,
+      "sha256": "c5dbe361bf84c0b9d60a0d640cadc01f0cc2fd1af435ad98b556e183fc910728",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "archive.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/archive.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3107,
+      "sha256": "c9f9cda127abe719ac54b664ed2279bae0f59db9567ec295c2274f74f972955a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "backfill.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/backfill.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3477,
+      "sha256": "4c8d0c6487648d172cb07bb0a38c2017519ece4b001206fa17625f9f059897a3",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "basename.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/basename.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1752,
+      "sha256": "93c90a20c151512834dafa38b6f8682970d744bff5d1f40d953770e814480d14",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "bisect.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/bisect.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 38249,
+      "sha256": "326f96077b94605d36a32b166b4aa5a8948981212396b699c729b4a55a6f07c0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "blame.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/blame.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 36760,
+      "sha256": "83812c86d40ba3e7b9afb12f12af7f6d67af4f8c74434b0cb3f1cbc66ebcb737",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "branch.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/branch.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 32285,
+      "sha256": "46473edbad8dfa5ad3647a4f0756e379ac1ff23a56b29442a66398cebbbc1f17",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "bswap.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/bswap.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4489,
+      "sha256": "90289b48394cb455b49eba30bcec2c488c8d7700a6fac27f078afc7e93341cc4",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "bugreport.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/bugreport.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5676,
+      "sha256": "61b300b47c0590e45ba10328f26b62e889e59b5ad26df961fc10c7ad543f36e8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "bundle.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/bundle.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7132,
+      "sha256": "3ff2b050c47d82df6f602aa463b09a9c7d40ac91334bd1f351003401c90d3012",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "cat-file.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/cat-file.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 32991,
+      "sha256": "4bf3d4d9ac28fdd560aabc96820295afd785268f03473246ed98755cef2b3601",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "check-attr.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/check-attr.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5270,
+      "sha256": "29e843bcf844b6324ce74ce2e2cb5df5fa19408b0135e8840540b3a3107fe2e2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "check-directional-formatting.bash",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/check-directional-formatting.bash",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1285,
+      "sha256": "509d2f9899121e4e59012d3b86866e03af4d0dd245408dd2d9263d4d2b6af459",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "check-ignore.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/check-ignore.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5463,
+      "sha256": "baa8f5981c70f23bb1dc32ff1099cacff7b2f1d0dacd3b5a0973e429a5600d13",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "check-mailmap.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/check-mailmap.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2323,
+      "sha256": "a334585cc160f21bdde096389534724bf7b6a61d7836b9273da7444f063b6441",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "check-ref-format.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/check-ref-format.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2368,
+      "sha256": "30db504e4bc3cd4f638c3aded3c2c319d5787beae2ab4433392a52422a3e4739",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "check-unsafe-assertions.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/check-unsafe-assertions.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 567,
+      "sha256": "38dc28c9311414b4f1ba5179ff3800e993df6f911b9329dac7bec0bae6134363",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "check-whitespace.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/check-whitespace.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2331,
+      "sha256": "cec258d0e6248f3b0510a913c28a05face549e7196cdec622a99845de2b76d06",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "checkout--worker.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/checkout--worker.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4261,
+      "sha256": "749f4432afee43997230a33d21e1a161f20076a087094075105d66d084fe7a23",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "checkout-index.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/checkout-index.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9285,
+      "sha256": "e1bea40c74a8b68d1f156705b128b8ac0c316171ffbcf984efb403808eacd9e4",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "checkout.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/checkout.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 65500,
+      "sha256": "b9bb865980438a664c05f271dcec7c772f6e8e7b3bead5404cc642d56a29e4f0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "clean.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/clean.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 28038,
+      "sha256": "2ca8082ccda0f2b2854beb1cae48d1e2bb3b2367d79a103b24aaea6e14f5acc6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "clone.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/clone.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 50108,
+      "sha256": "973181221179018d6099792f37d147aa5f50333240859d0d0ff6f6a98240fb44",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "column.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/column.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2232,
+      "sha256": "c2400cf524d71d4c1db798e9284e7dddb68d47e9294e7cae3ecd994c0b686dd8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "commit-graph.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/commit-graph.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 10529,
+      "sha256": "cd206410b2bc2a8f3ab482f6f6d05c78b457368ae88d89485ef906d6a7cdff3b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "commit-tree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/commit-tree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3889,
+      "sha256": "5263f6eb056120fe98a6081bd16d082c514399f1b1762c5c5507d70f5a43c1ee",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "commit.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/commit.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 62091,
+      "sha256": "ddd38de7590496bffefd891d71f559b71b4a704973ebad3a7d8a5dfff4658c91",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "compiler.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/compiler.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 874,
+      "sha256": "6610a6d63c9efd426f16374cc79efd22d537eaaae1e5dd7bc6eb3133456b5ee1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "config.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/config.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 47281,
+      "sha256": "c965476c54b09c516a68b2b04c2f392042351b6cc0664d0b0f1d55f8a24aded8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "count-objects.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/count-objects.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4439,
+      "sha256": "ec13ae40d08741d095fd61faca7ee0d86f0e315d3609f6465224b796d464e03e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "credential-cache--daemon.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/credential-cache--daemon.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9022,
+      "sha256": "9240a52e543a2943c02276d11d9658143ba1a2a79d1549fb0d09d5d8aa785f19",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "credential-cache.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/credential-cache.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4819,
+      "sha256": "8d889406315500c7e40414d04796d07aaec5b13bc80b0aa799ef09613c734017",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "credential-store.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/credential-store.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 6172,
+      "sha256": "4c638c2345becda61bc2b655937cbd1c4d15121d048ec7a66ead94fb3655d013",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "credential.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/credential.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1340,
+      "sha256": "a459e1f8a421649b60473c28ec1655e7f83bc193f6e1af0e5d696bdefdea600a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "describe.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/describe.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 21647,
+      "sha256": "28f85388c49ad559f89a33019d6ff93b306c1b5c04aa59e9c65742bef19fe3ba",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "diagnose.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/diagnose.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2070,
+      "sha256": "802329bd4df791d40810d70d0128185556814cd3317bd747de835042a7bc4f53",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "diff-files.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/diff-files.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2570,
+      "sha256": "f8a33a003c0c2f62bbfbaa014408d85e0a29b014ba19c3b57317a19d96b43d0b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "diff-index.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/diff-index.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2240,
+      "sha256": "76a6eb9220e0a0fe4ff7871ca5a8a8be6fdd2387d6790b30c92065a95c436985",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "diff-pairs.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/diff-pairs.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5422,
+      "sha256": "9e04d5120d22d40200deb03213331ab2e3c45fe9d0d1c39a356d9438626562da",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "diff-tree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/diff-tree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 6515,
+      "sha256": "0c303285082734ae778a57b59f4ee5ac65e1e9331a32802472bd52f985dde634",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "diff.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/diff.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 17684,
+      "sha256": "420f49699d66b61e52deb3264da4d447cf7f6da2b3b78a5b5d06434abeda0b97",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "difftool.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/difftool.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 24308,
+      "sha256": "08cc85d983e1b897fe8512eecc1ab0712dfb95a182d9e256df409a6c439051cb",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "dirent.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/dirent.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2176,
+      "sha256": "9694a5c790ee6e891913f25ef4739b940a0be1774a5f7ec9407c630da30af16e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "dirent.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/dirent.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 427,
+      "sha256": "6ce30aaa8238a16d83648b556ff14d35e1dc28059d8de3aa4de2f6037cc7a3af",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "disk.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/disk.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1468,
+      "sha256": "2217a8a6a116596dfe4255b4307744259e83afeebb51d3f3ff2b4b17e70ad8d1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fast-export.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fast-export.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 38957,
+      "sha256": "871a28fd7d1296177f9003474ceac9f659f8017c86affe5fd4f56f6113f6df58",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fast-import.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fast-import.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 104944,
+      "sha256": "f07099fb9256769c7323476517f3edf41a6a54798bb88569531630c5fe48b690",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fetch-pack.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fetch-pack.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7677,
+      "sha256": "f882e6f58216469593865f60e4fe9870acebc3251d631c2780b01e35c48d0448",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fetch.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fetch.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 79991,
+      "sha256": "f7dda45536864b701aa5eca8e32462e319cf068181f642b4e4a053d9556847bf",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fileno.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fileno.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 117,
+      "sha256": "11b82d96d9f6a1d99d7f105220a688ee8e37a7b532db0e45f94a93f4d421a6fd",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "find_vs_env.bat",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/find_vs_env.bat",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 6287,
+      "sha256": "77adc299e1953d444fc8055e6424c7a5dc69910e92092de8fe5539a1fb862f2a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "flush.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/flush.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 688,
+      "sha256": "a030befe6745e08b6b2519df507410c957b3e7079e5213edc387f80a935db03b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fmt-merge-msg.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fmt-merge-msg.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2422,
+      "sha256": "55e017deaa491a7bd54576482da08bb8884c76dc382f6d6ef067b43e25a60fe2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fopen.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fopen.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 938,
+      "sha256": "a40482387a1fb1f852b16c7dac4cf606dbafd630ffc37fced550ef16f87b4e3f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "for-each-ref.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/for-each-ref.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4382,
+      "sha256": "abbb5a54098f115a48311e84305b7ff5ae9e572bcaec2463204b65ab6a335cfa",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "for-each-repo.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/for-each-repo.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1799,
+      "sha256": "c0e67721e1a144688a47d12ac298c95ff903f0a881a6b43a27f2f41871bb8ef4",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsck.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsck.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 31235,
+      "sha256": "c42c89b36a23fd8953fcda86d5eead99c9449ce8ee6434615318e7baad9b0b9d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-darwin-gcc.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-darwin-gcc.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3888,
+      "sha256": "931920f10b06ba30c8a537850bb356cbbb2946c27ce7f99572970e713d4bde9c",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-health-darwin.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-health-darwin.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 452,
+      "sha256": "1053cb85ebe090ba77870a8b1826d9bf221f9501ddbea8915ad6b0ce99d00573",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-health-win32.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-health-win32.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7132,
+      "sha256": "205a7226f74222405ff7c85777686b2513a3e46d7f238d71f1628aca26bd53ab",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-health.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-health.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1381,
+      "sha256": "f99758ef1ded4fec7f26c8c70f115978be8a710240057b1e18cfac653c0b8097",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-ipc-darwin.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-ipc-darwin.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1555,
+      "sha256": "e9343951e508423a98146a1f4b5ddd7c5f84626a185868ade8d7df7d1c662ad2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-ipc-win32.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-ipc-win32.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 251,
+      "sha256": "4c0e2a6188cf26a583b8701a8f1a015fad557c4a95da17b8e731a0b2f7b6db9d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-listen-darwin.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-listen-darwin.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 15930,
+      "sha256": "273e617b04cfe9df2abc82c940308e2357301aa246d3abae680fd85bb5f3987f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-listen-win32.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-listen-win32.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 24051,
+      "sha256": "b8844386021b40503d31728afc1c680ca56c2f790e02fc01e94bb285cae483ad",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-listen.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-listen.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1560,
+      "sha256": "3a20bab3a399ecb8f87879eb005f320200c1f68386fc42f037b3a5a53e18e271",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-path-utils-darwin.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-path-utils-darwin.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3434,
+      "sha256": "700dd64183cd0b9b9fbd08b3bc02199e20622056e7a1a4659db5a985c4506006",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-path-utils-win32.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-path-utils-win32.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3496,
+      "sha256": "bc08130714bc32e1867dd9baa66acbd17f0c346ea1c3922b177e46cbd8cc04df",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-settings-darwin.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-settings-darwin.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1901,
+      "sha256": "307f526e1e6a75649c682ec85c4de2c46378d41b517b2ad0e321ec492d49f981",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsm-settings-win32.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsm-settings-win32.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1095,
+      "sha256": "cd707cc28a1e50ff7e9d7d97dc44fe834aaaebdbc7191b675013b0ab50bd7d90",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "fsmonitor--daemon.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/fsmonitor--daemon.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 45590,
+      "sha256": "32f33722f0e071aae3ff61dea1d302db51758c16aa024f27203336023ec8fb4a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "gc.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/gc.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 95048,
+      "sha256": "76c0c56d79fa875a16c14eb711ea0d0a79e8cc2b90d47c26f1ece542334a85d8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "generate-cmdlist.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/generate-cmdlist.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1879,
+      "sha256": "4b0b29a6e57f64c951afcc1300d4f8c7273ae1277e99a767296c68f9a1afb454",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "generate-configlist.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/generate-configlist.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 596,
+      "sha256": "b717d4b747dc63169cecfb751e98f789ebf155307b96877768138b5143596152",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "generate-hooklist.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/generate-hooklist.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 494,
+      "sha256": "2f1fbbc9cadd93b1f738c9dd636a923cec4be4acb4726a12b87a383e08b49d73",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "generate-perl.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/generate-perl.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 696,
+      "sha256": "60db683a83b066ca152d5596dcf5130f2c4aacaedb0e781dcc5880aa89b48eca",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "generate-python.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/generate-python.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 294,
+      "sha256": "a2204df5c3bd55f0cb38f01f3bb40f0d12400d8e5fdfd04e48d901e89eb6f817",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "generate-script.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/generate-script.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 661,
+      "sha256": "c167ace672208b8a5f2b54572f0782187b9f1a952e2d39b8827bcd68a52a79e2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "get-tar-commit-id.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/get-tar-commit-id.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1436,
+      "sha256": "8f3c483ba218fcff18deccc5671d425731249e9fdcceb0dd5d4cd3e2dbb56286",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "gettext.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/gettext.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3313,
+      "sha256": "88e54aa076b80f9a669792d3ec96927b7c01b623118377cbf8afe76c701a97f1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-compat-util.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-compat-util.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 31616,
+      "sha256": "4672122ff84565c3c1a521153e2aa9aa2b786179c5ecf2957b61e81b73652c7e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-curl-compat.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-curl-compat.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1910,
+      "sha256": "e23d1482d84fceec50c5c2581871976d18acaefccd29898fe3a1f0ac82b27ff3",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-difftool--helper.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-difftool--helper.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2660,
+      "sha256": "eafba74e4934494c0017f8b06375b3c7e67c84ac285b8492976c51de2f7da619",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-filter-branch.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-filter-branch.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 15796,
+      "sha256": "f2cc24f5bc3a155c92ebc3789ce539e484f3afeb56b323d78387c39ac9455b8b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-instaweb.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-instaweb.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 22153,
+      "sha256": "2af729bf93a3607229e04a999f1a24b068243fc5c60d3cf2cc6f478268ddfc1e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-merge-octopus.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-merge-octopus.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2477,
+      "sha256": "c5d08a8c4e5afc8b48d965c309d3b98930592da304cf04ac265c8b24ea3d6891",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-merge-one-file.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-merge-one-file.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3695,
+      "sha256": "496bd3daaca988726b23252e8032f8e3cc38913dbe2a0d9f1bafd7b7276ae717",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-merge-resolve.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-merge-resolve.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1226,
+      "sha256": "5638e11ae0ffa26607545afc060cc603083863acb1f7c723547d6dc1d3ff29c9",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-mergetool--lib.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-mergetool--lib.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 10908,
+      "sha256": "3fd517e10d0cd0febd5bdda9c7ba2189646fb2747345cd8d0bc5ddea4c42f05c",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-mergetool.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-mergetool.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 11693,
+      "sha256": "445d33f9aa9e1f93afda20fab277904599151af08463316ad45ff0a650031d10",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-p4.py",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-p4.py",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 172869,
+      "sha256": "21625e51714cc4333b4b706209f5e10a5d64b04e8960725c7b12aec3cf7a28b2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-quiltimport.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-quiltimport.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3696,
+      "sha256": "a103092c9c97d3b202477ae1391ea56b3c30ad40a2cef152dca6980fb5e57fa4",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-request-pull.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-request-pull.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3992,
+      "sha256": "679c05f4a1fde059dc14e583deb3b63f4ba3f79697c08bb69af2b6130c0bd104",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-sh-i18n.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-sh-i18n.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1717,
+      "sha256": "7e737b61612d686583fd28e5344e4c33eaf4dc621599c12de28c09459b0a4a63",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-sh-setup.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-sh-setup.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8417,
+      "sha256": "42476ea2da7bcfcd3f6515d204432303f2b7eb3e0b2354b8f3d7a424d0c3854a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-submodule.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-submodule.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 10493,
+      "sha256": "55a1a450b48fb98cc8c3f5745c411e3391ac7659f46eb4b7eef9053aa3614353",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-web--browse.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-web--browse.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4401,
+      "sha256": "5c0d1d91dadfba3fe353add1f07be76016a7c6a3b2260ff9dfec5491fcd9e5e6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-zlib.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-zlib.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 6504,
+      "sha256": "12659850680a6c565dd3a051936752a65fe766b50ea4b97ed572a2ff2fad62f1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git-zlib.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git-zlib.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 864,
+      "sha256": "aa2c0737f22542cc0756e407378149c03262bdecc5a9aa027ec2b63bce64a6c1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 30648,
+      "sha256": "4bd19232226f4b7d39fa9d19ec0e32ccf834566659e8c47ea1845e84aa9ce44c",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "git.manifest",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/git.manifest",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 965,
+      "sha256": "8af071994d0fe7164c6681cc9ce5ec2225722228eb0cdfe665ec2e6cbe14d0ec",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "gpg-interface.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/gpg-interface.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 31160,
+      "sha256": "e526f2eeaf87f67e195fbb6e5ee185f1dc35e219b97caa9a012ab202b4a3b9d1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "gpg-interface.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/gpg-interface.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3139,
+      "sha256": "a09c48e63a60a53cf5b50df88f907bcde9d0966d08487e0397f9e8c8ee374e80",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "graph.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/graph.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 41331,
+      "sha256": "2fefc7f15a39d0ac4d54a88646d880392e855d2233501267c7c4b6d7bf7d27b5",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "graph.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/graph.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8910,
+      "sha256": "0e93a09812a88dfff537647a0762247e58e939ee4d1e624efff9b0b5365a3218",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "grep.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/grep.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 50584,
+      "sha256": "d1eec967a81781d4c368ffacb3b887c986691ba3db84343ab8b067bb49b129f2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "grep.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/grep.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 6788,
+      "sha256": "cd60c8d4adbfc965edb3edcb223ed2002ba7e48d030fb4a056e6854a19a00ba7",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hash-lookup.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hash-lookup.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3424,
+      "sha256": "dc26908720a939dc105ca8fb1f6202eb74c383dfdb3e2311db5235ef12249013",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hash-lookup.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hash-lookup.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1294,
+      "sha256": "d784685e96de53ad7c334eb44dd6e995108a9cbfc5841569fea7dec08b4f573e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hash-object.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hash-object.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4284,
+      "sha256": "f6c01e3a4536f77751b8a4a392c9e8e0759f1e31081fe27f9c52999a9d6281b9",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hash.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hash.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7654,
+      "sha256": "54c9598509fe8c7096669afd6402c14209d49a91e78ed5e300987163adb2ca74",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hash.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hash.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 15024,
+      "sha256": "d7467a59d772c705cbe174847806081366723780f275ebc5a668a289887cbcfa",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hashmap.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hashmap.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8614,
+      "sha256": "9f1e485caea211206e9a8f8df47e662f1655d8e5e17c8b34cb180e56ac17daa0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hashmap.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hashmap.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 19593,
+      "sha256": "5c1ebdf126b784eb0bd8404cc14fb3109b06ddad0fd36ce98e9b8bc2a95fdc07",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "headless.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/headless.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3361,
+      "sha256": "827b28dc326a610dc876a44607dc07bb0179b9b53cddd94452feb554a67192c2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "help.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/help.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 22871,
+      "sha256": "fb4d0fccbdfc1281b7152417fd71f4dcaa4b7059168c9b0030ac7d6daeb7477e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hex-ll.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hex-ll.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1831,
+      "sha256": "3c78f5fe8320f64a7db54ea3a3bffe5586484f29d4cc0d101181a7d87a4ee57d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hex-ll.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hex-ll.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 708,
+      "sha256": "4433f614d8a2b833bba1bb25eb15fc1d5e9b2ee6cf1c404f4d05fceba0a1540b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hex.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hex.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2922,
+      "sha256": "e3e095c3758dc8dd608cf487941256b968c69d85d7666959de0f40980dc55536",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hex.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hex.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2912,
+      "sha256": "f0e0ce10a8829edfb81063901be4af1725a3e9dd0dc9e84cfcee196611973fc7",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hook.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hook.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4352,
+      "sha256": "af910598e202c8bff20f526470af0b0de3de60dab4a9492f00fafbead70372be",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hook.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hook.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2587,
+      "sha256": "7707046d4c7df1e464170823806698f1db098d162f074683c02ef6ab20e605c9",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "hstrerror.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/hstrerror.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 530,
+      "sha256": "603f1c772d09bd3a32824fe4a5d79cd9b995a77026572acf6bd0ecde0d432d35",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "http-backend.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/http-backend.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 20194,
+      "sha256": "575a78f9b9fa76a024a234cfec1efef30c4104a17833f50e604f275b69c333af",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "http-fetch.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/http-fetch.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4739,
+      "sha256": "82103149d6bce3514a9cc726ce567deaf93046acef3d96db5b3c5343b4ae25e3",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "http-push.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/http-push.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 52239,
+      "sha256": "d04d3c1ca2b9e0d35f7fddcbba64674b3dda33ed196d8fb8eb081f6bf7949ab4",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "http-walker.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/http-walker.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 15469,
+      "sha256": "b4af2de8a8eac079b4688f4008ff85617114382422604f70ece0e610e20af71c",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "http.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/http.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 78097,
+      "sha256": "733dea5ae4204ee1c3b0e20af4d12aca97708c6953ca009129b171bd47779a30",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "http.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/http.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7754,
+      "sha256": "9c29d2fb2cb4cb992f768e5e54a738324657578afd0a1a02671763db141d4281",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "ident.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/ident.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 18276,
+      "sha256": "8b42255a5ab1eb80c55a0896a5e1f33aea7c2327f50e40101d7fc794f85abb1d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "ident.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/ident.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1936,
+      "sha256": "4ee9d9f2d8567ffd43bbcb82bae4ec2fc5d66a5827cbe9150446fbb9549d6b7e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "imap-send.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/imap-send.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 45480,
+      "sha256": "22458da849df875ddd5a63c513ca75b98320c457de1461413361e6c29386b182",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "index-pack.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/index-pack.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 59803,
+      "sha256": "b39264104774491ba20502c40bf8080488ffbc5425c5cdbb0654c88622d0193f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "inet_ntop.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/inet_ntop.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4907,
+      "sha256": "c56d6a499d44968fa495bcf335c18c8c47c3782f9c1a8cfc4184326f5fc39b09",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "inet_pton.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/inet_pton.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 6986,
+      "sha256": "bd4110d4a55c67c87f30721ee5371aa8bdbac2e417e056b2f7c7e43a9487046f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "init-db.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/init-db.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7883,
+      "sha256": "b506dbbbf505387a95ef9a2d517680b22d8ad5d0ab43e11f53dde2b07a56c28c",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "install-dependencies.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/install-dependencies.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5812,
+      "sha256": "a5d3083a0c045c49ac043acbc09736f381effd698d492a9cb6e85a8ce0ec1310",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "install-sdk.ps1",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/install-sdk.ps1",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 478,
+      "sha256": "824a411f242b77fe23872e57c076fded203c0ea1fe8cc76650713359fbc6f72b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/CODE_OF_CONDUCT.md",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/CODE_OF_CONDUCT.md",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5989,
+      "sha256": "47d794c7d74fd6001506c157d0c08301cf4b06e729bc0d61b1306783d0e8d1ec",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/COPYING",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/COPYING",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 18765,
+      "sha256": "5b2198d1645f767585e8a88ac0499b04472164c0d2da22e75ecf97ef443ab32e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/INSTALL",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/INSTALL",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9780,
+      "sha256": "11d2854a5f93a4910ec74155133f962af7c19518cc6bfd3e099ef8f8cc596128",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/README.md",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/README.md",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3662,
+      "sha256": "4dddaa908cc3407fe752784073847ca4ba949793800a686bed696f93a64534a0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/SECURITY.md",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/SECURITY.md",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1972,
+      "sha256": "e67a0dec9f3052e33354b969e20b96193047866b6fc2aa5a1c048bc279d4b990",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/abspath.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/abspath.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8588,
+      "sha256": "414b4085274b427bcf9552f4aeae924cdae46062eedc78f87f9869384d65793b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/abspath.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/abspath.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1833,
+      "sha256": "ba7fd1922f59c0baaad275844f6a497d397d47be95facaf57de5412388894b7e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/add-interactive.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/add-interactive.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 33879,
+      "sha256": "9684bd2505c36043bec5ccd71f83964a132a33318ad9b58f081826e1d09c55ba",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/add-interactive.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/add-interactive.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1338,
+      "sha256": "71c89302eb02cd1f0315e91778d0b3c03bfcfb5d2d9bcaafca6c62024c7aed6b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/add-patch.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/add-patch.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 54503,
+      "sha256": "e18dc05790b90ce0dc0ef65f7631556538f9ea2c2f89d89492c365025ba54689",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/advice.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/advice.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9922,
+      "sha256": "54eec3e8a0e9cbc3b23b73889e89c47a911bf9a37cf4f816e4ad805954b55953",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/advice.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/advice.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2570,
+      "sha256": "5ba7d0af9a48bbff601a02f0d93027ec1567d7505fc90d4369db0a7e7543797f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/alias.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/alias.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2856,
+      "sha256": "ff0049652484993e9f781cd7e4a422e8946bb534cbcdbb44619bf47f5a6c79a6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/alias.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/alias.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 441,
+      "sha256": "846e399dd7763264072308facb958d2bd14b00effa84e1917f9e616a02004a0d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/alloc.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/alloc.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2855,
+      "sha256": "e04d84ddca0040a427f51a854be4e9654cf168e137ce9d9076ee8b73cc2164cb",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/alloc.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/alloc.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 493,
+      "sha256": "0b335b9c91203001318af50176e0207c46291a57da7b0f10abdce1121d01eb18",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/apply.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/apply.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 139278,
+      "sha256": "b163347eb95d4b99cdbb11549984debfb0cd06f32ba05c1f093372e53dc79fe2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/apply.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/apply.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5363,
+      "sha256": "585f4d186f314567d2147d2a848607cf92787b9908406b8a84de8e61a1771b78",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/archive-tar.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/archive-tar.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 14237,
+      "sha256": "1b48d74f9b55c4aab2837b29c0254b2cb3d85da29ecddf549e15a784db49e6a6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/archive-zip.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/archive-zip.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 17959,
+      "sha256": "01e8ac769ee5b0a81929f0461bb9d4d9fc78aa5bd048c735a2f599e92470595d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/archive.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/archive.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 22110,
+      "sha256": "161cbf1f8c6745fec177edaa6bf59d9e59d929a7d82514573df8053acae7493f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/archive.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/archive.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1578,
+      "sha256": "5d33f4d108943e5268ec86c3ce500a15bf45f277d4fa389c33ecee088f1aa91f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/attr.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/attr.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 35024,
+      "sha256": "082389a502a1271eed1b716e86c0764e05c920e48c99f2a8e37d0a236c904f64",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/attr.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/attr.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8286,
+      "sha256": "272992a11335ceec0a46ebde697aba207709431b9e0c29e72b945c427321ebed",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/banned.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/banned.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1131,
+      "sha256": "cd92ffebcbf514fb57a2b971ffa0af5be9a284f9eff89c336d9eebc2d6714bcc",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/base85.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/base85.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2854,
+      "sha256": "cbde021b8e6ce3318109b37b008d5cf98f1df9022e6e3e5cd0e318b48547f363",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/base85.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/base85.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 180,
+      "sha256": "c44097cb438add710311fd28b4d80058b961231a3ff7131fdf1c566b8db1c008",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/bisect.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/bisect.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 31703,
+      "sha256": "41153d8f52350e4a8929249cb0e45fe49d32b4925dc77fcc70dc076dc06d01d6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/bisect.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/bisect.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2352,
+      "sha256": "25e59ec93a8351c431e082faaf5f7efe1ac421b3653c4b52f1086f4adbc22565",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/blame.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/blame.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 86288,
+      "sha256": "32464f0acff1a882b4050cec5c4553a3db860b1c620e461e5611a1792c451d94",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/blame.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/blame.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5625,
+      "sha256": "2a4560236985948fa8d253e6ef65f1ad0eacefb405aca093f39d6888c215a1d0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/blob.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/blob.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 403,
+      "sha256": "02ea911f5d618848df6449ef698f3854798d154d83ddf57afece50c8628db433",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/blob.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/blob.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 654,
+      "sha256": "5511c53b2cc863a61e37a9aeaba45dfc4bce5acada8dd6dbeb2929597b34cb75",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/bloom.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/bloom.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 15139,
+      "sha256": "d039134feff4940f8240a9d3aacaf856200edff7769c21378d294941ac3a4d46",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/bloom.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/bloom.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5035,
+      "sha256": "94d688bf808f78ca3fc4d11ae5759d78b39c0becfc63e88e6ee1b84784475b9e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/branch.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/branch.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 25416,
+      "sha256": "6f595809a71b85c5aa35eeaec469440fb17ff63c17abc3f9d9a78653b46066f0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/branch.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/branch.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5341,
+      "sha256": "805c019c2fba618ffb4468778b27a2a502ea65f130b58b7056b1c7f957630c55",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/builtin.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/builtin.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 17013,
+      "sha256": "2ed582cc7578a7d93117580c5f68553f3f81744f677f30cbbc88c4519191757a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/bundle-uri.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/bundle-uri.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 24803,
+      "sha256": "ebb9a200484d098dcd8656216599321d9e740bbb6114fa033eb1f32d0212e025",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/bundle-uri.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/bundle-uri.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4338,
+      "sha256": "799e426a1a08dc8e34fee74531eb9811eb672af82e65fcc798ca170af7cd6f87",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/bundle.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/bundle.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 16772,
+      "sha256": "6ac7c3b942fa80b5d07ddad68e0abf06dbc6757c6dd1d5324d3ba848932cb383",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/bundle.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/bundle.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2358,
+      "sha256": "c28d7dd96ae488eaa87fdea8e1413a9527c0e87249db40c494c6eb69c755929a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/cache-tree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/cache-tree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 26502,
+      "sha256": "490ba234a8c06a77ce9b670e2f4e60d83fdceaa5f237790ef725bdf513438290",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/cache-tree.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/cache-tree.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1788,
+      "sha256": "035bfab894581610a3b82a6fa28271e34fdf7e0f5a8f88a3e079d6f2893eb205",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/chdir-notify.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/chdir-notify.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2335,
+      "sha256": "a4df0a823bed67859b4b154689f229c3a423627ad181fbd84341ad98d7bd2128",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/chdir-notify.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/chdir-notify.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2650,
+      "sha256": "6c3fe6cbfcfaf07d3e728f768e836abe59ea63dd8c4b09d0216bb606becf82b8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/check-builtins.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/check-builtins.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 596,
+      "sha256": "e4288dec7960fc403fddaf010cdc8e2c4b4e26d6a11579e6ccaa87ebdc2b916d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/checkout.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/checkout.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2049,
+      "sha256": "ccdf9a3671f4f291c653fce2ee409557cadddc893494c112ce49a1cf9c139917",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/checkout.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/checkout.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 364,
+      "sha256": "89a36dc69b34bf0c186915468171c1e8efa72a8614162feef6fa21a1e67d51ae",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/chunk-format.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/chunk-format.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4924,
+      "sha256": "da61d7c50e1cdec093ad600cef9112f7a52b6cb1cc5422df1873c0a5bb94a6a8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/chunk-format.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/chunk-format.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2112,
+      "sha256": "736a33a24b95bcdb4558bef77b67450c52146598ff295e524efe4d527c5e40c5",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/color.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/color.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 11110,
+      "sha256": "5112db1a724e69c24ecb3ab82fd5be2fc56b27eabdb29bde3e645db39a6974b0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/color.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/color.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5239,
+      "sha256": "46e0b539f4ff30d5fca386031ce78e83be21da53707c4300cae522341c679a81",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/column.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/column.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9847,
+      "sha256": "7f180656b3d4a4ea41cb179379d4ff2b772ef8001fbb7e2b464218a94c65cae7",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/column.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/column.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1455,
+      "sha256": "3460a8101f3eb93fe96f85f69a98b91900efcc90a7d117c06a9c154b094194cf",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/combine-diff.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/combine-diff.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 44377,
+      "sha256": "316aa5e65601f2aa252fb27e79dd0867bdebbfdfafb064387f06b8a60a277339",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/command-list.txt",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/command-list.txt",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 13568,
+      "sha256": "1ba8f889847b042adb72ee4e1780ba698aaf0f3df822814f89a683852c624857",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/commit-graph.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/commit-graph.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 79378,
+      "sha256": "7e592a2227dac0244adfa45e2bbea2e5153e6b97b29ccdd1d003e721deab867d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/commit-graph.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/commit-graph.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7080,
+      "sha256": "73d5cf66d74a822f8e1a3e8a3a2b795e00944f4d11b8787d127692913cd65be0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/commit-reach.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/commit-reach.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 35303,
+      "sha256": "474ad277e47a6086295150dad5cb983eca3193ff97038ec8d27d9b49f036ad2a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/commit-reach.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/commit-reach.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5253,
+      "sha256": "b318688de5f184de00c21c82c9d2b6e40df16eba1c181ed8a76946c39b6ed038",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/commit-slab-decl.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/commit-slab-decl.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1458,
+      "sha256": "c8f32667a8f8362b53dcf1aca955d517cf3dbdadf766948a0a0ed0653767da07",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/commit-slab-impl.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/commit-slab-impl.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3129,
+      "sha256": "502e7986ddfb8a53921778becc85dd128e6857ab0ef17c313c77a80a3b814fbf",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/commit-slab.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/commit-slab.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2601,
+      "sha256": "bf06fa92029abe5acf48db7811cef83d0cc65a7c87564d92356e59719585baf1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/commit.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/commit.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 52176,
+      "sha256": "383152b331e66b3cc9216fd0faeb93059f13ade0f2d1f8b55157f1c63eb37364",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/commit.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/commit.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 13882,
+      "sha256": "467fdc7d739bc69095f3a0bfaf3ef8d81027069fcdae75bc4e2edadee8e824c6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/common-exit.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/common-exit.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 680,
+      "sha256": "139b3065f9454a2a238ecda4d97273b0f86a98d29580b1461503ac1f7a5f3800",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/common-init.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/common-init.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1596,
+      "sha256": "be5f7f3249a59e1a70fb6a0995c3db9ee4cc9509c4140a374e85e7989af44d20",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/common-init.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/common-init.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 107,
+      "sha256": "7b32a114ccdc17fb466b31766787759eb8119cdc7af0c3d772ac081acee59d62",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/common-main.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/common-main.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 236,
+      "sha256": "498db0a58a4a996c1c00e491c03977d459d41c4fc7c16b3a51c3e7f358977040",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/config.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/config.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 90674,
+      "sha256": "73b80b17bd9d1796638a53e76496ca5507138b396eb28452b86fe521fbea3d74",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/config.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/config.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 25426,
+      "sha256": "c4ff53b6819893f164b7a8b74eb822e13e5fd311398e81c438ff43f59ce0165f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/connect.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/connect.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 38871,
+      "sha256": "30da6c330d018465935f43054c2d5ad903c18c5a855d7adee491eef3aa635ec9",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/connect.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/connect.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1297,
+      "sha256": "9956da7b4e720a35c0674e8ee9147570bc64b3e48bcc4d0587467433acf1962d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/connected.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/connected.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4758,
+      "sha256": "81971257d951a02d86b17ba1f790131ca561c8cff47fe47c94873a2cfb64c6d5",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/connected.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/connected.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1978,
+      "sha256": "59badaed93d20f36f819477077aa9f9a03d80d766407a7ae7a4a7baaab6dac9e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/convert.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/convert.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 51029,
+      "sha256": "833cac195ae220a12d30a57b38ffbbf74bb7417eadafacc6f643a11cfd057cf1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/convert.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/convert.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7455,
+      "sha256": "b117d1d42320407219e7736b657ba930ebfe1c0a75d61623c00fd2c27ccd62c0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/copy.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/copy.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 270,
+      "sha256": "06130c4ca0d471025ff731ef921806f7f8beb9ef33e2ed3f1852d44aac978390",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/credential.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/credential.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 10111,
+      "sha256": "0fa12cd2ba31a60228822f414499ccb40df2071a0ad50ccf917ddcf4f02f670c",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/diffcore-pickaxe.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/diffcore-pickaxe.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7349,
+      "sha256": "f0c169ddb5fb03662506d94cbdd643f81e123569fb8ee72e9860c7699737cfaa",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/diffcore-rename.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/diffcore-rename.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 52745,
+      "sha256": "431334aa349eb4565dfe1ac3bfa37817261cfac00d33febe4e16c0dac49bda6d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/diffcore-rotate.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/diffcore-rotate.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1064,
+      "sha256": "3c18badae6e3fbdf4c29946b00f2d670fa58938cb35293371854d7fbc7c49396",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/diffcore.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/diffcore.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7747,
+      "sha256": "cdde0dea0f6d4a87821e7ff2223061a1ae4b64050161392747a4318d89127b58",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/dir-iterator.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/dir-iterator.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7263,
+      "sha256": "1b0dcc1739dd2a6471c2ab0d7658da7d387ef23c5b49c83df446ec755d49f684",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/dir-iterator.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/dir-iterator.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3717,
+      "sha256": "13e395d92a67bb53a834a5e0c93ce95346642a398d0b050e13f00163d5765dae",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/dir.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/dir.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 114819,
+      "sha256": "7cbd9419c3756749b5b835952e9db18474dfca3a3043846ee4027e7aed4a03ea",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/dir.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/dir.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 22438,
+      "sha256": "6b0694ab29e3df57222c0378e8721542baad30c5544ddca52018a7fbfc441ce5",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/editor.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/editor.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4120,
+      "sha256": "4d6f79e6e520e75a9b0865226edc2fd044e81b4d649866bf59563a2380f57cf6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/editor.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/editor.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1194,
+      "sha256": "9bbcc1129f25a3d6dac944d71d35241e731f8f6e15130cc56cc76490845e9f2d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/entry.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/entry.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 16476,
+      "sha256": "a2416f6861870df1f2ff1969f27e0d9f0ed63636ac7f32b3cf774cb8d11575a7",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/entry.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/entry.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2225,
+      "sha256": "6dbc7fcb50da9869238be32d89ea1342754fb11c8f6340c8736327807a5c8e04",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/environment.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/environment.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 20503,
+      "sha256": "ff7aadfcd4e16af52227818fc4cbcafc2f6506665fc2bdc2ebcae9597573d61f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/environment.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/environment.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7610,
+      "sha256": "b22ed5f6e3d8c902fbf07ad5eb46a28757e497d7284f9e12d3dbd7757e525b24",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/exec-cmd.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/exec-cmd.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8819,
+      "sha256": "3c6d08239b7e7527c0154a95787817f240bd5b0775dbaaf4b305ddd362b36962",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/exec-cmd.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/exec-cmd.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 475,
+      "sha256": "9476aeded703aee3bb9b14430428b515aa80af0c8988964e9612d0840132898b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/fetch-negotiator.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/fetch-negotiator.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 712,
+      "sha256": "99ea4d1abdcac8ba8c7369276ba217d331906316d7975e41c5cf3cb6488b6769",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/fetch-negotiator.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/fetch-negotiator.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1866,
+      "sha256": "ebea3086bf8505766d31836405a88e86bacd95b69fa1a4e59abc7ca75192d4d8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/fetch-pack.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/fetch-pack.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 64827,
+      "sha256": "620f0907ce6f5f4274f19f7c11e7f8c84b88df5eeebaf2876cbca7fc54ea4d63",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "integrations/meson_options.txt",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/integrations/meson_options.txt",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8092,
+      "sha256": "917f9d21d013257b6ea27ad406e30996c4a9be32633516941eefe6266800ea6c",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "interpret-trailers.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/interpret-trailers.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7199,
+      "sha256": "e4b68688bc15a539bcfaed6901027fb164a43ad83e19469d1967af998a12fccd",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "iterator.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/iterator.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2150,
+      "sha256": "75715157dd246c6910031962c3413797e577b4f526d4962d4eb46684c41cf377",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "json-writer.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/json-writer.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8585,
+      "sha256": "0016d0e9d7e1096052408db4f1091b316242d341aa4629de393463ad6ac6c8c7",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "json-writer.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/json-writer.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9526,
+      "sha256": "78fe168ce6ec4acac3b12cbcd35d118b1cb05e58a4cc2780545d1b11c157a3b4",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "khash.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/khash.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 13044,
+      "sha256": "81d0963643cfede84d25bad97044514b1b316b5f38d0ef0b2dcec4a48409dc82",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "kwset.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/kwset.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 22814,
+      "sha256": "2395718ce943d06e4699563b10ad9343068a4e434e4df752bafdac3f4af0ba4a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "kwset.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/kwset.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2616,
+      "sha256": "bea9fee88bdde67de54ee2c05ef3c7e23914cf3fad09019cb6b502c35560beea",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "last-modified.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/last-modified.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 15089,
+      "sha256": "fb8c09471890ea3a8727223b44e80488c9aaaf3ed749e3f5435a66fd17c9e494",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "lazyload.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/lazyload.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1764,
+      "sha256": "4cd57791baed5cbea4e279bd2e4d331387feb4ae1f432a21ccc802de6b6b7610",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "levenshtein.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/levenshtein.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2580,
+      "sha256": "b33a23f1f8db088df6c908852829276e1cacc38f3e535b733ef25ffb6feef981",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "levenshtein.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/levenshtein.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 203,
+      "sha256": "705aade13e2b6780441688b34e9ed599e2b5f23a81203059ca02ec7ee9a00872",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "lib.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/lib.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9372,
+      "sha256": "dc013872736b693a0ffaa97d4f576c5e4b019c98d5b332000389c91ed21a6d03",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "line-log.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/line-log.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 34178,
+      "sha256": "e151fa3f5e3935629fed4dd46c1cda6244756582132b96305a97b1bb343c4268",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "line-log.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/line-log.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1828,
+      "sha256": "bf6fb74b454d188dc9c7c54d97fe3389cb32d365dc061c8462908097c7e5c964",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "line-range.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/line-range.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 6812,
+      "sha256": "ddb5b2836bf6f0aec56dc29ef00bcd5c8eb84b8f6e18abba376a08a8c3ce32f3",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "line-range.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/line-range.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1399,
+      "sha256": "cd895a8485947a3a78911c96cfd2bedcfbe69f40356c7440cba5144b22aab5c8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "linear-assignment.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/linear-assignment.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4219,
+      "sha256": "c8ae5e3cfe59469b6164da91d319a1d30a767446f4c214dbeaba42409befbc34",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "linear-assignment.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/linear-assignment.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 736,
+      "sha256": "4b13a3825f75f861595484707134dad46ed2a7786cfbbbdd1b227e11d9250968",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "list-objects-filter-options.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/list-objects-filter-options.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 11078,
+      "sha256": "358975fecdcd5aaecec4b5d0a06c0da60c35bb4c2a30a6ded4ae58568cacab10",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "list-objects-filter-options.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/list-objects-filter-options.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5164,
+      "sha256": "fd8766239c778ece8c6b5bb183f1c47094ffb26b264cf02abe00eb4519f00db6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "list-objects-filter.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/list-objects-filter.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 22268,
+      "sha256": "e3e84cef11b83ff700e8fcdc6b477ef045ccf21c9ca7eca31c83bc3730dcd67a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "list-objects-filter.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/list-objects-filter.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3309,
+      "sha256": "b79834db8ff21d8972136d1de4bf76ad755905f9ba053ef6cf7f0feac65cb404",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "list-objects.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/list-objects.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 11889,
+      "sha256": "112d162a8a378ca26b9e66f51bda98c6deba93241c3f027256da70f82fabc9d7",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "list-objects.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/list-objects.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 860,
+      "sha256": "b1bc32d65afc0d6e982aa81be70fa39870c675263c9094dd832c0d8932933224",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "list.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/list.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5715,
+      "sha256": "f8ba80d231b53d6a8043cced5a88829e3f09ecc8f4afac01e4738b31fac2755b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "lockfile.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/lockfile.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5834,
+      "sha256": "f2ffe261bbc5199c629d6aa8130cbc5a4fc2c0636904dba733592fab164796c3",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "lockfile.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/lockfile.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 11621,
+      "sha256": "11169c5369e71d7798d2430876ec1734e5780c53bda275d1ff370114fecdb635",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "log-tree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/log-tree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 34729,
+      "sha256": "9efe16f74290ab1b37a8a8f32765bae58d94220d83b6ce752e26e7622d264123",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "log-tree.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/log-tree.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1356,
+      "sha256": "27fcb583f5ea1db41da17bc7d015c7b66c61b0e736bb6cecdbedb2806b88d636",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "log.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/log.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 73098,
+      "sha256": "8ecf48c28c365624275fab8b0d15286319ef0bb7c60dd1aedaf050addecc0ba3",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "loose.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/loose.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 733,
+      "sha256": "d4789fb2bf907f4d60e08bf5fbf1b58aa7eb1518e8c5bdcd4ab09fc96a648cc9",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "ls-files.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/ls-files.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 22421,
+      "sha256": "f3830e028518e4854c760656b4c11e8a397348f2ed156940f4587092f7f7e168",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "ls-refs.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/ls-refs.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5625,
+      "sha256": "fd1c97fc02ef3234688fad1dc7d5f7fe235baa0c45cf0d433f70bbcea6fd4882",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "ls-refs.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/ls-refs.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 235,
+      "sha256": "936ccc5210cd22673e16196e79389e0262ff48ae89fd0b152fd91984ad2bdcf7",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "ls-remote.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/ls-remote.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5635,
+      "sha256": "e64f589a94787667912cc3de6f7daf03404bb70f86b44f4860592eacdc406f85",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "ls-tree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/ls-tree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 12353,
+      "sha256": "3363b0fd618a9f0015e447e4eaf2705d468f91ba4d40e813eae531fa8941d487",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mailinfo.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mailinfo.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 29998,
+      "sha256": "a8d7460ce67ed814549703a00c492f38df65a8e613b0686757a592e18eb53ced",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mailinfo.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mailinfo.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1341,
+      "sha256": "94179825a40e8507a800f9d9ca1f7a3a7983637f1f98e9fc365b62a71f02df83",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mailmap.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mailmap.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7626,
+      "sha256": "5e13c95545862991dd389b7f4b5ede789b6b6ca53e6858956a979d3d0bc16303",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mailmap.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mailmap.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 565,
+      "sha256": "06150d6c709bc9260ae0dd7827e99c846e0a823c8bd923dadf467e843db552ff",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mailsplit.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mailsplit.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7603,
+      "sha256": "57697c6453d97a9aefb5170ee39f26cfa8c83636720f36f93b5369fcfdd50a22",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "make-test-artifacts.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/make-test-artifacts.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 223,
+      "sha256": "d79352f7edd5bb65e44e5db7ab39d84275b7bf98249b5067944ef67ecedcb2d6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "memmem.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/memmem.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 752,
+      "sha256": "c209c8bba4ede52829fa7cc87dc5e529fb9bea90802de45bf101d2d61440ced2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "merge-base.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/merge-base.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4983,
+      "sha256": "87255d21f587d94885c282a2c5cc37c78449b52b0f3c7710fc60124a50301713",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "merge-file.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/merge-file.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5224,
+      "sha256": "779d11475addaf0ed1fbe9de5ae550094b1ca0d82498f6db27ef432a46061fa2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "merge-index.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/merge-index.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2974,
+      "sha256": "d6a4a2b2ee409baa69bde7625f42b9472ae03eba7040ca3cddbab12f8c352f2e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "merge-ours.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/merge-ours.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 933,
+      "sha256": "d91321f674e773c59e9bf94d8c3fedf14d87a881b588d6a7ccf53b03e93715dd",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "merge-recursive.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/merge-recursive.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2729,
+      "sha256": "16b7c8766d3a29c3dfbe1a94ac943ba6ac9ed83fd69bce0f7db501d47ff1fdaf",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "merge-tree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/merge-tree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 18492,
+      "sha256": "3f20d00148cbe72ebcf88c270cf0b14648ac222eb7f080f785b7fe4808801331",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "merge.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/merge.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 53222,
+      "sha256": "e09af88367f9e3397937956153c5806b470e97b07ba430f8eed04598b07b0468",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mingw-posix.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mingw-posix.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 10780,
+      "sha256": "84365681ebd7f2c79086f2e4d1413133e06fa70a8de171943a607572c7da9ce7",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mingw.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mingw.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 87982,
+      "sha256": "678aa28e03ca3d4a3c2316970fa3f54e469ffac09c71794bf74767ecd6d1b5fe",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mingw.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mingw.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 7380,
+      "sha256": "a0dca7c12bd14581259c605bd101854c7d9272a36a5ab7bc8f7ae630bf110463",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mkdir.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mkdir.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 461,
+      "sha256": "4c681dd52b78c64c4f08fe8612bed7c597450dc0965f4d6506d9c53268ed3898",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mktag.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mktag.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3163,
+      "sha256": "538f91bd1596074f37818cd17db8c822341aa61befd581a707bc094c003f8901",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mktree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mktree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5544,
+      "sha256": "07f0e1ad9c618aed870342a8cbbfd20943cfe2c392a8bd1479104c53cc7293bd",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mmap.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mmap.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 773,
+      "sha256": "3fae7d42982cecfa653ef95174c3142ef7c302b916f3d92c26f06c0cb6239645",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mount-fileshare.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mount-fileshare.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 505,
+      "sha256": "8535e8b1b07dfb7784805c0eeeecaedf959d5d98bea733d2b615de2ec67416b9",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "msvc-posix.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/msvc-posix.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 862,
+      "sha256": "f5fd5a33c89c4c3eee241e82cdebd4488270ac2784b837cdf5799205ef812d7e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "msvc.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/msvc.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 113,
+      "sha256": "1be9bdb6a20f9c6e1bb3780738f442ea8be24bdf4050af1e2062487396fc8e9c",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "msvc.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/msvc.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 94,
+      "sha256": "0f92e3ec13923a9d22b4876cfceb30ca94d8d8c6349b3c17c49d5fef2ee9b9cb",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "multi-pack-index.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/multi-pack-index.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8968,
+      "sha256": "59203fb51c3cdc3e5d21e1760d1fba6b9b8b78bddaa306c9fb65beeffb922c28",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "mv.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/mv.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 18714,
+      "sha256": "cea069e5ee01b800802e0426bd7f1f7fd1fa89d2f36e2fc7f870267c77acf0d2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "name-rev.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/name-rev.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 18117,
+      "sha256": "bc207a06343d62e4cb210ea4cb85e556d26869a999b5dd5aecba19dae433f438",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "nonblock.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/nonblock.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 939,
+      "sha256": "7fa01b78576cfecdf96cefc18d799d8cf223b1eb0b90bc0f823d7ffb86d7b645",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "nonblock.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/nonblock.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 181,
+      "sha256": "74f4ed81a3fcb64f745addfbda87b7c773d76d5676a6a78ef2288a9349070c39",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "notes.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/notes.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 33271,
+      "sha256": "6df45a9cc5fb9effae237a210f4bea2a81368edb21101d45bedfc1651f773f9f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "obstack.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/obstack.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 13914,
+      "sha256": "736017571c3f98014b7ba51fa0bd68f838e0342f13ca527318c51bb2aea7c71b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "obstack.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/obstack.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 19633,
+      "sha256": "8dc9426d9c534f56e70f024de6b9565171433556234578cb76180452aff62cb8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "open.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/open.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1163,
+      "sha256": "fbf3aa125303d0a8839720ab1b0f2ecdce0c8bfc4e52ca3adae4b73fd8e24837",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "pack-objects.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/pack-objects.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 145956,
+      "sha256": "e5fc2bd79d6c360214ddd4897aa5d0521793dc2eecf39ac542177daabbf51b7a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "pack-redundant.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/pack-redundant.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 16184,
+      "sha256": "d7c3984c042bac3422ee8f4b7bd7a4bb23d3e9a0a71c39721ad408e7a22b3e4a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "pack-refs.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/pack-refs.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 341,
+      "sha256": "f229b0dd285c5708078fc7cdb34b28f1e070ce40a69c4dc4e5e60e3adc09a19a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "patch-id.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/patch-id.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 6386,
+      "sha256": "112e21f9f3f879be84a6cf59b6666fcb207da6a7b5f0c3dc5b91fef1ddcd83a4",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "path-utils.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/path-utils.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1879,
+      "sha256": "00f991a4b42b9a035d9d200b5307cec0012eb53e1ff12f5356cb774b5f26f251",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "path-utils.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/path-utils.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1207,
+      "sha256": "1fb24c23be29bc336d615975a41750063b5932310c69796a438eae18c131eac0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "posix.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/posix.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 12569,
+      "sha256": "bb2b77aa31b9895c9697aaa6bc971bb269b1553d1a90f08ea793c52517ca55d6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "pread.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/pread.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 457,
+      "sha256": "a50fe8e948b0921af977732b05f50179f3e18b47e6d5d248fdf4736dffb54777",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "precompose_utf8.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/precompose_utf8.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5344,
+      "sha256": "a5831ecd2aab3950104ef4d74d5ea41a85f890c37166a8221e6b30fcf602aa23",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "precompose_utf8.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/precompose_utf8.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1396,
+      "sha256": "6bf42a80aafba68850e2f019e7bdf3380f440ea69b44111d17df9ad0f3cd057d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "print-test-failures.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/print-test-failures.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2579,
+      "sha256": "18a156c83e552a634ba2f7bb4d801c8e89fe22b8ad45162923a557f85161bf2c",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "procinfo.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/procinfo.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 254,
+      "sha256": "982019437ac902e72fb7e5179d89fbd9ae829c88d2b239cefcb8231bccc52912",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "prune-packed.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/prune-packed.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 860,
+      "sha256": "85a9be0a6e0a2377f131285c8374a6e4a216e6c399506f3a07ff1daf25def0f0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "prune.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/prune.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5370,
+      "sha256": "e7904a5edc3ea6d0e54376df8d3451a0a9fd1cfde75d9d95cd26d29f35bbc863",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "pthread.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/pthread.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1649,
+      "sha256": "03e45db88bd758b8d1cb66b2522ad3db62ea3004af9659cae8f5e0b9cc5040c0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "pthread.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/pthread.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2608,
+      "sha256": "3d2c8ae9b4ce672977a48f2929ede3a61ebfe48e2892e0dbd44b8bce5ac7b1fc",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "pull.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/pull.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 35821,
+      "sha256": "b54c60ab757f1fc88bfaee156731d38acdb64b5aee989d271896b6a4f86b4091",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "push.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/push.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 21167,
+      "sha256": "813512e1296c8ad11b9220e45c296266ac3c3935ae7beb6cf85fd977ae307f76",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "qsort_s.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/qsort_s.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1156,
+      "sha256": "1c44460673894cc152d9945ca56031dcf2201c75bccce46c069a8d77a7d86e33",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "range-diff.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/range-diff.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5977,
+      "sha256": "4e39b7cccc166298f057e63933bfaa06959bbca81e45c61c26ed688adc6d80c9",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "read-tree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/read-tree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 8669,
+      "sha256": "ca5eb1d60a163a207e5fbbcd49fcbbda5415130483b2dc55cc2df4efd54f2d99",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "rebase.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/rebase.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 57175,
+      "sha256": "c5c779eb410d4ef8d6fec89be9e17d946ea3854276fc48989e31ddb5ec10d2e2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "receive-pack.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/receive-pack.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 71142,
+      "sha256": "f3820d8a07a248b1616c1d5b566d18ba762f5a8fa205be38093f2898d40b8601",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "reflog.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/reflog.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 13820,
+      "sha256": "92b6988f0244074feda63526d133316752a9ed9c08da5ae3ba40884c3e67f8e5",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "refs.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/refs.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5341,
+      "sha256": "797fd9e5d180295e5ce92fa3a917b0cd0cf20e9668a55a5914f4f001cd1f4af0",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "regcomp_enhanced.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/regcomp_enhanced.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 213,
+      "sha256": "31e1cad1c5676045f8b7674d0328fb5df48b339e9f51c55dc588e53b0b601987",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "remote-ext.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/remote-ext.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4796,
+      "sha256": "4b6c03be4315f68425ce1982c02dcc82967dad555a93879ac914d3c8eebd7878",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "remote-fd.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/remote-fd.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2008,
+      "sha256": "8a1e6e04097890e62289f220bbe392907af01b90daf19f12f3094919547bccb7",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "remote.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/remote.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 56685,
+      "sha256": "c54850eb915889b18e3bca43f53429195037b3a5e2386e977d52b0043247c4f6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "repack.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/repack.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 18578,
+      "sha256": "888867d1bad3aa0a723758de9ed569b42cc3a41b3918d789a5d6342923828eca",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "replace.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/replace.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 18171,
+      "sha256": "4f1a954dfd14a5d8185cb86554abc31583873615c4256b8e4e94b96a9f409a69",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "replay.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/replay.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 16971,
+      "sha256": "25ee84ad4bae299889e50de02d4ea246a6ed0a79717ec37fc2a98e6cda6df59a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "repo.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/repo.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 15134,
+      "sha256": "a6bf1990c9e45359dc111153c45c4e45faf0efd1e908bbb6c629bd51f82f3932",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "rerere.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/rerere.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3448,
+      "sha256": "5feef96ceb56428fdeb884fd8619a96920516a33ef20d7dfd437e91ba7511b55",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "reset.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/reset.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 16681,
+      "sha256": "ba1da199b1940463c41452a6b7a18e7fc3073bc5629e20c4370ed3bc4f2b893f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "rev-list.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/rev-list.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 24673,
+      "sha256": "baa14ef1114c4ec3c71aead8abb05b028c83bd39b5f22516f4dca1954736a101",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "rev-parse.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/rev-parse.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 29197,
+      "sha256": "dd4b3b8a39bbf5fe9069a47b65872dd41adff3a619d9dd55d70b0d5d6729cc19",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "revert.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/revert.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9432,
+      "sha256": "85cb66e32c147b0f3526dbf0350484058f91688c765461c9b1eb5c78e47dfde9",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "rm.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/rm.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 13113,
+      "sha256": "8d2672282014291623336623b72299a4a6f143839e3dabb60d6d34dbd150a831",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "run-build-and-minimal-fuzzers.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/run-build-and-minimal-fuzzers.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 512,
+      "sha256": "3aff4e13c420383c872eb8013fadefe4e4db6d3fed22178fb5de3d3478b4fb47",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "run-build-and-tests.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/run-build-and-tests.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1653,
+      "sha256": "3a4f6620181037a23962c366f7f4a226720f8ec8b7fd5c0cc1e3f7ea1420ecc6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "run-rust-checks.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/run-rust-checks.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 325,
+      "sha256": "aeefd888c00a461aa65c73a695c12120b25705c7220b30e180ab38aa6c530aaf",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "run-static-analysis.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/run-static-analysis.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 553,
+      "sha256": "7668e45e195b3e589f8fd2a37825b477215fac348451134bcc887c6e42ac1853",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "run-style-check.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/run-style-check.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 137,
+      "sha256": "e2e51ab78a16b0f3d6de29550caf8607ba41c03e0c2adb96d6e6ac6cd0194220",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "run-test-slice-meson.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/run-test-slice-meson.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 427,
+      "sha256": "96b6562d4b779ec972cd4fbfd5cecdb7d884f937b8ab66ca67de43b9e3c7978d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "run-test-slice.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/run-test-slice.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 408,
+      "sha256": "e48d62c2821c74ac21d363f7080edbf26f9e3ed5a7962e314f3bf6acad987c76",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "send-pack.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/send-pack.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9313,
+      "sha256": "954e15662ab0a5071a3fbca5a7a4b1ab4231567d60aa07574ea6910bff417d89",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "setenv.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/setenv.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 862,
+      "sha256": "09b12d2dc0e38d5d42f8310b37f1de201a10825af78af63931cd0fde00b9c468",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "sha1-chunked.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/sha1-chunked.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 390,
+      "sha256": "9db66d2e989a9c929c3c2c07fd0bc6022726b427019582757bff3982131272a4",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "sha1-chunked.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/sha1-chunked.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 81,
+      "sha256": "49652f5495557b150079d9e45453502394b50ba1d2c7c8f012a9868c62cf4f50",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "sha1.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/sha1.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 6800,
+      "sha256": "6ae3dcf2315ba44a9ea908fffab643c9946752521ad17a5bb48d9c40a83e9b64",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "sha1.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/sha1.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 737,
+      "sha256": "adda92b44c86d3eb8219cb2def55d07b5eddae8f6bdcd5cb3989d54e44066ace",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "shortlog.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/shortlog.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 14548,
+      "sha256": "f18df4048fadad1c8eadecf7856f9897b27884dffd033b15d0a9dec057bff9bd",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "show-branch.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/show-branch.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 25148,
+      "sha256": "dad702113bcbae35f9d98c11c528a9b3f4d73d893b6f66a21f26851bfe49d0f2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "show-index.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/show-index.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3459,
+      "sha256": "ace2ad07314a8a03d171c3037d7d403b1696ef5c825f2ee816336b959386bbaa",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "show-ref.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/show-ref.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 9444,
+      "sha256": "4fa091606546196ffa84bfcf9ddd73bb0642dad890feaab1350b328f87f493ed",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "snprintf.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/snprintf.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1541,
+      "sha256": "62af520ada1fabec932580795655484bdc3a8e04890707070fcfd45649b4bde8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "sparse-checkout.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/sparse-checkout.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 32266,
+      "sha256": "1259f9fe0d0101394ab1964ff0f6c978fd460ab46111d3c67b0d230a8159db1a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "stash.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/stash.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 65380,
+      "sha256": "11815c3bcfde27d624db70b745e3b4b5f4c90612060bd03c64b719563c94e785",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "stat.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/stat.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1150,
+      "sha256": "22b5226798b47f82ec7ddd6efb06b496e1db140bb14af832f583f190cfd27700",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "strcasestr.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/strcasestr.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 431,
+      "sha256": "d2a2ae414ac6844b9374e6e741e5a2619bbd3835080da269269cb030cbf3748f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "strdup.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/strdup.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 169,
+      "sha256": "e9c46447164877b33d265020648ee1d228190656b2c97d28c7b53aae65a8685f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "stripspace.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/stripspace.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1760,
+      "sha256": "9f788d2b8688880aeb532ff554784f0ae85cb299502d56f126d0e1798968d12f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "strlcpy.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/strlcpy.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 247,
+      "sha256": "9715e380a6dc53f9679815ec90f4a06a6cf94e40a1112c49001c1c76d2d51bc2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "strtoimax.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/strtoimax.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 214,
+      "sha256": "11214810817d0bb7eac3bfad6550dbc43706d85f903cd23ca429a932f17a7e7e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "strtoumax.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/strtoumax.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 217,
+      "sha256": "48ab05b3cef72b6c4ef59de11c20706f8415a5fdf67256a46b7d6c833d517e0d",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "submodule--helper.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/submodule--helper.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 102879,
+      "sha256": "a5cb467d7e594c5ac63167384be4f0c439a0d8e357827a5ccbe0e2c58b255d0b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "symbolic-ref.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/symbolic-ref.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2899,
+      "sha256": "08665787fb87abea5c7980e2a33edd0e6d19b95ff849cc768d9d03ef88a22410",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "syslog.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/syslog.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1509,
+      "sha256": "53f831ee92fa5027b8603e41d49f4e74eb4cecff2433d7109db641bd5e2090c3",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "syslog.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/syslog.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 397,
+      "sha256": "7dbaad8779e56485eb23bcdff8d323c604b04183649b0b97604be5ba58144fb1",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "tag.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/tag.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 20474,
+      "sha256": "a1f56859f5775ca84fbb17955b87bb0aedd82ee320adcee16e52a6bae83d9ed2",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "terminal.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/terminal.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 13998,
+      "sha256": "630f2afe3c4423055dafa6f4f04c648bf6e6d6ac9c8685222742181e4fd23940",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "terminal.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/terminal.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 875,
+      "sha256": "f3747513efc922165dd5b3c11d88aa512d57b693b6bda39c905e94bcfb7baf51",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "test-documentation.sh",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/test-documentation.sh",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1609,
+      "sha256": "52e1ea0133e86b45acfe10eb3a3672e69fe55081679e0a4a9fc90746265aa2df",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "trace2_win32_process_info.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/trace2_win32_process_info.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 5364,
+      "sha256": "c83e51a6abd60f6b38819ea709e10f34984d32bde7c04058de62b0296cca7f31",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "unpack-file.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/unpack-file.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1177,
+      "sha256": "f0c7b10867359a09ae045c286de4699ca77b630d0af51b2c3e8978c1d8fc96f5",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "unpack-objects.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/unpack-objects.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 17123,
+      "sha256": "5a04899e2f906b2023c596606b652167dad5736a2e085abbebfa6e60e18e1c04",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "unsetenv.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/unsetenv.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 605,
+      "sha256": "26ec7344329600b5a4350e52654ec25784631beb901118d13dc94e8523ae126e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "update-index.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/update-index.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 37100,
+      "sha256": "d08efccd6f8d3fe8125743aec595959eba1b16a4c7069f3fea8cc09a67d32e64",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "update-ref.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/update-ref.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 23470,
+      "sha256": "d97a16dd8f34faa56d37b3ce673312a3ce9716b289d9636b9242aaf55c4c05e8",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "update-server-info.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/update-server-info.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 753,
+      "sha256": "23c406da6dbffbc0ab133768ca7ff1bdd5161edf7995079a828479d76b41a569",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "upload-archive.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/upload-archive.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 3483,
+      "sha256": "78f47a9d81e0142a855d3af9ca58e84ff379c656ada4204928bd5e6a146cd64e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "upload-pack.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/upload-pack.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2420,
+      "sha256": "8c48618a264e553fc735193841230c60e41a9b012eab0c79ab5ed56816c892f3",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "var.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/var.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 4621,
+      "sha256": "aaddba5622271f1d79df4712d0645df34f483cef88d93d2b70b445e460afd68f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "vcpkg_copy_dlls.bat",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/vcpkg_copy_dlls.bat",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1247,
+      "sha256": "5b49092526620a320495c37c8307055ba61c1de0c07459ddedc5b0e2b0c5a6d6",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "vcpkg_install.bat",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/vcpkg_install.bat",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2575,
+      "sha256": "c4a216c205b048635ba079fe8dc06636af3590ed57f9e8e14cfebc9351e739a3",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "verify-commit.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/verify-commit.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2219,
+      "sha256": "7b211030586ea6bc702ebfd01d6df3215ceb1169d22134051ba7bdbaae6aad9a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "verify-pack.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/verify-pack.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 2414,
+      "sha256": "bbae52701f5350b4e7a563518ec8968e6c2fda07276ab9dcdd117c14ee066c9b",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "verify-tag.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/verify-tag.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1782,
+      "sha256": "7dcf6c99a586ccb963a505fa77802c9a0925519db4353c2579244734f59d165a",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "win32.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/win32.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 878,
+      "sha256": "4d2fefb55c26293b72bc683abf2198d52bcb54a8ba3dc6a2c56c9c6b49368616",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "win32mmap.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/win32mmap.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1166,
+      "sha256": "c969ecd3daba4dbe706d27bfdd98f98d39cf2f2d6fb2dad365b066e83de5adcc",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "winansi.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/winansi.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 16981,
+      "sha256": "cf32dcd08c514a47b7745770093f862ba4fef71d0b5623234da1680a82d7a81f",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "worktree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/worktree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 41937,
+      "sha256": "4e6cc7c07696fe24696f5776995b4eff3be40c3a056c68a74173f587e76c7b3e",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "write-tree.c",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/write-tree.c",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1898,
+      "sha256": "76e66ec33a5e2c4c89a765a651be5d533ba7f56865c3042ed4eb7390b69c5d14",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    },
+    {
+      "source_path": "zlib-compat.h",
+      "source_version": "3ef4d1f31e79bc93c2f6a47804c83eea0df61fab",
+      "destination_path": "vendor/git/zlib-compat.h",
+      "observed_version": "7820444dbfedbdec64e45f4b65514d9e769a73a3",
+      "size_bytes": 1686,
+      "sha256": "67ca2a0d695e319e471cac2351bf119bc98af4a70fe1a8948dfa1bac7102bb31",
+      "transformation": "PR83 recorded path relocation; bytes preserved",
+      "content_verification": "verified"
+    }
+  ],
+  "observed_references": [
+    {
+      "from_path": "vendor/git/git.c",
+      "to_path": "mrliou/auth.c",
+      "symbol": "cmd_auth",
+      "observation": "registration and definition; not proof of executable linkage"
+    },
+    {
+      "from_path": "vendor/git/integrations/builtin.h",
+      "to_path": "mrliou/auth.c",
+      "symbol": "cmd_auth",
+      "observation": "declaration and definition; not proof of executable linkage"
+    },
+    {
+      "from_path": "vendor/git/MANIFEST.sha256",
+      "to_path": "mrliou/auth.c",
+      "observation": "historical ./auth.c entry; hash verified at current recorded path"
+    }
+  ],
+  "use_return_records": [
+    {
+      "component": "gt / cmd_auth",
+      "use_status": "not_runtime_verified",
+      "return_status": "not_runtime_verified",
+      "evidence_paths": [
+        "gt",
+        "test-auth-command.sh",
+        "mrliou/auth.c",
+        "mrliou/Makefile"
+      ],
+      "closure_requires": [
+        "actual executable build receipt",
+        "authentication verification without logging credentials",
+        "use/return trace bound to tested commit"
+      ]
+    },
+    {
+      "component": "Cloudflare particle-api",
+      "use_status": "not_verified_in_this_repair",
+      "return_status": "not_verified_in_this_repair",
+      "evidence_paths": [
+        ".github/workflows/cloudflare-builds-root-directory.yml"
+      ],
+      "closure_requires": [
+        "successful workflow execution receipt",
+        "deployment version",
+        "live route response tied to version"
+      ]
+    }
+  ]
+}
