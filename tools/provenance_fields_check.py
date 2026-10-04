@@ -115,13 +115,28 @@ def _walk(node, path: str = ""):
             yield from _walk(v, f"{path}[{i}]")
 
 
+def _text(value) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _description(value) -> bool:
+    """Keep existing string/list/mapping descriptions; reject empty or scalar impostors."""
+    if isinstance(value, str):
+        return bool(value.strip())
+    if isinstance(value, list):
+        return bool(value) and all(_description(item) for item in value)
+    if isinstance(value, dict):
+        return bool(value) and all(_text(key) and _description(item) for key, item in value.items())
+    return False
+
+
 def check_file(path: Path, root: Path) -> list[str]:
     rel = path.relative_to(root).as_posix()
     f: list[str] = []
 
     try:
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    except yaml.YAMLError as exc:
+    except (yaml.YAMLError, OSError, UnicodeError) as exc:
         return [f"{rel}: YAML 無法解析——{str(exc).splitlines()[0]}"]
 
     if not isinstance(data, dict):
@@ -131,18 +146,23 @@ def check_file(path: Path, root: Path) -> list[str]:
         if key not in data:
             f.append(f"{rel}: 缺少 §4 必要欄位 {key}")
 
+    # §4 source references must contain a usable value, not just a YAML key.
+    for key in ("source_repo", "source_artifact", "source_version"):
+        if key in data and not _text(data[key]):
+            f.append(f"{rel}: {key} 必須是非空字串（§4 來源引用）")
+
     if data.get("canonical_authority") != CANONICAL_AUTHORITY:
         f.append(f"{rel}: canonical_authority 必須是 {CANONICAL_AUTHORITY}（§1 不可變），實際：{data.get('canonical_authority')!r}")
     if data.get("origin_signature") != ORIGIN_SIGNATURE:
         f.append(f"{rel}: origin_signature 必須是 {ORIGIN_SIGNATURE}（§1 不可變），實際：{data.get('origin_signature')!r}")
 
     role = data.get("derivative_role")
-    if "derivative_role" in data and role not in DERIVATIVE_ROLES:
+    if "derivative_role" in data and (not isinstance(role, str) or role not in DERIVATIVE_ROLES):
         f.append(
             f"{rel}: derivative_role={role!r} 不在 §4 列舉 {sorted(DERIVATIVE_ROLES)} 內"
             "（naming_authority: false，不得自創）"
         )
-    if role == "mirror" and not (data.get("mirror_of") or data.get("derived_from")):
+    if role == "mirror" and not (_text(data.get("mirror_of")) or _text(data.get("derived_from"))):
         f.append(f"{rel}: derivative_role: mirror 必須標明 mirror_of 或 derived_from（§5 第 4 條）")
 
     owner = data.get("artifact_owner")
@@ -153,7 +173,7 @@ def check_file(path: Path, root: Path) -> list[str]:
         )
 
     status = data.get("verification_status")
-    if "verification_status" in data and status not in VERIFICATION_STATUSES:
+    if "verification_status" in data and (not isinstance(status, str) or status not in VERIFICATION_STATUSES):
         f.append(f"{rel}: verification_status={status!r} 不在 §4 列舉 {sorted(VERIFICATION_STATUSES)} 內")
 
     contributors = data.get("contributors")
@@ -166,18 +186,17 @@ def check_file(path: Path, root: Path) -> list[str]:
                     f.append(f"{rel}: contributors[{i}] 需要 name 與 role（§4 human-or-tool-with-role）")
                     continue
                 name, crole = str(c["name"]), str(c["role"])
+                if not _text(c["name"]) or not _text(c["role"]):
+                    f.append(f"{rel}: contributors[{i}] 的 name 與 role 必須是非空字串")
                 if AI_TOOL_PATTERN.search(name) and not re.search(r"\btool\b|工具", crole):
                     f.append(
                         f"{rel}: contributors[{i}] {name!r} 是 AI／bot，role 必須標明 tool（§3、§6），實際：{crole!r}"
                     )
 
-    # §4 只寫 transformation: <what changed>，字串或清單都合規；只擋空值。
+    # §4 <what changed>: preserve existing description forms, reject false/null/empty.
     transformation = data.get("transformation")
-    if "transformation" in data and (
-        transformation is None
-        or (isinstance(transformation, (str, list, dict)) and not transformation)
-    ):
-        f.append(f"{rel}: transformation 是空的（§4 what changed）")
+    if "transformation" in data and not _description(transformation):
+        f.append(f"{rel}: transformation 必須包含非空變換說明（§4 what changed）")
 
     for where, key, value in _walk(data):
         if key in AUTHOR_KEYS and isinstance(value, str) and AI_TOOL_PATTERN.search(value):
