@@ -1670,7 +1670,8 @@
       "tools/deploy-enhanced.sh"
     ],
     "d54034aa-mrliouword-system": [
-      "cloudflare/mrliouword-private/README-public-gate.md"
+      "cloudflare/mrliouword-private/README-public-gate.md",
+      "docs/retrospective/2026-10-04_system_status_test_session_record.md"
     ]
   }
 }

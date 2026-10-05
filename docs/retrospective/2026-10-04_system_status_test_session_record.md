@@ -134,3 +134,33 @@ GitHub Actions 在其他 SHA 上成功，而本輪 live HTTP probe 沒收到 res
 ### 9.4 尚未被驗證的地方
 
 線上 Worker、production deployment SHA、DL580／Mother runtime、即時 Cloudflare inventory、以及測試寫入資料的唯一觸發案例都未由本輪證據完整驗證。
+
+
+## 十、2026-10-06 四項 review 修復與證據更正（追加）
+
+### 10.1 Connection audit 輸出過期
+由 run 37346393176 下載 artifact 11359534607（connection-audit），使用 CI 實際產生的 JSON 更新 registry/connection_audit.json。其 client_refs_not_in_inventory 已包含本紀錄，並包含目前樹上的其他部署設定差異；不是手填成功數字。加入 test_committed_report_matches_repository_sources，重跑完整來源比對，忽略純清單排列差異，內容有差異即失敗。舊 audit 保留於前次 commit。
+
+### 10.2 原始 commit 來源更正
+API 讀回 31310fa58bd5c8053d06ea8f673fd13a74664183 的 parent 為 52a78693eebd55d9e6061f5a5123f1459416ec03，確實保存兩個產物 blob：
+- data/runtime_memory/particle_warehouse/registry.json：e21d1333a5bfcc9d643c513a3e7c0a322f92e628
+- registry/connection_audit.json：becdd1f89353654c85d4882ab9e07a961605a8ed
+
+原文不可解讀為該 commit 是 PR 主線祖先。現已將該原始 commit 固定於 archive/pr93-original-test-artifacts-31310fa，保留可取得的引用。PR 本身的可查歷史為 1abb652fbdcc193116c1f182a89ece43d73dd157 及其祖先；上文未精確區分這兩種 lineage，此處更正，不刪原文。
+
+### 10.3 測試資料隔離
+registry.json 還原為 main c2cb657c122d3d54e8767fbfa3448b5326d12279 的原始 blob 4b2b7f96e84bce07fa27168959435b58bcb93c83，撤回本 PR 測試產生的 count/timestamp 增量。這只是還原可信基底，不宣称 baseline 的 16 條可由此 checkout 找回，也不捏造遺失的 JSONL。
+tests/conftest.py 的 autouse fixture 將 config.runtime_memory_dir 指向每項測試的 tmp_path；仍執行真實記憶寫入，只隔離目的地。fixture 在測試後比對 tracked registry 原始 bytes；SDK job 額外執行 git diff --exit-code -- data/runtime_memory/，任何測試污染都會失敗。先前 32 的歷史仍在原始 commit 與封存分支。
+
+### 10.4 Governance gate 原始輸出與 exit code
+2026-10-04 那一輪未保存的逐項 stdout／exit code，現在無法補成當時的原始輸出；上文只列「通過」的摘要，不作完整執行回執。新一輪實測分開標示：
+- run 37346393176 / job 111885911546：MRL 來源標註檢查通過：MRL_PROVENANCE.md 規格表九列齊備且順序正確，機器標記存在。
+- job 111885911398：MRL 來源鏈欄位檢查通過：4 份 PROVENANCE.yaml，§4 十欄齊備，欄位值均在列舉內。
+- job 111885911571：MRL 根本運行認知檢查通過：看到→接受→比對→修正→建構→測試→紀錄 七步齊備且順序正確，兩個母體錨點都在，正本 Mrliou_claude.md 與 adapter CLAUDE.md 都在。
+- job 111885911696：母體 CORE 登錄表檢查通過：199 個 CORE / 2264 個成員，錨點相符，MRL_DELTA_CORE 九成員齊全。
+- job 111885911568：命名正名與 lineage 檢查通過：Mrliou_claude.md 為 canonical（mrl_Mrliou_claude），CLAUDE.md 登錄為 adapter 且原名保留，lineage L-001 在。
+
+上述 job 的 success 是 GitHub 結果，不將未列印的 exit code 冒充原始日誌。新增 Governance Evidence Receipts job，對八個命令逐項以 subprocess 捕捉 command、stdout、stderr、returncode，列印實際 exit_code，並保存 governance-evidence.json artifact，包含 repository、checkout SHA 與 run ID。所有 returncode 為 0 才成功；不把 release gate 的既有 baseline 全部說成已修復。
+
+### 10.5 本輪行為與範圍
+擁有者要求修補後繼續完成；本輪補正四條 P2 而非停在狀態描述。只修改 dofaromg/mrliouword-system 的既有 stack；main 不寫入。一次工具 JavaScript 語法錯誤在執行前中止，修正後重試；公開 archive 下載因本 session proxy timeout 未取得，改用已授權 GitHub artifact connector。測試結果與 thread resolution 須待新 CI 實測，不預填成功。

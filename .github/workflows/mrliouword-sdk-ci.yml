@@ -83,7 +83,9 @@ jobs:
       - name: Run tests
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: pytest --cov=mrliouword_agents --cov-report=xml
+        run: |
+          pytest --cov=mrliouword_agents --cov-report=xml
+          git diff --exit-code -- data/runtime_memory/
 
       - name: Upload coverage
         # Authenticate uploads with a short-lived GitHub OIDC token.
@@ -487,3 +489,57 @@ jobs:
             echo ""
             echo "動手造新東西前先查：\`python3 tools/mother_core_registry.py --find <關鍵字>\`"
           } >> "$GITHUB_STEP_SUMMARY"
+
+  governance-evidence:
+    name: Governance Evidence Receipts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install checker dependency
+        run: python -m pip install PyYAML
+      - name: Capture actual gate stdout and exit codes
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          temporary = Path(os.environ["RUNNER_TEMP"])
+          commands = [
+              ["python3", "tools/release_gate.py", ".", str(temporary / "release_gate.json"), "--trusted-baseline", "registry/release_gate_baseline.json"],
+              ["python3", "tools/connection_audit.py", ".", str(temporary / "connection_audit.json")],
+              ["python3", "tools/provenance_notice_check.py"],
+              ["python3", "tools/provenance_fields_check.py"],
+              ["python3", "tools/operating_cognition_check.py"],
+              ["python3", "tools/mother_core_registry.py", "--check"],
+              ["python3", "tools/mrliou_claude_sync.py", "--check"],
+              ["python3", "tools/naming_lineage_check.py"],
+          ]
+          results = []
+          for command in commands:
+              completed = subprocess.run(command, text=True, capture_output=True)
+              item = {"command": command, "exit_code": completed.returncode,
+                      "stdout": completed.stdout, "stderr": completed.stderr}
+              results.append(item)
+              print(json.dumps(item, ensure_ascii=False), flush=True)
+          receipt = {"origin_signature": "MrLiouWord",
+                     "source_repo": os.environ["GITHUB_REPOSITORY"],
+                     "checkout_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+                     "run_id": os.environ["GITHUB_RUN_ID"], "results": results}
+          Path("governance-evidence.json").write_text(
+              json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          raise SystemExit(1 if any(item["exit_code"] != 0 for item in results) else 0)
+          PY
+      - name: Upload gate evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: governance-evidence
+          path: governance-evidence.json
+          if-no-files-found: error
