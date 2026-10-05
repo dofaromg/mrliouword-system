@@ -164,3 +164,7 @@ tests/conftest.py 的 autouse fixture 將 config.runtime_memory_dir 指向每項
 
 ### 10.5 本輪行為與範圍
 擁有者要求修補後繼續完成；本輪補正四條 P2 而非停在狀態描述。只修改 dofaromg/mrliouword-system 的既有 stack；main 不寫入。一次工具 JavaScript 語法錯誤在執行前中止，修正後重試；公開 archive 下載因本 session proxy timeout 未取得，改用已授權 GitHub artifact connector。測試結果與 thread resolution 須待新 CI 實測，不預填成功。
+
+### 10.5 輕量 provenance CI fixture 修正
+
+Run `37347628304` / job `111890122862` 實際顯示：全域隔離 fixture 主動匯入 SDK config，讓僅安裝 PyYAML / pytest 的 provenance job 因缺少 pydantic 出現 45 個 setup errors。SDK 測試和新證據 job 已成功，但此輪整體仍為 failure。修正為設定 `RUNTIME_MEMORY_DIR`，並只在 config 已載入時 patch 既有實例；不替 provenance 工具引入 SDK 依賴，也不略過任何測試。保留 registry 不可變斷言，重新觸發兩個 PR 驗收。

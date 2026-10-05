@@ -55,13 +55,18 @@ def mock_config():
 @pytest.fixture(autouse=True)
 def isolated_runtime_memory(tmp_path, monkeypatch):
     """Keep real memory recording enabled without mutating repository state."""
-    from mrliouword_agents.core.config import config
+    import sys
+
+    runtime_dir = str(tmp_path / "runtime_memory")
+    monkeypatch.setenv("RUNTIME_MEMORY_DIR", runtime_dir)
+    config_module = sys.modules.get("mrliouword_agents.core.config")
+    if config_module is not None:
+        monkeypatch.setattr(config_module.config, "runtime_memory_dir", runtime_dir)
 
     registry = (
         Path(__file__).resolve().parents[1]
         / "data/runtime_memory/particle_warehouse/registry.json"
     )
     before = registry.read_bytes()
-    monkeypatch.setattr(config, "runtime_memory_dir", str(tmp_path / "runtime_memory"))
     yield
     assert registry.read_bytes() == before, "A test changed the tracked runtime registry"
