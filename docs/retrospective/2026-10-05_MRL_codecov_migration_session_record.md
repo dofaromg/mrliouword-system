@@ -66,3 +66,15 @@ Codecov 帳戶端是否允許 public repository tokenless uploads，無帳戶設
 9.2 舊版與新版預設錯誤處理不同，故明確開啟上傳失敗回報；pytest 語意保留。
 9.3 原 job failure 與 281 passed 並不矛盾：不同 step 的結果。
 9.4 新 head upload 及 Codecov 端 tokenless 接受條件尚待實測；不宣告 DELIVERY_PASS。
+
+
+## 十、2026-10-06 Stack #95 下層補件
+
+- 擁有者要求補上修復，使 #93 與 #94 各自完成驗證。
+- 前次 #93 head 1199762a5b80d485685a2ede0fa9fd5663c9a77f，run 37344007789 的兩個 matrix job 已成功（包括 OIDC coverage upload），唯 provenance job 111877912606 因 source_version 型別失敗。
+- 上層 #94 head dcdface7fd158d8853fbf4605d5ea6caf67913b7，run 37344008851 全部 12 jobs success；修補須補入下層才能使兩層獨立通過。
+- 本次將同一日期引用修正補入 #93，保留原欄位值、canonical_authority: Mr.liou 與 origin_signature: MrLiouWord。#94 的回歸測試持續保留。
+- 目標 repository 與兩個 head_repo_full_name 均讀回 dofaromg/mrliouword-system，repo ID 1130234040；Copilot 為 PR 建立者，不是 repository owner。這項查證僅覆蓋此次 stack，不替其他歷史建構下結論。
+- 未修改 main、connection audit 或 release gate；未建立其他擁有者的 repository。
+- 原工作曾將 #94 的成功交付與 #93 的未完成分開回報；擁有者本次要求完成下層，現在據此補件，不以原分層狀態作停止理由。
+- 新 head 尚待 CI，未提前寫入成功；本節為追加紀錄，保留上文歷史敘述。
