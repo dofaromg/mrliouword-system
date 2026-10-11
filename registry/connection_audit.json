@@ -1307,10 +1307,10 @@
       "in_service_registry": true,
       "client_references": [
         "test 2.sh",
-        "README.md",
-        "DEPLOYMENT.md",
-        "unified-resource-report.md",
         "test.sh",
+        "DEPLOYMENT.md",
+        "README.md",
+        "unified-resource-report.md",
         "cloudflare/config.json",
         "docs/retrospective/2026-09-29_cloudflare_secrets_wrong_deploy_session_record.md"
       ],
@@ -1666,11 +1666,12 @@
     ]
   },
   "client_refs_not_in_inventory": {
-    "d54034aa-mrliouword-system": [
-      "cloudflare/mrliouword-private/README-public-gate.md"
-    ],
     "particle-edge": [
       "tools/deploy-enhanced.sh"
+    ],
+    "d54034aa-mrliouword-system": [
+      "cloudflare/mrliouword-private/README-public-gate.md",
+      "docs/retrospective/2026-10-04_system_status_test_session_record.md"
     ]
   }
 }

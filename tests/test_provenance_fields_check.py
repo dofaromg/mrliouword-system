@@ -73,3 +73,12 @@ def test_source_and_owner_are_not_rewritten(tmp_path):
     assert check_file(path, tmp_path) == []
     assert path.read_bytes() == original
     assert data == before
+
+
+def test_world_model_source_version_is_a_string() -> None:
+    provenance = yaml.safe_load(
+        (ROOT / "mrl_world_model/PROVENANCE.yaml").read_text(encoding="utf-8")
+    )
+
+    assert provenance["source_version"] == "2026-09-29"
+    assert isinstance(provenance["source_version"], str)
