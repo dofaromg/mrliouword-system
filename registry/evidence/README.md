@@ -33,6 +33,7 @@
 | `../mrl_global_file_index_2026-07-29.json` | mirror | Google Drive 側 170 檔全域索引 —— 在 `claude/partner-jjchvg-connect` 分支，尚未合併進 main |
 | `Mrliou_MRL_Backfill_20260921_v1.index.md` + `packages/Mrliou_MRL_Backfill_20260921_v1/` | mirror | 2026-09-22 權利人上傳的內容交叉比對回填包（20 個觀測事件、23 個來源指紋、相容性收據驗證器）逐字保存；索引記實跑核對與 6 條 delta |
 | `MRL_BridgeNeuralLink_API_Dispatch_v1.index.md` + `packages/MRL_BridgeNeuralLink_API_Dispatch_v1/` | mirror | 2026-09-22 權利人上傳的商業治理增補與三方 API 派工包逐字保存；**未啟用**；索引記實跑核對、Notion／Drive 對照與 7 條 delta |
+| `Mrliouhan_Manus_Domain_Binding_Incident_20261002.md` | projection | Issue #64 與留言的事件證據索引；保留權利人回報與平台陳述，網域綁定、所有權及部署狀態仍未獨立驗證 |
 
 ## 相關
 
