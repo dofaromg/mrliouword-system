@@ -165,3 +165,23 @@ def test_single_line_jsonc_placeholder_is_detected(tmp_path: Path) -> None:
         '{ "d1_databases": [{ "database_id": "<your-id-here>" }] }\n', encoding="utf-8"
     )
     assert [f["key"] for f in find_placeholders(p)] == ["database_id"]
+
+
+def test_committed_report_matches_repository_sources():
+    """Catch stale references after adding repository evidence or configuration."""
+    from tools.connection_audit import audit
+
+    root = Path(__file__).resolve().parents[1]
+    expected = json.loads((root / "registry/connection_audit.json").read_text(encoding="utf-8"))
+
+    def canonical(value):
+        if isinstance(value, dict):
+            return {key: canonical(item) for key, item in value.items()}
+        if isinstance(value, list):
+            return sorted(
+                (canonical(item) for item in value),
+                key=lambda item: json.dumps(item, sort_keys=True, ensure_ascii=False),
+            )
+        return value
+
+    assert canonical(audit(root)) == canonical(expected)
