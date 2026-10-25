@@ -200,3 +200,54 @@ delta 1、2 改變了技術決策：因為網路被擋，才新增離線包與 `
   - **P2**：`#locate` 拒絕負數 index，與 `find()` 的行為不一致。修前實測：`no observation at REAL/owner_command[-1]`。已改成負數從尾端算，並加了回歸測試。
 - 這一則和第十一節同形：上一輪修 rollback 時只想到「檢查結果」，沒想到「失敗之後怎麼重跑」。
 - 修後：`# tests 17`、`# pass 17`；八道閘門全部 exit 0；`bash -n` exit 0。
+
+## 十三、追加：擁有者上傳 particle-memory v2.0.2 PDF 與 DL580 Bridge 通道盤點（2026-10-03，同一 session）
+
+兩個檔，**未附文字指示**，所以只做讀取與對照，沒有改任何 repo 內程式：
+
+| 檔 | SHA-256 |
+| --- | --- |
+| particle-memory-v2_0_2-final.pdf | 3d02ee3d17c890dd4f3ba458c8111ab13b891f05dda9c1ea8b8ad3e4a3800705 |
+| MRL_Dl580_Bridge_Channel_Audit_2026-07-07_2026-07-07.md | b24b44c3e633183b7fd1165491836aa84755cfe047f2d861e89474dd33345fc5 |
+
+先前 `cloudflare/particle-memory/PROVENANCE.yaml` 對這份 PDF 沒有記 SHA-256，這裡補記；是否與 2026-09-20 收到的是同一份，驗不了（見 delta 1）。
+
+### PDF 對照（本機沙盒；PDF 在這個環境無法渲染，自行以 zlib 解內容串流取文字）
+- 12 個文字串流、17,215 字元；ASCII 行 354 行，其中 54 行在 `cloudflare/particle-memory/src/index.js` 找不到逐字相同的行。含中日韓字元的註解因字型編碼無法還原，和 PROVENANCE 先前記的限制一致。
+- 54 行落在三處：
+  1. 已記錄的修改——DL580 位址與 API 金鑰常數、`MRL_syncToDL580`、把金鑰放進網址參數的 `/MRL_run?key=…`、`/MRL_pg?sql=…&key=…`（PROVENANCE「偏離原樣」第 1、2、5 項）。
+  2. **未記錄**——D1 資料層寫法，兩份程式需要的欄位集合不同（不是「二選一」）：
+     - `index.js` 用到 `id, simhash, content, layer, tags, metadata, created_at, updated_at` 共 8 欄：INSERT 寫 `metadata`（第 283 行），讀取時解析 `metadata`（第 302、334 行），`ORDER BY created_at`（第 311、330 行），UPDATE 寫 `updated_at=datetime('now')`（第 379 行）。INSERT 沒有寫 `created_at`，所以資料表必須替 `created_at` 提供預設值。
+     - PDF 版需要 7 欄，沒有 `metadata`，`INSERT` 為 `(id, simhash, content, layer, tags, created_at, updated_at)`，兩個時間欄都由 `Date.now()` 寫入毫秒整數。
+     - `metadata` 一詞在 PDF 出現 1 次、在 `index.js` 出現 11 次。
+  3. `/health`、`/stats`、`/sync/status` 的回應內容（PDF 會回傳 bridge 位址、`/health` 帶 `x-api-key` 打 bridge）——這屬於 PROVENANCE 已記錄的第 4 項修改，**不是新發現**。
+- 兩者標頭都寫 `v2.0.0`，檔名卻是 `v2.0.2`。哪一份較新，驗不了。
+- 這與 PROVENANCE 先前的說法衝突：它把 PDF 寫成「同一份程式的列印版」，只確認「硬編碼金鑰與 psql 指令組裝路徑一致」，並寫 transformation「核心記憶邏輯未更動」。實測顯示 PDF 與 `index.js` 在 D1 欄位上就不同，所以「同一份」不成立，「核心記憶邏輯未更動」只對 `index.js` 這份成立。**本輪沒有改 PROVENANCE**，等擁有者裁示以哪一份為準。
+
+### Bridge 通道盤點（唯讀）
+- 文內日期互相矛盾：檔名 `2026-07-07`，標頭 `date: 2026-06-11`；`key_required: false` 與同一份文件第 8 項「x-api-key 必填」衝突（推測是指 health/version 不需要，未確證）。
+- 文件稱 `/health`、`/version` 公開、不需要 key；擁有者 2026-09-30 的實連結果是 Cloudflare 現行放行規則會檢查 `x-api-key`，兩者是不同時間點的觀測，不互相否定。
+- 文件列出 `POST /MRL_file/write` 的 safePath 只擋 `..`，「任意非穿越絕對路徑可寫」。這與我先前靜態讀 `server.js` 的結論一致，也代表寫入範圍包含 C 槽；擁有者說 C 槽只剩約 2.23 GiB，部署時要明確只寫 D 槽。
+- 這份文件的第 8 項把 API 金鑰原文寫在檔案裡。倉庫端查證：`git grep` 該金鑰 → 無（沒有進任何追蹤檔案）。
+
+### 我在這輪犯的錯
+| # | 錯誤 | 誰抓到 | 現在擋著它的是什麼 |
+| --- | --- | --- | --- |
+| 1 | 預覽 PDF 文字時，遮蔽規則只遮「24 字元以上」的長字串，**漏掉 14 字元的 Bridge 金鑰**，金鑰原文被印進本 session 的輸出 | 自己看輸出時發現 | 之後顯示一律先做精確字串遮蔽，再顯示；本節與整份紀錄都不含金鑰值。此值本來就同時存在於 Notion 頁、擁有者上傳的檔案與 Bridge 原始碼中，**輪換仍是必要的**，這次洩漏不改變這個結論 |
+| 2 | 同形的錯誤更早也發生過一次：分析 Bridge 3.1.0 封包時，用 `sed` 只遮「值後面的部分」，金鑰原文同樣出現在輸出 | 自己，寫本節時回頭查 | 同上。紀錄第十節當時只寫「寫死了金鑰」，沒寫值 |
+| 3 | 在驗證「`datetime('now')` 有沒有出現」時用了含括號的 `grep -E`，括號被當成群組，得到 0；實際上該字串存在於 `index.js` 第 379 行 | 自己，對照讀行時發現 | 這項計數不採用；結論只依據 `INSERT INTO` 欄位清單的逐行比對 |
+| 4 | 把兩個 `INSERT` 欄位清單當成各自的完整資料表結構來比較，把 delta 寫成「正式 D1 是哪一組」；實際上 `index.js` 同時需要 `metadata`、`created_at`、`updated_at`，欄位清單也不能代表型別與預設值 | Codex 審閱 PR #92（P2） | delta 2 改為核對完整結構；與錯誤紀錄第 1、9 則同形——把局部觀測升格成全局結論 |
+
+第 1、2 則與錯誤紀錄第 1、9 則同形的一面：還沒看輸出就假設「遮蔽規則夠用」。
+
+### 驗不了的 delta
+| # | 命題 | 我的狀態 | 能驗的條件 |
+| --- | --- | --- | --- |
+| 1 | 本次 PDF 與 2026-09-20 收到的 `particle-memory-v2_0_2-final.pdf` 是同一份 | 驗不了（先前沒記 SHA-256） | 擁有者提供當時那份的雜湊，或確認檔案來源 |
+| 2 | 正式 D1 的完整結構（欄位、型別、預設值、可否為 NULL）能同時滿足 `index.js` 的全部讀寫 | 驗不了；`wrangler.toml` 的 `database_id` 仍是佔位字串，沒部署過 | 讀正式 D1 的 `PRAGMA table_info(memories)`，逐欄核對上面 8 欄：`created_at` 要有預設值，`updated_at` 要能存 `datetime('now')` 文字，`metadata` 要存在且可存 JSON 文字；欄位名稱相符還不夠，型別與預設值也要核對 |
+| 3 | 盤點文件的內容在 2026-10 仍然正確（Bridge 版本、路由、`key_required`） | 驗不了（網路被擋） | 新 session 開通後打 `/version`、`/health` |
+
+delta 2 改變了技術決策：在確認 D1 完整結構前，`cloudflare/particle-memory` 不應部署，否則 `INSERT`／`UPDATE` 的欄位、型別或預設值可能和實際資料表不符。
+
+### 第八節觀測重點：在指令執行前就寫下結果
+本輪有發生：0 次預填計數或狀態；上面 54、354、12、17,215 都是從指令輸出複製。第四節第 3 則是相反的情況——寫下了一個自己沒驗證過的假設（括號當字面）。
