@@ -1,0 +1,16 @@
+{
+  "schema": "MRL_Backfill_Delivery_Audit_v1",
+  "observed_at_utc": "2026-09-21T14:27:59.171891+00:00",
+  "particle_mappings": 11,
+  "corrections": 4,
+  "gap_records": 5,
+  "source_fingerprints": 23,
+  "notion_pages_readback": 5,
+  "local_memory_events": 20,
+  "local_evidence_events": 20,
+  "candidate_passport_versions": 1,
+  "fixture_tests_passed": 12,
+  "json_and_jsonl_parse": "PASS",
+  "upstream_source_copies_included": false,
+  "host_consumption_verified": false
+}

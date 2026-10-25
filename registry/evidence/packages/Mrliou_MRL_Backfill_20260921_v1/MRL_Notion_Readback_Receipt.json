@@ -1,0 +1,134 @@
+{
+  "schema": "MRL_Notion_Backfill_Readback_v1",
+  "observed_at": "2026-09-21T14:25:45.800Z",
+  "pages": [
+    {
+      "id": "3e28eeeec5b581118727c0b7ccf42335",
+      "isError": false,
+      "keys": [
+        "metadata",
+        "title",
+        "url",
+        "text",
+        "cover",
+        "icon",
+        "is_archived",
+        "path",
+        "verification",
+        "page_last_edited_at"
+      ],
+      "chars": 17685,
+      "section": true,
+      "linked": true,
+      "memoryHash": true,
+      "truncated": false
+    },
+    {
+      "id": "37b8eeeec5b5815bbddddc7390c99d99",
+      "isError": false,
+      "keys": [
+        "metadata",
+        "title",
+        "url",
+        "text",
+        "cover",
+        "icon",
+        "path",
+        "verification",
+        "page_last_edited_at"
+      ],
+      "chars": 17603,
+      "section": true,
+      "linked": true,
+      "memoryHash": false,
+      "truncated": false
+    },
+    {
+      "id": "3b88eeeec5b581adb0aec7c998926133",
+      "isError": false,
+      "keys": [
+        "metadata",
+        "title",
+        "url",
+        "text",
+        "cover",
+        "icon",
+        "is_archived",
+        "path",
+        "verification",
+        "page_last_edited_at"
+      ],
+      "chars": 9988,
+      "section": true,
+      "linked": true,
+      "memoryHash": false,
+      "truncated": false
+    },
+    {
+      "id": "37c8eeeec5b581778f05d563d1536375",
+      "isError": false,
+      "keys": [
+        "metadata",
+        "title",
+        "url",
+        "text",
+        "cover",
+        "icon",
+        "path",
+        "verification",
+        "page_last_edited_at"
+      ],
+      "chars": 6768,
+      "section": true,
+      "linked": true,
+      "memoryHash": false,
+      "truncated": false
+    },
+    {
+      "id": "37c8eeeec5b58183b34ee2076bfdc8b2",
+      "isError": false,
+      "keys": [
+        "metadata",
+        "title",
+        "url",
+        "text",
+        "cover",
+        "icon",
+        "path",
+        "verification",
+        "page_last_edited_at"
+      ],
+      "chars": 25069,
+      "section": true,
+      "linked": true,
+      "memoryHash": false,
+      "truncated": false
+    }
+  ],
+  "original_anchor_checks": [
+    {
+      "id": "37b8eeeec5b5815bbddddc7390c99d99",
+      "original_anchor_preserved": true
+    },
+    {
+      "id": "3b88eeeec5b581adb0aec7c998926133",
+      "original_anchor_preserved": true
+    },
+    {
+      "id": "37c8eeeec5b581778f05d563d1536375",
+      "original_anchor_preserved": true
+    },
+    {
+      "id": "37c8eeeec5b58183b34ee2076bfdc8b2",
+      "original_anchor_preserved": true
+    }
+  ],
+  "host_consumption_verified": false,
+  "content_checks": {
+    "ten_sections": true,
+    "memory_head_present": true,
+    "evidence_head_present": true,
+    "passport_head_present": true
+  }
+}
+

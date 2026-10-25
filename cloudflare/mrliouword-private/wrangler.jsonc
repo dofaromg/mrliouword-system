@@ -25,5 +25,24 @@
   "vars": {
     "ORIGIN": "MrLiouWord",
     "VERSION": "2.0.0"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "MRL_CORE_MEMORY",
+        "class_name": "Mrliou_CoreMemory"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "Mrliou_core_memory_v1",
+      "new_sqlite_classes": [
+        "Mrliou_CoreMemory"
+      ]
+    }
+  ],
+  "version_metadata": {
+    "binding": "MRL_WORKER_VERSION"
   }
 }

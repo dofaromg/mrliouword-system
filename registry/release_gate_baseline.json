@@ -1,0 +1,369 @@
+{
+  "canonical_authority": "Mr.liou",
+  "origin_signature": "MrLiouWord",
+  "source_repo": "dofaromg/mrliouword-system",
+  "source_artifact": "registry/release_gate_baseline.json",
+  "source_version": "generated-by:tools/release_gate.py",
+  "derivative_role": "generated",
+  "artifact_owner": "Mr.liou",
+  "contributors": [
+    "Mr.liou（canonical_authority：定義與裁決）",
+    "Claude Code（tool：實作）"
+  ],
+  "transformation": "記錄建立關卡當下既有的未通過項，未改動任何既有產物",
+  "verification_status": "verified",
+  "registry_status": "unregistered",
+  "note": "債務帳本，不是豁免清單。政策第 8 節規定失敗項不得標示為 Canon／Official／Verified／source_of_truth——列在這裡的產物仍然不得如此標示。每修好一項就從這裡移除，數字只能往下走。",
+  "known_failures": [
+    {
+      "artifact": "containers/cli/package.json",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "containers/cli/package.json",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "containers/cli/package.json",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "containers/cli/package.json",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "containers/cli/package.json",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "containers/cli/package.json",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "containers/package.json",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "containers/package.json",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "containers/package.json",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "containers/package.json",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "containers/package.json",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "containers/package.json",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/package.json",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/package.json",
+      "gate": "Naming Gate",
+      "detail": "'mrliouword-private' 是 legacy alias（canonical=MRL_System_Core，disposition=migrate_service_name），但未宣告 canonical 身分"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/package.json",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/package.json",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/package.json",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/package.json",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/package.json",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "package.json",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "package.json",
+      "gate": "Naming Gate",
+      "detail": "'mrliouword-private' 是 legacy alias（canonical=MRL_System_Core，disposition=migrate_service_name），但未宣告 canonical 身分"
+    },
+    {
+      "artifact": "package.json",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "package.json",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "package.json",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "package.json",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "package.json",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "particle-chat-v42/package.json",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "particle-chat-v42/package.json",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "particle-chat-v42/package.json",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "particle-chat-v42/package.json",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "particle-chat-v42/package.json",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "particle-chat-v42/package.json",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "pyproject.toml",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "pyproject.toml",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "pyproject.toml",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "pyproject.toml",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "pyproject.toml",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "pyproject.toml",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/wrangler.jsonc",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/wrangler.jsonc",
+      "gate": "Naming Gate",
+      "detail": "'mrliouword-private' 是 legacy alias（canonical=MRL_System_Core，disposition=migrate_service_name），但未宣告 canonical 身分"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/wrangler.jsonc",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/wrangler.jsonc",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/wrangler.jsonc",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/wrangler.jsonc",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "cloudflare/mrliouword-private/wrangler.jsonc",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "cloudflare/particle-auth-gateway/wrangler.jsonc",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "cloudflare/particle-auth-gateway/wrangler.jsonc",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "cloudflare/particle-auth-gateway/wrangler.jsonc",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "cloudflare/particle-auth-gateway/wrangler.jsonc",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "cloudflare/particle-auth-gateway/wrangler.jsonc",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "cloudflare/particle-auth-gateway/wrangler.jsonc",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "particle-chat-v42/wrangler.jsonc",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "particle-chat-v42/wrangler.jsonc",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "particle-chat-v42/wrangler.jsonc",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "particle-chat-v42/wrangler.jsonc",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "particle-chat-v42/wrangler.jsonc",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "particle-chat-v42/wrangler.jsonc",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "wrangler 2.jsonc",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "wrangler 2.jsonc",
+      "gate": "Naming Gate",
+      "detail": "'mrliouword-private' 是 legacy alias（canonical=MRL_System_Core，disposition=migrate_service_name），但未宣告 canonical 身分"
+    },
+    {
+      "artifact": "wrangler 2.jsonc",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "wrangler 2.jsonc",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "wrangler 2.jsonc",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "wrangler 2.jsonc",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "wrangler 2.jsonc",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    },
+    {
+      "artifact": "wrangler.jsonc",
+      "gate": "Authority Lock",
+      "detail": "未宣告 canonical_authority"
+    },
+    {
+      "artifact": "wrangler.jsonc",
+      "gate": "Provenance Completeness",
+      "detail": "provenance incomplete；缺關鍵欄位 ['canonical_authority', 'source_artifact', 'derivative_role']（共缺 10）"
+    },
+    {
+      "artifact": "wrangler.jsonc",
+      "gate": "Source Hash / Commit Link",
+      "detail": "既無 source_version 也無來源雜湊，無法回溯"
+    },
+    {
+      "artifact": "wrangler.jsonc",
+      "gate": "Contributor Role Separation",
+      "detail": "未宣告 contributors"
+    },
+    {
+      "artifact": "wrangler.jsonc",
+      "gate": "Mirror / Projection Role Check",
+      "detail": "未宣告 derivative_role"
+    },
+    {
+      "artifact": "wrangler.jsonc",
+      "gate": "Runtime Verification Status",
+      "detail": "未宣告 verification_status"
+    }
+  ]
+}

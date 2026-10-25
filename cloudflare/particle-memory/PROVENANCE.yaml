@@ -1,0 +1,122 @@
+# ============================================================================
+#  particle-memory 來源鏈記錄
+#
+#  依 docs/governance/ATTRIBUTION_AND_PROVENANCE_POLICY_v1.0.md 第 4 節。
+#
+#  ⚠️ 本次匯入**不是**逐位元組原樣。原因記在 deviation_from_verbatim：
+#     原始碼含一把可用的 API 金鑰，而本倉庫是 public 且已有 fork。
+#     提交它等於公開發布憑證，且無法撤回。原始檔的 sha256 記在下方，
+#     原件仍可逐位元組回驗——只是不放進公開倉庫。
+# ============================================================================
+
+canonical_authority: Mr.liou
+origin_signature: MrLiouWord
+source_repo: dofaromg/mrliouword-system
+source_artifact: cloudflare/particle-memory/
+source_version: import-2026-09-20
+derivative_role: implementation
+artifact_owner: Mr.liou
+verification_status: partial
+
+canonical_identity:
+  module: MRL_Memory
+  registry: registry/MRL_System_MrliouAI_Naming_Registry_v1.yaml
+  cloud_resource_name: particle-memory
+  cloud_name_status: implementation_identifier
+  disposition: 非 legacy alias；依規則 4 為實作識別碼，不取代 canonical 名稱
+  note: 盤點編號 17／140；CloudflareConnector.swift 呼叫 /commit 與 /recall
+
+source_materials:
+  provided_by: Mr.liou
+  date_received: 2026-09-20
+  files:
+    - name: particle-memory-v2-index.js
+      sha256: 2575168c6a50ac7bbbad250241dee4b99b0a2c67b317ee5df5fb2b1115c18554
+      role: 主要來源（esbuild 打包後的部署形態）
+      note: 標頭自稱 v2.0.0
+    - name: particle-memory-v2_0_2-final.pdf
+      role: 同一份程式的列印版
+      note: >
+        檔名為 v2.0.2 但內文標頭仍寫 v2.0.0。PDF 文字抽取對中日韓字元失真，
+        且 MRL_buildPsqlCmd 的定義段落無法自 PDF 還原，因此**未**用它比對
+        取代 .js。兩份的硬編碼金鑰與 psql 指令組裝路徑一致。
+    - name: FlowAgent_ParticleMemory_FullBackup_20250719.zip
+      role: 未採用
+      note: >
+        內容為 FlowAgent 的 seed/particle 封包（.flpkg / .fltnz），
+        不含 particle-memory 原始碼。FlowAgent 在命名註冊表中的
+        disposition 為 preserve_only_in_historical_provenance，
+        另案處理，未併入本模組。
+
+deviation_from_verbatim:
+  reason: 原始碼含可用憑證，倉庫為 public 且已有 fork
+  policy_basis: >
+    命名註冊表規則 3 要求歷史證據保留原文。此處與「不得公開發布憑證」
+    直接衝突。取捨方式：原件不入庫，但記錄 sha256 使其仍可逐位元組回驗；
+    所有偏離逐項列出，不隱藏。
+  changes:
+    - id: 1
+      what: 移除硬編碼的 DL580_BRIDGE 與 DL580_API_KEY
+      to: 一律由 Worker secret 提供，且不設任何預設值
+    - id: 2
+      what: 同步改為 fail-closed
+      to: 必須 bridge、金鑰、DL580_SYNC_ENABLED 三者皆備才啟用
+    - id: 3
+      what: 未信任欄位在組成 psql 指令前先行驗證
+      to: 任一欄位含 shell 元字元即整筆不同步
+    - id: 4
+      what: 對外回應不再揭露 bridge 位址
+      to: /、/health、/stats、/sync/status 改回「由 secret 提供」
+    - id: 5
+      what: 移除 MRL_syncToDL580 中對 /MRL_pg 的無效前置呼叫
+      to: 該呼叫的結果從未被使用，每次同步白白多一次往返
+
+security_findings:
+  - id: SEC-1
+    severity: critical
+    title: POST /store 可經 DL580 同步橋在遠端主機執行任意指令
+    detail: >
+      使用者送出的 content 逐字嵌入 SQL，整段 SQL 包進 psql -c "..."，
+      再以 cmd 查詢參數送往 /MRL_run。轉義僅處理 SQL 單引號與 shell 雙引號；
+      $( )、反引號、分號、管線、& 皆未處理。POST /store 對外無任何驗證。
+    proof: content 為 "無害的筆記 $(id) 以及 `whoami`" 時兩段原封不動留在雙引號內
+    status: 已以修改 3 止血（fail-closed），**非正解**
+    real_fix_needs: bridge 提供「SQL 與參數分開傳遞」的端點；屬 DL580 側，不在本倉庫
+  - id: SEC-2
+    severity: critical
+    title: 原始碼硬編碼可用的 API 金鑰
+    detail: DL580_API_KEY 與 bridge 位址寫死在原始碼中
+    status: 已以修改 1 移除；金鑰未進入本倉庫或其 git 歷史（已查證）
+    owner_action_required: 該金鑰已存在於使用者傳遞的 .js 與 PDF 中，建議輪換
+  - id: SEC-3
+    severity: high
+    title: POST /store /update /delete 對外無任何驗證
+    detail: 與 particle-api 的 X-Master-Key 機制不同，本模組沒有任何存取控制
+    status: 未修改——加上驗證會改變既有呼叫端的契約，需擁有者決定
+
+transformation: >
+  自使用者提供的原始封存匯入，移除憑證、同步改為 fail-closed、
+  未信任輸入加上驗證。核心記憶邏輯（七層、SimHash64、MemoryVault、
+  各端點）未更動。
+
+contributors:
+  - name: Mr.liou
+    role: canonical_authority｜提供原始封存｜定義與裁決
+  - name: Claude Code
+    role: tool｜匯入、安全稽核、修正實作
+
+verification:
+  performed:
+    - node --check 語法通過
+    - 同步設定四種組合實測，未設定即不同步
+    - 五種注入載荷實測全數擋下（$( )／反引號／分號／管線／&／換行）
+    - 三種正常內容實測全數放行（曾誤擋，見下）
+    - simhash64 決定性與相似度實測未受影響
+  self_correction: >
+    第一版守衛檢查「組好的整串指令」，因 SQL 範本自身含分號與換行而把
+    正常內容一起擋掉。實測發現後改為驗證使用者輸入本身。錯誤記在原始碼
+    註解中，避免日後改回去。
+  not_performed:
+    - 實際部署（database_id 未知，刻意留佔位字串）
+    - 對 DL580 bridge 的實際行為驗證（不在本倉庫可查證範圍）
+  note: 因此 verification_status 為 partial。

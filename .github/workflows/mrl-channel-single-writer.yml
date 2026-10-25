@@ -1,0 +1,38 @@
+# origin_signature: MrLiouWord; implementation provenance:
+# cloudflare/particle-api/PROVENANCE.yaml#channel_single_writer_20260922
+name: MRL Channel Single Writer
+on:
+  pull_request:
+    paths:
+      - 'cloudflare/particle-api/**'
+      - '.github/workflows/mrl-channel-single-writer.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare/particle-api/**'
+      - '.github/workflows/mrl-channel-single-writer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  channel-runtime:
+    name: Channel runtime and deployment preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: cloudflare/particle-api
+    env:
+      WRANGLER_SEND_METRICS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: cloudflare/particle-api/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run deploy:check
+      # No production deployment or secret access from pull-request code.

@@ -1,0 +1,39 @@
+{
+  "schema": "Mrliou_MRL_Compatibility_Observation_v1",
+  "observation_kind": "fixture",
+  "context": {
+    "source": {
+      "repository": "fixture/runtime",
+      "commit": "1111111111111111111111111111111111111111",
+      "license_ref": "fixture-only"
+    },
+    "artifact_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "hardware": {
+      "host_id": "TEST_FIXTURE_NOT_HARDWARE",
+      "gpu": "fixture",
+      "architecture": "fixture",
+      "driver": "fixture",
+      "runtime_sdk": "fixture"
+    },
+    "operation": {
+      "name": "fixture_op",
+      "backend": "fixture",
+      "dtype": "f32",
+      "shape": [
+        2,
+        2
+      ],
+      "parameters": {}
+    }
+  },
+  "context_sha256": "205c640fe7e1082ca1b74aa5976c54323cb67c2685e65794685d23f1d74a055a",
+  "numeric_tolerance": 1e-05,
+  "trace": {
+    "path": "trace.json",
+    "sha256": "716ef2acc76fd77d201dedfc333fbc6889c0f8c437ab82a59bab44682f108eb9"
+  },
+  "result": {
+    "path": "result.json",
+    "sha256": "074deec0d4d80d11c189a538ed349f325c391749fba1a1b87471d298378f9017"
+  }
+}

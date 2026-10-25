@@ -1,0 +1,33 @@
+{
+  "check": "COMMERCIAL_COMPLETENESS",
+  "check_state": "BLOCKED",
+  "commercial_state": "COMMERCIAL_UNRESOLVED",
+  "missing": [
+    "authority_registry_ref",
+    "contract_ref",
+    "customer_data_rights",
+    "evidence_refs",
+    "export_rules",
+    "governing_law_review_ref",
+    "price_terms_ref",
+    "rights_granted.access",
+    "rights_granted.brand_naming",
+    "rights_granted.commercialization",
+    "rights_granted.core_technology",
+    "rights_granted.data",
+    "rights_granted.deployment",
+    "rights_granted.derivative",
+    "rights_granted.distribution",
+    "rights_granted.modification",
+    "rights_granted.source",
+    "rights_granted.sublicense",
+    "rights_granted.use",
+    "supplier_data_terms_ref",
+    "termination_rules",
+    "third_party_licenses"
+  ],
+  "conflicts": [
+    "OPEN_CONFLICTS"
+  ],
+  "note": "Presence checks only. Evidence authenticity, applicable law and approval must be reviewed separately."
+}

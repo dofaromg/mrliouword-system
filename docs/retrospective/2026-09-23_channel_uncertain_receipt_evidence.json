@@ -1,0 +1,157 @@
+{
+  "canonical_authority": "Mr.liou",
+  "origin_signature": "MrLiouWord",
+  "source_repo": "dofaromg/mrliouword-system",
+  "source_artifact": "PR #82 Channel verifier",
+  "source_version": "8467eaefd37d61ff84a8532cddea8139a50af859",
+  "derivative_role": "engineering_evidence",
+  "artifact_owner": "Mr.liou",
+  "contributors": [
+    "Mr.liou",
+    "Codex"
+  ],
+  "transformation": "R04 post-commit response-failure receipt repair",
+  "verification_status": "partial",
+  "Expected_File_List": [
+    "cloudflare/particle-api/scripts/verify-channel-deployment.mjs",
+    "cloudflare/particle-api/tests/channel-single-writer.test.mjs",
+    "cloudflare/particle-api/README.md",
+    "cloudflare/particle-api/PROVENANCE.yaml",
+    "docs/retrospective/2026-09-23_channel_uncertain_receipt_session_record.md",
+    "docs/retrospective/2026-09-23_channel_uncertain_receipt_evidence.json"
+  ],
+  "Expected_Dependency_Tree": {
+    "verifier": [
+      "node:fs/promises",
+      "node:crypto",
+      "node:assert/strict",
+      "fetch",
+      "MRL_MASTER_KEY (environment only)",
+      "/channel/verify",
+      "/channel/stats",
+      "/channel/emit",
+      "/channel/stream"
+    ],
+    "regression": [
+      "node:http",
+      "Miniflare/workerd",
+      "D1",
+      "Durable Object",
+      "KV",
+      "R2",
+      "package-lock.json"
+    ],
+    "trace": [
+      "PROVENANCE.yaml",
+      "README.md",
+      "session_record",
+      "this evidence"
+    ]
+  },
+  "file_manifest": [
+    {
+      "path": "cloudflare/particle-api/scripts/verify-channel-deployment.mjs",
+      "size": 6796,
+      "sha256": "d6bd660622df478fb02bc97377953a5dff6bdf81bbd7f802ce849e0357a6d41a"
+    },
+    {
+      "path": "cloudflare/particle-api/tests/channel-single-writer.test.mjs",
+      "size": 21247,
+      "sha256": "767074e74c898cbee8af3af4b92ce987cbc7bd0f1f671a9da6a06ac4acc4509a"
+    },
+    {
+      "path": "cloudflare/particle-api/README.md",
+      "size": 15406,
+      "sha256": "25046c26f5c372b4b49819afc04513bfddda8b9e4f04e9b4e35394a36bae814a"
+    },
+    {
+      "path": "cloudflare/particle-api/PROVENANCE.yaml",
+      "size": 9099,
+      "sha256": "1d1ec9c6e7fd28859159752c9527737616e78f25390634ae6888100e8996e0e7"
+    },
+    {
+      "path": "docs/retrospective/2026-09-23_channel_uncertain_receipt_session_record.md",
+      "size": 5128,
+      "sha256": "0cd58bbbaff76bb80a1967c046b71118a59f455ee7afd47d85a38f76e6ed9ca3"
+    }
+  ],
+  "self_inventory": {
+    "path": "docs/retrospective/2026-09-23_channel_uncertain_receipt_evidence.json",
+    "integrity": "self is included in Expected_File_List; its bytes/hash are audited in the external publication receipt and pinned by the containing Git tree, avoiding a recursive self-hash"
+  },
+  "validation": {
+    "negative_control": {
+      "exit_code": 1,
+      "actual": 2,
+      "expected": 3,
+      "D1_rows": 3
+    },
+    "targeted": {
+      "exit_code": 0,
+      "passed": 2
+    },
+    "full_suite": {
+      "exit_code": 0,
+      "tests": 17,
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0
+    },
+    "typecheck": {
+      "exit_code": 0
+    },
+    "deploy_check": {
+      "exit_code": 0,
+      "scope": "local dry-run only"
+    },
+    "governance_before": {
+      "six_gates_exit_code": 0,
+      "release_baseline_findings": 70
+    },
+    "governance_after": {
+      "six_gates_exit_code": 0,
+      "release_baseline_findings": 70
+    },
+    "logs": [
+      {
+        "name": "r04-before.txt",
+        "text": "✖ deployment verifier accounts for committed writes whose responses are lost or malformed (828.866231ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1196.643235\n\n✖ failing tests:\n\ntest at tests/channel-single-writer.test.mjs:286:3\n✖ deployment verifier accounts for committed writes whose responses are lost or malformed (828.866231ms)\n  AssertionError [ERR_ASSERTION]: every attempted write must survive transport failures\n  \n  2 !== 3\n  \n      at TestContext.<anonymous> (file:///workspace/scratch/a2eed9026b28/mrliouword-system/cloudflare/particle-api/tests/channel-single-writer.test.mjs:321:12)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n      at async Test.run (node:internal/test_runner/test:1389:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: 2,\n    expected: 3,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n"
+      },
+      {
+        "name": "r04-targeted.txt",
+        "text": "✔ deployment verifier writes exact-SHA concurrency receipt against the local runtime (921.506823ms)\n✔ deployment verifier accounts for committed writes whose responses are lost or malformed (461.084648ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1672.031948\n"
+      },
+      {
+        "name": "r04-tests.txt",
+        "text": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> particle-api@3.0.0 test\n> node --test tests/*.test.mjs\n\n✔ 96 parallel emits across three Worker instances create one linear chain (1002.835682ms)\n✔ same-key emits retain every row and recall the latest committed version (418.90139ms)\n✔ emit, KV sync, and multi-batch R2 indexing use the same writer (1269.666705ms)\n✔ restart resumes the existing D1 head and preserves historical rows byte-for-byte (748.226363ms)\n✔ D1 rejection leaves KV untouched and does not poison the queue (338.700169ms)\n✔ R2 batch failure rolls back its batch, retains earlier batches and resumes from committed head (680.382378ms)\n✔ pre-existing sibling history is retained and all new writes fail closed (370.685792ms)\n✔ legacy UNIQUE(key) is reported without rewriting the schema or history (402.451649ms)\n✔ old future timestamp does not reorder a new emit behind the chain head (348.559261ms)\n✔ KV failure returns the committed receipt; D1-backed recall is consistent (326.994523ms)\n✔ missing DO binding fails closed without a direct-D1 fallback (1.078677ms)\n✔ auth, public routes, input rejection, response provenance and unknown routes remain compatible (270.992018ms)\n✔ deployment verifier writes exact-SHA concurrency receipt against the local runtime (674.998901ms)\n✔ deployment verifier accounts for committed writes whose responses are lost or malformed (400.670151ms)\n✔ unavailable DO returns a provenance-bearing 503 and never touches D1 (0.826966ms)\n✔ R2 cursor continues after 1000 objects and an intervening emit (3184.882534ms)\n✔ late actor write is fenced when the D1 head changes before commit (325.053756ms)\nℹ tests 17\nℹ suites 0\nℹ pass 17\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 11080.206066\n"
+      },
+      {
+        "name": "r04-deploy-check.txt",
+        "text": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> particle-api@3.0.0 deploy:check\n> wrangler deploy --config wrangler.toml --dry-run --outdir .wrangler/deploy-check\n\nProxy environment variables detected. We'll use your proxy for fetch requests.\n\n ⛅️ wrangler 4.60.0\n───────────────────\nTotal Upload: 24.75 KiB / gzip: 7.27 KiB\nYour Worker has access to the following bindings:\nBinding                                                       Resource            \nenv.MRL_CHANNEL_CHAIN (Mrliou_ChannelChain)                   Durable Object      \nenv.MRLIOUWORD_VAULT (01275832766148bfbcaa00ee4aeb9946)       KV Namespace        \nenv.DB (mrliouword-db)                                        D1 Database         \nenv.PARTICLES (mrlioubook)                                    R2 Bucket           \n\n--dry-run: exiting now.\n"
+      }
+    ]
+  },
+  "invariants": [
+    "Every attempted emit key appears in operations despite transport/JSON failure",
+    "Unknown commit state is never inferred as not committed",
+    "No implicit retry; test observed exactly three requests and three D1 rows",
+    "Runtime src/index.ts and wrangler.toml unchanged from source_version",
+    "No main merge, route/DNS mutation, historical row or receipt deletion"
+  ],
+  "deployment": {
+    "status": "UNVERIFIED",
+    "baseline_build_id": "5148014e-742f-435e-92ed-47095d83373b",
+    "failure_cause": "UNVERIFIED",
+    "mother_runtime_consumption": "UNVERIFIED"
+  },
+  "delivery_audit": {
+    "status": "DELIVERY_PASS",
+    "Expected": 6,
+    "Generated": 6,
+    "Missing": [],
+    "Extra": [],
+    "Mismatch": [],
+    "Coverage": 100,
+    "scope": "six R04 source files; excludes production and Mother host"
+  }
+}

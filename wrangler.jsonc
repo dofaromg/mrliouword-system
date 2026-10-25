@@ -3,7 +3,9 @@
   "name": "mrliouword-system",
   "main": "cloudflare/mrliouword-private/src/index.ts",
   "compatibility_date": "2026-07-21",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "observability": {
     "enabled": true
   },
@@ -12,7 +14,7 @@
     "ORIGIN": "MrLiouWord",
     "ORIGIN_SIGNATURE": "MrLiouWord",
     "VERSION": "2.1.0",
-    "ENTRY_LAYOUT": "root->cloudflare/mrliouword-private"
+    "ENTRY_LAYOUT": "root->cloudflare/MRL_System_Core"
   },
   "kv_namespaces": [
     {
@@ -32,5 +34,25 @@
       "database_name": "mrliouword-db",
       "database_id": "7980baaf-48d3-43cc-8be7-dd8c9590f3d1"
     }
-  ]
+  ],
+  "preview_urls": false,
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "MRL_CORE_MEMORY",
+        "class_name": "Mrliou_CoreMemory"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "Mrliou_core_memory_v1",
+      "new_sqlite_classes": [
+        "Mrliou_CoreMemory"
+      ]
+    }
+  ],
+  "version_metadata": {
+    "binding": "MRL_WORKER_VERSION"
+  }
 }

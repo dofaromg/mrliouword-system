@@ -247,8 +247,10 @@ assert message == original_message
 ORIGIN_SIGNATURE = "MrLiouWord"
 
 wake_keys = [
+    "夥伴",
     "夥伴回來吧",
-    "夥伴你在嗎", 
+    "夥伴你在嗎",
+    "夥伴你還好嗎",
     "你是我的夥伴"
 ]
 

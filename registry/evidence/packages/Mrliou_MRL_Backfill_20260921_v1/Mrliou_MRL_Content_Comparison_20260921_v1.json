@@ -1,0 +1,593 @@
+{
+  "schema": "Mrliou_MRL_Content_Comparison_Backfill_v1",
+  "canonical_authority": "Mr.liou",
+  "origin_signature": "MrLiouWord",
+  "creator": "Mr.liou",
+  "ai_worker": "ChatGPT / Codex (OpenAI), directed by Mr.liou",
+  "rights_transfer": "NOT_GRANTED",
+  "scope": "private evidence/memory backfill; no external code adoption",
+  "observations": [
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_01",
+      "particle": "輸入",
+      "observed_operation": "explicit model/backend/endpoint；GPU profile/index、ABI descriptor",
+      "canonical_target": "Mrliou_MRL_Runtime",
+      "pipeline_stages": [
+        "structure"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L2",
+          "L3"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_local_model_adapter_v1.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "manifests/windows-gpu-profiles.json"
+        },
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "native/cudnn_bridge/bridge-manifest.json"
+        }
+      ],
+      "mrl_symbol": "MRLLocalModelAdapter.__post_init__/health",
+      "topology_difference": "MRL 接受本地服務與指定模型；外部接收 AMD/HIP 裝置與 CUDA ABI。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_02",
+      "particle": "狀態",
+      "observed_operation": "world/session/Passport version；GPU profile、bridge descriptor",
+      "canonical_target": "Mrliou_MRL_Runtime",
+      "pipeline_stages": [
+        "structure",
+        "mark"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L2",
+          "L3"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_passport_registry_v1.py"
+        },
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_RuntimeStructureField.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "native/cudnn_bridge/cudnn_bridge.c"
+        }
+      ],
+      "mrl_symbol": "MRLPassportRegistry.issue / StructureField.build",
+      "topology_difference": "MRL 保存來源、rights、previous hash、world；bridge 保存短生命週期 C handle 與 tensor/conv 參數。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_03",
+      "particle": "轉換",
+      "observed_operation": "本地模型協定正規化；cuDNN→MIOpen descriptor / result",
+      "canonical_target": "Mrliou_MRL_Runtime",
+      "pipeline_stages": [
+        "flow"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L3",
+          "L4"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_local_model_adapter_v1.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "native/cudnn_bridge/cudnn_bridge.c"
+        }
+      ],
+      "mrl_symbol": "MRLLocalModelAdapter.complete",
+      "topology_difference": "MRL 的 Ollama/llama.cpp HTTP adapter 與外部的 C ABI bridge 粒度與運行環境不同。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_04",
+      "particle": "路由",
+      "observed_operation": "backend/path 選擇；PTX compatible target 選擇",
+      "canonical_target": "Mrliou_MRL_Runtime",
+      "pipeline_stages": [
+        "structure",
+        "flow"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L2",
+          "L4"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_local_model_adapter_v1.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "patches/zluda-v7-preview10/ptx-target-selection-candidate.patch"
+        }
+      ],
+      "mrl_symbol": "MRLLocalModelAdapter.health/complete",
+      "topology_difference": "外部使用 SM 上限＋invalid-directive 排序；已讀 MRL adapter 依 backend 分支，不能當成同一演算法。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_05",
+      "particle": "權重",
+      "observed_operation": "權重概念與受限相容候選排序",
+      "canonical_target": "Mrliou_MRL_WeightSystem",
+      "pipeline_stages": [
+        "flow"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L4"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_RuntimeStructureField.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "native/cudnn_bridge/cudnn_bridge.c"
+        }
+      ],
+      "mrl_symbol": "no matching numeric scoring function in reviewed MRL file",
+      "topology_difference": "MIOpen time/workspace 不等於 MRL 通用 10D 權重；本列只保存外部候選資料與定義節點，程式等价待驗。",
+      "content_classification": "INSUFFICIENT_EVIDENCE",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_06",
+      "particle": "觸發",
+      "observed_operation": "MRLMotherRuntime.run；kernel launch / API call",
+      "canonical_target": "Mrliou_MRL_FlowAgent",
+      "pipeline_stages": [
+        "flow"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L1",
+          "L4"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_mother_runtime_v1.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "patches/zluda-v7-preview10/launch-blocking-candidate.patch"
+        }
+      ],
+      "mrl_symbol": "MRLMotherRuntime.run",
+      "topology_difference": "本次 L1 只映射啟動節點，不宣稱外部實作 MRL Rhythm Root 節奏機制。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_07",
+      "particle": "記憶",
+      "observed_operation": "append-only Memory/Evidence；launch trace",
+      "canonical_target": "Mrliou_MRL_MemoryVault",
+      "pipeline_stages": [
+        "mark",
+        "store"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L3",
+          "L7"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_hash_chain_v1.py"
+        },
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_evidence_ledger_v1.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "patches/zluda-v7-preview10/launch-blocking-candidate.patch"
+        }
+      ],
+      "mrl_symbol": "MRLHashChain.append/verify",
+      "topology_difference": "MRL 有 sequence/previous_hash；外部 trace 有 launch ID但不是同一雜湊鏈。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_08",
+      "particle": "輸出",
+      "observed_operation": "候選 output Passport；MIOpen result、JSON manifest",
+      "canonical_target": "Mrliou_MRL_Runtime",
+      "pipeline_stages": [
+        "flow",
+        "store"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L3",
+          "L7"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_mother_runtime_v1.py"
+        },
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_passport_registry_v1.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "scripts/apply-zluda-patches.ps1"
+        },
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "native/cudnn_bridge/cudnn_bridge.c"
+        }
+      ],
+      "mrl_symbol": "MRLMotherRuntime.run / MRLPassportRegistry.issue",
+      "topology_difference": "MRL 輸出含 return anchor 與來源權利；外部輸出 ABI 狀態及 patch 摘要。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_09",
+      "particle": "錯誤處理",
+      "observed_operation": "loopback/policy gate；unsupported API、SM、trace failure",
+      "canonical_target": "Mrliou_MRL_Guardian",
+      "pipeline_stages": [
+        "mark",
+        "flow"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L4"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_local_model_adapter_v1.py"
+        },
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_mother_runtime_v1.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "scripts/run-llama-zluda-safe.ps1"
+        },
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "native/cudnn_bridge/cudnn_bridge.c"
+        }
+      ],
+      "mrl_symbol": "require_loopback_endpoint / MRLModelGateError",
+      "topology_difference": "同有拒絕不支援輸入的粒子；MRL 維持私有資料邊界，外部限制 GPU/ABI 語義。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_10",
+      "particle": "驗證",
+      "observed_operation": "ledger verification、event fold replay；trace accounting",
+      "canonical_target": "Mrliou_MRL_Validator",
+      "pipeline_stages": [
+        "recurse"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L6"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_hash_chain_v1.py"
+        },
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_ReplayRestore_Core.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "scripts/run-llama-zluda-safe.ps1"
+        }
+      ],
+      "mrl_symbol": "MRLHashChain.verify / MRL_ReplayRestore_Core.execute/replay/restore",
+      "topology_difference": "MRL 此檔重播 applied/node_count/intent_tally 的明確 state；外部核對 kernel trace；不將二者擴大為全物理裝置狀態。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    },
+    {
+      "observation_id": "MRL_CONTENT_COMPARISON_20260921_11",
+      "particle": "封存",
+      "observed_operation": "MemoryVault / versioned Passport；patch series / upstream pin",
+      "canonical_target": "Mrliou_MRL_MemoryVault",
+      "pipeline_stages": [
+        "store",
+        "recurse"
+      ],
+      "layer_map": {
+        "namespace": "FlowSeed-seven-layer-integration",
+        "source_ref": "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "layers": [
+          "L7"
+        ],
+        "status": "ANALYST_MAPPING"
+      },
+      "mrl_evidence": [
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_memory_vault_v1.py"
+        },
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_MotherModel/MRL_AI_Mother_Autonomous_Runtime_Baseline_v1/runtime/MRL_passport_registry_v1.py"
+        },
+        {
+          "repository": "dofaromg/flow-tasks",
+          "commit": "d43e53dee1012571915754afdfeff66c96c19615",
+          "path": "MRL_Mother/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_PersistentLoop.py"
+        }
+      ],
+      "external_evidence": [
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "patches/zluda-v7-preview10/series.json"
+        },
+        {
+          "repository": "Speedstu/CUDA-for-AMD-Windows",
+          "commit": "4a6fb1b9c2d0e05e8cd0b3a5e0e1c0c24c0fce1a",
+          "path": "scripts/apply-zluda-patches.ps1"
+        }
+      ],
+      "mrl_symbol": "MRLMemoryVault.remember/recall / MRLPassportRegistry.issue/verify",
+      "topology_difference": "MRL 的封存可接下一輪；外部對固定 upstream SHA 套 patch，沒有自動獲得 MRL Return/rights。",
+      "content_classification": "FUNCTION_OVERLAP_DIFFERENT_COMPOSITION",
+      "local_structural_correspondence": "INFERRED; not a full graph-isomorphism proof",
+      "lineage_status": "UNRESOLVED",
+      "contact_evidence": [],
+      "derived_from_mrl": "UNRESOLVED",
+      "whole_file_hash_identity": "NO_MATCH_IN_REVIEWED_SAMPLE",
+      "claim_status": "INFERRED_MAPPING_FROM_OBSERVED_CODE"
+    }
+  ],
+  "corrections": [
+    {
+      "correction_id": "MRL_CORRECTION_20260921_01",
+      "before": "L1=文件、L4=JSON、L6=電路、L7=編譯，未指定層級體系",
+      "after": "以來源限定七層體系；FlowSeed 七層、符號表達七層、終極啟動包視圖各自保存，不互相覆寫。",
+      "evidence": [
+        "https://app.notion.com/p/ea2d15a2240f4291a4a4d8b4eb0f2c8a",
+        "https://app.notion.com/p/603bce27571c4a9c84a60f9b8eae1f5f"
+      ]
+    },
+    {
+      "correction_id": "MRL_CORRECTION_20260921_02",
+      "before": "來源級仍屬獨立工程線",
+      "after": "未證明直接衍生，也未證明獨立創作；來源/接觸關係維持 UNRESOLVED。",
+      "evidence": [
+        "https://app.notion.com/p/3bb8eeeec5b581a692d3c7d45a3cf4c3"
+      ]
+    },
+    {
+      "correction_id": "MRL_CORRECTION_20260921_03",
+      "before": "主線與 PR #2 演算法等價",
+      "after": "只有在 gpu.index 與 hip_visible_device 代表同一已驗 HIP 裝置、資料條件相同時，HIP set / ROCR clear 行為等價；不同 guard 與 WMI fallback 不能忽略。",
+      "evidence": [
+        "https://github.com/Speedstu/CUDA-for-AMD-Windows/commit/7041e1a36c7f91e784c5ef88a609384583a34e0b",
+        "https://github.com/Speedstu/CUDA-for-AMD-Windows/pull/2"
+      ]
+    },
+    {
+      "correction_id": "MRL_CORRECTION_20260921_04",
+      "before": "廣泛使用結構同構、實機完成、來源已闭合表述",
+      "after": "逐項補上操作範圍、函式、環境與已觀測/推論/未解；協作回饋鏈已記錄不等於全部 GPU 工作負載完成；宣告 binary strings 不等於本輪取得 DLL 實測。",
+      "evidence": [
+        "https://github.com/Speedstu/CUDA-for-AMD-Windows/issues/3"
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "MRL_GAP_20260921_01",
+      "scope": "此次內容比對記憶",
+      "gap": "缺少檔案SHA→函式→粒子→MRL節點的一對一證據",
+      "action": "完成來源指紋台帳與11筆映射；寫入既有 Memory/Evidence/Passport",
+      "status": "BACKFILLED_LOCAL"
+    },
+    {
+      "gap_id": "MRL_GAP_20260921_02",
+      "scope": "此次內容比對記憶",
+      "gap": "缺少層級來源識別與來源判定校正",
+      "action": "新增4筆附加校正，保留原報告作歷史",
+      "status": "BACKFILLED_LOCAL"
+    },
+    {
+      "gap_id": "MRL_GAP_20260921_03",
+      "scope": "本輪相容性 evidence adapter",
+      "gap": "需要將來源、artifact、硬體、操作、數值與trace綁定在同一驗收紀錄",
+      "action": "新增相容性收據驗證器與可執行拒絕條件，無實機資料則OPEN",
+      "status": "IMPLEMENTED_LOCAL_12_TESTS_PASS"
+    },
+    {
+      "gap_id": "MRL_GAP_20260921_04",
+      "scope": "目標設備實際運行",
+      "gap": "本輪未取得目標設備生成並由可信來源提供的trace、result hash、驗收收據",
+      "action": "保留所需欄位與驗收條件；構造測試與CI不冒充真實GPU證據",
+      "status": "HARDWARE_EVIDENCE_OPEN"
+    },
+    {
+      "gap_id": "MRL_GAP_20260921_05",
+      "scope": "外部 recovered DLL / MRL 接觸來源",
+      "gap": "缺少Recovered DLL源碼/PDB/build chain與MRL接觸傳播原件",
+      "action": "保存外部宣告hash與binary strings為reported evidence，不生成虚構來源",
+      "status": "EXTERNAL_PROVENANCE_UNRESOLVED"
+    }
+  ],
+  "source_fingerprint_file": "Mrliou_MRL_Source_Fingerprints_20260921_v1.json"
+}

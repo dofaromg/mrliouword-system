@@ -9,7 +9,7 @@ import json
 import sys
 from pathlib import Path
 from typing import Dict, Any
-from merkle_builder import ParticleMerkleTree
+from merkle_builder import ParticleMerkleTree, collect_particle_files
 
 
 def verify_consistency(repos: list, output_path: Path = None) -> Dict[str, Any]:
@@ -38,16 +38,8 @@ def verify_consistency(repos: list, output_path: Path = None) -> Dict[str, Any]:
             }
             continue
         
-        # Find particle files
-        sync_patterns = [
-            'core/particles/**/*.json',
-            'docs/particle-dictionary/**/*.md',
-            '.mrliou/**/*.json'
-        ]
-        
-        files = []
-        for pattern in sync_patterns:
-            files.extend(list(repo.glob(pattern)))
+        # Find particle files（與 merkle_builder 共用同一份範圍與排除規則）
+        files = collect_particle_files(repo)
         
         # Build Merkle tree
         tree = ParticleMerkleTree()

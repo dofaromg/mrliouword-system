@@ -33,7 +33,9 @@ import argparse
 sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../'))
 
-from integrations.github.logical_extractor import LogicalExtractor
+from integrations.github.logical_extractor import (
+    LogicalStructureExtractor as LogicalExtractor,
+)
 from integrations.webgpu.attention_filter import AttentionFilter
 from integrations.particle.test_recorder import ParticleTestRecorder
 from integrations.particle.naming_engine import ParticleNamingEngine
@@ -212,10 +214,33 @@ class IntelligentRepoSync:
         
         for snippet in snippets:
             try:
-                structure = self.logical_extractor.extract(
+                structure = self.logical_extractor.extract_from_code(
                     code=snippet.code,
                     language=snippet.language
                 )
+                
+                # extract_from_code 回傳的 patterns 是 Dict[str, List[str]]，
+                # 鍵為模式名。下游（命名引擎、標籤）需要的是名稱列表，
+                # 在此衍生一次，保留原 dict 不失真。
+                # patterns 是 {模式類別: [命中的關鍵字]}。兩個下游要的東西不同：
+                #   pattern_names    類別名（attention_mechanism）— 適合當標籤
+                #   pattern_keywords 命中的關鍵字（attention、memory、merkle）—
+                #     這才是命名引擎 PATTERN_TO_TYPE 認得的詞彙。只傳類別名會
+                #     讓 determine_type 的 Priority 1 永遠不命中，落到 Priority 3
+                #     甚至 fx.logic.general。
+                patterns = structure.get('patterns', {}) or {}
+                structure['pattern_names'] = list(patterns.keys())
+                structure['pattern_keywords'] = [
+                    keyword for matched in patterns.values() for keyword in matched
+                ]
+                
+                # extract_from_code 的 reasoning_chains 是 List[List[str]]，
+                # 而命名引擎宣告 List[str] 並直接 ' '.join()。兩邊契約不同，
+                # 在此銜接，不更動任一模組的宣告。
+                structure['reasoning_texts'] = [
+                    ' '.join(chain) if isinstance(chain, (list, tuple)) else str(chain)
+                    for chain in structure.get('reasoning_chains', [])
+                ]
                 
                 # Add source info
                 structure_dict = structure
@@ -289,9 +314,9 @@ class IntelligentRepoSync:
         try:
             for structure in structures:
                 decision = self.naming_engine.generate_name(
-                    patterns=structure.get('patterns', []),
+                    patterns=structure.get('pattern_keywords', []),
                     concepts=structure.get('concepts', []),
-                    reasoning_chains=structure.get('reasoning_chains', []),
+                    reasoning_chains=structure.get('reasoning_texts', []),
                     source_info=structure.get('source_info')
                 )
                 
@@ -300,6 +325,7 @@ class IntelligentRepoSync:
                 # Add naming to structure
                 structure['particle_name'] = decision.particle_name
                 structure['particle_type'] = decision.particle_type
+                structure['confidence'] = decision.confidence
             
             logger.info(f"Generated {len(naming_decisions)} particle names")
             
@@ -329,7 +355,7 @@ class IntelligentRepoSync:
                     particle_type=structure.get('particle_type', 'fx.logic.general'),
                     content=content,
                     source_info=structure.get('source_info', {}),
-                    tags=structure.get('patterns', []) + structure.get('concepts', []),
+                    tags=structure.get('pattern_names', []) + structure.get('concepts', []),
                     metadata={
                         'confidence': structure.get('confidence', 0.0),
                         'formula': structure.get('formula', '')

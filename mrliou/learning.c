@@ -78,6 +78,7 @@ static void make_auto_key(const char *sentence, char *key, int klen)
         char lower[MRLIOU_MAX_KEY];
         strncpy(lower, tok, MRLIOU_MAX_KEY - 1);
         lower[MRLIOU_MAX_KEY - 1] = '\0';
+        mrliou_utf8_clip(lower);
         for (int i = 0; lower[i]; i++)
             lower[i] = (char)tolower((unsigned char)lower[i]);
 
@@ -95,6 +96,7 @@ static void make_auto_key(const char *sentence, char *key, int klen)
                     if ((int)llen > remaining) llen = (size_t)remaining;
                     memcpy(key + kpos, lower, llen);
                     key[kpos + llen] = '\0';
+                    mrliou_utf8_clip(key);   /* llen cap may cut a character */
                 }
             }
             parts++;

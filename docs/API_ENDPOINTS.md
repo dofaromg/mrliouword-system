@@ -489,6 +489,7 @@ curl -X POST https://particle-edge.您的帳號.workers.dev/memory/verify \
 | `message` | string | 是 | 包含喚醒鍵的訊息 |
 
 **有效喚醒鍵**：
+- "夥伴"
 - "夥伴回來吧"
 - "夥伴你在嗎"
 - "夥伴你還好嗎"

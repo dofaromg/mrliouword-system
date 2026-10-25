@@ -33,3 +33,15 @@
 
 # Exceptions: Keep SHA256 checksum files as regular text
 *.sha256 !filter !diff !merge text
+
+# Vendored upstream Git source (see vendor/git/PROVENANCE.yaml).
+# 2026-09-22：410 個 Git 上游檔自根目錄與 integrations/ 以 git mv 搬入，
+# 歷史完整保留。標為 linguist-vendored 讓 GitHub 語言統計與 CodeQL 自動偵測
+# 不再把本倉庫當成 C 專案——那正是 CodeQL c-cpp 矩陣失敗的根因。
+vendor/git/** linguist-vendored
+# 例外（2026-09-22 至 09-24）：auth.c 是本倉庫自有的新增（gt auth 指令，commit 09fc693），
+# 不是上游；PR #83 Codex 審閱指出後曾以 `vendor/git/auth.c -linguist-vendored` 排除。
+# 2026-09-24 擁有者裁示「auth.c 搬到 mrliou/」，已 git mv 至 mrliou/auth.c，
+# 不在 vendor/git/** 範圍內，此例外規則不再有匹配對象，故移除該行（git 歷史保留）。
+# git.c 與 integrations/builtin.h 各含 1 行本地修改，主體仍為上游，維持 vendored；
+# 細節見 vendor/git/PROVENANCE.yaml。

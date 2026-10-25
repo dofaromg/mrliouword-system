@@ -1,0 +1,20 @@
+{
+  "origin_signature": "MrLiouWord",
+  "validation_date": "2026-09-22",
+  "python_command": "python3 -m unittest -v test_dispatch",
+  "python_exit_code": 0,
+  "tests_run": 9,
+  "tests_passed": 9,
+  "tests_failed": 0,
+  "javascript_command": "node --check bridge-client.mjs",
+  "javascript_exit_code": 0,
+  "coverage": ["concurrent idempotency", "scope and policy mismatch", "default live disabled", "concurrent job claims", "stale completion refusal", "crash recovery without resend", "three provider fixture parsers", "workspace and reader isolation over local HTTP", "commercial completeness cannot approve", "append-only receipts"],
+  "execution_scope": "LOCAL_TESTS_WITH_FIXTURE_PROVIDER_RESPONSES",
+  "live_provider_calls": 0,
+  "production_changes": 0,
+  "notion_addendum": "https://app.notion.com/p/3e38eeeec5b581ed9b54cc274d3be698",
+  "notion_readback": "18 sections present; parent is existing MRL world model top-level revision v1.1",
+  "live_integration": "NOT_CONNECTED",
+  "commercial_status": "COMMERCIAL_UNRESOLVED",
+  "limitations": ["No Socket.IO server integration test: upstream ExtensionChannel and exact dependency versions unavailable", "No live Notion policy refresh service", "No automatic Drive receipt projection service", "No live provider, payment, payout or customer acceptance verification"]
+}

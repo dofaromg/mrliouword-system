@@ -7,7 +7,9 @@ from mrliouword_agents.core.exceptions import AgentError
 
 
 class TestAgent(BaseAgent):
-    """測試用 Agent"""
+    """測試用 Agent（非測試類別，避免 pytest 嘗試蒐集）"""
+
+    __test__ = False
 
     async def execute(self, *args, **kwargs):
         yield "Test message"

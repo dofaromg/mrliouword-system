@@ -1,0 +1,10 @@
+{
+  "scope": "LOCAL_FIXTURE_REGRESSION_NOT_HARDWARE",
+  "observed_at_utc": "2026-09-21T14:27:27.322921+00:00",
+  "tests_run": 12,
+  "failures": 0,
+  "errors": 0,
+  "passed": true,
+  "hardware_acceptance": "OPEN",
+  "log": "test_boolean_success_rejected (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_boolean_success_rejected) ... ok\ntest_consistent_fixture_never_becomes_hardware_acceptance (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_consistent_fixture_never_becomes_hardware_acceptance) ... ok\ntest_cross_context_trace (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_cross_context_trace) ... ok\ntest_digest_tamper (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_digest_tamper) ... ok\ntest_equal_counts_with_duplicate_id_rejected (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_equal_counts_with_duplicate_id_rejected) ... ok\ntest_error_event (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_error_event) ... ok\ntest_exit_zero_without_trace (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_exit_zero_without_trace) ... ok\ntest_kernel_pair_mismatch (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_kernel_pair_mismatch) ... ok\ntest_missing_exact_commit (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_missing_exact_commit) ... ok\ntest_nan_error_rejected (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_nan_error_rejected) ... ok\ntest_path_escape (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_path_escape) ... ok\ntest_unfinished_trace (test_Mrliou_MRL_Compatibility_Evidence_v1.EvidenceGateTests.test_unfinished_trace) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.009s\n\nOK\n"
+}

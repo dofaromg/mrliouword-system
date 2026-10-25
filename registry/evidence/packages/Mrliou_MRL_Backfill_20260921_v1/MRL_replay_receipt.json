@@ -1,0 +1,9 @@
+{
+  "source_commit": "d43e53dee1012571915754afdfeff66c96c19615",
+  "scope": "20 observation record IDs/order/intent counters; no GPU or full process state replay",
+  "node_count": 20,
+  "relation_count": 19,
+  "state_hash": "0a8dc901866a156a8ccfafaf10b276cd0b13afba3a85098f6a6b151184fc8ce1",
+  "replay_exact": true,
+  "restore_exact": true
+}

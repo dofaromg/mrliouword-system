@@ -16,6 +16,7 @@ Author: MR.liou
 import re
 import ast
 import json
+import textwrap
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass, asdict
 
@@ -99,6 +100,10 @@ class LogicalStructureExtractor:
             邏輯架構字典
         """
         language = language.lower()
+        
+        # 傳入的片段常帶有整段縮排（例如三引號字串中的程式碼），
+        # 直接餵給 ast.parse 會是 IndentationError，靜默得到空結構。
+        code = textwrap.dedent(code)
         
         # 選擇對應的提取器
         extractor = self.language_extractors.get(language, self._extract_generic)
