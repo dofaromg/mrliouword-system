@@ -18,7 +18,7 @@
   "inventory_note": "CareOS-Cloudflare 盤點 2026-03-12（使用者提供，來源標註為 Cloudflare API 即時拉取）",
   "totals": {
     "cloud_workers": 140,
-    "deployable_from_repo": 3,
+    "deployable_from_repo": 4,
     "config_incomplete": 1,
     "in_service_registry": 3,
     "referenced_by_clients": 4,
@@ -617,8 +617,8 @@
       ],
       "in_service_registry": true,
       "client_references": [
-        "README.md",
         "unified-resource-report.md",
+        "README.md",
         "cloudflare/config.json"
       ],
       "naming": {
@@ -1279,9 +1279,15 @@
     },
     {
       "name": "mrliouword-system",
-      "deployable_from_repo": false,
+      "deployable_from_repo": true,
       "config_incomplete": [],
-      "wrangler_configs": [],
+      "wrangler_configs": [
+        {
+          "path": "wrangler.jsonc",
+          "readable_by_wrangler": true,
+          "placeholders": []
+        }
+      ],
       "in_service_registry": false,
       "client_references": [],
       "naming": {
@@ -1306,11 +1312,11 @@
       ],
       "in_service_registry": true,
       "client_references": [
+        "unified-resource-report.md",
+        "README.md",
         "test 2.sh",
         "test.sh",
         "DEPLOYMENT.md",
-        "README.md",
-        "unified-resource-report.md",
         "cloudflare/config.json",
         "docs/retrospective/2026-09-29_cloudflare_secrets_wrong_deploy_session_record.md"
       ],
@@ -1650,13 +1656,6 @@
   },
   "config_parse_failed": [],
   "wrangler_configs_not_in_inventory": {
-    "mrl-system-core": [
-      {
-        "path": "wrangler.jsonc",
-        "readable_by_wrangler": true,
-        "placeholders": []
-      }
-    ],
     "particle-chat-v42": [
       {
         "path": "particle-chat-v42/wrangler.jsonc",
